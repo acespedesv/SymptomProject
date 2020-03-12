@@ -8,27 +8,48 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    BodyView bodyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_main);
+
+        bodyView = findViewById(R.id.bodyView);
+
+        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type","None");
+        Toast.makeText(this,"Welcome "+body, Toast.LENGTH_SHORT).show();
+
+        if(body.equals("male")){
+            bodyView.setBodyType(BodyView.BodyType.MALE);
+
+        }
+        else if(body.equals("female")){
+            bodyView.setBodyType(BodyView.BodyType.FEMALE);
+        }
+        else{
+            // Handle
+        }
+
+        // Setup the flip button
+        ImageButton flipButton = (ImageButton) findViewById(R.id.flip_button);
+        flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                bodyView.flip();
             }
         });
+
     }
 
     @Override
