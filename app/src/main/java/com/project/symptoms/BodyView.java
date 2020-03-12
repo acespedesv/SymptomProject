@@ -2,6 +2,7 @@ package com.project.symptoms;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,21 +16,36 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 
-public class BodyView extends View {
+public class BodyView extends View implements AlertDialog.OnClickListener{
 
     // Used to draw the circles over the image
     private Paint redBrush;
-    private float CIRCLE_RADIUS = 40f;
+
+    // Possible sizes to use
+    private float CIRCLE_SMALL = 30f;
+    private float CIRCLE_MEDIUM = 50f;
+    private float CIRCLE_LARGE = 70f;
+
+    // Options for the user to choose
+    final String intensityOptions[] = {"Leve","Medio","Fuerte"};
+
+    // The dialog to ask the intesity of the pain
+    AlertDialog intensitySelectionDialog;
+
+    // The actual size to use when drawing circles
+    private float CIRCLE_RADIUS = CIRCLE_SMALL;
 
     // The image to draw on the screen
     private Drawable imageDrawable;
 
     // The (X,Y) pairs of the points to be drawn over the image
-    private ArrayList<Pair<Float, Float>> points;
+    private ArrayList<float[]> points;
+    private float[] current_point = {0,0,0}; //X, Y, Radius
 
 
 
@@ -63,16 +79,29 @@ public class BodyView extends View {
         init();
     }
 
+    private void addPoint(float x, float y, float radius){
+        float point[] = {x,y,radius};
+        points.add(point);
+        invalidate();
+    }
+
     private void init(){
         redBrush = new Paint();
         redBrush.setColor(Color.RED);
-        points = new ArrayList<Pair<Float,Float>>();
+        points = new ArrayList<>();
 
         imageDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.img_male_front, null);
 
         // Default state
         setBodyType(BodyType.MALE);
         setState(State.FRONT);
+
+        // Setup the intensity selection dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Seleccione la intensidad del dolor")
+                .setItems(intensityOptions, this);
+        intensitySelectionDialog = builder.create();
+
     }
 
 
@@ -125,14 +154,17 @@ public class BodyView extends View {
     }
 
     /**
-     * Toggle {@link #currentState}
+     * Toggle {@link #currentState} and empty {@link #points}
      */
     public void flip(){
         currentState = (currentState==State.FRONT) ? State.BACK : State.FRONT;
+        points.clear();
         updateImage();
     }
 
-
+    /**
+     * Draw the current image and draw the list of points over the image
+     */
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -141,8 +173,8 @@ public class BodyView extends View {
         imageDrawable.draw(canvas);
 
         // Draw the points over the image
-        for(Pair point : points){
-            canvas.drawCircle((float)point.first, (float)point.second, CIRCLE_RADIUS, redBrush);
+        for(float[] point : points){
+            canvas.drawCircle(point[0], point[1], point[2], redBrush);
         }
 
 
@@ -156,17 +188,43 @@ public class BodyView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                float x = event.getX(), y = event.getY();
-                Pair point = new Pair<Float, Float>(x,y);
-                points.add(point);
 
-                // Force redraw
-                invalidate();
+                current_point[0] = event.getX();
+                current_point[1] = event.getY();
+
+                intensitySelectionDialog.show();
+
+
+//                float x = event.getX(), y = event.getY();
+//                Pair point = new Pair<Float, Float>(x,y);
+//                points.add(point);
+//
+//                // Force redraw
+//                invalidate();
 
                 break;
 
 
         }
         return true;
+    }
+
+    // When intensity chosen from dialog
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+
+        switch (which){
+            case 0:
+                current_point[2] = CIRCLE_SMALL;
+                break;
+            case 1:
+                current_point[2] = CIRCLE_MEDIUM;
+                break;
+            case 2:
+                current_point[2] = CIRCLE_LARGE;
+                break;
+        }
+
+        addPoint(current_point[0], current_point[1], current_point[2]);
     }
 }
