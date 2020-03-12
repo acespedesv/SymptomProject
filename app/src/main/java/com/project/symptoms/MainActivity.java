@@ -2,11 +2,7 @@ package com.project.symptoms;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -42,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Setup the flip button
-        ImageButton flipButton = (ImageButton) findViewById(R.id.flip_button);
+        ImageButton flipButton = findViewById(R.id.flip_button);
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
