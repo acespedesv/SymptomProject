@@ -3,6 +3,7 @@ package com.project.symptoms;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -14,28 +15,26 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     BodyView bodyView;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        init();
 
+    }
+
+    private void init(){
         bodyView = findViewById(R.id.bodyView);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type","None");
         Toast.makeText(this,"Welcome "+body, Toast.LENGTH_SHORT).show();
 
-        if(body.equals("male")){
-            bodyView.setBodyType(BodyView.BodyType.MALE);
-
-        }
-        else if(body.equals("female")){
-            bodyView.setBodyType(BodyView.BodyType.FEMALE);
-        }
-        else{
-            // Handle
-        }
+        if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
+        else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
 
         // Setup the flip button
         ImageButton flipButton = findViewById(R.id.flip_button);
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 bodyView.flip();
             }
         });
-
     }
 
     @Override
