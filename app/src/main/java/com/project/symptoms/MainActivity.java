@@ -1,5 +1,6 @@
 package com.project.symptoms;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,10 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        CalendarFragment.OnFragmentInteractionListener,
+        BodyFragment.OnFragmentInteractionListener,
+        MainMenuFragment.OnFragmentInteractionListener {
 
     BodyView bodyView;
     Toolbar toolbar;
@@ -66,5 +70,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
