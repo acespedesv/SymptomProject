@@ -48,11 +48,13 @@
             android:layout_marginTop="@dimen/fab_margin"
             android:gravity="center">
 
-            <TextView
+            <EditText
                 android:id="@+id/date_pressure"
-                android:padding="@dimen/text_view_padding"
-                android:background="@drawable/text_views_style"
-                android:layout_width="@dimen/text_view_width"
+                android:autofillHints="@string/sample_date"
+                android:inputType="date"
+                android:padding="@dimen/edit_text_padding"
+                android:background="@drawable/edit_text_style"
+                android:layout_width="@dimen/edit_text_width"
                 android:layout_height="wrap_content"
                 android:text="@string/sample_date"
                 android:textAlignment="center"
@@ -76,11 +78,13 @@
             android:layout_marginTop="@dimen/fab_margin"
             android:gravity="center">
 
-            <TextView
+            <EditText
                 android:id="@+id/hour_pressure"
-                android:background="@drawable/text_views_style"
-                android:padding="@dimen/text_view_padding"
-                android:layout_width="@dimen/text_view_width"
+                android:inputType="date"
+                android:autofillHints="@string/sample_hour"
+                android:background="@drawable/edit_text_style"
+                android:padding="@dimen/edit_text_padding"
+                android:layout_width="@dimen/edit_text_width"
                 android:layout_height="wrap_content"
                 android:text="@string/sample_hour"
                 android:textAlignment="center"
