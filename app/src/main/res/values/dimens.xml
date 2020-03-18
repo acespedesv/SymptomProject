@@ -1,6 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="glucose_image_width">300dp</dimen>
-    <dimen name="glucose_image_height">300dp</dimen>
+    <dimen name="blood_pressure_image_width">300dp</dimen>
+    <dimen name="blood_pressure_image_height">300dp</dimen>
     <dimen name="button_width">180dp</dimen>
+    <dimen name="text_view_padding">5dp</dimen>
+    <dimen name="text_view_width">250dp</dimen>
 </resources>
