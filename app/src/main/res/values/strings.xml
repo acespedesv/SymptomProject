@@ -7,4 +7,6 @@
     <string name="sample_date">Miércoles 15 de Febrero</string>
     <string name="sample_hour">21:00</string>
     <string name="save_button_text">Guardar</string>
+    <string name="sample_pressure_diastolic_value">140</string>
+    <string name="sample_pressure_sistolic_value">90</string>
 </resources>
