@@ -16,16 +16,18 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/blood_pressure_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_blood_pressure_icon"
-            android:contentDescription="@string/presion_button" />
+            android:contentDescription="@string/blood_pressure_button" />
 
         <TextView
+            android:id="@+id/blood_pressure_text"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/presion_button"
+            android:text="@string/blood_pressure_button"
             android:textAlignment="center"
             android:textColor="@color/colorMainWhite"
             android:textSize="18sp" />
@@ -33,6 +35,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/calendar_icon"
         android:src="@drawable/ic_history"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -47,19 +50,21 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/glucose_text"
             android:layout_width="100dp"
             android:textAlignment="center"
             android:gravity="center"
             android:layout_height="match_parent"
-            android:text="@string/glucosa_button"
+            android:text="@string/glucose_button"
             android:textColor="@color/colorMainWhite"
             android:textSize="18sp" />
 
         <ImageView
+            android:id="@+id/glucose_icon"
             android:src="@drawable/ic_glucose_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:contentDescription="@string/presion_button" />
+            android:contentDescription="@string/glucose_button" />
 
     </LinearLayout>
 
