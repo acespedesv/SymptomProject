@@ -5,7 +5,7 @@
     android:layout_height="50dp"
     android:gravity="center"
     android:orientation="horizontal"
-    android:background="@color/colorDarkBlue"
+    android:background="@drawable/main_menu_style"
     tools:context=".MainMenuFragment">
 
     <LinearLayout
