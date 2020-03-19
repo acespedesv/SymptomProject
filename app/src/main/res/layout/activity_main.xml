@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <include layout="@layout/action_bar"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <fragment
+            android:id="@+id/calendar_fragment"
+            android:name="com.project.symptoms.CalendarFragment"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_calendar" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <fragment
+            android:id="@+id/body_fragment"
+            android:name="com.project.symptoms.BodyFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:layout_marginTop="15dp"
+            tools:layout="@layout/fragment_body" />
 
-    <include layout="@layout/content_main" />
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:name="com.project.symptoms.MainMenuFragment"
+            tools:layout="@layout/fragment_main_menu"
+            android:id="@+id/fragment_main_menu" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
