@@ -1,15 +1,11 @@
 package com.project.symptoms;
 
-import android.app.Activity;
-import android.app.Presentation;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
@@ -30,7 +26,7 @@ public class BodySelection extends FragmentActivity{
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor =  prefs.edit();
                 editor.putString("body_type", "female");
-                editor.commit();
+                editor.apply();
 
                 Intent intent = new Intent(BodySelection.this, MainActivity.class);
                 startActivity(intent);
@@ -43,7 +39,7 @@ public class BodySelection extends FragmentActivity{
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor =  prefs.edit();
                 editor.putString("body_type", "male");
-                editor.commit();
+                editor.apply();
 
                 Intent intent = new Intent(BodySelection.this, MainActivity.class);
                 startActivity(intent);

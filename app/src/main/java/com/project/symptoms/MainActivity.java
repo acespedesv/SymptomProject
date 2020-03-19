@@ -1,9 +1,7 @@
 package com.project.symptoms;
 
+import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,41 +13,41 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        CalendarFragment.OnFragmentInteractionListener,
+        BodyFragment.OnFragmentInteractionListener,
+        MainMenuFragment.OnFragmentInteractionListener {
 
     BodyView bodyView;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        init();
 
+    }
+
+    private void init(){
         bodyView = findViewById(R.id.bodyView);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type","None");
         Toast.makeText(this,"Welcome "+body, Toast.LENGTH_SHORT).show();
 
-        if(body.equals("male")){
-            bodyView.setBodyType(BodyView.BodyType.MALE);
-
-        }
-        else if(body.equals("female")){
-            bodyView.setBodyType(BodyView.BodyType.FEMALE);
-        }
-        else{
-            // Handle
-        }
+        if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
+        else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
 
         // Setup the flip button
-        ImageButton flipButton = (ImageButton) findViewById(R.id.flip_button);
+        ImageButton flipButton = findViewById(R.id.flip_button);
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 bodyView.flip();
             }
         });
-
     }
 
     @Override
@@ -72,5 +70,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -3,15 +3,11 @@ package com.project.symptoms;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -74,13 +70,8 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
         init();
     }
 
-    public BodyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void addPoint(float x, float y, float radius){
-        float point[] = {x,y,radius};
+        float[] point = {x, y, radius};
         points.add(point);
         invalidate();
     }
@@ -113,20 +104,10 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
         int targetImageResId = R.drawable.img_male_front;// Default value
 
         if(currentBodyType == BodyType.FEMALE){
-            if(currentState == State.FRONT){
-                targetImageResId = R.drawable.img_female_front;
-            }
-            else{
-                targetImageResId = R.drawable.img_female_back;
-            }
+            targetImageResId = (currentState == State.FRONT) ? R.drawable.img_female_front : R.drawable.img_female_back;
         }
         else if(currentBodyType == BodyType.MALE){
-            if(currentState == State.FRONT){
-                targetImageResId = R.drawable.img_male_front;
-            }
-            else{
-                targetImageResId = R.drawable.img_male_back;
-            }
+            targetImageResId = (currentState == State.FRONT) ? R.drawable.img_male_front : R.drawable.img_male_back;
         }
 
         imageDrawable = ResourcesCompat.getDrawable(getResources(), targetImageResId, null);
@@ -186,13 +167,11 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            current_point[0] = event.getX();
+            current_point[1] = event.getY();
 
-                current_point[0] = event.getX();
-                current_point[1] = event.getY();
-
-                intensitySelectionDialog.show();
+            intensitySelectionDialog.show();
 
 
 //                float x = event.getX(), y = event.getY();
@@ -201,10 +180,6 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
 //
 //                // Force redraw
 //                invalidate();
-
-                break;
-
-
         }
         return true;
     }
