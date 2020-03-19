@@ -1,6 +1,7 @@
 package com.project.symptoms;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class BloodPressureForm extends AppCompatActivity {
+public class BloodPressureForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
     protected Toolbar toolbar;
     protected Button saveButton;
@@ -46,4 +47,8 @@ public class BloodPressureForm extends AppCompatActivity {
         startActivity(mainActivityIntent);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

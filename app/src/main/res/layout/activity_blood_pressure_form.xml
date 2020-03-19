@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".BloodPressureForm">
 
-    <!--TODO: Include toolbar-->
-
     <include layout="@layout/content_blood_pressure_form" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

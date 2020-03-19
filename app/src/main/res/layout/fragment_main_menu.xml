@@ -23,6 +23,7 @@
             android:contentDescription="@string/blood_pressure_button" />
 
         <TextView
+            android:fontFamily="@font/montserrat"
             android:id="@+id/blood_pressure_text"
             android:layout_width="100dp"
             android:layout_height="match_parent"
@@ -30,7 +31,7 @@
             android:text="@string/blood_pressure_button"
             android:textAlignment="center"
             android:textColor="@color/colorMainWhite"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -40,7 +41,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_weight="1"
-        android:contentDescription="@string/history_button" />
+        android:contentDescription="@string/history_button"
+        android:tint="@color/colorMainWhite"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -50,6 +52,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:fontFamily="@font/montserrat"
             android:id="@+id/glucose_text"
             android:layout_width="100dp"
             android:textAlignment="center"
@@ -57,7 +60,7 @@
             android:layout_height="match_parent"
             android:text="@string/glucose_button"
             android:textColor="@color/colorMainWhite"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/glucose_icon"
