@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements
         else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
 
         // Setup the flip button
-        ImageButton flipButton = findViewById(R.id.flip_button);
+        ImageView flipButton = findViewById(R.id.flip_button);
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
