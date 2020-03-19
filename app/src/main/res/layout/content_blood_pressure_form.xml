@@ -41,71 +41,46 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="@dimen/fab_margin"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/date_pressure"
-                android:padding="@dimen/edit_text_padding"
-                android:background="@drawable/edit_text_style"
                 android:layout_width="@dimen/edit_text_width"
                 android:layout_height="wrap_content"
+                android:background="@drawable/text_view_style"
+                android:padding="@dimen/edit_text_padding"
                 android:text="@string/sample_date"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:drawableEnd="@drawable/ic_flip"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:tint="@color/colorMainGreen"
-                android:src="@drawable/ic_flip">
-
-            </ImageView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:gravity="center">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fab_margin"/>
 
             <TextView
                 android:id="@+id/hour_pressure"
-                android:background="@drawable/edit_text_style"
+                android:background="@drawable/text_view_style"
                 android:padding="@dimen/edit_text_padding"
                 android:layout_width="@dimen/edit_text_width"
                 android:layout_height="wrap_content"
                 android:text="@string/sample_hour"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:drawableEnd="@drawable/ic_flip"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:tint="@color/colorMainGreen"
-                android:src="@drawable/ic_flip">
-
-            </ImageView>
+            <Button
+                android:background="@drawable/save_button"
+                android:id="@+id/save_button"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:text="@string/save_button_text"/>
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:background="@drawable/save_button"
-        android:id="@+id/save_button"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/save_button_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
