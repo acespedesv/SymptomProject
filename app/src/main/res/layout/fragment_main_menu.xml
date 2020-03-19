@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_presionicon"
+            android:src="@drawable/ic_blood_pressure_icon"
             android:contentDescription="@string/presion_button" />
 
         <TextView
@@ -56,7 +56,7 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:src="@drawable/ic_glucosaicon"
+            android:src="@drawable/ic_glucose_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@string/presion_button" />

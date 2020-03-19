@@ -39,7 +39,7 @@ public class BodySelection extends FragmentActivity{
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor =  prefs.edit();
                 editor.putString("body_type", "male");
-                editor.commit();
+                editor.apply();
 
                 Intent intent = new Intent(BodySelection.this, MainActivity.class);
                 startActivity(intent);

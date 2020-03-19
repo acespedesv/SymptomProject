@@ -5,8 +5,8 @@
     <string name="action_about">Acerca de</string>
     <string name="action_notifications">Notificaciones</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="presion_button">Presión Sanguínea</string>
-    <string name="glucosa_button">Glucosa</string>
+    <string name="blood_pressure_button">Presión Sanguínea</string>
+    <string name="glucose_button">Glucosa</string>
     <string name="history_button">Historial</string>
     <string name="date_sample">Miércoles 19, Febrero</string>
 </resources>
