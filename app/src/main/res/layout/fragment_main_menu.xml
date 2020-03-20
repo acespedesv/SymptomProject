@@ -8,67 +8,42 @@
     android:background="@drawable/main_menu_style"
     tools:context=".MainMenuFragment">
 
-    <LinearLayout
+    <TextView
+        android:layout_marginStart="@dimen/fab_margin"
+        android:fontFamily="@font/montserrat"
+        android:layout_weight="1"
+        android:id="@+id/blood_pressure_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/blood_pressure_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_blood_pressure_icon"
-            android:contentDescription="@string/blood_pressure_button" />
-
-        <TextView
-            android:fontFamily="@font/montserrat"
-            android:id="@+id/blood_pressure_text"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/blood_pressure_button"
-            android:textAlignment="center"
-            android:textColor="@color/colorMainWhite"
-            android:textSize="15sp" />
-
-    </LinearLayout>
+        android:text="@string/blood_pressure_button"
+        android:textAlignment="center"
+        android:textColor="@color/colorMainWhite"
+        android:textSize="15sp"
+        android:drawableStart="@drawable/ic_blood_pressure_icon" />
 
     <ImageView
         android:id="@+id/calendar_icon"
         android:src="@drawable/ic_history"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="10dp"
         android:layout_weight="1"
         android:contentDescription="@string/history_button"
         android:tint="@color/colorMainWhite"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <TextView
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:fontFamily="@font/montserrat"
+        android:id="@+id/glucose_text"
+        android:layout_width="100dp"
+        android:textAlignment="center"
         android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:fontFamily="@font/montserrat"
-            android:id="@+id/glucose_text"
-            android:layout_width="100dp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_height="match_parent"
-            android:text="@string/glucose_button"
-            android:textColor="@color/colorMainWhite"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/glucose_icon"
-            android:src="@drawable/ic_glucose_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/glucose_button" />
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:text="@string/glucose_button"
+        android:textColor="@color/colorMainWhite"
+        android:textSize="15sp"
+        android:layout_weight="1"
+        android:drawableEnd="@drawable/ic_glucose_icon"/>
 
 </LinearLayout>

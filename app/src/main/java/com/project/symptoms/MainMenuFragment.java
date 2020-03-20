@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -24,7 +25,8 @@ import android.widget.Toast;
  */
 public class MainMenuFragment extends Fragment {
 
-    private ImageView glucoseButton, bloodPressureButton, historyButton;
+    private TextView glucoseTextView, bloodPressureTextView;
+    private ImageView historyButton;
     private View rootFragmentView;
     private OnFragmentInteractionListener mListener;
 
@@ -39,18 +41,18 @@ public class MainMenuFragment extends Fragment {
 
     private void initFragmentUI() {
         // Get all menu options
-        bloodPressureButton = rootFragmentView.findViewById(R.id.blood_pressure_icon);
-        glucoseButton = rootFragmentView.findViewById(R.id.glucose_icon);
+        bloodPressureTextView = rootFragmentView.findViewById(R.id.blood_pressure_text);
+        glucoseTextView = rootFragmentView.findViewById(R.id.glucose_text);
         historyButton = rootFragmentView.findViewById(R.id.calendar_icon);
 
         // Set event listeners
-        bloodPressureButton.setOnClickListener(new View.OnClickListener() {
+        bloodPressureTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openBloodPressureFormActivity();
             }
         });
-        glucoseButton.setOnClickListener(new View.OnClickListener() {
+        glucoseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGlucoseFormActivity();
