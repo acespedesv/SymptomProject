@@ -3,10 +3,10 @@
 
     <item>
         <shape android:shape="oval">
-            <stroke android:width="4dp" android:color="#025E06"/>
             <size android:width="100dp" android:height="100dp"/>
+<!--            <solid android:color="@color/colorMainGreen"/>-->
             <gradient android:angle="90" android:startColor="@color/colorMainGreen"
-                android:endColor="#025E06"/> <!--TODO: add this color to xml-->
+                android:endColor="#33B83D"/> <!--TODO: add this color to xml-->
         </shape>
     </item>
 
