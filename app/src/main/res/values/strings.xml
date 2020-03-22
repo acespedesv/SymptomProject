@@ -17,4 +17,5 @@
     <string name="glucose_button">Glucosa</string>
     <string name="history_button">Historial</string>
     <string name="date_sample">Miércoles 19, Febrero</string>
+    <string name="calendar_day_sample">02</string>
 </resources>

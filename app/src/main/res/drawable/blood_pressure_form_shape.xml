@@ -6,7 +6,7 @@
             <size android:width="100dp" android:height="100dp"/>
 <!--            <solid android:color="@color/colorMainGreen"/>-->
             <gradient android:angle="90" android:startColor="@color/colorMainGreen"
-                android:endColor="#33B83D"/> <!--TODO: add this color to xml-->
+                android:endColor="#12AC21"/> <!--TODO: add this color to xml-->
         </shape>
     </item>
 
