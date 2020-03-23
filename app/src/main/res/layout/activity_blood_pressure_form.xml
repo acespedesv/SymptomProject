@@ -126,7 +126,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/save_button"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/save_button_text" />
+                android:text="@string/save_button_text"
+                android:textColor="@color/colorMainWhite"/>
 
         </LinearLayout>
 

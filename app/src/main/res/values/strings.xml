@@ -17,4 +17,6 @@
     <string name="glucose_button">Glucosa</string>
     <string name="history_button">Historial</string>
     <string name="date_sample">Miércoles 19, Febrero</string>
+    <string name="bottom_sheet_title">Defina el tamaño del área de dolor</string>
+    <string name="done_text">Listo</string>
 </resources>

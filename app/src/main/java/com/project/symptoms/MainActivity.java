@@ -7,11 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class MainActivity extends AppCompatActivity implements
         CalendarFragment.OnFragmentInteractionListener,
@@ -48,6 +52,17 @@ public class MainActivity extends AppCompatActivity implements
                 bodyView.flip();
             }
         });
+
+        // Set up bottom sheet
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+        View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
+                R.layout.layout_bottom_sheet_seekbar,
+                (LinearLayout)findViewById(R.id.bottomSheetContainer)
+        );
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+
+
     }
 
     @Override

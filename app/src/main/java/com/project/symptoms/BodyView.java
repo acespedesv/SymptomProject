@@ -8,12 +8,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.AndroidViewModel;
 
 import java.util.ArrayList;
 
@@ -21,6 +27,9 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
 
     // Used to draw the circles over the image
     private Paint redBrush;
+
+    // Max seekBar value
+    private int MAX_SEEKBAR_VALUE = 100;
 
     // Possible sizes to use
     private float CIRCLE_SMALL = 30f;
@@ -119,12 +128,9 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
      * Update the {@link #currentBodyType} attribute
      */
     public void setBodyType(BodyType newBodyType){
-
         currentBodyType = newBodyType;
         updateImage();
-
     }
-
 
     /**
      * Update the {@link #currentState} attribute
@@ -158,9 +164,7 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
             canvas.drawCircle(point[0], point[1], point[2], redBrush);
         }
 
-
     }
-
 
     /**
      * When the image is touched
@@ -168,27 +172,36 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            current_point[0] = event.getX();
-            current_point[1] = event.getY();
+            float xPos = event.getX(), yPos = event.getY();
+            current_point[0] = xPos;
+            current_point[1] = yPos;
 
-            intensitySelectionDialog.show();
+            // Let user choose circle size
+            chooseCircleSize(xPos, yPos);
 
-
-//                float x = event.getX(), y = event.getY();
-//                Pair point = new Pair<Float, Float>(x,y);
-//                points.add(point);
-//
-//                // Force redraw
-//                invalidate();
         }
+
         return true;
+    }
+
+    private void chooseCircleSize(float xPos, float yPos) {
+        // Define seekBar and set properties
+        SeekBar circleSizeSeekBar = new SeekBar(getContext());
+
+
+
+        LinearLayout mainLinearLayout = findViewById(R.id.main_linear_layout);
+        mainLinearLayout.addView(circleSizeSeekBar);
+
+        // Hide main_menu_fragment
+
     }
 
     // When intensity chosen from dialog
     @Override
-    public void onClick(DialogInterface dialog, int which) {
+    public void onClick(DialogInterface dialog, int option) {
 
-        switch (which){
+        switch (option){
             case 0:
                 current_point[2] = CIRCLE_SMALL;
                 break;
