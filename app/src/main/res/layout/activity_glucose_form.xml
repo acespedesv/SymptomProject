@@ -65,7 +65,9 @@
                 android:inputType="number"
                 android:textColor="@color/colorMainWhite"
                 android:textSize="60sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:cursorVisible="false"
+                android:textColorHint="@color/colorMainWhite"/>
 
         </RelativeLayout>
 
@@ -114,7 +116,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/save_button"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/save_button_text" />
+                android:text="@string/save_button_text"
+                android:textStyle="bold"
+                android:textColor="@color/colorMainWhite"/>
 
         </LinearLayout>
 

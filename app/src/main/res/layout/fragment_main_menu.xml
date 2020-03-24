@@ -18,7 +18,7 @@
         android:gravity="center"
         android:text="@string/blood_pressure_button"
         android:textColor="@color/colorMainWhite"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:drawableStart="@drawable/ic_blood_pressure_icon"/>
 
     <ImageView
@@ -27,7 +27,7 @@
         android:src="@drawable/ic_history"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="12dp"
+        android:padding="10dp"
         android:contentDescription="@string/history_button"
         android:tint="@color/colorMainWhite"/>
 
@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         android:text="@string/glucose_button"
         android:textColor="@color/colorMainWhite"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:layout_weight="1"
         android:drawableEnd="@drawable/ic_glucose_icon"/>
 
