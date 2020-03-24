@@ -187,12 +187,17 @@ public class BodyView extends View {
         seekBar.setProgress(MIN_SEEKBAR_VALUE);
 
         // Add initial guide circle
-        addPoint(xPos, yPos, Integer.valueOf(MIN_SEEKBAR_VALUE).floatValue());
+        addTmpPoint(xPos, yPos, Integer.valueOf(MIN_SEEKBAR_VALUE).floatValue());
 
         // Listen to seek bar changes made by user
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+                // Avoid circles of size 0
+                if(i == 0) i += MIN_SEEKBAR_VALUE;
+
+                // Clean and add new tmpPoint
                 tmpPoint = null;
                 addTmpPoint(xPos, yPos, Integer.valueOf(i).floatValue());
             }
