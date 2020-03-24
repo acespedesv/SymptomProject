@@ -35,6 +35,8 @@ public class BodyView extends View {
 
     // The (X,Y) pairs of the points to be drawn over the image
     private ArrayList<float[]> points;
+    // Temporary point that will be drawn several times
+    // whenever user is choosing the size of a new circle
     private float[] tmpPoint = new float[3];
 
     // Used to know the current state in order to change it accordingly
@@ -176,12 +178,15 @@ public class BodyView extends View {
                 R.layout.layout_bottom_sheet_seekbar,
                 (LinearLayout)findViewById(R.id.bottomSheetContainer)
         );
+
         bottomSheetDialog.setContentView(bottomSheetView);
 
+        // Set up seek bar
         final SeekBar seekBar = bottomSheetView.findViewById(R.id.seekBar);
         seekBar.setMax(MAX_SEEKBAR_VALUE);
         seekBar.setProgress(MIN_SEEKBAR_VALUE);
 
+        // Add initial guide circle
         addPoint(xPos, yPos, Integer.valueOf(MIN_SEEKBAR_VALUE).floatValue());
 
         // Listen to seek bar changes made by user
@@ -201,7 +206,7 @@ public class BodyView extends View {
             }
         });
 
-        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setCancelable(false); // Don't allow the user to press back
         bottomSheetDialog.show();
 
         Button doneButton = bottomSheetView.findViewById(R.id.size_done_button);
@@ -211,7 +216,7 @@ public class BodyView extends View {
 
                 // TODO: Save x and y pos from this circle in DB
 
-                // Once the size was chosen then draw that circle and clean the tmp ones
+                // Once the size was chosen draw that circle and clean the tmp one
                 tmpPoint = null;
                 addPoint(xPos, yPos, Integer.valueOf(seekBar.getProgress()).floatValue());
                 bottomSheetDialog.dismiss();
