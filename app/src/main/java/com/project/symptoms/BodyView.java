@@ -35,7 +35,7 @@ public class BodyView extends View {
 
     // The (X,Y) pairs of the points to be drawn over the image
     private ArrayList<float[]> points;
-    private ArrayList<float[]> tmpPoints;
+    private float[] tmpPoint = new float[3];
 
     // Used to know the current state in order to change it accordingly
     private State currentState;
@@ -67,8 +67,10 @@ public class BodyView extends View {
     }
 
     private void addTmpPoint(float x, float y, float radius){
-        float[] point = {x, y, radius};
-        tmpPoints.add(point);
+        tmpPoint = new float[3];
+        tmpPoint[0] = x;
+        tmpPoint[1] = y;
+        tmpPoint[2] = radius;
         invalidate();
     }
 
@@ -79,16 +81,13 @@ public class BodyView extends View {
         redBrush.setColor(Color.RED);
 
         points = new ArrayList<>();
-        tmpPoints = new ArrayList<>();
 
         imageDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.img_male_front, null);
 
         // Default state
         setBodyType(BodyType.MALE);
         setState(State.FRONT);
-
     }
-
 
     /**
      * Update {@link #imageDrawable} image to match the {@link #currentBodyType} and {@link #currentState}
@@ -144,12 +143,10 @@ public class BodyView extends View {
         imageDrawable.setBounds(0,0,getWidth(),(int)(getHeight()*0.75f));
         imageDrawable.draw(canvas);
 
-        // Draw the temporary points over the image
-        for(float[] tmpPoint : tmpPoints){
-            canvas.drawCircle(tmpPoint[0], tmpPoint[1], tmpPoint[2], redBrush);
-        }
+        // Draw the temporary point over the image
+        if(tmpPoint != null) canvas.drawCircle(tmpPoint[0], tmpPoint[1], tmpPoint[2], redBrush);
 
-        // Draw the points over the image
+        // Draw the final points over the image
         for(float[] point : points){
             canvas.drawCircle(point[0], point[1], point[2], redBrush);
         }
@@ -171,7 +168,7 @@ public class BodyView extends View {
 
     private void chooseCircleSize(final float xPos, final float yPos) {
 
-        // Set up bottom sheet
+        // Set up bottom sheet dialog
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
 
         // Inflate bottom sheet view to add it to the dialog
@@ -181,25 +178,23 @@ public class BodyView extends View {
         );
         bottomSheetDialog.setContentView(bottomSheetView);
 
-        // Listen to seek bar changes made by user
         final SeekBar seekBar = bottomSheetView.findViewById(R.id.seekBar);
         seekBar.setMax(MAX_SEEKBAR_VALUE);
         seekBar.setProgress(MIN_SEEKBAR_VALUE);
 
         addPoint(xPos, yPos, Integer.valueOf(MIN_SEEKBAR_VALUE).floatValue());
 
+        // Listen to seek bar changes made by user
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                tmpPoints.clear();
+                tmpPoint = null;
                 addTmpPoint(xPos, yPos, Integer.valueOf(i).floatValue());
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -213,8 +208,11 @@ public class BodyView extends View {
         doneButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                tmpPoints.clear();
+
+                // TODO: Save x and y pos from this circle in DB
+
                 // Once the size was chosen then draw that circle and clean the tmp ones
+                tmpPoint = null;
                 addPoint(xPos, yPos, Integer.valueOf(seekBar.getProgress()).floatValue());
                 bottomSheetDialog.dismiss();
             }
