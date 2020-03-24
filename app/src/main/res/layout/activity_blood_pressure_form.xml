@@ -124,7 +124,7 @@
                 android:id="@+id/save_button"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="wrap_content"
-                android:background="@drawable/save_button"
+                android:background="@drawable/filled_button"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/save_button_text"
                 android:textColor="@color/colorMainWhite"/>

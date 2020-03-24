@@ -53,15 +53,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        // Set up bottom sheet
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
-        View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
-                R.layout.layout_bottom_sheet_seekbar,
-                (LinearLayout)findViewById(R.id.bottomSheetContainer)
-        );
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
-
 
     }
 

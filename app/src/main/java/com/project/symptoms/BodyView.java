@@ -2,7 +2,6 @@ package com.project.symptoms;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,58 +10,40 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.AndroidViewModel;
 
 import java.util.ArrayList;
 
-public class BodyView extends View implements AlertDialog.OnClickListener{
+public class BodyView extends View {
 
     // Used to draw the circles over the image
     private Paint redBrush;
 
-    // Max seekBar value
+    // Max/Min seekBar value that represents circle sizes range
     private int MAX_SEEKBAR_VALUE = 100;
-
-    // Possible sizes to use
-    private float CIRCLE_SMALL = 30f;
-    private float CIRCLE_MEDIUM = 50f;
-    private float CIRCLE_LARGE = 70f;
-
-    // Options for the user to choose
-    final String intensityOptions[] = {"Leve","Medio","Fuerte"};
-
-    // The dialog to ask the intesity of the pain
-    AlertDialog intensitySelectionDialog;
-
-    // The actual size to use when drawing circles
-    private float CIRCLE_RADIUS = CIRCLE_SMALL;
+    private int MIN_SEEKBAR_VALUE = 10;
 
     // The image to draw on the screen
     private Drawable imageDrawable;
 
     // The (X,Y) pairs of the points to be drawn over the image
     private ArrayList<float[]> points;
-    private float[] current_point = {0,0,0}; //X, Y, Radius
-
-
+    private ArrayList<float[]> tmpPoints;
 
     // Used to know the current state in order to change it accordingly
     private State currentState;
     private BodyType currentBodyType;
 
-
     // Enums to limit the options to use
     public enum BodyType{MALE, FEMALE};
     public enum State{FRONT, BACK};
-
 
     public BodyView(Context context) {
         super(context);
@@ -85,22 +66,26 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
         invalidate();
     }
 
+    private void addTmpPoint(float x, float y, float radius){
+        float[] point = {x, y, radius};
+        tmpPoints.add(point);
+        invalidate();
+    }
+
     private void init(){
         redBrush = new Paint();
+        redBrush.setAntiAlias(false);
+        redBrush.setStyle(Paint.Style.FILL);
         redBrush.setColor(Color.RED);
+
         points = new ArrayList<>();
+        tmpPoints = new ArrayList<>();
 
         imageDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.img_male_front, null);
 
         // Default state
         setBodyType(BodyType.MALE);
         setState(State.FRONT);
-
-        // Setup the intensity selection dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Seleccione la intensidad del dolor")
-                .setItems(intensityOptions, this);
-        intensitySelectionDialog = builder.create();
 
     }
 
@@ -154,10 +139,15 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
      */
     @Override
     protected void onDraw(Canvas canvas) {
-
+        super.onDraw(canvas);
         // Set the dimensions to draw the image
         imageDrawable.setBounds(0,0,getWidth(),(int)(getHeight()*0.75f));
         imageDrawable.draw(canvas);
+
+        // Draw the temporary points over the image
+        for(float[] tmpPoint : tmpPoints){
+            canvas.drawCircle(tmpPoint[0], tmpPoint[1], tmpPoint[2], redBrush);
+        }
 
         // Draw the points over the image
         for(float[] point : points){
@@ -173,46 +163,62 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float xPos = event.getX(), yPos = event.getY();
-            current_point[0] = xPos;
-            current_point[1] = yPos;
-
             // Let user choose circle size
             chooseCircleSize(xPos, yPos);
-
         }
-
         return true;
     }
 
-    private void chooseCircleSize(float xPos, float yPos) {
-        // Define seekBar and set properties
-        SeekBar circleSizeSeekBar = new SeekBar(getContext());
+    private void chooseCircleSize(final float xPos, final float yPos) {
 
+        // Set up bottom sheet
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
 
+        // Inflate bottom sheet view to add it to the dialog
+        View bottomSheetView = LayoutInflater.from(getContext()).inflate(
+                R.layout.layout_bottom_sheet_seekbar,
+                (LinearLayout)findViewById(R.id.bottomSheetContainer)
+        );
+        bottomSheetDialog.setContentView(bottomSheetView);
 
-        LinearLayout mainLinearLayout = findViewById(R.id.main_linear_layout);
-        mainLinearLayout.addView(circleSizeSeekBar);
+        // Listen to seek bar changes made by user
+        final SeekBar seekBar = bottomSheetView.findViewById(R.id.seekBar);
+        seekBar.setMax(MAX_SEEKBAR_VALUE);
+        seekBar.setProgress(MIN_SEEKBAR_VALUE);
 
-        // Hide main_menu_fragment
+        addPoint(xPos, yPos, Integer.valueOf(MIN_SEEKBAR_VALUE).floatValue());
 
-    }
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tmpPoints.clear();
+                addTmpPoint(xPos, yPos, Integer.valueOf(i).floatValue());
+            }
 
-    // When intensity chosen from dialog
-    @Override
-    public void onClick(DialogInterface dialog, int option) {
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
-        switch (option){
-            case 0:
-                current_point[2] = CIRCLE_SMALL;
-                break;
-            case 1:
-                current_point[2] = CIRCLE_MEDIUM;
-                break;
-            case 2:
-                current_point[2] = CIRCLE_LARGE;
-                break;
-        }
+            }
 
-        addPoint(current_point[0], current_point[1], current_point[2]);
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.show();
+
+        Button doneButton = bottomSheetView.findViewById(R.id.size_done_button);
+        doneButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tmpPoints.clear();
+                // Once the size was chosen then draw that circle and clean the tmp ones
+                addPoint(xPos, yPos, Integer.valueOf(seekBar.getProgress()).floatValue());
+                bottomSheetDialog.dismiss();
+            }
+        });
+
     }
 }

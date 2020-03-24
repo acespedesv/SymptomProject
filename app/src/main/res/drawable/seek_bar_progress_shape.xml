@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/progressshape" >
+        android:id="@+id/progress_shape" >
         <clip>
             <shape
                 android:shape="rectangle" >
                 <size android:height="5dp"/>
                 <corners
                     android:radius="5dp" />
-                <solid android:color="@color/colorMainOrange"/>
+                <solid android:color="@color/colorMainGreen"/>
             </shape>
         </clip>
     </item>
 
     <item>
         <shape>
-            <corners
-                android:radius="5dp" />
-            <solid android:color="#BEFDB98E"/>
+            <solid android:color="#BEA6FD8E"/>
 <!--            <gradient-->
 <!--                android:angle="270"-->
 <!--                android:startColor="#D86424"-->
