@@ -7,10 +7,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -24,7 +26,7 @@ import android.widget.Toast;
  */
 public class MainMenuFragment extends Fragment {
 
-    private ImageView glucoseButton, bloodPressureButton, historyButton;
+    private View glucoseButton, bloodPressureButton, historyButton;
     private View rootFragmentView;
     private OnFragmentInteractionListener mListener;
 
@@ -69,11 +71,11 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void openGlucoseFormActivity() {
-        //TODO: Implement this
+        Intent bloodPressureActivity = new Intent(getContext(), GlucoseForm.class);
+        startActivity(bloodPressureActivity);
     }
 
     private void openBloodPressureFormActivity(){
-        Toast.makeText(getContext(), "Pressed", Toast.LENGTH_SHORT).show();
         Intent bloodPressureActivity = new Intent(getContext(), BloodPressureForm.class);
         startActivity(bloodPressureActivity);
     }

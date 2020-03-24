@@ -10,30 +10,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+<!--        GLUCOSE FORM-->
+        <activity
+            android:name=".GlucoseForm"
+            android:label="@string/title_activity_glucose_form"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+
+<!--        BLOOD PRESSURE FORM -->
         <activity
             android:name=".BloodPressureForm"
-            android:label="@string/title_activity_glucose_form"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/blood_pressure_form_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+<!--        MAIN ACTIVITY-->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <!--TODO: Enable Google indexing properly-->
+
+                <!-- TODO: Enable Google indexing properly -->
                 <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+
+<!--        BODY SELECTION ACTIVITY-->
         <activity
             android:name=".BodySelection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-    </application>
 
+
+    </application>
 </manifest>
