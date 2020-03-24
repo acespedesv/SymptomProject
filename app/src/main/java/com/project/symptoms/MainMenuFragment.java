@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 /**
@@ -40,7 +39,7 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void initFragmentUI() {
-        // Get all menu options
+        // Get all menu option views
         bloodPressureTextView = rootFragmentView.findViewById(R.id.blood_pressure_text);
         glucoseTextView = rootFragmentView.findViewById(R.id.glucose_text);
         historyButton = rootFragmentView.findViewById(R.id.calendar_icon);
@@ -71,13 +70,13 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void openGlucoseFormActivity() {
-        //TODO: Implement this
+        Intent glucoseFormActivity = new Intent(getContext(), GlucoseForm.class);
+        startActivity(glucoseFormActivity);
     }
 
     private void openBloodPressureFormActivity(){
-        Toast.makeText(getContext(), "Pressed", Toast.LENGTH_SHORT).show();
-        Intent bloodPressureActivity = new Intent(getContext(), BloodPressureForm.class);
-        startActivity(bloodPressureActivity);
+        Intent bloodPressureFormActivity = new Intent(getContext(), BloodPressureForm.class);
+        startActivity(bloodPressureFormActivity);
     }
 
     @Override

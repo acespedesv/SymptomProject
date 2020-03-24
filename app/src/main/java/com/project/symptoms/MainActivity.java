@@ -1,5 +1,6 @@
 package com.project.symptoms;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.nio.channels.InterruptedByTimeoutException;
 
 public class MainActivity extends AppCompatActivity implements
         CalendarFragment.OnFragmentInteractionListener,
@@ -30,14 +33,23 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private void init(){
+
+    private void launchBodySelection(){
+        startActivity(new Intent(this, BodySelection.class));
+    }
+
+    private void init() {
         bodyView = findViewById(R.id.bodyView);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type","None");
-        Toast.makeText(this,"Welcome "+body, Toast.LENGTH_SHORT).show();
+        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type", "None");
 
+        if (body.equals("None")) {
+            launchBodySelection();
+        }
+
+        // Make the view match the selected body type
         if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
         else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
 
