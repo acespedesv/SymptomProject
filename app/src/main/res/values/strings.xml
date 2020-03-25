@@ -18,4 +18,12 @@
     <string name="glucose_button">Glucosa</string>
     <string name="history_button">Historial</string>
     <string name="date_sample">Miércoles 19, Febrero</string>
+    <string name="proceed">Continuar</string>
+
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+
+    <string name="select_body_message">Deslice y seleccione su cuerpo:</string>
+
+
 </resources>
