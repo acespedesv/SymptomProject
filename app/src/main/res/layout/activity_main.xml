@@ -9,6 +9,7 @@
     <include layout="@layout/action_bar"/>
 
     <LinearLayout
+        android:id="@+id/main_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -38,7 +39,6 @@
             android:name="com.project.symptoms.MainMenuFragment"
             tools:layout="@layout/fragment_main_menu"
             android:id="@+id/fragment_main_menu" />
-
 
     </LinearLayout>
 

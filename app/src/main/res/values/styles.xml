@@ -23,6 +23,14 @@
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">14sp</item>
     </style>
+    
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
     <style name="BodySelectionOption">
         <item name="android:layout_marginRight">20dp</item>
