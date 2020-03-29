@@ -149,8 +149,10 @@ public class BodyView extends View implements AlertDialog.OnClickListener{
     @Override
     protected void onDraw(Canvas canvas) {
 
+        int margin = getWidth()/4;
+
         // Set the dimensions to draw the image
-        imageDrawable.setBounds(0,0,getWidth(),(int)(getHeight()*0.75f));
+        imageDrawable.setBounds(margin,0,3*margin,(int)(getHeight()*0.8f));
         imageDrawable.draw(canvas);
 
         // Draw the points over the image
