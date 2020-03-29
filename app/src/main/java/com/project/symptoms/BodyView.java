@@ -140,9 +140,13 @@ public class BodyView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+      
         super.onDraw(canvas);
+
+        int margin = getWidth()/4;
+      
         // Set the dimensions to draw the image
-        imageDrawable.setBounds(0,0,getWidth(),(int)(getHeight()*0.75f));
+        imageDrawable.setBounds(margin,0,3*margin,(int)(getHeight()*0.8f));
         imageDrawable.draw(canvas);
 
         // Draw the temporary point over the image
