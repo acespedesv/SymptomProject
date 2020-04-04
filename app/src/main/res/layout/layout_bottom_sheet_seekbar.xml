@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_seekbar_background"
+    android:id="@+id/bottomSheetContainer"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="30dp">
+
+    <TextView
+        android:layout_gravity="center"
+        android:padding="@dimen/fab_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bottom_sheet_title"
+        android:textAlignment="center"
+        android:textSize="26sp"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/colorMainGreen"/>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:splitTrack="false"
+        android:progressDrawable="@drawable/seek_bar_progress_shape"
+        android:thumb="@drawable/seek_bar_custom_thumb" />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/done_text"
+        android:fontFamily="@font/montserrat"
+        android:background="@drawable/filled_button"
+        android:textColor="@color/colorMainWhite"
+        android:textSize="16sp"
+        android:id="@+id/size_done_button"/>
+
+</LinearLayout>

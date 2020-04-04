@@ -19,4 +19,10 @@
     <string name="history_button">Historial</string>
     <string name="date_sample">Miércoles 19, Febrero</string>
     <string name="calendar_day_sample">02</string>
+    <string name="bottom_sheet_title">Tamaño del área de dolor</string>
+    <string name="done_text">Listo</string>
+    <string name="proceed">Continuar</string>
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+    <string name="select_body_message">Deslice y seleccione su cuerpo:</string>
 </resources>
