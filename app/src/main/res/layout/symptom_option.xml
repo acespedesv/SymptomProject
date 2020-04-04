@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="120dp"
+    android:layout_height="match_parent"
+    >
+
+
+<!--    CIRCLE-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_play_circle_filled_black_24dp"
+        android:backgroundTint="#AAA"
+        />
+
+<!--    ICON-->
+    <ImageView
+        android:tag="icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:src="@drawable/ic_play_circle_filled_black_24dp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:background="#FFF"
+        android:layout_marginLeft="70dp"
+        />
+
+    <TextView
+        android:tag="label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text="Dolor"
+        />
+</RelativeLayout>
