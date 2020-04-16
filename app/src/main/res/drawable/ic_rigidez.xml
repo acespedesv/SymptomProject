@@ -1,4 +1,14 @@
-<vector android:height="108dp" android:viewportHeight="512"
-    android:viewportWidth="512" android:width="108dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#FF000000" android:pathData="m255.703,0 l-221.703,128v256l221.703,128 221.703,-128v-256zM432.219,136.652 L255.703,238.566 79.188,136.652 255.703,34.742zM64.086,162.68 L240.66,264.621v203.953l-176.574,-101.945zM270.746,468.574v-203.953l176.574,-101.941v203.949zM270.746,468.574"/>
+<vector android:height="92.32674dp" android:viewportHeight="580"
+    android:viewportWidth="678.46" android:width="108dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#2e9ccc" android:pathData="M106.76,106.76m-106.76,0a106.76,106.76 0,1 1,213.52 0a106.76,106.76 0,1 1,-213.52 0"/>
+    <path android:fillColor="#2e9ccc" android:pathData="M203.96,379.23c-67.07,-93.14 -32,-145.67 49.92,-179.52 98.52,-43.95 167.08,-59.9 224.14,-76.49 43.84,-11.65 60.23,1.33 69.05,21.25L547.07,311.25c6.38,109.41 -63.73,92.41 -74.36,42.49L470.76,231c0.69,-6.16 -5.68,-12.14 -18.2,-10.83 -8,1.82 -15.64,2.13 -22.34,3.94 -12.69,3.83 -24.7,11.08 -36.12,21.24 -5.88,12.56 -4.31,22.48 3.19,35.06C417.76,306.16 438.84,346 459.97,388.79c11.73,51.13 8.71,118.61 1.06,191.21L241.14,580l25.49,-62.67 1.06,-72.24Z"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M581.09,375.19c10.94,1 21.93,1.42 32.91,1.32a317,317 0,0 0,-2.1 -39.44,155.86 155.86,0 0,0 36.36,-17.74"
+        android:strokeColor="#48a5bb" android:strokeWidth="12.75"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M574.84,427.63a151.17,151.17 0,0 1,36.64 31.8,235.45 235.45,0 0,0 17.8,-31.62l46.55,21"
+        android:strokeColor="#48a5bb" android:strokeWidth="12.75"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M515.84,486.17a119.92,119.92 0,0 0,17.29 29.18q12.48,-11.4 26,-21.6a2.78,2.78 0,0 1,4.75 0.69q14.78,19.38 29.39,38.86"
+        android:strokeColor="#48a5bb" android:strokeWidth="12.75"/>
 </vector>
