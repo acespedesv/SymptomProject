@@ -116,7 +116,7 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_estres, "Estrés"),
                 new SymptomOption(R.drawable.ic_angustia, "Angustia")
         };
-        optionsList.put("Dermatológico", emocionesDetonantes);
+        optionsList.put("Emociones detonantes", emocionesDetonantes);
 
         SymptomOption sensacionClimatica[] = {
                 new SymptomOption(R.drawable.ic_frio, "Frio"),
