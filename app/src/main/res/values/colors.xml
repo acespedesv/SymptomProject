@@ -11,4 +11,6 @@
     <color name="colorMainWhite">#FFFFFF</color>
     <color name="colorGreyBackground">#AFAFAF</color>
     <color name="colorBlack">#000000</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
