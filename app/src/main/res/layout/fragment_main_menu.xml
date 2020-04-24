@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="@drawable/main_menu_style"
+    tools:context=".MainMenuFragment">
+
+    <TextView
+        android:layout_marginStart="@dimen/fab_margin"
+        android:fontFamily="@font/montserrat"
+        android:layout_weight="1"
+        android:id="@+id/blood_pressure_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/blood_pressure_button"
+        android:textColor="@color/colorMainWhite"
+        android:textSize="18sp"
+        android:drawableStart="@drawable/ic_blood_pressure_icon"/>
+
+    <ImageView
+        android:background="@drawable/history_shape"
+        android:id="@+id/calendar_icon"
+        android:src="@drawable/ic_history"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:contentDescription="@string/history_button"
+        android:tint="@color/colorMainWhite"/>
+
+    <TextView
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:fontFamily="@font/montserrat"
+        android:id="@+id/glucose_text"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:text="@string/glucose_button"
+        android:textColor="@color/colorMainWhite"
+        android:textSize="18sp"
+        android:layout_weight="1"
+        android:drawableEnd="@drawable/ic_glucose_icon"/>
+
+</LinearLayout>

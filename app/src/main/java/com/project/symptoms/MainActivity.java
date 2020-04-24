@@ -1,34 +1,64 @@
 package com.project.symptoms;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        CalendarFragment.OnFragmentInteractionListener,
+        BodyFragment.OnFragmentInteractionListener,
+        MainMenuFragment.OnFragmentInteractionListener {
+
+    BodyView bodyView;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        init();
+
+    }
+
+
+    private void launchBodySelection(){
+        startActivity(new Intent(this, BodySelection.class));
+    }
+
+    private void init() {
+        bodyView = findViewById(R.id.bodyView);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type", "None");
+
+        if (body.equals("None")) {
+            launchBodySelection();
+        }
+
+        // Make the view match the selected body type
+        if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
+        else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
+
+        // Setup the flip button
+        ImageView flipButton = findViewById(R.id.flip_button);
+        flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                bodyView.flip();
             }
         });
+
+
     }
 
     @Override
@@ -51,5 +81,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

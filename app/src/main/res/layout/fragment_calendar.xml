@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:paddingStart="@dimen/fab_margin"
+    android:paddingEnd="@dimen/fab_margin"
+    tools:context=".CalendarFragment"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <!--TODO: Fill out this layout dynamically using calendar API-->
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+        <TextView
+            android:textColor="@color/colorMainWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/calendar_day_sample"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@drawable/calendar_item_shape"/>
+
+    </LinearLayout>
+
+</HorizontalScrollView>
