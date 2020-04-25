@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -143,24 +144,49 @@ public class BodyView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-      
         super.onDraw(canvas);
 
-        int margin = getWidth()/4;
-      
-        // Set the dimensions to draw the image
-        imageDrawable.setBounds(margin,0,3*margin,(int)(getHeight()*0.8f));
-        imageDrawable.draw(canvas);
+        drawBodyImage(canvas);
 
-        // Draw the temporary point over the image
-        if(tmpPoint != null) canvas.drawCircle(tmpPoint[0], tmpPoint[1], tmpPoint[2], redBrush);
+        drawPermanentPoints(canvas);
 
-        // Draw the final points over the image
-        for(float[] point : points){
-            canvas.drawCircle(point[0], point[1], point[2], redBrush);
-        }
+        drawTemporaryPoint(canvas);
 
     }
+
+    private void drawPermanentPoints(Canvas canvas) {
+        for(float[] point : points)
+            canvas.drawCircle(point[0], point[1], point[2], redBrush);
+    }
+
+    private void drawTemporaryPoint(Canvas canvas) {
+        if(tmpPoint != null)
+            canvas.drawCircle(tmpPoint[0], tmpPoint[1], tmpPoint[2], redBrush);
+    }
+
+    private void drawBodyImage(Canvas canvas) {
+        imageDrawable.setBounds(calculateCenteredBounds());
+        imageDrawable.draw(canvas);
+    }
+
+    private Rect calculateCenteredBounds() {
+        float PERCENTAGE_OF_HEIGHT_TO_USE = 0.8f; // 0 to 1 scale
+        float PERCENTAGE_OF_WIDTH_TO_USE = 0.5f;
+
+        int final_height = (int) (getHeight() * PERCENTAGE_OF_HEIGHT_TO_USE);
+
+        float remainingFreeWidth = getWidth() * (1 - PERCENTAGE_OF_WIDTH_TO_USE);
+
+        int sideMargin = (int) (remainingFreeWidth / 2);
+
+        int left = sideMargin;
+        int right = 3*sideMargin;
+        int top = 0;
+        int bottom = final_height;
+
+        return new Rect(left,top,right,bottom);
+    }
+
 
     /**
      * When the image is touched
