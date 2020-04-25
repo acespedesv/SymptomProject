@@ -234,8 +234,14 @@ public class BodyView extends View {
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(i);
                 bottomSheetDialog.dismiss();
+
+                startSymptomForm();
             }
         });
 
+    }
+
+    private void startSymptomForm() {
+        getContext().startActivity(new Intent(getContext(), SymptomForm.class));
     }
 }
