@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.view;
 
 
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.project.symptoms.R;
+import com.project.symptoms.activity.SymptomForm;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;

@@ -6,7 +6,7 @@
     android:layout_height="50dp"
     android:paddingStart="@dimen/fab_margin"
     android:paddingEnd="@dimen/fab_margin"
-    tools:context=".CalendarFragment"
+    tools:context=".fragment.CalendarFragment"
     android:scrollbars="none">
 
     <LinearLayout

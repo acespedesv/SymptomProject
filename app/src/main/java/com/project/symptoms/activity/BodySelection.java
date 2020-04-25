@@ -1,10 +1,8 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -14,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+
+import com.project.symptoms.R;
 
 public class BodySelection extends FragmentActivity{
 

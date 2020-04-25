@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <include layout="@layout/action_bar"/>
 
@@ -14,29 +14,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <fragment class="com.project.symptoms.CalendarFragment"
+        <fragment class="com.project.symptoms.fragment.CalendarFragment"
             android:id="@+id/calendar_fragment"
-            android:name="com.project.symptoms.CalendarFragment"
+            android:name="com.project.symptoms.fragment.CalendarFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
             tools:layout="@layout/fragment_calendar" />
 
-        <fragment class="com.project.symptoms.BodyFragment"
+        <fragment class="com.project.symptoms.fragment.BodyFragment"
             android:id="@+id/body_fragment"
-            android:name="com.project.symptoms.BodyFragment"
+            android:name="com.project.symptoms.fragment.BodyFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
             android:layout_marginTop="35dp"
             tools:layout="@layout/fragment_body" />
 
-        <fragment class="com.project.symptoms.MainMenuFragment"
+        <fragment class="com.project.symptoms.fragment.MainMenuFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.2"
-            android:name="com.project.symptoms.MainMenuFragment"
+            android:name="com.project.symptoms.fragment.MainMenuFragment"
             tools:layout="@layout/fragment_main_menu"
             android:id="@+id/fragment_main_menu" />
 

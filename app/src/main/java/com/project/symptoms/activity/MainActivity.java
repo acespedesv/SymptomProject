@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+
+import com.project.symptoms.fragment.MainMenuFragment;
+import com.project.symptoms.R;
+import com.project.symptoms.fragment.BodyFragment;
+import com.project.symptoms.fragment.CalendarFragment;
+import com.project.symptoms.view.BodyView;
 
 public class MainActivity extends AppCompatActivity implements
         CalendarFragment.OnFragmentInteractionListener,

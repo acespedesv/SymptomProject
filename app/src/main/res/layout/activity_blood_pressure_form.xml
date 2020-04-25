@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".BloodPressureForm"
+    tools:context=".activity.BloodPressureForm"
     tools:showIn="@layout/activity_blood_pressure_form"
     android:background="@color/colorMainWhite">
 
@@ -137,8 +137,8 @@
 
     <fragment
         android:id="@+id/fragment_main_menu"
-        android:name="com.project.symptoms.MainMenuFragment"
-        class="com.project.symptoms.MainMenuFragment"
+        android:name="com.project.symptoms.fragment.MainMenuFragment"
+        class="com.project.symptoms.fragment.MainMenuFragment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"

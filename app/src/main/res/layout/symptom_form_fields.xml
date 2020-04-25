@@ -144,7 +144,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="@string/reaction_medicament_hint"
-            android:importantForAutofill="no"
             android:inputType="textLongMessage" />
 
         <TextView
@@ -163,7 +162,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="@string/reaction_food_hint"
-            android:importantForAutofill="no"
             android:inputType="textLongMessage" />
 
         <LinearLayout
@@ -182,6 +180,7 @@
             android:text="@string/save_button_text"
             android:textStyle="bold"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:textColor="@color/colorMainWhite"/>
 
 

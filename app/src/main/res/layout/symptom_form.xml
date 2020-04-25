@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".SymptomForm"
+    tools:context=".activity.SymptomForm"
     android:background="@color/colorMainWhite">
 
+    <!--    ACTIONBAR-->
     <include
         android:id="@+id/include"
         layout="@layout/action_bar" />
 
+    <!--    MAIN TITLE-->
     <TextView
         android:id="@+id/form_title"
         android:layout_width="wrap_content"
@@ -28,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
+    <!--  SCROLLABLE SECTION  -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -49,10 +52,11 @@
 
     </LinearLayout>
 
+    <!--  MAIN MENU FRAGMENT  -->
     <fragment
         android:id="@+id/fragment_main_menu"
-        android:name="com.project.symptoms.MainMenuFragment"
-        class="com.project.symptoms.MainMenuFragment"
+        android:name="com.project.symptoms.fragment.MainMenuFragment"
+        class="com.project.symptoms.fragment.MainMenuFragment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"

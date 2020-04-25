@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+
+import com.project.symptoms.R;
 
 public class SplashScreen extends AppCompatActivity {
 

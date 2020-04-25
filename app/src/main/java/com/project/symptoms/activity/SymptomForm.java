@@ -1,30 +1,47 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.HashMap;
+import com.project.symptoms.R;
+import com.project.symptoms.fragment.MainMenuFragment;
+import com.project.symptoms.util.DateTimeUtils;
 
 public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
-    Object[][] optionsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.symptom_form);
 
+        loadSymptomCategories();
+
+        setupPickers();
+
+
+    }
+
+    private void setupPickers() {
+        TextView startHour = findViewById(R.id.start_hour);
+        TextView endHour = findViewById(R.id.end_hour);
+        DateTimeUtils.getInstance().registerAsTimePicker(startHour);
+        DateTimeUtils.getInstance().registerAsTimePicker(endHour);
+
+    }
+
+    private void loadSymptomCategories() {
         SymptomOption dolores[] = {
                 new SymptomOption(R.drawable.ic_agudo, "Agudo"),
                 new SymptomOption(R.drawable.ic_punzante, "Punzante"),
@@ -115,7 +132,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 new SymptomOption(R.drawable.ic_sequedad, "Sequedad")
         };
 
-        optionsList = new Object[][]{
+        Object[][] optionsList = new Object[][]{
                 {"Tipo de dolor", dolores},
                 {"Digestivo", digestivos},
                 {"Respiratorio", respiratorio},
@@ -163,14 +180,15 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private HorizontalScrollView inflateSymptomCategory(SymptomOption[] options){
-        HorizontalScrollView scrollView = new HorizontalScrollView(this);
-
         LinearLayout optionsRow = new LinearLayout(this);
         optionsRow.setOrientation(LinearLayout.HORIZONTAL);
-        scrollView.addView(optionsRow);
+        optionsRow.setGravity(Gravity.CENTER);
 
         for (SymptomOption option : options)
             optionsRow.addView(createViewFromOption(option));
+
+        HorizontalScrollView scrollView = new HorizontalScrollView(this);
+        scrollView.addView(optionsRow);
 
         return scrollView;
     }
@@ -196,7 +214,6 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
         TextView label = relativeLayout.findViewWithTag("label");
         label.setText(option.label);
-        label.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         return view;
     }

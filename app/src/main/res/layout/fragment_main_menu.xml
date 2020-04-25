@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:background="@drawable/main_menu_style"
-    tools:context=".MainMenuFragment">
+    tools:context=".fragment.MainMenuFragment">
 
     <TextView
         android:layout_marginStart="@dimen/fab_margin"
