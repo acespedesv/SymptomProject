@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/symtom_form"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <!--    DESCRIPTION-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/symptom_description"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/symptom_description_hint"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/intensity"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp">
+
+            <RadioButton
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:buttonTint="@color/IntesidadBaja"
+                android:drawableTint="#F8EB03"
+                android:gravity="center"
+                android:text="@string/low"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:buttonTint="#FF6600"
+                android:gravity="center"
+                android:text="@string/medium"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:buttonTint="#FF0000"
+                android:gravity="center"
+                android:text="@string/high"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/intermittent"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/start_hour"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/start_hour"
+            android:layout_width="@dimen/edit_text_width"
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_view_style"
+            android:drawableEnd="@drawable/ic_history"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@string/sample_hour"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/end_hour"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/end_hour"
+            android:layout_width="@dimen/edit_text_width"
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_view_style"
+            android:drawableEnd="@drawable/ic_history"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/edit_text_padding"
+            android:text="@string/sample_hour"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/reaction_medicament"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editText6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/reaction_medicament_hint"
+            android:importantForAutofill="no"
+            android:inputType="textLongMessage" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/reaction_food"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editText7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/reaction_food_hint"
+            android:importantForAutofill="no"
+            android:inputType="textLongMessage" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/categories_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:background="@drawable/filled_button"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/save_button_text"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="@color/colorMainWhite"/>
+
+
+
+    </LinearLayout>

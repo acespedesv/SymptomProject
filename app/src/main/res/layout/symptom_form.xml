@@ -1,177 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".SymptomForm"
+    android:background="@color/colorMainWhite">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/action_bar" />
+
+    <TextView
+        android:id="@+id/form_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/symptom_form"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <LinearLayout
-        android:id="@+id/symtom_form"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/symptom_form"
-            android:textColor="#F18834"
-            android:textSize="30sp" />
-
-        <!--    DESCRIPTION-->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/symptom_description"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/symptom_description_hint"
-            android:importantForAutofill="no"
-            android:inputType="textLongMessage"
-            android:isScrollContainer="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/intensity"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <RadioGroup
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_main_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+        <ScrollView
+            android:id="@+id/symtom_form"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:paddingStart="90dp"
-            android:paddingEnd="10dp">
-
-            <RadioButton
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:buttonTint="@color/IntesidadBaja"
-                android:drawableTint="#F8EB03"
-                android:gravity="center"
-                android:text="@string/low"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:buttonTint="#FF6600"
-                android:gravity="center"
-                android:text="@string/medium"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:buttonTint="#FF0000"
-                android:gravity="center"
-                android:text="@string/high"
-                android:textSize="20sp" />
-        </RadioGroup>
-
-        <Switch
-            android:id="@+id/switch2"
-            android:layout_width="184dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/intermittent"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/start_hour"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="normal" />
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="158dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:importantForAutofill="no"
-            android:inputType="time" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/end_hour"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="normal" />
-
-        <EditText
-            android:id="@+id/editText5"
-            android:layout_width="158dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:importantForAutofill="no"
-            android:inputType="time" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/reaction_medicament"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/editText6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/reaction_medicament_hint"
-            android:importantForAutofill="no"
-            android:inputType="textLongMessage" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/reaction_food"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/editText7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/reaction_food_hint"
-            android:importantForAutofill="no"
-            android:inputType="textLongMessage" />
+            android:layout_height="500dp">
+            <include layout="@layout/symptom_form_fields"/>
+        </ScrollView>
 
     </LinearLayout>
-</ScrollView>
+
+    <fragment
+        android:id="@+id/fragment_main_menu"
+        android:name="com.project.symptoms.MainMenuFragment"
+        class="com.project.symptoms.MainMenuFragment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_main_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

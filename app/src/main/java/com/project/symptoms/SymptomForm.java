@@ -3,6 +3,7 @@ package com.project.symptoms;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-public class SymptomForm extends AppCompatActivity {
+public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
     Object[][] optionsList;
 
@@ -128,9 +129,9 @@ public class SymptomForm extends AppCompatActivity {
         };
 
 
-        LinearLayout categoriesScrollView = findViewById(R.id.symtom_form);
+        LinearLayout categoriesSection = findViewById(R.id.categories_section);
 
-        inflateSymptomsCategories(categoriesScrollView, optionsList);
+        inflateSymptomsCategories(categoriesSection, optionsList);
     }
 
     /**
@@ -198,6 +199,11 @@ public class SymptomForm extends AppCompatActivity {
         label.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         return view;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**
