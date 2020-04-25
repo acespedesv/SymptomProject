@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Symptoms</string>
-    <string name="action_settings">Settings</string>
     <string name="symptom_form">Registro de sintoma</string>
     <string name="symptom_description">Descripción del Síntoma:</string>
     <string name="symptom_description_hint">Escriba aquí la descripción del sintoma - máx 50 caracteres</string>

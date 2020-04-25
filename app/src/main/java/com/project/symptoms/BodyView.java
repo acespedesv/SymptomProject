@@ -2,6 +2,7 @@ package com.project.symptoms;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -228,6 +229,10 @@ public class BodyView extends View {
                 // Once the size was chosen draw that circle and clean the tmp one
                 tmpPoint = null;
                 addPoint(xPos, yPos, Integer.valueOf(seekBar.getProgress()).floatValue());
+                Intent i = new Intent(getContext(), SymptomForm.class);
+                // Recommended when starting a new activity out of Activity context
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(i);
                 bottomSheetDialog.dismiss();
             }
         });
