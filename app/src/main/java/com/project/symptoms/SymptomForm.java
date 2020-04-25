@@ -10,6 +10,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -122,7 +123,7 @@ public class SymptomForm extends AppCompatActivity {
                 {"Dermatológico", dermatologico},
                 {"Actividades Detonantes", actividadesDetonantes},
                 {"Emociones Detonantes", emocionesDetonantes},
-                {"Clima",sensacionClimatica},
+                {"Clima", sensacionClimatica},
 
         };
 
@@ -134,64 +135,53 @@ public class SymptomForm extends AppCompatActivity {
 
     /**
      * Should inflate each SymptomOption in the hashmap to the UI
+     *
      * @param categories should be matrix of Objects each row as: category name (String) and a SymptomOption[]
      */
-    private void inflateSymptomsCategories(LinearLayout parentLayout, Object[][] categories){
+    private void inflateSymptomsCategories(LinearLayout parentLayout, Object[][] categories) {
         String categoryName = "";
-        int categoryNamePosition = 0, lisOfOptionsPosition = 1; // Indexes
-        for( Object[] row  : categories){
+        SymptomOption[] options = null;
+        int categoryNamePosition = 0, optionsPosition = 1; // Names for indexes
 
+        LinearLayout verticalLayout = new LinearLayout(this);
+        verticalLayout.setOrientation(LinearLayout.VERTICAL);
+
+        for (Object[] row : categories) {
             categoryName = (String) row[categoryNamePosition];
+            options = (SymptomOption[]) row[optionsPosition];
 
-            LinearLayout UIrow = new LinearLayout(this);
-            UIrow.setOrientation(LinearLayout.VERTICAL);
+            verticalLayout.addView(inflateCategoryLabel(categoryName));
 
-            TextView categoryLabel = new TextView(this);
-            categoryLabel.setText(categoryName);
-            categoryLabel.setTextSize(20);
-            categoryLabel.setPadding(20,50,20,20);
-
-            UIrow.addView(categoryLabel);
-
-            HorizontalScrollView scrollView = new HorizontalScrollView(this);
-            LinearLayout optionsRow = new LinearLayout(this);
-            optionsRow.setOrientation(LinearLayout.HORIZONTAL);
-            scrollView.addView(optionsRow);
-
-
-            SymptomOption[] options = (SymptomOption[]) row[lisOfOptionsPosition];
-            for(SymptomOption option : options){
-                View newView = createViewFromOption(option);
-                optionsRow.addView(newView);
-            }
-
-            UIrow.addView(scrollView);
-            parentLayout.addView(UIrow);
+            verticalLayout.addView(inflateSymptomCategory(options));
 
         }
 
+        parentLayout.addView(verticalLayout);
+
+
     }
 
-    // Create a view for representing the parameter
-//    private View createViewFromOption(SymptomOption option){
-//        LinearLayout box = new LinearLayout(this);
-//        box.setGravity(Gravity.CENTER);
-//        box.setOrientation(LinearLayout.VERTICAL);
-//        box.setPadding(20,0,20,0);
-//
-//
-//        ImageView image = new ImageView(this);
-//        image.setImageResource(option.imageResId);
-//
-//        CheckBox checkbox = new CheckBox(this);
-//
-//        checkbox.setText(option.label);
-//
-//        box.addView(image);
-//        box.addView(checkbox);
-//
-//        return box;
-//    }
+    private HorizontalScrollView inflateSymptomCategory(SymptomOption[] options){
+        HorizontalScrollView scrollView = new HorizontalScrollView(this);
+
+        LinearLayout optionsRow = new LinearLayout(this);
+        optionsRow.setOrientation(LinearLayout.HORIZONTAL);
+        scrollView.addView(optionsRow);
+
+        for (SymptomOption option : options)
+            optionsRow.addView(createViewFromOption(option));
+
+        return scrollView;
+    }
+
+    private TextView inflateCategoryLabel(String categoryName){
+        TextView categoryLabel = new TextView(this);
+        categoryLabel.setText(categoryName);
+        categoryLabel.setTextSize(20);
+        categoryLabel.setPadding(20, 50, 20, 20);
+        return categoryLabel;
+    }
+
 
     private View createViewFromOption(SymptomOption option){
         LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService
@@ -210,6 +200,9 @@ public class SymptomForm extends AppCompatActivity {
         return view;
     }
 
+    /**
+     * A simple data-only class for representing each symptom option in the form
+     */
     private class SymptomOption {
         int imageResId;
         String label;
