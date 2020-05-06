@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,29 +20,30 @@ import android.widget.SeekBar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.project.symptoms.R;
 import com.project.symptoms.activity.SymptomForm;
+import com.project.symptoms.fragment.BodyFragment;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
 
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Currency;
 
 public class BodyView extends View {
 
     // Used to draw the circles over the image
     private Paint redBrush;
 
-    // Max/Min seekBar value that represents circle sizes range
-    private int MAX_SEEKBAR_VALUE = 100;
-    private int MIN_SEEKBAR_VALUE = 10;
-
     // The image to draw on the screen
     private Drawable imageDrawable;
 
     // The (X,Y) pairs of the points to be drawn over the image
-    private ArrayList<float[]> points;
+    private ArrayList<Circle> points;
+
     // Temporary point that will be drawn several times
     // whenever user is choosing the size of a new circle
-    private float[] tmpPoint = new float[3];
+    private Circle temporaryPoint;
 
     // Used to know the current state in order to change it accordingly
     private State currentState;
@@ -50,6 +52,9 @@ public class BodyView extends View {
     // Enums to limit the options to use
     public enum BodyType{MALE, FEMALE};
     public enum State{FRONT, BACK};
+
+
+    Fragment parentFragment;
 
     public BodyView(Context context) {
         super(context);
@@ -66,17 +71,14 @@ public class BodyView extends View {
         init();
     }
 
-    private void addPoint(float x, float y, float radius){
-        float[] point = {x, y, radius};
-        points.add(point);
+    public void addPoint(Circle circle){
+        Circle newPoint = new Circle(circle.x, circle.y, circle.radius);
+        points.add(newPoint);
         invalidate();
     }
 
-    private void addTmpPoint(float x, float y, float radius){
-        tmpPoint = new float[3];
-        tmpPoint[0] = x;
-        tmpPoint[1] = y;
-        tmpPoint[2] = radius;
+    public void setTemporaryPoint(Circle point){
+        temporaryPoint = point;
         invalidate();
     }
 
@@ -155,13 +157,13 @@ public class BodyView extends View {
     }
 
     private void drawPermanentPoints(Canvas canvas) {
-        for(float[] point : points)
-            canvas.drawCircle(point[0], point[1], point[2], redBrush);
+        for(Circle point : points)
+            canvas.drawCircle(point.x, point.y, point.radius, redBrush);
     }
 
     private void drawTemporaryPoint(Canvas canvas) {
-        if(tmpPoint != null)
-            canvas.drawCircle(tmpPoint[0], tmpPoint[1], tmpPoint[2], redBrush);
+        if(temporaryPoint != null)
+            canvas.drawCircle(temporaryPoint.x, temporaryPoint.y, temporaryPoint.radius, redBrush);
     }
 
     private void drawBodyImage(Canvas canvas) {
@@ -196,80 +198,38 @@ public class BodyView extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float xPos = event.getX(), yPos = event.getY();
             // Let user choose circle size
-            chooseCircleSize(xPos, yPos);
+
+            try {
+                BodyFragment bodyFragment = (BodyFragment) parentFragment;
+
+                String str = String.format("bodyview:/clicked?x=%f&y=%f",
+                xPos, yPos);
+                Uri uri = Uri.parse(str);
+                bodyFragment.onButtonPressed(uri);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         return true;
-    }
-
-    private void chooseCircleSize(final float xPos, final float yPos) {
-
-        // Set up bottom sheet dialog
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
-
-        // Inflate bottom sheet view to add it to the dialog
-        View bottomSheetView = LayoutInflater.from(getContext()).inflate(
-                R.layout.layout_bottom_sheet_seekbar,
-                (LinearLayout)findViewById(R.id.bottomSheetContainer)
-        );
-
-        bottomSheetDialog.setContentView(bottomSheetView);
-
-        // Set up seek bar
-        final SeekBar seekBar = bottomSheetView.findViewById(R.id.seekBar);
-        seekBar.setMax(MAX_SEEKBAR_VALUE);
-        seekBar.setProgress(MIN_SEEKBAR_VALUE);
-
-        // Add initial guide circle
-        addTmpPoint(xPos, yPos, Integer.valueOf(MIN_SEEKBAR_VALUE).floatValue());
-
-        // Listen to seek bar changes made by user
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-                // Avoid circles of size 0
-                if(i == 0) i += MIN_SEEKBAR_VALUE;
-
-                // Clean and add new tmpPoint
-                tmpPoint = null;
-                addTmpPoint(xPos, yPos, Integer.valueOf(i).floatValue());
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        bottomSheetDialog.setCancelable(false); // Don't allow the user to press back
-        bottomSheetDialog.show();
-
-        Button doneButton = bottomSheetView.findViewById(R.id.size_done_button);
-        doneButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // TODO: Save x and y pos from this circle in DB
-
-                // Once the size was chosen draw that circle and clean the tmp one
-                tmpPoint = null;
-                addPoint(xPos, yPos, Integer.valueOf(seekBar.getProgress()).floatValue());
-                Intent i = new Intent(getContext(), SymptomForm.class);
-                // Recommended when starting a new activity out of Activity context
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getContext().startActivity(i);
-                bottomSheetDialog.dismiss();
-
-                startSymptomForm();
-            }
-        });
 
     }
 
-    private void startSymptomForm() {
-        getContext().startActivity(new Intent(getContext(), SymptomForm.class));
+
+    public void setParentFragment(Fragment parentFragment) {
+        this.parentFragment = parentFragment;
+    }
+
+    // Data-Only class
+    public static class Circle{
+        public float x;
+        public float y;
+        public float radius;
+
+        public Circle(float x, float y, float radius){
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+        }
+
     }
 }
