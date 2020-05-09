@@ -138,6 +138,7 @@ public class BodyView extends View {
     public void flip(){
         currentState = (currentState==State.FRONT) ? State.BACK : State.FRONT;
         points.clear();
+        temporaryPoint = null;
         updateImage();
     }
 
