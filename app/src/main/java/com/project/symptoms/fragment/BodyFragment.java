@@ -1,14 +1,18 @@
-package com.project.symptoms;
+package com.project.symptoms.fragment;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.project.symptoms.R;
+import com.project.symptoms.view.BodyView;
 
 
 /**
@@ -65,8 +69,15 @@ public class BodyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_body, container, false);
+        ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_body, container, false);
+
+        // Enable the BodyView to communicate to it's parent
+        BodyView bodyView = layout.findViewById(R.id.bodyView);
+        bodyView.setParentFragment(this);
+
+        return layout;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

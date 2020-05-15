@@ -1,9 +1,11 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -12,20 +14,34 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.HashMap;
+import com.project.symptoms.R;
+import com.project.symptoms.fragment.MainMenuFragment;
+import com.project.symptoms.util.DateTimeUtils;
 
-public class SymptomForm extends AppCompatActivity {
+public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
-    HashMap<String, SymptomOption[]> optionsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.symptom_form);
 
+        loadSymptomCategories();
 
-        optionsList = new HashMap<>();
+        setupPickers();
 
+
+    }
+
+    private void setupPickers() {
+        TextView startHour = findViewById(R.id.start_hour);
+        TextView endHour = findViewById(R.id.end_hour);
+        DateTimeUtils.getInstance().registerAsTimePicker(startHour);
+        DateTimeUtils.getInstance().registerAsTimePicker(endHour);
+
+    }
+
+    private void loadSymptomCategories() {
         SymptomOption dolores[] = {
                 new SymptomOption(R.drawable.ic_agudo, "Agudo"),
                 new SymptomOption(R.drawable.ic_punzante, "Punzante"),
@@ -33,7 +49,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_opresivo, "Opresivo"),
                 new SymptomOption(R.drawable.ic_electrico, "Eléctrico")
         };
-        optionsList.put("Tipo de dolor", dolores);
 
         SymptomOption digestivos[] = {
                 new SymptomOption(R.drawable.ic_nauseas, "Nauseas"),
@@ -50,7 +65,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_incontinencia, "Incotinencia"),
                 new SymptomOption(R.drawable.ic_ulceras_bucales, "Úlceras bucales")
         };
-        optionsList.put("Digestivo", digestivos);
 
         SymptomOption respiratorio[] = {
                 new SymptomOption(R.drawable.ic_falta_de_aire, "Falta de aire"),
@@ -61,8 +75,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_irritacion, "Irritación"),
                 new SymptomOption(R.drawable.ic_silbido, "Silbido")
         };
-        optionsList.put("Respiratorio", respiratorio);
-
 
         SymptomOption sensorial[] = {
                 new SymptomOption(R.drawable.ic_mareos, "Mareo"),
@@ -74,7 +86,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_pesadez, "Pesadez"),
                 new SymptomOption(R.drawable.ic_debilidad, "Debilidad")
         };
-        optionsList.put("Sensorial", sensorial);
 
 
         SymptomOption nervioso[] = {
@@ -85,7 +96,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_cambios_de_humor, "Cambios de humor"),
                 new SymptomOption(R.drawable.ic_agotamiento, "Agotamiento")
         };
-        optionsList.put("Nervioso", nervioso);
 
         SymptomOption dermatologico[] = {
                 new SymptomOption(R.drawable.ic_hematoma, "Hematomas"),
@@ -99,7 +109,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_urticaria, "Urticaria"),
                 new SymptomOption(R.drawable.ic_comeson, "Comezón"),
         };
-        optionsList.put("Dermatológico", dermatologico);
 
         SymptomOption actividadesDetonantes[] = {
                 new SymptomOption(R.drawable.ic_despertar, "Al despertar"),
@@ -107,7 +116,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_durante_actividad_fisica, "Durante actividad física"),
                 new SymptomOption(R.drawable.ic_despues_de_actividad, "Post actividad física")
         };
-        optionsList.put("Actividades Detonantes", actividadesDetonantes);
 
         SymptomOption emocionesDetonantes[] = {
                 new SymptomOption(R.drawable.ic_susto, "Susto"),
@@ -116,7 +124,6 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_estres, "Estrés"),
                 new SymptomOption(R.drawable.ic_angustia, "Angustia")
         };
-        optionsList.put("Emociones detonantes", emocionesDetonantes);
 
         SymptomOption sensacionClimatica[] = {
                 new SymptomOption(R.drawable.ic_frio, "Frio"),
@@ -124,71 +131,76 @@ public class SymptomForm extends AppCompatActivity {
                 new SymptomOption(R.drawable.ic_humedad, "Humedad"),
                 new SymptomOption(R.drawable.ic_sequedad, "Sequedad")
         };
-        optionsList.put("Clima", sensacionClimatica);
 
-        LinearLayout categoriesScrollView = findViewById(R.id.symtom_form);
+        Object[][] optionsList = new Object[][]{
+                {"Tipo de dolor", dolores},
+                {"Digestivo", digestivos},
+                {"Respiratorio", respiratorio},
+                {"Sensorial", sensorial},
+                {"Nervioso", nervioso},
+                {"Dermatológico", dermatologico},
+                {"Actividades Detonantes", actividadesDetonantes},
+                {"Emociones Detonantes", emocionesDetonantes},
+                {"Clima", sensacionClimatica},
 
-        inflateSymptomsCategories(categoriesScrollView, optionsList);
+        };
+
+
+        LinearLayout categoriesSection = findViewById(R.id.categories_section);
+
+        inflateSymptomsCategories(categoriesSection, optionsList);
     }
 
     /**
      * Should inflate each SymptomOption in the hashmap to the UI
-     * @param categories should be a hashmap from string (category name) to SymptomOption[]
+     *
+     * @param categories should be matrix of Objects each row as: category name (String) and a SymptomOption[]
      */
-    private void inflateSymptomsCategories(LinearLayout parentLayout, HashMap<String,SymptomOption[]> categories){
+    private void inflateSymptomsCategories(LinearLayout parentLayout, Object[][] categories) {
         String categoryName = "";
-        for( Object key : categories.keySet()){
+        SymptomOption[] options = null;
+        int categoryNamePosition = 0, optionsPosition = 1; // Names for indexes
 
-            categoryName = (String) key;
+        LinearLayout verticalLayout = new LinearLayout(this);
+        verticalLayout.setOrientation(LinearLayout.VERTICAL);
 
-            LinearLayout row = new LinearLayout(this);
-            row.setOrientation(LinearLayout.VERTICAL);
+        for (Object[] row : categories) {
+            categoryName = (String) row[categoryNamePosition];
+            options = (SymptomOption[]) row[optionsPosition];
 
-            TextView categoryLabel = new TextView(this);
-            categoryLabel.setText(categoryName);
-            categoryLabel.setTextSize(20);
-            categoryLabel.setPadding(20,50,20,20);
+            verticalLayout.addView(inflateCategoryLabel(categoryName));
 
-            row.addView(categoryLabel);
-
-            HorizontalScrollView scrollView = new HorizontalScrollView(this);
-            LinearLayout optionsRow = new LinearLayout(this);
-            optionsRow.setOrientation(LinearLayout.HORIZONTAL);
-            scrollView.addView(optionsRow);
-
-
-            for(SymptomOption option : categories.get(categoryName)){
-                View newView = createViewFromOption(option);
-                optionsRow.addView(newView);
-            }
-
-            row.addView(scrollView);
-            parentLayout.addView(row);
+            verticalLayout.addView(inflateSymptomCategory(options));
 
         }
 
+        parentLayout.addView(verticalLayout);
+
+
     }
 
-    // Create a view for representing the parameter
-//    private View createViewFromOption(SymptomOption option){
-//        LinearLayout box = new LinearLayout(this);
-//        box.setGravity(Gravity.CENTER);
-//        box.setOrientation(LinearLayout.VERTICAL);
-//        box.setPadding(20,0,20,0);
-//
-//
-//        ImageView image = new ImageView(this);
-//        image.setImageResource(option.imageResId);
-//
-//        CheckBox checkbox = new CheckBox(this);
-//
-//        checkbox.setText(option.label);
-//
-//        box.addView(image);
-//        box.addView(checkbox);
-//
-//        return box;
-//    }
+    private HorizontalScrollView inflateSymptomCategory(SymptomOption[] options){
+        LinearLayout optionsRow = new LinearLayout(this);
+        optionsRow.setOrientation(LinearLayout.HORIZONTAL);
+        optionsRow.setGravity(Gravity.CENTER);
+
+        for (SymptomOption option : options)
+            optionsRow.addView(createViewFromOption(option));
+
+        HorizontalScrollView scrollView = new HorizontalScrollView(this);
+        scrollView.addView(optionsRow);
+
+        return scrollView;
+    }
+
+    private TextView inflateCategoryLabel(String categoryName){
+        TextView categoryLabel = new TextView(this);
+        categoryLabel.setText(categoryName);
+        categoryLabel.setTextSize(20);
+        categoryLabel.setPadding(20, 50, 20, 20);
+        return categoryLabel;
+    }
+
 
     private View createViewFromOption(SymptomOption option){
         LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService
@@ -202,11 +214,18 @@ public class SymptomForm extends AppCompatActivity {
 
         TextView label = relativeLayout.findViewWithTag("label");
         label.setText(option.label);
-        label.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         return view;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    /**
+     * A simple data-only class for representing each symptom option in the form
+     */
     private class SymptomOption {
         int imageResId;
         String label;

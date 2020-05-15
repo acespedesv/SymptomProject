@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.util;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

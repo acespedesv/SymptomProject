@@ -1,20 +1,15 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import com.project.symptoms.fragment.MainMenuFragment;
+import com.project.symptoms.R;
+import com.project.symptoms.util.DateTimeUtils;
 
 public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 

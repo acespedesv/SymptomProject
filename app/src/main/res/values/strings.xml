@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Symptoms</string>
-    <string name="symptom_form">Registro de sintoma</string>
+    <string name="symptom_form">Registro de síntoma</string>
     <string name="symptom_description">Descripción del Síntoma:</string>
-    <string name="symptom_description_hint">Escriba aquí la descripción del sintoma - máx 50 caracteres</string>
+    <string name="symptom_description_hint">Escriba aquí la descripción del sintoma</string>
     <string name="intensity">Intensidad:</string>
     <string name="low">Baja</string>
     <string name="medium">Media</string>
@@ -11,9 +11,9 @@
     <string name="start_hour">Hora de Inicio:</string>
     <string name="end_hour">Hora Fin:</string>
     <string name="reaction_medicament">Reacción a medicamento:</string>
-    <string name="reaction_medicament_hint">Escriba aquí del medicamento - máx 30 caracteres</string>
+    <string name="reaction_medicament_hint">Escriba aquí del medicamento</string>
     <string name="reaction_food">Reacción Alérgica Alimentaria:</string>
-    <string name="reaction_food_hint">Escriba aquí del alimento - máx 50 caracteres</string>
+    <string name="reaction_food_hint">Escriba aquí del alimento</string>
     <string name="title_activity_glucose_form">GlucoseForm</string>
     <string name="glucose_form_title">Registro de Glucosa</string>
     <string name="blood_pressure_form_title">Registro de Presión Arterial</string>
@@ -42,4 +42,5 @@
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">SYMP APP</string>
+    <string name="first_step">Primer paso</string>
 </resources>

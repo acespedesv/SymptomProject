@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="50dp">
 
-    <com.project.symptoms.BodyView
+    <com.project.symptoms.view.BodyView
         android:id="@+id/bodyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

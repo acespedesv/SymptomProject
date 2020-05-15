@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,7 +11,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class BloodPressureForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
+import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.fragment.MainMenuFragment;
+import com.project.symptoms.R;
+
+public class BloodPressureForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
     protected Toolbar toolbar;
     protected Button saveButton;

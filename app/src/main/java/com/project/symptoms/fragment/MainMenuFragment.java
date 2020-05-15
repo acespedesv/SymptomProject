@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.project.symptoms.R;
+import com.project.symptoms.activity.BloodPressureForm;
+import com.project.symptoms.activity.GlucoseForm;
 
 
 /**

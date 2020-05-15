@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,18 +8,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.project.symptoms.dialog.CircleSizeSelectionDialog;
+import com.project.symptoms.fragment.MainMenuFragment;
+import com.project.symptoms.R;
+import com.project.symptoms.fragment.BodyFragment;
+import com.project.symptoms.fragment.CalendarFragment;
+import com.project.symptoms.view.BodyView;
+
 public class MainActivity extends AppCompatActivity implements
         CalendarFragment.OnFragmentInteractionListener,
         BodyFragment.OnFragmentInteractionListener,
-        MainMenuFragment.OnFragmentInteractionListener {
+        MainMenuFragment.OnFragmentInteractionListener,
+        CircleSizeSelectionDialog.OnCircleSizeSelectedListener,
+        CircleSizeSelectionDialog.OnCircleSizeUpdatedListener {
 
     BodyView bodyView;
     Toolbar toolbar;
+    CircleSizeSelectionDialog sizeSelectionDialog;
+    BodyView.Circle currentCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +95,45 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    public void launchCircleSizeSelectionDialog(){
+        if(sizeSelectionDialog == null){
+            sizeSelectionDialog = new CircleSizeSelectionDialog(this, R.style.BottomSheetDialogTheme);
+            sizeSelectionDialog.setOnCircleSelectedListener(this);
+            sizeSelectionDialog.setOnCircleSizeUpdateListener(this);
+        }
+        sizeSelectionDialog.show();
+
+
+    }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
+        float x = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
+        float y = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
+        if( currentCircle == null)
+            currentCircle = new BodyView.Circle(0,0,10);
+        currentCircle.x = x;
+        currentCircle.y = y;
+        bodyView.setTemporaryPoint(currentCircle);
+        launchCircleSizeSelectionDialog();
 
+    }
+
+    @Override
+    public void OnCircleSizeUpdate(float radius) {
+        currentCircle.radius = radius;
+        bodyView.setTemporaryPoint(currentCircle);
+    }
+
+    @Override
+    public void OnCircleSizeSelected(float radius) {
+        sizeSelectionDialog.dismiss();
+        currentCircle.radius = radius;
+        bodyView.addPoint(currentCircle);
+        launchSymptomForm();
+    }
+
+    private void launchSymptomForm() {
+        startActivity(new Intent(this, SymptomForm.class));
     }
 }
