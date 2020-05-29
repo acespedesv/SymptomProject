@@ -1,6 +1,8 @@
 package com.project.symptoms.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,7 +15,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.project.symptoms.DB.DBHelper;
+import com.project.symptoms.DB.DBTables;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
@@ -33,10 +38,13 @@ public class MainActivity extends AppCompatActivity implements
     CircleSizeSelectionDialog sizeSelectionDialog;
     BodyView.Circle currentCircle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Create the database
+        DBHelper database = new DBHelper(this);
         init();
 
     }
@@ -69,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements
                 bodyView.flip();
             }
         });
-
 
     }
 
