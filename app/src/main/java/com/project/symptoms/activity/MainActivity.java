@@ -1,8 +1,6 @@
 package com.project.symptoms.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,15 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.project.symptoms.DB.DBHelper;
-import com.project.symptoms.DB.DBTables;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;

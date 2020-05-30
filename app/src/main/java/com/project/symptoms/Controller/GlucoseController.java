@@ -1,36 +1,32 @@
 package com.project.symptoms.Controller;
 
 import android.content.Context;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.project.symptoms.DAO.GlucoseDao;
 import com.project.symptoms.Model.Glucose;
-import com.project.symptoms.activity.GlucoseForm;
 
 public class GlucoseController {
 
-    private EditText measure;
+    private int measure;
     private TextView dateView;
     private TextView timeView;
     private Context context;
     private Glucose glucose;
     private GlucoseDao glucoseDao;
 
-    public GlucoseController(EditText measure, TextView date, TextView time, Context context) {
-        this.measure = measure;
+    public GlucoseController(String measure, TextView date, TextView time, Context context) {
+        this.measure = Integer.parseInt(measure);
         this.dateView = date;
         this.timeView = time;
         this.context = context;
     }
 
     public int saveData() {
-        String value = measure.getText().toString();
         String date = "" + dateView.getText();
         String time = "" + timeView.getText();
         //Creates the model
-        glucose = new Glucose(Integer.parseInt(value), date, time);
+        glucose = new Glucose(measure, date, time);
         //Calls the dao
         glucoseDao = new GlucoseDao(context);
         return glucoseDao.insert(glucose);

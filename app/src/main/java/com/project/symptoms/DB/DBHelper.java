@@ -16,23 +16,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
         public void onCreate(SQLiteDatabase db)
         {
-            db.execSQL(DBTables.SQL_CREATE_SYMPTOM);
-            db.execSQL(DBTables.SQL_CREATE_CATEGORY);
-            db.execSQL(DBTables.SQL_CREATE_CATEGORY_OPTION);
-            db.execSQL(DBTables.SQL_CREATE_SELECTED_CATEGORY_OPTION);
-            db.execSQL(DBTables.SQL_CREATE_PRESSURE);
-            db.execSQL(DBTables.SQL_CREATE_GLUCOSE);
+            db.execSQL(Contract.SQL_CREATE_SYMPTOM);
+            db.execSQL(Contract.SQL_CREATE_CATEGORY);
+            db.execSQL(Contract.SQL_CREATE_CATEGORY_OPTION);
+            db.execSQL(Contract.SQL_CREATE_SELECTED_CATEGORY_OPTION);
+            db.execSQL(Contract.SQL_CREATE_PRESSURE);
+            db.execSQL(Contract.SQL_CREATE_GLUCOSE);
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // This database is only a cache for online data, so its upgrade policy is
             // to simply to discard the data and start over
-            db.execSQL(DBTables.SQL_DELETE_SYMPTOM);
-            db.execSQL(DBTables.SQL_DELETE_CATEGORY);
-            db.execSQL(DBTables.SQL_DELETE_CATEGORY_OPTION);
-            db.execSQL(DBTables.SQL_DELETE_SELECTED_CATEGORY_OPTION);
-            db.execSQL(DBTables.SQL_DELETE_PRESSURE);
-            db.execSQL(DBTables.SQL_DELETE_GLUCOSE);
+            db.execSQL(Contract.SQL_DELETE_SYMPTOM);
+            db.execSQL(Contract.SQL_DELETE_CATEGORY);
+            db.execSQL(Contract.SQL_DELETE_CATEGORY_OPTION);
+            db.execSQL(Contract.SQL_DELETE_SELECTED_CATEGORY_OPTION);
+            db.execSQL(Contract.SQL_DELETE_PRESSURE);
+            db.execSQL(Contract.SQL_DELETE_GLUCOSE);
             onCreate(db);
         }
         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

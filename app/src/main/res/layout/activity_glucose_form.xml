@@ -118,7 +118,8 @@
                 android:fontFamily="@font/montserrat"
                 android:text="@string/save_button_text"
                 android:textStyle="bold"
-                android:textColor="@color/colorMainWhite"/>
+                android:textColor="@color/colorMainWhite"
+                android:onClick="onClick"/>
 
         </LinearLayout>
 
