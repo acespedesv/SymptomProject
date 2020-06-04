@@ -18,11 +18,11 @@ public class DateTimeUtils implements
 
     private  final boolean FORMAT_12H = false;
 
-    private  final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("EEE dd MMM yyyy");
+    public  final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("EEE dd MMM yyyy");
 
-    private  final SimpleDateFormat TIME_FORMATTER = new SimpleDateFormat(" hh:mm a");
+    public  final SimpleDateFormat TIME_FORMATTER = new SimpleDateFormat(" hh:mm a");
 
-    private  final SimpleDateFormat DATE_PARSER = new SimpleDateFormat("yyyy/MM/dd");
+    public  final SimpleDateFormat DATE_PARSER = new SimpleDateFormat("yyyy/MM/dd");
 
     private  TextView dateView;
     private  TextView timeView;

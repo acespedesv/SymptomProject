@@ -1,23 +1,23 @@
-package com.project.symptoms;
+package com.project.symptoms.db.model;
+
+import java.util.Date;
 
 public class Pressure{
 
     private int pressure_id;
     private int systolic;
     private int diastolic;
-    private String date;
-    private String time;
+    private long datetime;
 
-    public Pressure(int pressure_id, int systolic, int diastolic, String date, String time){
+    public Pressure(int pressure_id, int systolic, int diastolic, long datetime){
         this.pressure_id = pressure_id;
         this.systolic = systolic;
         this.diastolic = diastolic;
-        this.date = date;
-        this.time = time;
+        this.datetime = datetime;
     }
 
-    public Pressure(int systolic, int diastolic, String date, String time){
-        this(0, systolic, diastolic, date, time);
+    public Pressure(int systolic, int diastolic, long datetime){
+        this(0, systolic, diastolic, datetime);
     }
 
 
@@ -45,19 +45,11 @@ public class Pressure{
         this.diastolic = diastolic;
     }
 
-    public String getDate() {
-        return date;
+    public long getDatetime() {
+        return datetime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDatetime(long datetime) {
+        this.datetime = datetime;
     }
 }
