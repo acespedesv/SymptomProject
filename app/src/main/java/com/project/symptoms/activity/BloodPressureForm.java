@@ -5,15 +5,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.project.symptoms.db.controller.PressureController;
+import com.project.symptoms.db.model.Pressure;
 import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class BloodPressureForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
@@ -48,14 +55,24 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
     }
 
     private void saveData(){
+        // Gather all the data fields
+        EditText systolicView = findViewById(R.id.systolic);
+        EditText diastolicView = findViewById(R.id.diastolic);
+        TextView hourView =  findViewById(R.id.hour_pressure);
+        TextView dateView = findViewById(R.id.date_pressure);
 
-        // TODO: Save data here
+        int systolicValue = Integer.parseInt(systolicView.getText().toString());
+        int diastolicValue = Integer.parseInt(diastolicView.getText().toString());
+        String time = hourView.getText().toString();
+        String date = dateView.getText().toString();
 
-        Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        String text = "Data registered";
-        int duration = Toast.LENGTH_SHORT;
-        Toast.makeText(getApplicationContext(), text, duration).show();
-        startActivity(mainActivityIntent);
+        long id = PressureController.getInstance(this).insert(systolicValue, diastolicValue, date, time);
+
+        if(id != -1){
+            String text = getResources().getString(R.string.value_successfully_saved);
+            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements
         currentCircle.radius = radius;
         bodyView.addPoint(currentCircle);
         launchSymptomForm();
+
     }
 
     private void launchSymptomForm() {
