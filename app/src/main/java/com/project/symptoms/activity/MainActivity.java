@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -131,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements
         currentCircle.radius = radius;
         bodyView.addPoint(currentCircle);
         launchSymptomForm();
+
     }
 
     private void launchSymptomForm() {
