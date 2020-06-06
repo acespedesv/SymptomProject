@@ -46,13 +46,15 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void saveData() {
+        int glucoseValue = Integer.parseInt(measureText.getText().toString());
+        String date = dateView.getText().toString();
+        String hour = timeView.getText().toString();
 
-        GlucoseController glucoseController = new GlucoseController(measureText.getText().toString(), dateView, timeView, GlucoseForm.this);
-        int id = glucoseController.saveData();
+        long id = GlucoseController.getInstance(this).insert(glucoseValue, date, hour);
         Toast.makeText(getApplicationContext(), "ID" + id, Toast.LENGTH_SHORT).show();
 
-        Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        startActivity(mainActivityIntent);
+        /*Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(mainActivityIntent);*/
     }
 
     @Override

@@ -1,23 +1,16 @@
 package com.project.symptoms.Model;
 
-import android.widget.ScrollView;
-
-import java.sql.Time;
-import java.util.Date;
-
 public class Glucose {
     private int id;
     private int value;
-    private String date;
-    private String time;
+    private long datetime;
 
     public Glucose() {
     }
 
-    public Glucose(int value, String date, String time) {
+    public Glucose(int value, long datetime) {
         this.value = value;
-        this.date = date;
-        this.time = time;
+        this.datetime = datetime;
     }
 
     public Glucose(int value) {
@@ -40,19 +33,11 @@ public class Glucose {
         this.value = value;
     }
 
-    public String getDate() {
-        return date;
+    public long getDatetime() {
+        return datetime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDatetime(long datetime) {
+        this.datetime = datetime;
     }
 }
