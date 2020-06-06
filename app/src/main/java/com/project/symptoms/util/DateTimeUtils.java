@@ -136,4 +136,16 @@ public class DateTimeUtils implements
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         updateTimeView(hourOfDay, minute);
     }
+
+    public Date joinDateAndTimeFromStrings(String date, String time) throws Exception{
+        Date dateDate = DATE_FORMATTER.parse(date);
+        Date timeDate = TIME_FORMATTER.parse(time);
+
+        // Join the the date and time in a single Date object
+        Date completeDatetime = new Date(dateDate.getTime());
+        completeDatetime.setHours(timeDate.getHours());
+        completeDatetime.setMinutes(timeDate.getMinutes());
+
+        return completeDatetime;
+    }
 }

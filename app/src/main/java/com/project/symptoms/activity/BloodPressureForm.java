@@ -64,20 +64,10 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
 
         int systolicValue = Integer.parseInt(systolicView.getText().toString());
         int diastolicValue = Integer.parseInt(diastolicView.getText().toString());
+        String time = hourView.getText().toString();
+        String date = dateView.getText().toString();
 
-        Date hour=null, date=null;
-        try{
-            String hourText = hourView.getText().toString();
-            String dateText = dateView.getText().toString();
-            hour = DateTimeUtils.getInstance().TIME_FORMATTER.parse(hourText);
-            date = DateTimeUtils.getInstance().DATE_FORMATTER.parse(dateText);
-        }catch (Exception e){e.printStackTrace();}
-
-        // Join the the date and time in a single Date object
-        Date wholeDatetime = new Date(date.getTime());
-        wholeDatetime.setHours(hour.getHours());
-        wholeDatetime.setMinutes(hour.getMinutes());
-        long id = PressureController.getInstance(this).insert(systolicValue, diastolicValue, wholeDatetime.getTime());
+        long id = PressureController.getInstance(this).insert(systolicValue, diastolicValue, date, time);
 
         if(id != -1){
             String text = getResources().getString(R.string.value_successfully_saved);

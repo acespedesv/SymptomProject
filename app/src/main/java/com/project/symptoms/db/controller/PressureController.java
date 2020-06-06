@@ -5,8 +5,10 @@ import android.content.Context;
 import com.project.symptoms.db.dao.PressureDao;
 import com.project.symptoms.db.dao.PressureDaoImpl;
 import com.project.symptoms.db.model.Pressure;
+import com.project.symptoms.util.DateTimeUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PressureController {
@@ -28,10 +30,12 @@ public class PressureController {
 
 
     // Return the id of the new row
-    public long insert(int systolic, int diastolic, long datetime){
-        Pressure pressure = new Pressure(systolic, diastolic, datetime);
+    public long insert(int systolic, int diastolic, String date, String time){
+
         long newId = -1;
         try{
+            Date completeDatetime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(date, time);
+            Pressure pressure = new Pressure(systolic, diastolic, completeDatetime.getTime());
             newId = pressureDao.insert(pressure);
         }catch (Exception e){
             e.printStackTrace();
