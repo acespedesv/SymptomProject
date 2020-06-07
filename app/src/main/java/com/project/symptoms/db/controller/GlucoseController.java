@@ -2,9 +2,9 @@ package com.project.symptoms.Controller;
 
 import android.content.Context;
 
-import com.project.symptoms.DAO.GlucoseDao;
-import com.project.symptoms.DAO.GlucoseDaoImpl;
-import com.project.symptoms.Model.Glucose;
+import com.project.symptoms.db.dao.GlucoseDao;
+import com.project.symptoms.db.dao.GlucoseDaoImpl;
+import com.project.symptoms.db.model.Glucose;
 import com.project.symptoms.util.DateTimeUtils;
 
 import java.util.Date;
@@ -26,23 +26,10 @@ public class GlucoseController {
 
     public long insert(int glucoseValue, String dateText, String hourText) {
         long newId = -1;
-        Date date = null, hour = null;
-        try {
-            date = DateTimeUtils.getInstance().DATE_FORMATTER.parse(dateText);
-            hour = DateTimeUtils.getInstance().TIME_FORMATTER.parse(hourText);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        // Join the the date and time in a single Date object
-        Date wholeDatetime = new Date(date.getTime());
-        wholeDatetime.setHours(hour.getHours());
-        wholeDatetime.setMinutes(hour.getMinutes());
-
-        //Creates the model
-        Glucose glucose = new Glucose(glucoseValue, wholeDatetime.getTime());
 
         try {
+            Date completeDateTime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(dateText, hourText);
+            Glucose glucose = new Glucose(glucoseValue, completeDateTime.getTime());
             newId = glucoseDao.insert(glucose);
         }catch (Exception e){
             e.printStackTrace();

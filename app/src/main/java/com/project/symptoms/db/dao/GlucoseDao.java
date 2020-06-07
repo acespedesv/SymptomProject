@@ -1,6 +1,6 @@
 package com.project.symptoms.DAO;
 
-import com.project.symptoms.Model.Glucose;
+import com.project.symptoms.db.model.Glucose;
 
 public interface GlucoseDao {
 

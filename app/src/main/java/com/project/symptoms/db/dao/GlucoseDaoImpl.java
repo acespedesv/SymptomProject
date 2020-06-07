@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.project.symptoms.DB.DBHelper;
 import com.project.symptoms.DB.Contract;
-import com.project.symptoms.Model.Glucose;
+import com.project.symptoms.db.model.Glucose;
 
 public class GlucoseDaoImpl implements GlucoseDao{
     private DBHelper dbHelper;
