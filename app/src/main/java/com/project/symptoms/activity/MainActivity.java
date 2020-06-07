@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.project.symptoms.DB.DBHelper;
+import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;

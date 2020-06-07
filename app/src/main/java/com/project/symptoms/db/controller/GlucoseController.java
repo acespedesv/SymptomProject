@@ -1,4 +1,4 @@
-package com.project.symptoms.Controller;
+package com.project.symptoms.db.controller;
 
 import android.content.Context;
 

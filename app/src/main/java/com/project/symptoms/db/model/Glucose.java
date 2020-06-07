@@ -1,4 +1,4 @@
-package com.project.symptoms.Model;
+package com.project.symptoms.db.model;
 
 public class Glucose {
     private int id;

@@ -1,6 +1,5 @@
 package com.project.symptoms.activity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.project.symptoms.Controller.GlucoseController;
+import com.project.symptoms.db.controller.GlucoseController;
 import com.project.symptoms.R;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;

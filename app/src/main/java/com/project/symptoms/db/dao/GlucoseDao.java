@@ -1,4 +1,4 @@
-package com.project.symptoms.DAO;
+package com.project.symptoms.db.dao;
 
 import com.project.symptoms.db.model.Glucose;
 

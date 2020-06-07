@@ -1,14 +1,15 @@
-package com.project.symptoms.DAO;
+package com.project.symptoms.db.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.project.symptoms.DB.DBHelper;
-import com.project.symptoms.DB.Contract;
+import com.project.symptoms.db.Contract;
+import com.project.symptoms.db.DBHelper;
+import com.project.symptoms.db.dao.GlucoseDao;
 import com.project.symptoms.db.model.Glucose;
 
-public class GlucoseDaoImpl implements GlucoseDao{
+public class GlucoseDaoImpl implements GlucoseDao {
     private DBHelper dbHelper;
 
     public GlucoseDaoImpl(Context context) {
