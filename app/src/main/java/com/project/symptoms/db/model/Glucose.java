@@ -5,6 +5,12 @@ public class Glucose {
     private int value;
     private long datetime;
 
+    public Glucose(int id, int value, long datetime) {
+        this.id = id;
+        this.value = value;
+        this.datetime = datetime;
+    }
+
     public Glucose() {
     }
 

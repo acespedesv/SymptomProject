@@ -14,10 +14,11 @@ public class GlucoseController {
     private static GlucoseController instance;
     private static GlucoseDao glucoseDao;
 
-    private GlucoseController(){}
+    private GlucoseController() {
+    }
 
-    public static GlucoseController getInstance(Context context){
-        if(instance == null){
+    public static GlucoseController getInstance(Context context) {
+        if (instance == null) {
             instance = new GlucoseController();
             glucoseDao = new GlucoseDaoImpl(context);
         }
@@ -31,18 +32,44 @@ public class GlucoseController {
             Date completeDateTime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(dateText, hourText);
             Glucose glucose = new Glucose(glucoseValue, completeDateTime.getTime());
             newId = glucoseDao.insert(glucose);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return newId;
     }
 
-    public int deleteData() {
-        /*int id = 2;
-        glucose = new Glucose(id);
-        //Calls the dao
-        glucoseDao = new GlucoseDaoImpl(context);
-        return glucoseDao.delete(glucose.getId());*/
-        return 2;
+    public int delete(int id) {
+        int quantity = -1;
+        try {
+            quantity = glucoseDao.delete(id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+
+    public Glucose select(int id) {
+        Glucose glucose = null;
+        try {
+            glucose = glucoseDao.select(id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return glucose;
+    }
+
+    public int update(int id, int glucoseValue, String dateText, String hourText) {
+        int updatedId = -1;
+
+        try {
+            Date completeDateTime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(dateText, hourText);
+            Glucose glucose = new Glucose(id, glucoseValue, completeDateTime.getTime());
+            updatedId = glucoseDao.update(glucose);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updatedId;
     }
 }

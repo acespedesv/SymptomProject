@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.symptoms.db.controller.GlucoseController;
 import com.project.symptoms.R;
+import com.project.symptoms.db.model.Glucose;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
 
@@ -34,6 +35,12 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
 
         DateTimeUtils.getInstance().registerAsDatePicker(dateView);
         DateTimeUtils.getInstance().registerAsTimePicker(timeView);
+
+
+        /*Glucose glucose = GlucoseController.getInstance(this).select(4);
+        measureText = findViewById(R.id.glucose_measure);
+        measureText.setText(Integer.toString(glucose.getValue()));*/
+
     }
 
     public void onClick(View view) {
@@ -41,6 +48,7 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         //setSupportActionBar(toolbar);
 
         measureText = findViewById(R.id.glucose_measure);
+        //updateData();
         saveData();
     }
 
@@ -54,6 +62,15 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
 
         /*Intent mainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(mainActivityIntent);*/
+    }
+
+    private void updateData() {
+        int glucoseValue = Integer.parseInt(measureText.getText().toString());
+        String date = dateView.getText().toString();
+        String hour = timeView.getText().toString();
+
+        int id = GlucoseController.getInstance(this).update(1, glucoseValue, date, hour);
+        Toast.makeText(getApplicationContext(), "ID" + id, Toast.LENGTH_SHORT).show();
     }
 
     @Override

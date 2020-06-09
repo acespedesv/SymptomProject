@@ -2,11 +2,11 @@ package com.project.symptoms.db.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
-import com.project.symptoms.db.dao.GlucoseDao;
 import com.project.symptoms.db.model.Glucose;
 
 public class GlucoseDaoImpl implements GlucoseDao {
@@ -31,23 +31,59 @@ public class GlucoseDaoImpl implements GlucoseDao {
         return newRowId;
     }
 
-    public boolean update(Glucose glucose) throws Exception {
-        return true;
+    public int update(Glucose glucose) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        //New value for one column
+        ContentValues values = new ContentValues();
+        values.put(Contract.Glucose.COLUMN_NAME_VALUE, glucose.getValue());
+        values.put(Contract.Glucose.COLUMN_NAME_DATETIME, glucose.getDatetime());
+
+        String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {Integer.toString(glucose.getId())};
+
+        int count = db.update(Contract.Glucose.TABLE_NAME, values, selection, selectionArgs);
+        return count;
     }
 
-    public int delete(int id) throws Exception{
-
+    public int delete(int id) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Define 'where' part of query.
         String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
         // Specify arguments in placeholder order.
-        String[] selectionArgs = {"" + id};
+        String[] selectionArgs = {Integer.toString(id)};
         // Issue SQL statement.
-        //int deletedRows = db.delete(Contract.Glucose.TABLE_NAME, selection, selectionArgs);
-
-        return 0; //deletedRows;
+        return db.delete(Contract.Glucose.TABLE_NAME, selection, selectionArgs); //deletedRows;
     }
 
-    public boolean select(int id) throws Exception {
-        return true;
+    public Glucose select(int id) throws Exception {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] columns = {
+                //BaseColumns._ID,
+                Contract.Glucose.COLUMN_NAME_VALUE,
+                Contract.Glucose.COLUMN_NAME_DATETIME
+        };
+
+        String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {"" + id};
+
+        /*String sortOrder =
+                FeedEntry.COLUMN_NAME_SUBTITLE + " DESC";*/
+
+        Cursor cursor = db.query(
+                Contract.Glucose.TABLE_NAME,   // The table to query
+                columns,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                  // don't filter by row groups
+                null               // The sort order
+        );
+
+        cursor.moveToFirst();
+        String value = cursor.getString(0);
+        String dateTime = cursor.getString(1);
+        return new Glucose(id, Integer.parseInt(value), Long.parseLong(dateTime));
     }
 }
