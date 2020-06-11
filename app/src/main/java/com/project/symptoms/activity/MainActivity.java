@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
 import com.project.symptoms.fragment.BodyFragment;
 import com.project.symptoms.fragment.CalendarFragment;
+import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.view.BodyView;
 
 public class MainActivity extends AppCompatActivity implements
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        TextView dateTextView = findViewById(R.id.current_date);
+        DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
 
     }
 
