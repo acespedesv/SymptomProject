@@ -38,7 +38,6 @@ public class DateTimeUtils implements
 
     }
 
-
     public static DateTimeUtils getInstance(){
         if( instance == null)
             instance = new DateTimeUtils();
@@ -69,6 +68,27 @@ public class DateTimeUtils implements
 
         updateDateView(current_year, current_month, current_day);
 
+    }
+
+    public String getCurrentDate(){
+        int current_year = Calendar.getInstance().get(Calendar.YEAR);
+        int current_month = Calendar.getInstance().get(Calendar.MONTH);
+        int current_day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        String date = "";
+        try{
+            current_month++; // BECAUSE MONTHS START COUNTING AT ZERO
+            date =  DATE_FORMATTER.format(DATE_PARSER.parse(current_year+"/"+current_month+"/"+current_day));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public String getCurrentTime(){
+        int current_hour = Calendar.getInstance().get(Calendar.HOUR);
+        int current_minute = Calendar.getInstance().get(Calendar.MINUTE);
+        String text =  TIME_FORMATTER.format(new Date(0,0,0, current_hour, current_minute));
     }
 
     public void registerAsTimePicker(TextView v){

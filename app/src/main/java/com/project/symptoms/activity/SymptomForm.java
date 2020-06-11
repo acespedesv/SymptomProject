@@ -8,29 +8,67 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.symptoms.R;
+import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.view.BodyView;
+
+import java.util.ArrayList;
 
 public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
+    private Button saveButton;
+    private ArrayList<BodyView.Circle> currentCircles;
+    private BodyView.Circle currentCircle;
+    private String date, time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.symptom_form);
-
         loadSymptomCategories();
-
+        saveButton = findViewById(R.id.save_button);
         setupPickers();
+        setUpListeners();
+    }
 
+    private void setUpBundleData(){
+        currentCircle = getIntent().getParcelableExtra("Circle");
+        date = getIntent().getStringExtra("Date");
+        time = getIntent().getStringExtra("Time");
+    }
 
+    // Read circles data from Bundle and rebuild the array list
+    private void initCircles(Bundle bundle) {
+        currentCircles = new ArrayList<>();
+        for (int i = 0; i < bundle.size(); i++){ currentCircles.add((BodyView.Circle)bundle.getParcelable("Circle_"+i)); }
+    }
+
+    private void setUpListeners(){
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSymptomsData();
+            }
+        });
+    }
+
+    private void saveSymptomsData() {
+        setUpBundleData(); // Initialize attributes just before inserting data
+        long newId = SymptomController.getInstance(this).insert(currentCircle.x, currentCircle.y, currentCircle.radius, date, time);
+        if(newId != -1){
+            String text = getResources().getString(R.string.value_successfully_saved);
+            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setupPickers() {
@@ -42,7 +80,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void loadSymptomCategories() {
-        SymptomOption dolores[] = {
+        SymptomOption[] dolores = {
                 new SymptomOption(R.drawable.ic_agudo, "Agudo"),
                 new SymptomOption(R.drawable.ic_punzante, "Punzante"),
                 new SymptomOption(R.drawable.ic_palpitante, "Palpitante"),
@@ -50,7 +88,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 new SymptomOption(R.drawable.ic_electrico, "Eléctrico")
         };
 
-        SymptomOption digestivos[] = {
+        SymptomOption[] digestivos = {
                 new SymptomOption(R.drawable.ic_nauseas, "Nauseas"),
                 new SymptomOption(R.drawable.ic_mal_aliento, "Mal aliento"),
                 new SymptomOption(R.drawable.ic_agruras, "Agruras"),
@@ -66,7 +104,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 new SymptomOption(R.drawable.ic_ulceras_bucales, "Úlceras bucales")
         };
 
-        SymptomOption respiratorio[] = {
+        SymptomOption[] respiratorio = {
                 new SymptomOption(R.drawable.ic_falta_de_aire, "Falta de aire"),
                 new SymptomOption(R.drawable.ic_catarro, "Catarro"),
                 new SymptomOption(R.drawable.ic_tos, "Tos"),
@@ -76,7 +114,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 new SymptomOption(R.drawable.ic_silbido, "Silbido")
         };
 
-        SymptomOption sensorial[] = {
+        SymptomOption[] sensorial = {
                 new SymptomOption(R.drawable.ic_mareos, "Mareo"),
                 new SymptomOption(R.drawable.ic_alteraciones_visuales, "Alteraciones Visuales"),
                 new SymptomOption(R.drawable.ic_alteraciones_auditivas, "Alteraciones Auditivas"),
@@ -88,7 +126,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         };
 
 
-        SymptomOption nervioso[] = {
+        SymptomOption[] nervioso = {
                 new SymptomOption(R.drawable.ic_ansiedad, "Ansiedad"),
                 new SymptomOption(R.drawable.ic_depresion, "Depresión"),
                 new SymptomOption(R.drawable.ic_insomnio, "Insomnio"),
@@ -97,7 +135,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 new SymptomOption(R.drawable.ic_agotamiento, "Agotamiento")
         };
 
-        SymptomOption dermatologico[] = {
+        SymptomOption[] dermatologico = {
                 new SymptomOption(R.drawable.ic_hematoma, "Hematomas"),
                 new SymptomOption(R.drawable.ic_sarpullido, "Sarpullido/Erupción"),
                 new SymptomOption(R.drawable.ic_manchas, "Manchas"),
@@ -110,14 +148,14 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 new SymptomOption(R.drawable.ic_comeson, "Comezón"),
         };
 
-        SymptomOption actividadesDetonantes[] = {
+        SymptomOption[] actividadesDetonantes = {
                 new SymptomOption(R.drawable.ic_despertar, "Al despertar"),
                 new SymptomOption(R.drawable.ic_dormir, "Al dormir"),
                 new SymptomOption(R.drawable.ic_durante_actividad_fisica, "Durante actividad física"),
                 new SymptomOption(R.drawable.ic_despues_de_actividad, "Post actividad física")
         };
 
-        SymptomOption emocionesDetonantes[] = {
+        SymptomOption[] emocionesDetonantes = {
                 new SymptomOption(R.drawable.ic_susto, "Susto"),
                 new SymptomOption(R.drawable.ic_enojo, "Enojo"),
                 new SymptomOption(R.drawable.ic_tristeza, "Tristeza"),
@@ -125,7 +163,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 new SymptomOption(R.drawable.ic_angustia, "Angustia")
         };
 
-        SymptomOption sensacionClimatica[] = {
+        SymptomOption[] sensacionClimatica = {
                 new SymptomOption(R.drawable.ic_frio, "Frio"),
                 new SymptomOption(R.drawable.ic_calor, "Calor"),
                 new SymptomOption(R.drawable.ic_humedad, "Humedad"),

@@ -1,22 +1,20 @@
 package com.project.symptoms.db.model;
 
-import java.util.Date;
-
-public class Pressure{
+public class PressureModel {
 
     private int pressure_id;
     private int systolic;
     private int diastolic;
     private long datetime;
 
-    public Pressure(int pressure_id, int systolic, int diastolic, long datetime){
+    public PressureModel(int pressure_id, int systolic, int diastolic, long datetime){
         this.pressure_id = pressure_id;
         this.systolic = systolic;
         this.diastolic = diastolic;
         this.datetime = datetime;
     }
 
-    public Pressure(int systolic, int diastolic, long datetime){
+    public PressureModel(int systolic, int diastolic, long datetime){
         this(0, systolic, diastolic, datetime);
     }
 

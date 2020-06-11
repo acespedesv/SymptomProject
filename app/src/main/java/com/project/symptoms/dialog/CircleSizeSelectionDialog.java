@@ -16,8 +16,8 @@ public class CircleSizeSelectionDialog extends BottomSheetDialog {
     private int MAX_SEEKBAR_VALUE = 100;
     private int MIN_SEEKBAR_VALUE = 10;
 
-    private OnCircleSizeSelectedListener sizeSelectedLister;
-    private OnCircleSizeUpdatedListener sizeUpdateLister;
+    private OnCircleSizeSelectedListener sizeSelectedListener;
+    private OnCircleSizeUpdatedListener sizeUpdatedListener;
 
     private SeekBar seekBar;
 
@@ -52,7 +52,7 @@ public class CircleSizeSelectionDialog extends BottomSheetDialog {
             @Override
             public void onClick(View view) {
                 float currentSize = Integer.valueOf(seekBar.getProgress()).floatValue();
-                sizeSelectedLister.OnCircleSizeSelected(currentSize);
+                sizeSelectedListener.OnCircleSizeSelected(currentSize);
             }
         });
     }
@@ -71,7 +71,7 @@ public class CircleSizeSelectionDialog extends BottomSheetDialog {
 
                 float currentSize = Integer.valueOf(i).floatValue();
 
-                sizeUpdateLister.OnCircleSizeUpdate(currentSize);
+                sizeUpdatedListener.OnCircleSizeUpdate(currentSize);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -85,11 +85,11 @@ public class CircleSizeSelectionDialog extends BottomSheetDialog {
     }
 
     public void setOnCircleSizeUpdateListener(OnCircleSizeUpdatedListener sizeUpdateListener){
-        this.sizeUpdateLister = sizeUpdateListener;
+        this.sizeUpdatedListener = sizeUpdateListener;
     }
 
     public void setOnCircleSelectedListener(OnCircleSizeSelectedListener sizeSelectedListener){
-        this.sizeSelectedLister = sizeSelectedListener;
+        this.sizeSelectedListener = sizeSelectedListener;
     }
 
 

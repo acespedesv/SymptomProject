@@ -1,6 +1,5 @@
 package com.project.symptoms.activity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,14 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.project.symptoms.db.controller.PressureController;
-import com.project.symptoms.db.model.Pressure;
 import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 public class BloodPressureForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 

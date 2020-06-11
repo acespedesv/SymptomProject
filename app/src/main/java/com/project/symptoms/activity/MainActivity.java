@@ -22,6 +22,8 @@ import com.project.symptoms.fragment.CalendarFragment;
 import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.view.BodyView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements
         CalendarFragment.OnFragmentInteractionListener,
         BodyFragment.OnFragmentInteractionListener,
@@ -29,10 +31,11 @@ public class MainActivity extends AppCompatActivity implements
         CircleSizeSelectionDialog.OnCircleSizeSelectedListener,
         CircleSizeSelectionDialog.OnCircleSizeUpdatedListener {
 
-    BodyView bodyView;
-    Toolbar toolbar;
-    CircleSizeSelectionDialog sizeSelectionDialog;
-    BodyView.Circle currentCircle;
+    private BodyView bodyView;
+    private Toolbar toolbar;
+    private CircleSizeSelectionDialog sizeSelectionDialog;
+    private BodyView.Circle currentCircle;
+    private TextView dateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        TextView dateTextView = findViewById(R.id.current_date);
+        dateTextView = findViewById(R.id.current_date);
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
 
     }
@@ -137,7 +140,18 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    // Create new intent and send current circles information through Bundle
     private void launchSymptomForm() {
-        startActivity(new Intent(this, SymptomForm.class));
+        Intent newIntent = new Intent(this, SymptomForm.class);
+        Bundle data = new Bundle();
+        data.putParcelable("Circle", currentCircle);
+        data.putString("Date", dateTextView.getText().toString());
+        data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
+//        ArrayList<BodyView.Circle> currentCircles = bodyView.getPoints();
+//        for (int i = 0; i < currentCircles.size(); i++){
+//            data.putParcelable("Circle_" + 1, currentCircles.get(i));
+//        }
+        newIntent.putExtras(data);
+        startActivity(newIntent);
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.project.symptoms.db.dao.PressureDao;
 import com.project.symptoms.db.dao.PressureDaoImpl;
-import com.project.symptoms.db.model.Pressure;
+import com.project.symptoms.db.model.PressureModel;
 import com.project.symptoms.util.DateTimeUtils;
 
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ public class PressureController {
         long newId = -1;
         try{
             Date completeDatetime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(date, time);
-            Pressure pressure = new Pressure(systolic, diastolic, completeDatetime.getTime());
-            newId = pressureDao.insert(pressure);
+            PressureModel pressureModel = new PressureModel(systolic, diastolic, completeDatetime.getTime());
+            newId = pressureDao.insert(pressureModel);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -58,8 +58,8 @@ public class PressureController {
     // Return if whether succeeded or not
     public boolean update(long pressureId, int systolic, int diastolic, long datetime){
         try {
-            Pressure newPressure = new Pressure(systolic, diastolic, datetime);
-            pressureDao.update(pressureId, newPressure);
+            PressureModel newPressureModel = new PressureModel(systolic, diastolic, datetime);
+            pressureDao.update(pressureId, newPressureModel);
             return true;
         }catch (Exception e ){
             e.printStackTrace();
@@ -67,8 +67,8 @@ public class PressureController {
         }
     }
 
-    public List<Pressure> listAll(){
-        List<Pressure> result = new ArrayList<>();
+    public List<PressureModel> listAll(){
+        List<PressureModel> result = new ArrayList<>();
         try{
             result = pressureDao.listAll();
         }catch (Exception e){
