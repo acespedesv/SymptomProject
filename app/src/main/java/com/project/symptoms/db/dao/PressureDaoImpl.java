@@ -43,7 +43,7 @@ public class PressureDaoImpl implements PressureDao {
         return result;
     }
 
-    List<PressureModel> buildListFromCursor(Cursor cursor){
+    private List<PressureModel> buildListFromCursor(Cursor cursor){
         List<PressureModel> result = new ArrayList<>();
         int id, systolic, diastolic;
         long datetime;

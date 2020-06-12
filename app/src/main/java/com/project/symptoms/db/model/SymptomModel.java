@@ -3,21 +3,23 @@ package com.project.symptoms.db.model;
 public class SymptomModel {
     private int symptomId;
     private float circlePosX, circlePosY;
-    private long creationDateTime;
+    private long creationDate, creationTime;
     private float circleRadius;
 
-    public SymptomModel(int symptomId, int circlePosX, int circlePosY, long creationDateTime, float circleRadius) {
+    public SymptomModel(int symptomId, float circlePosX, float circlePosY, long creationDate, long creationTime, float circleRadius) {
         this.symptomId = symptomId;
         this.circlePosX = circlePosX;
         this.circlePosY = circlePosY;
-        this.creationDateTime = creationDateTime;
+        this.creationDate = creationDate;
+        this.creationTime = creationTime;
         this.circleRadius = circleRadius;
     }
 
-    public SymptomModel(float circlePosX, float circlePosY, long creationDateTime, float circleRadius) {
+    public SymptomModel(float circlePosX, float circlePosY, long creationDate, long creationTime, float circleRadius) {
         this.circlePosX = circlePosX;
         this.circlePosY = circlePosY;
-        this.creationDateTime = creationDateTime;
+        this.creationDate = creationDate;
+        this.creationTime = creationTime;
         this.circleRadius = circleRadius;
     }
 
@@ -37,13 +39,15 @@ public class SymptomModel {
         this.circlePosY = circlePosY;
     }
 
-    public long getCreationDateTime() {
-        return creationDateTime;
+    public long getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreationDateTime(long creationDateTime) {
-        this.creationDateTime = creationDateTime;
-    }
+    public void setCreationDate(long creationDate) { this.creationDate = creationDate; }
+
+    public long getCreationTime() { return creationTime; }
+
+    public void setCreationTime(long creationTime) { this.creationTime = creationTime; }
 
     public float getCircleRadius() {
         return circleRadius;

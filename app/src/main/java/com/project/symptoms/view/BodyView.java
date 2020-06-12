@@ -79,6 +79,14 @@ public class BodyView extends View {
         invalidate();
     }
 
+    public void addPoints(ArrayList<Circle> circles){
+        for (Circle circle: circles) {
+            points.add(new Circle(circle.x, circle.y, circle.radius));
+        }
+        circles.clear();
+        invalidate();
+    }
+
     public void setTemporaryPoint(Circle point){
         temporaryPoint = point;
         invalidate();

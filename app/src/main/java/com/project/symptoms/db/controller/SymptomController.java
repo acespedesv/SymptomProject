@@ -5,7 +5,9 @@ import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class SymptomController {
 
@@ -26,13 +28,34 @@ public class SymptomController {
 
         long newId = -1;
         try{
-            Date completeDatetime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(date, time);
-            SymptomModel symptomModel = new SymptomModel(posX, posY, completeDatetime.getTime(), circleRadius);
+            Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
+            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
+            SymptomModel symptomModel = new SymptomModel(posX, posY, finalDate.getTime(), finalTime.getTime(), circleRadius);
             newId = symptomDao.insert(symptomModel);
         }catch (Exception e){
             e.printStackTrace();
         }
         return newId;
+    }
+
+    public List<SymptomModel> listAll(){
+        List<SymptomModel> result = new ArrayList<>();
+        try{
+            result = symptomDao.listAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<SymptomModel> listAll(long date){
+        List<SymptomModel> result = new ArrayList<>();
+        try{
+            result = symptomDao.listAll(date);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

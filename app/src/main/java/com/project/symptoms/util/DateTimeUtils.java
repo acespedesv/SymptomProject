@@ -8,6 +8,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -158,14 +159,16 @@ public class DateTimeUtils implements
     }
 
     public Date joinDateAndTimeFromStrings(String date, String time) throws Exception{
-        Date dateDate = DATE_FORMATTER.parse(date);
-        Date timeDate = TIME_FORMATTER.parse(time);
-
+        Date dateDate = getDateFromString(date);
+        Date timeDate = getTimeFromString(time);
         // Join the the date and time in a single Date object
         Date completeDatetime = new Date(dateDate.getTime());
-        completeDatetime.setHours(timeDate.getHours());
-        completeDatetime.setMinutes(timeDate.getMinutes());
-
+        completeDatetime.setTime(timeDate.getTime());
         return completeDatetime;
     }
+
+    public Date getDateFromString(String date) throws ParseException { return DATE_FORMATTER.parse(date); }
+
+    public Date getTimeFromString(String time) throws ParseException { return TIME_FORMATTER.parse(time); }
+
 }

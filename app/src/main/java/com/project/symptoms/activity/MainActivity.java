@@ -8,12 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.project.symptoms.db.controller.SymptomController;
+import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
@@ -22,7 +26,10 @@ import com.project.symptoms.fragment.CalendarFragment;
 import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.view.BodyView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
         CalendarFragment.OnFragmentInteractionListener,
@@ -44,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements
         init();
 
     }
-
 
     private void launchBodySelection(){
         startActivity(new Intent(this, BodySelection.class));
@@ -77,6 +83,38 @@ public class MainActivity extends AppCompatActivity implements
         dateTextView = findViewById(R.id.current_date);
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
 
+        // Capture when text view to be able to update the symptoms showed in the body view
+        dateTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    updateSymptomsInBodyView();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    // Get all symptoms for current date from DB and add them to the BodyView
+    private void updateSymptomsInBodyView() throws ParseException {
+        // Get current date from text view to filter the data in DB
+        Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
+        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime());
+
+        // Instantiate new circles from DB data and add them to the BodyView
+        ArrayList<BodyView.Circle> circles = new ArrayList<>();
+        for (SymptomModel symptomModel: symptomModels) {
+            BodyView.Circle currentCircle = new BodyView.Circle(symptomModel.getCirclePosX(), symptomModel.getCirclePosY(), symptomModel.getCircleRadius());
+            circles.add(currentCircle);
+        }
+
+        bodyView.addPoints(circles);
     }
 
     @Override
@@ -108,8 +146,6 @@ public class MainActivity extends AppCompatActivity implements
             sizeSelectionDialog.setOnCircleSizeUpdateListener(this);
         }
         sizeSelectionDialog.show();
-
-
     }
 
     @Override
@@ -122,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements
         currentCircle.y = y;
         bodyView.setTemporaryPoint(currentCircle);
         launchCircleSizeSelectionDialog();
-
     }
 
     @Override
@@ -137,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements
         currentCircle.radius = radius;
         bodyView.addPoint(currentCircle);
         launchSymptomForm();
-
     }
 
     // Create new intent and send current circles information through Bundle
