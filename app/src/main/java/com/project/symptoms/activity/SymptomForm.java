@@ -3,6 +3,8 @@ package com.project.symptoms.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.project.symptoms.R;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.view.SymptomOptionView;
 
 public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
@@ -205,17 +208,9 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     private View createViewFromOption(SymptomOption option){
         LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
-
-        View view = inflater.inflate(R.layout.symptom_option,null);
-        RelativeLayout relativeLayout = (RelativeLayout)view;
-
-        ImageView icon = relativeLayout.findViewWithTag("icon");
-        icon.setImageResource(option.imageResId);
-
-        TextView label = relativeLayout.findViewWithTag("label");
-        label.setText(option.label);
-
-        return view;
+        SymptomOptionView optionView =  new SymptomOptionView(this);
+        optionView.setSymptomOption(option);
+        return optionView;
     }
 
     @Override
@@ -226,9 +221,9 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     /**
      * A simple data-only class for representing each symptom option in the form
      */
-    private class SymptomOption {
-        int imageResId;
-        String label;
+    public class SymptomOption {
+        public int imageResId;
+        public String label;
 
         public SymptomOption(int resId, String label){
             this.imageResId = resId;
