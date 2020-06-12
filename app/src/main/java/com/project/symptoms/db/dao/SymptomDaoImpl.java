@@ -20,10 +20,10 @@ public class SymptomDaoImpl implements SymptomDao{
     public long insert(SymptomModel symptomModel) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Contract.Pressure.COLUMN_NAME_DIASTOLIC, symptomModel.getCirclePosX());
-        values.put(Contract.Pressure.COLUMN_NAME_SYSTOLIC, symptomModel.getCirclePosY());
-        values.put(Contract.Pressure.COLUMN_NAME_DATETIME, symptomModel.getCreationDateTime());
-        values.put(Contract.Pressure.COLUMN_NAME_DATETIME, symptomModel.getCircleRadius());
+        values.put(Contract.Symptom_TMP.COLUMN_NAME_POS_X, symptomModel.getCirclePosX());
+        values.put(Contract.Symptom_TMP.COLUMN_NAME_POS_Y, symptomModel.getCirclePosY());
+        values.put(Contract.Symptom_TMP.COLUMN_NAME_CREATION_DATE, symptomModel.getCreationDateTime());
+        values.put(Contract.Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS, symptomModel.getCircleRadius());
         long newId = db.insert(Contract.Symptom_TMP.TABLE_NAME,null, values);
         db.close();
         return newId;
