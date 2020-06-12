@@ -88,7 +88,7 @@ public class DateTimeUtils implements
     public String getCurrentTime(){
         int current_hour = Calendar.getInstance().get(Calendar.HOUR);
         int current_minute = Calendar.getInstance().get(Calendar.MINUTE);
-        String text =  TIME_FORMATTER.format(new Date(0,0,0, current_hour, current_minute));
+        return TIME_FORMATTER.format(new Date(0,0,0, current_hour, current_minute));
     }
 
     public void registerAsTimePicker(TextView v){
