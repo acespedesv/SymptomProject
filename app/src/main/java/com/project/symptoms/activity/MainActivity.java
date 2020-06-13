@@ -49,7 +49,11 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-
+        try {
+            updateSymptomsInBodyView();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void launchBodySelection(){
@@ -107,14 +111,14 @@ public class MainActivity extends AppCompatActivity implements
         Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
         List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime());
 
-        // Instantiate new circles from DB data and add them to the BodyView
+        // Instantiate new circles from DB data and replace them in the BodyView
         ArrayList<BodyView.Circle> circles = new ArrayList<>();
         for (SymptomModel symptomModel: symptomModels) {
             BodyView.Circle currentCircle = new BodyView.Circle(symptomModel.getCirclePosX(), symptomModel.getCirclePosY(), symptomModel.getCircleRadius());
             circles.add(currentCircle);
         }
 
-        bodyView.addPoints(circles);
+        bodyView.replacePoints(circles);
     }
 
     @Override
@@ -181,10 +185,6 @@ public class MainActivity extends AppCompatActivity implements
         data.putParcelable("Circle", currentCircle);
         data.putString("Date", dateTextView.getText().toString());
         data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
-//        ArrayList<BodyView.Circle> currentCircles = bodyView.getPoints();
-//        for (int i = 0; i < currentCircles.size(); i++){
-//            data.putParcelable("Circle_" + 1, currentCircles.get(i));
-//        }
         newIntent.putExtras(data);
         startActivity(newIntent);
     }
