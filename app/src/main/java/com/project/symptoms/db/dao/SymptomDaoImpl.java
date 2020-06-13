@@ -25,7 +25,7 @@ public class SymptomDaoImpl implements SymptomDao{
         values.put(Contract.Symptom_TMP.COLUMN_NAME_POS_X, symptomModel.getCirclePosX());
         values.put(Contract.Symptom_TMP.COLUMN_NAME_POS_Y, symptomModel.getCirclePosY());
         values.put(Contract.Symptom_TMP.COLUMN_NAME_CREATION_DATE, symptomModel.getCreationDate());
-        values.put(Contract.Symptom_TMP.COLUMN_NAME_CREATION_DATE, symptomModel.getCreationTime());
+        values.put(Contract.Symptom_TMP.COLUMN_NAME_CREATION_TIME, symptomModel.getCreationTime());
         values.put(Contract.Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS, symptomModel.getCircleRadius());
         long newId = db.insert(Contract.Symptom_TMP.TABLE_NAME,null, values);
         db.close();
@@ -41,7 +41,7 @@ public class SymptomDaoImpl implements SymptomDao{
             id = cursor.getInt(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_ID_PK));
             circlePosX = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_POS_X));
             circlePosY = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_POS_Y));
-            circleRadius = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_POS_Y));
+            circleRadius = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS));
             date = cursor.getLong(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CREATION_DATE));
             time = cursor.getLong(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CREATION_TIME));
             result.add(new SymptomModel(id, circlePosX, circlePosY, date, time, circleRadius));

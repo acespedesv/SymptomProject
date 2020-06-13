@@ -80,6 +80,7 @@ public class BodyView extends View {
     }
 
     public void replacePoints(ArrayList<Circle> circles){
+        temporaryPoint = null;
         points.clear();
         for (Circle circle: circles) {
             points.add(new Circle(circle.x, circle.y, circle.radius));
