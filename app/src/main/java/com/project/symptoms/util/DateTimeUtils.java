@@ -163,7 +163,8 @@ public class DateTimeUtils implements
         Date timeDate = getTimeFromString(time);
         // Join the the date and time in a single Date object
         Date completeDatetime = new Date(dateDate.getTime());
-        completeDatetime.setTime(timeDate.getTime());
+        completeDatetime.setHours(timeDate.getHours());
+        completeDatetime.setMinutes(timeDate.getMinutes());
         return completeDatetime;
     }
 
