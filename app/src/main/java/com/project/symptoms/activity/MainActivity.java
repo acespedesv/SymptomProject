@@ -15,9 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SymptomModel;
+import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
@@ -44,10 +44,13 @@ public class MainActivity extends AppCompatActivity implements
     private BodyView.Circle currentCircle;
     private TextView dateTextView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Create the database
+        DBHelper database = new DBHelper(this);
         init();
         try {
             updateSymptomsInBodyView();
