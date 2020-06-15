@@ -23,6 +23,7 @@ import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.view.BodyView;
+import com.project.symptoms.view.SymptomOptionView;
 
 import java.util.ArrayList;
 
