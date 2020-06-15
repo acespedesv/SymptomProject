@@ -31,14 +31,13 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_pressure_form);
-        init();
-
 
         TextView hour = findViewById(R.id.hour_pressure);
         DateTimeUtils.getInstance().registerAsTimePicker(hour);
 
         TextView date = findViewById(R.id.date_pressure);
         DateTimeUtils.getInstance().registerAsDatePicker(date);
+        init();
 
     }
 
