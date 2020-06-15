@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -77,10 +79,22 @@ public class BodyView extends View {
         invalidate();
     }
 
+    public void replacePoints(ArrayList<Circle> circles){
+        temporaryPoint = null;
+        points.clear();
+        for (Circle circle: circles) {
+            points.add(new Circle(circle.x, circle.y, circle.radius));
+        }
+        circles.clear();
+        invalidate();
+    }
+
     public void setTemporaryPoint(Circle point){
         temporaryPoint = point;
         invalidate();
     }
+
+    public ArrayList<Circle> getPoints(){ return points; }
 
     private void init(){
         redBrush = new Paint();
@@ -221,7 +235,8 @@ public class BodyView extends View {
     }
 
     // Data-Only class
-    public static class Circle{
+    // Implements Parcelable to be able to send an instance trough Bundle between intents
+    public static class Circle implements Parcelable {
         public float x;
         public float y;
         public float radius;
@@ -232,5 +247,34 @@ public class BodyView extends View {
             this.radius = radius;
         }
 
+        protected Circle(Parcel in) {
+            x = in.readFloat();
+            y = in.readFloat();
+            radius = in.readFloat();
+        }
+
+        public static final Creator<Circle> CREATOR = new Creator<Circle>() {
+            @Override
+            public Circle createFromParcel(Parcel in) {
+                return new Circle(in);
+            }
+
+            @Override
+            public Circle[] newArray(int size) {
+                return new Circle[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeFloat(x);
+            dest.writeFloat(y);
+            dest.writeFloat(radius);
+        }
     }
 }

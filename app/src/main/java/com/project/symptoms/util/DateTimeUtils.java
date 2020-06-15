@@ -8,6 +8,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,7 +38,6 @@ public class DateTimeUtils implements
     private DateTimeUtils(){
 
     }
-
 
     public static DateTimeUtils getInstance(){
         if( instance == null)
@@ -69,6 +69,27 @@ public class DateTimeUtils implements
 
         updateDateView(current_year, current_month, current_day);
 
+    }
+
+    public String getCurrentDate(){
+        int current_year = Calendar.getInstance().get(Calendar.YEAR);
+        int current_month = Calendar.getInstance().get(Calendar.MONTH);
+        int current_day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        String date = "";
+        try{
+            current_month++; // BECAUSE MONTHS START COUNTING AT ZERO
+            date =  DATE_FORMATTER.format(DATE_PARSER.parse(current_year+"/"+current_month+"/"+current_day));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public String getCurrentTime(){
+        int current_hour = Calendar.getInstance().get(Calendar.HOUR);
+        int current_minute = Calendar.getInstance().get(Calendar.MINUTE);
+        return TIME_FORMATTER.format(new Date(0,0,0, current_hour, current_minute));
     }
 
     public void registerAsTimePicker(TextView v){
@@ -138,14 +159,16 @@ public class DateTimeUtils implements
     }
 
     public Date joinDateAndTimeFromStrings(String date, String time) throws Exception{
-        Date dateDate = DATE_FORMATTER.parse(date);
-        Date timeDate = TIME_FORMATTER.parse(time);
-
+        Date dateDate = getDateFromString(date);
+        Date timeDate = getTimeFromString(time);
         // Join the the date and time in a single Date object
         Date completeDatetime = new Date(dateDate.getTime());
-        completeDatetime.setHours(timeDate.getHours());
-        completeDatetime.setMinutes(timeDate.getMinutes());
-
+        completeDatetime.setTime(timeDate.getTime());
         return completeDatetime;
     }
+
+    public Date getDateFromString(String date) throws ParseException { return DATE_FORMATTER.parse(date); }
+
+    public Date getTimeFromString(String time) throws ParseException { return TIME_FORMATTER.parse(time); }
+
 }

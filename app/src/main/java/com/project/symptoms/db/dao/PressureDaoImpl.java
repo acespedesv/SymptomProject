@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
-import com.project.symptoms.db.model.Pressure;
+import com.project.symptoms.db.model.PressureModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +22,12 @@ public class PressureDaoImpl implements PressureDao {
 
 
     @Override
-    public long insert(Pressure pressure) throws Exception {
+    public long insert(PressureModel pressureModel) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Contract.Pressure.COLUMN_NAME_DIASTOLIC, pressure.getDiastolic());
-        values.put(Contract.Pressure.COLUMN_NAME_SYSTOLIC, pressure.getSystolic());
-        values.put(Contract.Pressure.COLUMN_NAME_DATETIME, pressure.getDatetime());
+        values.put(Contract.Pressure.COLUMN_NAME_DIASTOLIC, pressureModel.getDiastolic());
+        values.put(Contract.Pressure.COLUMN_NAME_SYSTOLIC, pressureModel.getSystolic());
+        values.put(Contract.Pressure.COLUMN_NAME_DATETIME, pressureModel.getDatetime());
         long newId = db.insert(Contract.Pressure.TABLE_NAME,null, values);
         db.close();
         return newId;
@@ -35,16 +35,16 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public List<Pressure> listAll() throws Exception {
+    public List<PressureModel> listAll() throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, null);
-        List<Pressure> result = buildListFromCursor(cursor);
+        List<PressureModel> result = buildListFromCursor(cursor);
         db.close();
         return result;
     }
 
-    List<Pressure> buildListFromCursor(Cursor cursor){
-        List<Pressure> result = new ArrayList<>();
+    private List<PressureModel> buildListFromCursor(Cursor cursor){
+        List<PressureModel> result = new ArrayList<>();
         int id, systolic, diastolic;
         long datetime;
         while(cursor.moveToNext()){
@@ -52,7 +52,7 @@ public class PressureDaoImpl implements PressureDao {
             systolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_SYSTOLIC));
             diastolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DIASTOLIC));
             datetime = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DATETIME));
-            result.add(new Pressure(id, systolic, diastolic, datetime));
+            result.add(new PressureModel(id, systolic, diastolic, datetime));
         }
         return result;
     }
@@ -63,7 +63,7 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public boolean update(long id, Pressure newValues) throws Exception {
+    public boolean update(long id, PressureModel newValues) throws Exception {
         return true;
     }
 

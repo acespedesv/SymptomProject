@@ -9,6 +9,28 @@ public class Contract {
     private Contract() {
     }
 
+    public static class Symptom_TMP implements BaseColumns {
+        public static final String TABLE_NAME = "symptom_tmp";
+        public static final String COLUMN_NAME_ID_PK = "symptom_id";
+        public static final String COLUMN_NAME_POS_X = "circle_pos_X";
+        public static final String COLUMN_NAME_POS_Y = "circle_pos_Y";
+        public static final String COLUMN_NAME_CREATION_DATE = "creation_date";
+        public static final String COLUMN_NAME_CREATION_TIME = "creation_time";
+        public static final String COLUMN_NAME_CIRCLE_RADIUS = "circle_radius";
+    }
+
+    public static final String SQL_CREATE_SYMPTOM_TMP =
+            "CREATE TABLE " + Symptom_TMP.TABLE_NAME + " (" +
+                    Symptom_TMP.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    Symptom_TMP.COLUMN_NAME_POS_X + " REAL," +
+                    Symptom_TMP.COLUMN_NAME_POS_Y + " REAL," +
+                    Symptom_TMP.COLUMN_NAME_CREATION_DATE + " INTEGER," +
+                    Symptom_TMP.COLUMN_NAME_CREATION_TIME + " INTEGER," +
+                    Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS + " REAL)";
+
+    public static final String SQL_DELETE_SYMPTOM_TMP =
+            "DROP TABLE IF EXISTS " + Symptom_TMP.TABLE_NAME;
+
     /* Inner class that defines the table contents */
     public static class Symptom implements BaseColumns {
         public static final String TABLE_NAME = "symptom";
@@ -102,7 +124,7 @@ public class Contract {
                     Pressure.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     Pressure.COLUMN_NAME_SYSTOLIC + " INTEGER," +
                     Pressure.COLUMN_NAME_DIASTOLIC + " INTEGER," +
-                    Pressure.COLUMN_NAME_DATETIME + " INTEGER)";
+                    Pressure.COLUMN_NAME_DATETIME + " INTEGER)"; // TODO: Is this an Integer?
 
     public static final String SQL_DELETE_PRESSURE =
             "DROP TABLE IF EXISTS " + Pressure.TABLE_NAME;
