@@ -14,6 +14,7 @@ public class Contract {
         public static final String COLUMN_NAME_ID_PK = "symptom_id";
         public static final String COLUMN_NAME_POS_X = "circle_pos_X";
         public static final String COLUMN_NAME_POS_Y = "circle_pos_Y";
+        public static final String COLUMN_NAME_SIDE = "circle_side";
         public static final String COLUMN_NAME_CREATION_DATE = "creation_date";
         public static final String COLUMN_NAME_CREATION_TIME = "creation_time";
         public static final String COLUMN_NAME_CIRCLE_RADIUS = "circle_radius";
@@ -24,6 +25,7 @@ public class Contract {
                     Symptom_TMP.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     Symptom_TMP.COLUMN_NAME_POS_X + " REAL," +
                     Symptom_TMP.COLUMN_NAME_POS_Y + " REAL," +
+                    Symptom_TMP.COLUMN_NAME_POS_Y + "INTEGER" +
                     Symptom_TMP.COLUMN_NAME_CREATION_DATE + " INTEGER," +
                     Symptom_TMP.COLUMN_NAME_CREATION_TIME + " INTEGER," +
                     Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS + " REAL)";

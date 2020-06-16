@@ -10,7 +10,7 @@ public interface SymptomDao {
 
     List<SymptomModel> listAll() throws Exception;
 
-    List<SymptomModel> listAll(long dateTime) throws Exception;
+    List<SymptomModel> listAll(long dateTime, int circleSide) throws Exception;
 
     boolean delete(long id) throws Exception;
 

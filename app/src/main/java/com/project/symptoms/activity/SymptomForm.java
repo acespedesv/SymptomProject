@@ -33,6 +33,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     private ArrayList<BodyView.Circle> currentCircles;
     private BodyView.Circle currentCircle;
     private String date, time;
+    private int bodyState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         currentCircle = getIntent().getParcelableExtra("Circle");
         date = getIntent().getStringExtra("Date");
         time = getIntent().getStringExtra("Time");
+        bodyState = getIntent().getIntExtra("State", -1);
     }
 
     // Read circles data from Bundle and rebuild the array list
@@ -67,7 +69,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
     private void saveSymptomsData() {
         setUpBundleData(); // Initialize attributes just before inserting data
-        long newId = SymptomController.getInstance(this).insert(currentCircle.x, currentCircle.y, currentCircle.radius, date, time);
+        long newId = SymptomController.getInstance(this).insert(currentCircle.x, currentCircle.y, currentCircle.radius, date, time, bodyState);
         if(newId != -1){
             String text = getResources().getString(R.string.value_successfully_saved);
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();

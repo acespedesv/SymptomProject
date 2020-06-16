@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 bodyView.flip();
+                try {
+                    updateSymptomsInBodyView();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -185,9 +190,11 @@ public class MainActivity extends AppCompatActivity implements
     private void launchSymptomForm() {
         Intent newIntent = new Intent(this, SymptomForm.class);
         Bundle data = new Bundle();
+        int bodyState = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
         data.putParcelable("Circle", currentCircle);
         data.putString("Date", dateTextView.getText().toString());
         data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
+        data.putInt("State", bodyState);
         newIntent.putExtras(data);
         startActivity(newIntent);
     }

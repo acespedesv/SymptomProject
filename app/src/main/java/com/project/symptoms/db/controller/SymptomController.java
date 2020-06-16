@@ -24,13 +24,13 @@ public class SymptomController {
     }
 
     // Return the id of the new row
-    public long insert(float posX, float posY, float circleRadius, String date, String time){
+    public long insert(float posX, float posY, float circleRadius, String date, String time, int circleSide){
 
         long newId = -1;
         try{
             Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
             Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
-            SymptomModel symptomModel = new SymptomModel(posX, posY, finalDate.getTime(), finalTime.getTime(), circleRadius);
+            SymptomModel symptomModel = new SymptomModel(posX, posY, finalDate.getTime(), finalTime.getTime(), circleRadius, circleSide);
             newId = symptomDao.insert(symptomModel);
         }catch (Exception e){
             e.printStackTrace();
@@ -52,6 +52,16 @@ public class SymptomController {
         List<SymptomModel> result = new ArrayList<>();
         try{
             result = symptomDao.listAll(date);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<SymptomModel> listAll(long date, int circleSide){
+        List<SymptomModel> result = new ArrayList<>();
+        try{
+            result = symptomDao.listAll(date, circleSide);
         }catch (Exception e){
             e.printStackTrace();
         }
