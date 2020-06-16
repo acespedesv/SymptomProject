@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements
     private CircleSizeSelectionDialog sizeSelectionDialog;
     private BodyView.Circle currentCircle;
     private TextView dateTextView;
+    private int circleSide;
 
 
     @Override
@@ -115,9 +116,12 @@ public class MainActivity extends AppCompatActivity implements
 
     // Get all symptoms for current date from DB and add them to the BodyView
     private void updateSymptomsInBodyView() throws ParseException {
+        circleSide = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
+
+
         // Get current date from text view to filter the data in DB
         Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
-        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime());
+        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), circleSide);
 
         // Instantiate new circles from DB data and replace them in the BodyView
         ArrayList<BodyView.Circle> circles = new ArrayList<>();
@@ -190,11 +194,10 @@ public class MainActivity extends AppCompatActivity implements
     private void launchSymptomForm() {
         Intent newIntent = new Intent(this, SymptomForm.class);
         Bundle data = new Bundle();
-        int bodyState = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
         data.putParcelable("Circle", currentCircle);
         data.putString("Date", dateTextView.getText().toString());
         data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
-        data.putInt("State", bodyState);
+        data.putInt("State", circleSide);
         newIntent.putExtras(data);
         startActivity(newIntent);
     }

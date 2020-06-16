@@ -48,16 +48,6 @@ public class SymptomController {
         return result;
     }
 
-    public List<SymptomModel> listAll(long date){
-        List<SymptomModel> result = new ArrayList<>();
-        try{
-            result = symptomDao.listAll(date);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     public List<SymptomModel> listAll(long date, int circleSide){
         List<SymptomModel> result = new ArrayList<>();
         try{
