@@ -73,6 +73,8 @@ public class BodyView extends View {
         init();
     }
 
+    public State getState(){ return currentState; }
+
     public void addPoint(Circle circle){
         Circle newPoint = new Circle(circle.x, circle.y, circle.radius);
         points.add(newPoint);

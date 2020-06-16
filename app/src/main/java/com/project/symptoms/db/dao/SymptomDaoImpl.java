@@ -24,6 +24,7 @@ public class SymptomDaoImpl implements SymptomDao{
         ContentValues values = new ContentValues();
         values.put(Contract.Symptom_TMP.COLUMN_NAME_POS_X, symptomModel.getCirclePosX());
         values.put(Contract.Symptom_TMP.COLUMN_NAME_POS_Y, symptomModel.getCirclePosY());
+        values.put(Contract.Symptom_TMP.COLUMN_NAME_SIDE, symptomModel.getCircleSide());
         values.put(Contract.Symptom_TMP.COLUMN_NAME_CREATION_DATE, symptomModel.getCreationDate());
         values.put(Contract.Symptom_TMP.COLUMN_NAME_CREATION_TIME, symptomModel.getCreationTime());
         values.put(Contract.Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS, symptomModel.getCircleRadius());
@@ -37,14 +38,16 @@ public class SymptomDaoImpl implements SymptomDao{
         int id;
         float circlePosX, circlePosY, circleRadius;
         long date, time;
+        int circleSide;
         while(cursor.moveToNext()){
             id = cursor.getInt(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_ID_PK));
             circlePosX = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_POS_X));
             circlePosY = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_POS_Y));
+            circleSide = cursor.getInt(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_SIDE));
             circleRadius = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS));
             date = cursor.getLong(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CREATION_DATE));
             time = cursor.getLong(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CREATION_TIME));
-            result.add(new SymptomModel(id, circlePosX, circlePosY, date, time, circleRadius));
+            result.add(new SymptomModel(id, circlePosX, circlePosY, date, time, circleRadius, circleSide));
         }
         return result;
     }
@@ -59,10 +62,10 @@ public class SymptomDaoImpl implements SymptomDao{
     }
 
     @Override
-    public List<SymptomModel> listAll(long dateTime) throws Exception {
+    public List<SymptomModel> listAll(long dateTime, int circleSide) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = "creation_date = ?";
-        String[] whereArgs = new String[] {Long.toString(dateTime)};
+        String whereClause = "creation_date = ? AND circle_side = ?";
+        String[] whereArgs = new String[] {Long.toString(dateTime), Integer.toString(circleSide)};
         Cursor cursor = db.query(Contract.Symptom_TMP.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<SymptomModel> result = buildListFromCursor(cursor);
         db.close();

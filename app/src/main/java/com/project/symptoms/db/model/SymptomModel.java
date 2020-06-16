@@ -5,22 +5,25 @@ public class SymptomModel {
     private float circlePosX, circlePosY;
     private long creationDate, creationTime;
     private float circleRadius;
+    private int circleSide;
 
-    public SymptomModel(int symptomId, float circlePosX, float circlePosY, long creationDate, long creationTime, float circleRadius) {
+    public SymptomModel(int symptomId, float circlePosX, float circlePosY, long creationDate, long creationTime, float circleRadius, int circleSide) {
         this.symptomId = symptomId;
         this.circlePosX = circlePosX;
         this.circlePosY = circlePosY;
         this.creationDate = creationDate;
         this.creationTime = creationTime;
         this.circleRadius = circleRadius;
+        this.circleSide = circleSide;
     }
 
-    public SymptomModel(float circlePosX, float circlePosY, long creationDate, long creationTime, float circleRadius) {
+    public SymptomModel(float circlePosX, float circlePosY, long creationDate, long creationTime, float circleRadius, int circleSide) {
         this.circlePosX = circlePosX;
         this.circlePosY = circlePosY;
         this.creationDate = creationDate;
         this.creationTime = creationTime;
         this.circleRadius = circleRadius;
+        this.circleSide = circleSide;
     }
 
     public float getCirclePosX() {
@@ -64,4 +67,8 @@ public class SymptomModel {
     public void setSymptomId(int symptomId) {
         this.symptomId = symptomId;
     }
+
+    public int getCircleSide() { return circleSide; }
+
+    public void setCircleSide(int circleSide) { this.circleSide = circleSide; }
 }
