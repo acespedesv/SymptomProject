@@ -48,8 +48,8 @@ public class BodySelection extends FragmentActivity{
             @Override
             public void onClick(View v) {
                 selectedBodyType = FEMALE;
-                v.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
-                maleButton.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
+                v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
+                maleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
                 // Swap color
                 // v.setBackgroundColor(selectedColor);
             }
@@ -59,8 +59,8 @@ public class BodySelection extends FragmentActivity{
             @Override
             public void onClick(View v) {
                 selectedBodyType = MALE;
-                v.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
-                femaleButton.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
+                v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
+                femaleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
                 // Swap color
                 // v.setBackgroundColor(selectedColor);
                 // femaleButton.setBackgroundColor(normalColor);
