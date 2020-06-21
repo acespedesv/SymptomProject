@@ -48,11 +48,10 @@ public class BodySelection extends FragmentActivity{
             @Override
             public void onClick(View v) {
                 selectedBodyType = FEMALE;
-
+                v.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
                 // Swap color
                 // v.setBackgroundColor(selectedColor);
-                v.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
-                maleButton.setBackgroundColor(normalColor);
+                // maleButton.setBackgroundColor(normalColor);
             }
         });
 
@@ -60,11 +59,10 @@ public class BodySelection extends FragmentActivity{
             @Override
             public void onClick(View v) {
                 selectedBodyType = MALE;
-
-                // Swap color
                 v.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
-                v.setBackgroundColor(selectedColor);
-                femaleButton.setBackgroundColor(normalColor);
+                // Swap color
+                // v.setBackgroundColor(selectedColor);
+                // femaleButton.setBackgroundColor(normalColor);
             }
         });
 
