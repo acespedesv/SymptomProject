@@ -1,6 +1,7 @@
 package com.project.symptoms.db;
 
 import android.provider.BaseColumns;
+import android.widget.ScrollView;
 
 public class Contract {
 
@@ -148,4 +149,21 @@ public class Contract {
     public static final String SQL_DELETE_GLUCOSE =
             "DROP TABLE IF EXISTS " + Pressure.TABLE_NAME;
 
+    public static class GlucoseLevels implements BaseColumns{
+        public static final String TABLE_NAME = "glucose_levels";
+        public static final String COLUMN_NAME_ID_PK = "glucose_levels_id";
+        public static final String COLUMN_NAME_LEVEL = "level";
+        public static final String COLUMN_NAME_FASTING_PLASMA = "fasting_plasma";
+        public static final String COLUMN_NAME_TOLERANCE_TEST = "tolerance_test";
+    }
+
+    public static final String SQL_CREATE_GLUCOSE_LEVELS =
+            "CREATE TABLE " + GlucoseLevels.TABLE_NAME + " ("+
+            GlucoseLevels.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            GlucoseLevels.COLUMN_NAME_LEVEL + " TEXT," +
+            GlucoseLevels.COLUMN_NAME_FASTING_PLASMA + " TEXT," +
+            GlucoseLevels.COLUMN_NAME_TOLERANCE_TEST + " TEXT)";
+
+    public static final String SQL_DELETE_GLUCOSE_LEVELS =
+            "DROP TABLE IF EXISTS " + GlucoseLevels.TABLE_NAME;
 }

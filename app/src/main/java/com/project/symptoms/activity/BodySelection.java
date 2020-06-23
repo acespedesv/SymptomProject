@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.project.symptoms.R;
+import com.project.symptoms.db.DBHelper;
+import com.project.symptoms.db.controller.GlucoseLevelsController;
 
 public class BodySelection extends FragmentActivity{
 
@@ -40,6 +42,9 @@ public class BodySelection extends FragmentActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        DBHelper database = new DBHelper(this);
+        long id = GlucoseLevelsController.getInstance(this).insert();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.body_selection);
 

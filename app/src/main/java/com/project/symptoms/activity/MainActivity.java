@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Create the database
-        DBHelper database = new DBHelper(this);
+        //DBHelper database = new DBHelper(this);
+
         init();
         try {
             updateSymptomsInBodyView();
