@@ -40,10 +40,16 @@ public class Contract {
         public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_INTENSITY = "intensity";
         public static final String COLUMN_NAME_INTERMITTENCE = "intermittence";
+        public static final String COLUMN_NAME_START_DATE = "start_date";
         public static final String COLUMN_NAME_START_TIME = "start_time";
+        public static final String COLUMN_NAME_END_DATE = "end_date";
         public static final String COLUMN_NAME_END_TIME = "end_time";
         public static final String COLUMN_NAME_CAUSING_DRUG = "causing_drug";
         public static final String COLUMN_NAME_CAUSING_FOOD = "causing_food";
+        public static final String COLUMN_NAME_POS_X = "circle_pos_X";
+        public static final String COLUMN_NAME_POS_Y = "circle_pos_Y";
+        public static final String COLUMN_NAME_SIDE = "circle_side";
+        public static final String COLUMN_NAME_CIRCLE_RADIUS = "circle_radius";
 
     }
 
@@ -53,10 +59,16 @@ public class Contract {
                     Symptom.COLUMN_NAME_DESCRIPTION + " TEXT," +
                     Symptom.COLUMN_NAME_INTENSITY + " TEXT," +
                     Symptom.COLUMN_NAME_INTERMITTENCE + " NUMERIC," +
-                    Symptom.COLUMN_NAME_START_TIME + " NUMERIC," +
-                    Symptom.COLUMN_NAME_END_TIME + " NUMERIC," +
+                    Symptom.COLUMN_NAME_START_DATE + " INTEGER," +
+                    Symptom.COLUMN_NAME_START_TIME + " INTEGER," +
+                    Symptom.COLUMN_NAME_END_DATE + " INTEGER," +
+                    Symptom.COLUMN_NAME_END_TIME + " INTEGER," +
                     Symptom.COLUMN_NAME_CAUSING_DRUG + " TEXT," +
-                    Symptom.COLUMN_NAME_CAUSING_FOOD + " TEXT)";
+                    Symptom.COLUMN_NAME_CAUSING_FOOD + " TEXT," +
+                    Symptom.COLUMN_NAME_POS_X + " REAL," +
+                    Symptom.COLUMN_NAME_POS_Y + " REAL," +
+                    Symptom.COLUMN_NAME_SIDE + " INTEGER," +
+                    Symptom.COLUMN_NAME_CIRCLE_RADIUS + " REAL)";
 
     public static final String SQL_DELETE_SYMPTOM =
             "DROP TABLE IF EXISTS " + Symptom.TABLE_NAME;

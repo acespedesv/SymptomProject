@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SymptomDao {
 
-    long insert(SymptomModel pressure) throws Exception;
+    long insert(SymptomModel symptomModel) throws Exception;
 
     List<SymptomModel> listAll() throws Exception;
 
