@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.project.symptoms.R;
+
 public class SymptomCheckerWorker extends Worker {
     String notificationMessage;
     int symptomId;
@@ -26,7 +28,7 @@ public class SymptomCheckerWorker extends Worker {
         if(symptomStillOpen()){
             Log.i("#","Still open");
             tmp = false;
-            NotificationWrapper.getInstance(getApplicationContext()).notify("App", notificationMessage);
+            NotificationWrapper.getInstance(getApplicationContext()).notify(buildTitle(), buildMessageFor(symptomId));
             NotificationWrapper.getInstance(getApplicationContext()).startReminderFor(symptomId);
         }
         else{
@@ -40,5 +42,14 @@ public class SymptomCheckerWorker extends Worker {
     // TODO check from to the database
     private boolean symptomStillOpen(){
         return tmp;
+    }
+
+    private String buildMessageFor(int symtomId){
+        String format = getApplicationContext().getResources().getString(R.string.symptom_reminder_format);
+        return String.format(format,"X","DATE");
+    }
+
+    private String buildTitle(){
+        return getApplicationContext().getResources().getString(R.string.app_name);
     }
 }
