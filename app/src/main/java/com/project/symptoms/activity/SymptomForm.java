@@ -3,18 +3,18 @@ package com.project.symptoms.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,26 +30,63 @@ import java.util.ArrayList;
 public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
     private Button saveButton;
+    private RadioGroup intensityRadioGroupView;
+    private Switch intermittenceSwitchView, endDateTimeSwitch;
+    private EditText symptomDescriptionView, symptomMedicamentView, symptomFoodView;
+    private TextView startDateView, startTimeView, endDateView, endTimeView;
     private ArrayList<BodyView.Circle> currentCircles;
     private BodyView.Circle currentCircle;
-    private String date, time;
+    private String mainActivityDate, mainActivityTime;
     private int bodyState;
+    private Drawable textViewEnabledDrawable;
+    private Drawable textViewDisabledDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.symptom_form);
         loadSymptomCategories();
-        saveButton = findViewById(R.id.save_button);
-        setupPickers();
+        setUpViews();
         setUpListeners();
+    }
+
+    private void setUpViews(){
+        textViewEnabledDrawable = getResources().getDrawable(R.drawable.text_view_style, getTheme());
+        textViewDisabledDrawable = getResources().getDrawable(R.drawable.text_view_disabled_style, getTheme());
+        saveButton = findViewById(R.id.save_button);
+        startDateView = findViewById(R.id.start_date);
+        startTimeView = findViewById(R.id.start_time);
+        endDateView = findViewById(R.id.end_date);
+        endTimeView = findViewById(R.id.end_time);
+        intensityRadioGroupView = findViewById(R.id.symp_radio_group);
+        intermittenceSwitchView = findViewById(R.id.intermittence_switch);
+        symptomDescriptionView = findViewById(R.id.symp_description);
+        symptomMedicamentView = findViewById(R.id.symp_medicament);
+        symptomFoodView = findViewById(R.id.symp_food);
+        endDateTimeSwitch = findViewById(R.id.end_date_allowed_switch);
+        DateTimeUtils.getInstance().registerAsTimePicker(startDateView);
+        DateTimeUtils.getInstance().registerAsTimePicker(startTimeView);
+        DateTimeUtils.getInstance().registerAsTimePicker(endDateView);
+        DateTimeUtils.getInstance().registerAsTimePicker(endTimeView);
+        setStartDateTime(mainActivityDate, mainActivityTime);
     }
 
     private void setUpBundleData(){
         currentCircle = getIntent().getParcelableExtra("Circle");
-        date = getIntent().getStringExtra("Date");
-        time = getIntent().getStringExtra("Time");
+        mainActivityDate = getIntent().getStringExtra("Date");
+        mainActivityTime = getIntent().getStringExtra("Time");
         bodyState = getIntent().getIntExtra("State", -1);
+    }
+
+    private void setStartDateTime(String date, String time){
+        startDateView.setText(date);
+
+        // Not allow user to edit this because the date needs to be the same than MainActivity one
+        // TODO: check this with client
+        startDateView.setEnabled(false);
+        startDateView.setClickable(false);
+
+        startTimeView.setText(time);
     }
 
     // Read circles data from Bundle and rebuild the array list
@@ -59,6 +96,27 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void setUpListeners(){
+        endDateTimeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endDateView.setEnabled(endDateTimeSwitch.isChecked());
+                endDateView.setClickable(endDateTimeSwitch.isChecked());
+                endTimeView.setEnabled(endDateTimeSwitch.isChecked());
+                endTimeView.setClickable(endDateTimeSwitch.isChecked());
+                if (endDateTimeSwitch.isChecked()){
+                    endDateView.setBackground(textViewEnabledDrawable);
+                    endDateView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_history, getTheme()), null);
+                    endTimeView.setBackground(textViewEnabledDrawable);
+                    endTimeView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_time, getTheme()), null);
+                }
+                else {
+                    endDateView.setBackground(textViewDisabledDrawable);
+                    endDateView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_history, getTheme()), null);
+                    endTimeView.setBackground(textViewDisabledDrawable);
+                    endTimeView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_time, getTheme()), null);
+                }
+            }
+        });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,20 +126,18 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void saveSymptomsData() {
-        setUpBundleData(); // Initialize attributes just before inserting data
-        long newId = SymptomController.getInstance(this).insert(currentCircle.x, currentCircle.y, currentCircle.radius, date, time, bodyState);
+        setUpBundleData();
+        String endDate = endDateTimeSwitch.isChecked() ? endDateView.getText().toString() : "";
+        String endTime = endDateTimeSwitch.isChecked() ? endTimeView.getText().toString() : "";
+        int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
+        long newId = SymptomController.getInstance(this).insert(currentCircle.x, currentCircle.y,
+                mainActivityDate, mainActivityTime, endDate, endTime, symptomDescriptionView.getText().toString(),
+                findViewById(intensityCheckedViewId).toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
+                intermittenceSwitchView.isChecked() ? 1 : 0, currentCircle.radius, bodyState);
         if(newId != -1){
             String text = getResources().getString(R.string.value_successfully_saved);
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void setupPickers() {
-        TextView startHour = findViewById(R.id.start_hour);
-        TextView endHour = findViewById(R.id.end_hour);
-        DateTimeUtils.getInstance().registerAsTimePicker(startHour);
-        DateTimeUtils.getInstance().registerAsTimePicker(endHour);
-
     }
 
     private void loadSymptomCategories() {

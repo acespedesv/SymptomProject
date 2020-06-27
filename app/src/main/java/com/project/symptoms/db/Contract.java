@@ -58,7 +58,7 @@ public class Contract {
                     Symptom.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     Symptom.COLUMN_NAME_DESCRIPTION + " TEXT," +
                     Symptom.COLUMN_NAME_INTENSITY + " TEXT," +
-                    Symptom.COLUMN_NAME_INTERMITTENCE + " NUMERIC," +
+                    Symptom.COLUMN_NAME_INTERMITTENCE + " INTEGER," +
                     Symptom.COLUMN_NAME_START_DATE + " INTEGER," +
                     Symptom.COLUMN_NAME_START_TIME + " INTEGER," +
                     Symptom.COLUMN_NAME_END_DATE + " INTEGER," +

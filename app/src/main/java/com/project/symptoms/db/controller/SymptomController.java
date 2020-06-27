@@ -24,7 +24,7 @@ public class SymptomController {
     }
 
     // Return the id of the new row when inserting successfully
-    public long insert(int symptomId, float circlePosX, float circlePosY, String startDate, String startTime,
+    public long insert(float circlePosX, float circlePosY, String startDate, String startTime,
                        String endDate, String endTime, String description, String intensity,
                        String causingDrug, String causingFood, int intermittence, float circleRadius, int circleSide){
 
@@ -34,7 +34,7 @@ public class SymptomController {
             Date finalStartTime = DateTimeUtils.getInstance().getTimeFromString(startTime);
             Date finalEndDate = DateTimeUtils.getInstance().getDateFromString(endDate);
             Date finalEndTime = DateTimeUtils.getInstance().getTimeFromString(endTime);
-            SymptomModel symptomModel = new SymptomModel(symptomId, circlePosX, circlePosY, finalStartDate.getTime(), finalStartTime.getTime(),
+            SymptomModel symptomModel = new SymptomModel(circlePosX, circlePosY, finalStartDate.getTime(), finalStartTime.getTime(),
                     finalEndDate.getTime(), finalEndTime.getTime(), description,
                     intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide);
             newId = symptomDao.insert(symptomModel);
