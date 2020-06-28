@@ -36,8 +36,13 @@
     <string name="bottom_sheet_title">Tamaño del área de dolor</string>
     <string name="done_text">Listo</string>
     <string name="proceed">Continuar</string>
-    <string name="male">Hombre</string>
-    <string name="female">Mujer</string>
+    <string name="choice_required_to_continue">Debe seleccionar una opción para continuar</string>
+
+
+    <!-- BODY_TYPE_VALUES  -->
+    <string name="body_type_male">Hombre</string>
+    <string name="body_type_female">Mujer</string>
+
     <string name="select_body_message">Deslice y seleccione su cuerpo:</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="value_successfully_saved">Valor guardado exitosamente</string>
@@ -47,4 +52,14 @@
     <string name="symptom_reminder_format">El síntoma %s registrado el día %s se encuentra activo. Ingrese a la aplicación para realizar el cambio correspondiente</string>
     <string name="frequency_title">Recordatorio de síntomas</string>
     <string name="frequency_summary">Horas luego de registrar un síntoma sin finalización</string>
+
+    <!-- PREFERENCES KEYS -->
+    <string name="preference_reminder_frequency_key">reminder_frequency</string>
+    <string name="preference_selected_body_type_key">selected_body_type</string>
+
+    <!-- PREFERENCES DEFAULT VALUES -->
+    <string name="preference_reminder_frequency_default">8</string>
+    <string name="preference_selected_body_type_default">Ninguno</string>
+
+
 </resources>

@@ -9,43 +9,38 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.project.symptoms.R;
+import com.project.symptoms.view.BodyView;
 
 public class BodySelection extends FragmentActivity{
 
     int selectedColor = Color.parseColor("#8DBF41");
     int normalColor = Color.parseColor("#d6d7d7");
 
+    SharedPreferences prefs;
+
     TextView currentSelectionText;
 
-    // Rows
-    final int FEMALE = 0;
-    final int MALE = 1;
-
-    // Columns
-    final int KEYWORD = 0;
-    final int NAME = 1;
-
-
-    int selectedBodyType = MALE; // Be MALE OF FEMALE
-
-    String bodyTypes[][] = {
-            {"female","Mujer"},
-            {"male","Hombre"}
-    };
+    String maleBody, femaleBody, noneSelected;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.body_selection);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        maleBody = getString(R.string.body_type_male);
+        femaleBody = getString(R.string.body_type_female);
+        noneSelected = getString(R.string.preference_selected_body_type_default);
 
         currentSelectionText = findViewById(R.id.current_selection);
-        currentSelectionText.setText("Ninguno");
+        currentSelectionText.setText(getCurrentBodySelection());
 
 
         final ImageButton maleButton = findViewById(R.id.male_button);
@@ -54,7 +49,7 @@ public class BodySelection extends FragmentActivity{
         femaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedBodyType = FEMALE;
+                saveBodySelection(femaleBody);
                 updateSelectionText();
 
                 // Swap color
@@ -66,7 +61,7 @@ public class BodySelection extends FragmentActivity{
         maleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedBodyType = MALE;
+                saveBodySelection(maleBody);
                 updateSelectionText();
 
                 // Swap color
@@ -80,22 +75,41 @@ public class BodySelection extends FragmentActivity{
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor =  prefs.edit();
-                editor.putString("body_type", bodyTypes[selectedBodyType][KEYWORD]);
-                editor.apply();
-
-                Intent intent = new Intent(BodySelection.this, MainActivity.class);
-                startActivity(intent);
+                if (getCurrentBodySelection().equals(noneSelected))
+                    notifyChoiceNeeded();
+                else {
+                    startMainActivity();
+                }
             }
         });
 
     }
 
+    private void notifyChoiceNeeded() {
+        Toast.makeText(this, getString(R.string.choice_required_to_continue), Toast.LENGTH_SHORT).show();
+    }
+
+    private void startMainActivity() {
+        Toast.makeText(this, getCurrentBodySelection(), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+
     /**
      * Reflect the current selection on the screen
      */
     private void updateSelectionText(){
-        currentSelectionText.setText(bodyTypes[selectedBodyType][NAME]);
+        currentSelectionText.setText(getCurrentBodySelection());
+    }
+
+    private String getCurrentBodySelection(){
+        return prefs.getString(getString(R.string.preference_selected_body_type_key),
+                getString(R.string.preference_selected_body_type_default));
+    }
+
+    private void saveBodySelection(String newValue){
+        prefs.edit()
+                .putString(getString(R.string.preference_selected_body_type_key), newValue)
+                .commit();
     }
 }

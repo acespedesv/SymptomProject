@@ -1,6 +1,7 @@
 package com.project.symptoms.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -70,29 +71,9 @@ public class MainActivity extends AppCompatActivity implements
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type", "None");
+        setupBodyView();
 
-        if (body.equals("None")) {
-            launchBodySelection();
-        }
-
-        // Make the view match the selected body type
-        if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
-        else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
-
-        // Setup the flip button
-        ImageView flipButton = findViewById(R.id.flip_button);
-        flipButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                bodyView.flip();
-                try {
-                    updateSymptomsInBodyView();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        setupFlipButton();
 
         dateTextView = findViewById(R.id.current_date);
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
@@ -113,6 +94,43 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+    }
+
+    private void setupBodyView() {
+        String selectedBody = getSelectedBodyType();
+        String noSelectedBody = getResources().getString(R.string.preference_selected_body_type_default);
+        String maleBody = getResources().getString(R.string.body_type_male);
+        String femaleBody = getResources().getString(R.string.body_type_female);
+
+        if (selectedBody.equals(noSelectedBody)) {
+            launchBodySelection();
+        }
+
+        // Make the view match the selected body type
+        if(selectedBody.equals(maleBody)) bodyView.setBodyType(BodyView.BodyType.MALE);
+        else if(selectedBody.equals(femaleBody)) bodyView.setBodyType(BodyView.BodyType.FEMALE);
+    }
+
+    private void setupFlipButton() {
+        ImageView flipButton = findViewById(R.id.flip_button);
+        flipButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                bodyView.flip();
+                try {
+                    updateSymptomsInBodyView();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private String getSelectedBodyType() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String body = prefs.getString(getResources().getString(R.string.preference_selected_body_type_key),
+                getResources().getString(R.string.preference_selected_body_type_default));
+        return body;
     }
 
     // Get all symptoms for current date from DB and add them to the BodyView
