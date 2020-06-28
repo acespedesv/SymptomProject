@@ -6,9 +6,12 @@ import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomCategoryDaoImpl;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SymptomCategoryController {
 
-    private static SymptomCategoryController instance;
+    private static SymptomCategoryController instance; // Todo: Fix warning
     private SymptomCategoryDaoImpl symptomCategoryDao;
     private Context context;
 
@@ -45,6 +48,16 @@ public class SymptomCategoryController {
             e.printStackTrace();
         }
         return success;
+    }
+
+    public List<SymptomCategoryModel> listAll(){
+        List<SymptomCategoryModel> result = new ArrayList<>();
+        try{
+            result = symptomCategoryDao.listAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

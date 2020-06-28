@@ -69,7 +69,7 @@ public class SymptomDaoImpl implements SymptomDao{
         int circleSide;
         int duration;
         while(cursor.moveToNext()){
-            id = cursor.getInt(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_ID_PK));
+            id = cursor.getInt(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_ID_PK));
             description = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_DESCRIPTION));
             intensity = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_INTENSITY));
             causingDrug = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_CAUSING_DRUG));
