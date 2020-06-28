@@ -25,26 +25,21 @@ public class SymptomCategoryController {
     // Return the id of the new row when inserting successfully
     public boolean insert(){
         boolean success = true;
-        SymptomCategoryModel symptomCategoryModel = null;
+        SymptomCategoryModel symptomCategoryModel;
+        String[] names = {context.getResources().getString(R.string.pain_type),
+                context.getResources().getString(R.string.digestive_pain),
+                context.getResources().getString(R.string.respiratory_pain),
+                context.getResources().getString(R.string.sensory_pain),
+                context.getResources().getString(R.string.emotional_pain),
+                context.getResources().getString(R.string.dermatological_pain),
+                context.getResources().getString(R.string.triggering_activity),
+                context.getResources().getString(R.string.triggering_feeling),
+                context.getResources().getString(R.string.triggering_weather_condition)};
         try{
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.pain_type));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.digestive_pain));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.respiratory_pain));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.sensory_pain));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.emotional_pain));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.dermatological_pain));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.triggering_activity));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.triggering_feeling));
-            symptomCategoryDao.insert(symptomCategoryModel);
-            symptomCategoryModel = new SymptomCategoryModel(context.getResources().getString(R.string.triggering_weather_condition));
-            symptomCategoryDao.insert(symptomCategoryModel);
+            for (String name: names) {
+                symptomCategoryModel = new SymptomCategoryModel(name);
+                symptomCategoryDao.insert(symptomCategoryModel);
+            }
         }catch (Exception e){
             success = false;
             e.printStackTrace();
