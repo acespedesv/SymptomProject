@@ -43,7 +43,7 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
     @Override
     public List<SymptomCategoryModel> listAll() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query(Contract.Symptom_TMP.TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, null, null, null, null, null);
         List<SymptomCategoryModel> result = buildListFromCursor(cursor);
         db.close();
         return result;

@@ -59,5 +59,14 @@ public class SymptomCategoryController {
         }
         return result;
     }
+    public SymptomCategoryModel getSymptomCategoryByName(String name) {
+        SymptomCategoryModel result = null;
+        try{
+            result = symptomCategoryDao.selectSymptomCategory(name);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 }
