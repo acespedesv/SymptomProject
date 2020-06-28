@@ -34,7 +34,7 @@ public class SymptomDaoImpl implements SymptomDao{
         values.put(Contract.Symptom.COLUMN_NAME_POS_Y, symptomModel.getCirclePosY());
         values.put(Contract.Symptom.COLUMN_NAME_SIDE, symptomModel.getCircleSide());
         values.put(Contract.Symptom.COLUMN_NAME_CIRCLE_RADIUS, symptomModel.getCircleRadius());
-        long newId = db.insert(Contract.Symptom_TMP.TABLE_NAME,null, values);
+        long newId = db.insert(Contract.Symptom.TABLE_NAME,null, values);
         db.close();
         return newId;
     }
@@ -89,12 +89,12 @@ public class SymptomDaoImpl implements SymptomDao{
     }
 
     @Override
-    public boolean delete(long id) throws Exception {
+    public boolean delete(int id) throws Exception {
         return false;
     }
 
     @Override
-    public boolean update(long id, SymptomModel newValues) throws Exception {
+    public boolean update(int id, SymptomModel newValues) throws Exception {
         return false;
     }
 }

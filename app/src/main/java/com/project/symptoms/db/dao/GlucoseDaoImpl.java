@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
-import com.project.symptoms.db.model.Glucose;
+import com.project.symptoms.db.model.GlucoseModel;
 
 public class GlucoseDaoImpl implements GlucoseDao {
     private DBHelper dbHelper;
@@ -16,14 +16,14 @@ public class GlucoseDaoImpl implements GlucoseDao {
         dbHelper = new DBHelper(context);
     }
 
-    public long insert(Glucose glucose) throws Exception {
+    public long insert(GlucoseModel glucoseModel) throws Exception {
         // Gets the data repository in write mode
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(Contract.Glucose.COLUMN_NAME_VALUE, glucose.getValue());
-        values.put(Contract.Glucose.COLUMN_NAME_DATETIME, glucose.getDatetime());
+        values.put(Contract.Glucose.COLUMN_NAME_VALUE, glucoseModel.getValue());
+        values.put(Contract.Glucose.COLUMN_NAME_DATETIME, glucoseModel.getDatetime());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(Contract.Glucose.TABLE_NAME, null, values);
@@ -31,16 +31,16 @@ public class GlucoseDaoImpl implements GlucoseDao {
         return newRowId;
     }
 
-    public int update(Glucose glucose) throws Exception {
+    public int update(GlucoseModel glucoseModel) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //New value for one column
         ContentValues values = new ContentValues();
-        values.put(Contract.Glucose.COLUMN_NAME_VALUE, glucose.getValue());
-        values.put(Contract.Glucose.COLUMN_NAME_DATETIME, glucose.getDatetime());
+        values.put(Contract.Glucose.COLUMN_NAME_VALUE, glucoseModel.getValue());
+        values.put(Contract.Glucose.COLUMN_NAME_DATETIME, glucoseModel.getDatetime());
 
         String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
-        String[] selectionArgs = {Integer.toString(glucose.getId())};
+        String[] selectionArgs = {Integer.toString(glucoseModel.getId())};
 
         int count = db.update(Contract.Glucose.TABLE_NAME, values, selection, selectionArgs);
         return count;
@@ -56,7 +56,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
         return db.delete(Contract.Glucose.TABLE_NAME, selection, selectionArgs); //deletedRows;
     }
 
-    public Glucose select(int id) throws Exception {
+    public GlucoseModel select(int id) throws Exception {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] columns = {
@@ -84,6 +84,6 @@ public class GlucoseDaoImpl implements GlucoseDao {
         cursor.moveToFirst();
         String value = cursor.getString(0);
         String dateTime = cursor.getString(1);
-        return new Glucose(id, Integer.parseInt(value), Long.parseLong(dateTime));
+        return new GlucoseModel(id, Integer.parseInt(value), Long.parseLong(dateTime));
     }
 }

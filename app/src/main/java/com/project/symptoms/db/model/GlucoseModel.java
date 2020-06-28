@@ -1,25 +1,25 @@
 package com.project.symptoms.db.model;
 
-public class Glucose {
+public class GlucoseModel {
     private int id;
     private int value;
     private long datetime;
 
-    public Glucose(int id, int value, long datetime) {
+    public GlucoseModel(int id, int value, long datetime) {
         this.id = id;
         this.value = value;
         this.datetime = datetime;
     }
 
-    public Glucose() {
+    public GlucoseModel() {
     }
 
-    public Glucose(int value, long datetime) {
+    public GlucoseModel(int value, long datetime) {
         this.value = value;
         this.datetime = datetime;
     }
 
-    public Glucose(int value) {
+    public GlucoseModel(int value) {
         this.value = value;
     }
 
