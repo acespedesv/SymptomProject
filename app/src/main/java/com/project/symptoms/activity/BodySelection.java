@@ -19,8 +19,7 @@ import com.project.symptoms.view.BodyView;
 
 public class BodySelection extends FragmentActivity{
 
-    int selectedColor = Color.parseColor("#8DBF41");
-    int normalColor = Color.parseColor("#d6d7d7");
+    int selectedColor, normalColor;
 
     SharedPreferences prefs;
 
@@ -32,8 +31,10 @@ public class BodySelection extends FragmentActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.body_selection);
-
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        selectedColor = getColor(R.color.body_selection_selected_color);
+        normalColor = getColor(R.color.body_selection_normal_color);
 
         maleBody = getString(R.string.body_type_male);
         femaleBody = getString(R.string.body_type_female);
@@ -90,7 +91,6 @@ public class BodySelection extends FragmentActivity{
     }
 
     private void startMainActivity() {
-        Toast.makeText(this, getCurrentBodySelection(), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, MainActivity.class));
     }
 

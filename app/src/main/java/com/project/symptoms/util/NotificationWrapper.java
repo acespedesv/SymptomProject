@@ -5,7 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -16,8 +19,6 @@ import androidx.work.WorkManager;
 import com.project.symptoms.R;
 import com.project.symptoms.activity.MainActivity;
 
-import java.time.Duration;
-import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 
 
@@ -92,21 +93,36 @@ public class NotificationWrapper {
      * Program a worker to check if the symptom has finished yet and notify if it has not
      */
     public void startReminderFor(int symptomId){
+        int frequency = getCurrentFrequency();
+
         OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(SymptomCheckerWorker.class)
                 .setInputData(buildInputData(symptomId))
-                .setInitialDelay(getCurrentFrequency(), getCurrentTimeUnit())
+                .setInitialDelay(frequency, getCurrentTimeUnit())
                 .build();
         WorkManager.getInstance(context).enqueue(oneTimeWorkRequest);
+
+        showReminderSetToast(frequency);
     }
 
-    // TODO set this in hours
+    private void showReminderSetToast(int frequency) {
+        String format = context.getString(R.string.reminder_set_format);
+        String text = String.format(format, frequency);
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+    }
+
     private TimeUnit getCurrentTimeUnit() {
-        return TimeUnit.SECONDS;
+        return TimeUnit.HOURS;
     }
 
     // TODO: user here the frequency set in preferences
     private int getCurrentFrequency() {
-        return 2;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String key = context.getString(R.string.preference_reminder_frequency_key);
+        String defaultValueString = context.getString(R.string.preference_reminder_frequency_default);
+        String savedFrequencyString = prefs.getString(key, defaultValueString);
+        int savedValue = Integer.parseInt(savedFrequencyString);
+        return savedValue;
+
     }
 
     private Data buildInputData(int symptomId) {

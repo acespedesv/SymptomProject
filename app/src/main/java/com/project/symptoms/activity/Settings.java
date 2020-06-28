@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.project.symptoms.R;
 import com.project.symptoms.fragment.SettingsFragment;
+import com.project.symptoms.util.NotificationWrapper;
 
 public class Settings extends AppCompatActivity {
 
@@ -18,5 +19,11 @@ public class Settings extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.settings_container, new SettingsFragment())
                 .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationWrapper.getInstance(this).startReminderFor(2);
     }
 }

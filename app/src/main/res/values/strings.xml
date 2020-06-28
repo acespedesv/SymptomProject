@@ -37,6 +37,7 @@
     <string name="done_text">Listo</string>
     <string name="proceed">Continuar</string>
     <string name="choice_required_to_continue">Debe seleccionar una opción para continuar</string>
+    <string name="reminder_set_format">Recordatorio programado para dentro de %d horas</string>
 
 
     <!-- BODY_TYPE_VALUES  -->

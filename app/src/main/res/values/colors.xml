@@ -18,6 +18,11 @@
     <color name="symptom_option_normal_border">#81bf41</color>
     <color name="symptom_option_selected_border">#82e61a</color>
 
+    <color name="body_selection_selected_color">#8DBF41</color>
+    <color name="body_selection_normal_color">#D6D7D7</color>
+
+
+
 
     <color name="black_overlay">#66000000</color>
 </resources>
