@@ -45,5 +45,6 @@
     <string name="dummy_content">SYMP APP</string>
     <string name="first_step">Primer paso</string>
     <string name="symptom_reminder_format">El síntoma %s registrado el día %s se encuentra activo. Ingrese a la aplicación para realizar el cambio correspondiente</string>
-
+    <string name="frequency_title">Recordatorio de síntomas</string>
+    <string name="frequency_summary">Horas luego de registrar un síntoma sin finalización</string>
 </resources>
