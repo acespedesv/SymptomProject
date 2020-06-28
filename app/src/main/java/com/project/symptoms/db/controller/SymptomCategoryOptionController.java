@@ -2,7 +2,6 @@ package com.project.symptoms.db.controller;
 
 import android.content.Context;
 
-import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomCategoryOptionDaoImpl;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 import com.project.symptoms.db.model.SymptomCategoryOptionModel;
@@ -55,9 +54,9 @@ public class SymptomCategoryOptionController {
         
         try{
             for (String categoryName : namesHashMap.keySet()) {
+                symptomCategoryModel = symptomCategoryController.getSymptomCategoryByName(categoryName); // Get model to use it's PK as FK
+                int fk = symptomCategoryModel.getCategoryId();
                 for (String optionName: namesHashMap.get(categoryName)) {
-                    symptomCategoryModel = symptomCategoryController.getSymptomCategoryByName(categoryName); // Get model to use it's PK as FK
-                    int fk = symptomCategoryModel.getCategoryId();
                     symptomCategoryOptionModel = new SymptomCategoryOptionModel(fk, optionName);
                     symptomCategoryOptionDao.insert(symptomCategoryOptionModel);
                 }

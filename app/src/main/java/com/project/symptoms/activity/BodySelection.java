@@ -58,8 +58,8 @@ public class BodySelection extends FragmentActivity{
                 updateSelectionText();
 
                 // Swap color
-                 v.setBackgroundColor(selectedColor);
-                 maleButton.setBackgroundColor(normalColor);
+                v.setBackgroundColor(selectedColor);
+                maleButton.setBackgroundColor(normalColor);
             }
         });
 
