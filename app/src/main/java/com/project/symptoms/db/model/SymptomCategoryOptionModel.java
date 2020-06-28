@@ -11,6 +11,11 @@ public class SymptomCategoryOptionModel {
         this.categoryOptionName = categoryOptionName;
     }
 
+    public SymptomCategoryOptionModel(int categoryFkId, String categoryOptionName) {
+        this.categoryFkId = categoryFkId;
+        this.categoryOptionName = categoryOptionName;
+    }
+
     public int getCategoryOptionId() { return categoryOptionId; }
 
     public void setCategoryOptionId(int categoryOptionId) { this.categoryOptionId = categoryOptionId; }

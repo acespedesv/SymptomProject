@@ -9,6 +9,7 @@ import com.project.symptoms.db.model.SymptomCategoryOptionModel;
 import com.project.symptoms.util.SymptomCategoriesUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SymptomCategoryOptionController {
@@ -34,11 +35,33 @@ public class SymptomCategoryOptionController {
         boolean success = true;
         SymptomCategoryOptionModel symptomCategoryOptionModel;
         SymptomCategoryModel symptomCategoryModel;
+
+        // Prepare data for insertion
         String[] categoryNames = SymptomCategoriesUtils.getCategoryNames(context.getResources());
+        String[] painTypeNames = SymptomCategoriesUtils.getPainTypeNames(context.getResources());
+        String[] digestiveNames = SymptomCategoriesUtils.getDigestiveTypeNames(context.getResources());
+        String[] respiratoryNames = SymptomCategoriesUtils.getRespiratoryTypeNames(context.getResources());
+        String[] sensoryNames = SymptomCategoriesUtils.getSensoryTypeNames(context.getResources());
+        String[] emotionalNames = SymptomCategoriesUtils.getEmotionalTypeNames(context.getResources());
+        String[] dermatologicalNames = SymptomCategoriesUtils.getDermatologicalTypeNames(context.getResources());
+        String[] triggeringActivitiesNames = SymptomCategoriesUtils.getTriggeringActivityTypeNames(context.getResources());
+        String[] triggeringEmotionsNames = SymptomCategoriesUtils.getTriggeringEmotionTypeNames(context.getResources());
+        String[] triggeringWeatherStateNames = SymptomCategoriesUtils.getTriggeringWeatherStateTypeNames(context.getResources());
+        String[][] namesMatrix = new String[][]{painTypeNames, digestiveNames, respiratoryNames, sensoryNames, emotionalNames, dermatologicalNames, triggeringActivitiesNames,
+        triggeringEmotionsNames, triggeringWeatherStateNames};
+        HashMap<String, String[]> namesHashMap = new HashMap<>();
+        int matrixIndex = 0;
+        for (String name: categoryNames) { namesHashMap.put(name, namesMatrix[matrixIndex++]); }
+        
         try{
-
-
-
+            for (String categoryName : namesHashMap.keySet()) {
+                for (String optionName: namesHashMap.get(categoryName)) {
+                    symptomCategoryModel = symptomCategoryController.getSymptomCategoryByName(categoryName); // Get model to use it's PK as FK
+                    int fk = symptomCategoryModel.getCategoryId();
+                    symptomCategoryOptionModel = new SymptomCategoryOptionModel(fk, optionName);
+                    symptomCategoryOptionDao.insert(symptomCategoryOptionModel);
+                }
+            }
         }catch (Exception e){
             success = false;
             e.printStackTrace();
