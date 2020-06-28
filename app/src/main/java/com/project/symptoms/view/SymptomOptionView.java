@@ -48,10 +48,10 @@ public class SymptomOptionView extends RelativeLayout  implements View.OnClickLi
         inflater.inflate(R.layout.symptom_option,this);
 
         isChecked = false;
-        this.label = (TextView) findViewWithTag("label");
-        this.backgroundCircle = (ImageView) findViewWithTag("background_circle");
-        this.borderCircle = (ImageView) findViewWithTag("border_circle");
-        this.icon = (ImageView) findViewWithTag("icon");
+        this.label = findViewWithTag("label");
+        this.backgroundCircle = findViewWithTag("background_circle");
+        this.borderCircle = findViewWithTag("border_circle");
+        this.icon = findViewWithTag("icon");
         setOnClickListener(this);
 
     }

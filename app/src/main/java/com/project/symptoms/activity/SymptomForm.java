@@ -31,13 +31,14 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
     private Button saveButton;
     private RadioGroup intensityRadioGroupView;
-    private Switch intermittenceSwitchView, endDateTimeSwitch;
+    private Switch intermittenceSwitchView;
     private EditText symptomDescriptionView, symptomMedicamentView, symptomFoodView;
-    private TextView startDateView, startTimeView, endDateView, endTimeView;
+    private TextView startDateView, startTimeView;
     private ArrayList<BodyView.Circle> currentCircles;
     private BodyView.Circle currentCircle;
     private String mainActivityDate, mainActivityTime;
     private int bodyState;
+    private EditText symptomDurationView;
     private Drawable textViewEnabledDrawable;
     private Drawable textViewDisabledDrawable;
 
@@ -56,18 +57,14 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         saveButton = findViewById(R.id.save_button);
         startDateView = findViewById(R.id.start_date);
         startTimeView = findViewById(R.id.start_time);
-        endDateView = findViewById(R.id.end_date);
-        endTimeView = findViewById(R.id.end_time);
         intensityRadioGroupView = findViewById(R.id.symp_radio_group);
         intermittenceSwitchView = findViewById(R.id.intermittence_switch);
         symptomDescriptionView = findViewById(R.id.symp_description);
         symptomMedicamentView = findViewById(R.id.symp_medicament);
         symptomFoodView = findViewById(R.id.symp_food);
-        endDateTimeSwitch = findViewById(R.id.end_date_allowed_switch);
+        symptomDurationView = findViewById(R.id.symp_duration);
         DateTimeUtils.getInstance().registerAsTimePicker(startDateView);
         DateTimeUtils.getInstance().registerAsTimePicker(startTimeView);
-        DateTimeUtils.getInstance().registerAsTimePicker(endDateView);
-        DateTimeUtils.getInstance().registerAsTimePicker(endTimeView);
         setStartDateTime(mainActivityDate, mainActivityTime);
     }
 
@@ -96,27 +93,6 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void setUpListeners(){
-        endDateTimeSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                endDateView.setEnabled(endDateTimeSwitch.isChecked());
-                endDateView.setClickable(endDateTimeSwitch.isChecked());
-                endTimeView.setEnabled(endDateTimeSwitch.isChecked());
-                endTimeView.setClickable(endDateTimeSwitch.isChecked());
-                if (endDateTimeSwitch.isChecked()){
-                    endDateView.setBackground(textViewEnabledDrawable);
-                    endDateView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_history, getTheme()), null);
-                    endTimeView.setBackground(textViewEnabledDrawable);
-                    endTimeView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_time, getTheme()), null);
-                }
-                else {
-                    endDateView.setBackground(textViewDisabledDrawable);
-                    endDateView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_history, getTheme()), null);
-                    endTimeView.setBackground(textViewDisabledDrawable);
-                    endTimeView.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_time, getTheme()), null);
-                }
-            }
-        });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,13 +103,17 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
     private void saveSymptomsData() {
         setUpBundleData();
-        String endDate = endDateTimeSwitch.isChecked() ? endDateView.getText().toString() : "";
-        String endTime = endDateTimeSwitch.isChecked() ? endTimeView.getText().toString() : "";
+
+        String stringDuration = symptomDurationView.getText().toString();
+        int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
+
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
+
         long newId = SymptomController.getInstance(this).insert(currentCircle.x, currentCircle.y,
-                mainActivityDate, mainActivityTime, endDate, endTime, symptomDescriptionView.getText().toString(),
+                mainActivityDate, mainActivityTime, finalDuration, symptomDescriptionView.getText().toString(),
                 findViewById(intensityCheckedViewId).toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
                 intermittenceSwitchView.isChecked() ? 1 : 0, currentCircle.radius, bodyState);
+
         if(newId != -1){
             String text = getResources().getString(R.string.value_successfully_saved);
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
@@ -244,7 +224,6 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
         };
 
-
         LinearLayout categoriesSection = findViewById(R.id.categories_section);
 
         inflateSymptomsCategories(categoriesSection, optionsList);
@@ -272,10 +251,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
             verticalLayout.addView(inflateSymptomCategory(options));
 
         }
-
         parentLayout.addView(verticalLayout);
-
-
     }
 
     private HorizontalScrollView inflateSymptomCategory(SymptomOption[] options){
@@ -321,10 +297,9 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         public int imageResId;
         public String label;
 
-        public SymptomOption(int resId, String label){
+        SymptomOption(int resId, String label){
             this.imageResId = resId;
             this.label = label;
-
         }
     }
 }

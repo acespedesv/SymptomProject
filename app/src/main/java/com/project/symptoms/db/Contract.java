@@ -42,8 +42,7 @@ public class Contract {
         public static final String COLUMN_NAME_INTERMITTENCE = "intermittence";
         public static final String COLUMN_NAME_START_DATE = "start_date";
         public static final String COLUMN_NAME_START_TIME = "start_time";
-        public static final String COLUMN_NAME_END_DATE = "end_date";
-        public static final String COLUMN_NAME_END_TIME = "end_time";
+        public static final String COLUMN_NAME_DURATION = "duration";
         public static final String COLUMN_NAME_CAUSING_DRUG = "causing_drug";
         public static final String COLUMN_NAME_CAUSING_FOOD = "causing_food";
         public static final String COLUMN_NAME_POS_X = "circle_pos_X";
@@ -61,8 +60,7 @@ public class Contract {
                     Symptom.COLUMN_NAME_INTERMITTENCE + " INTEGER," +
                     Symptom.COLUMN_NAME_START_DATE + " INTEGER," +
                     Symptom.COLUMN_NAME_START_TIME + " INTEGER," +
-                    Symptom.COLUMN_NAME_END_DATE + " INTEGER," +
-                    Symptom.COLUMN_NAME_END_TIME + " INTEGER," +
+                    Symptom.COLUMN_NAME_DURATION + " INTEGER," +
                     Symptom.COLUMN_NAME_CAUSING_DRUG + " TEXT," +
                     Symptom.COLUMN_NAME_CAUSING_FOOD + " TEXT," +
                     Symptom.COLUMN_NAME_POS_X + " REAL," +

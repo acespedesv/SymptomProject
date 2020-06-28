@@ -27,8 +27,7 @@ public class SymptomDaoImpl implements SymptomDao{
         values.put(Contract.Symptom.COLUMN_NAME_INTERMITTENCE, symptomModel.getIntermittence());
         values.put(Contract.Symptom.COLUMN_NAME_START_DATE, symptomModel.getStartDate());
         values.put(Contract.Symptom.COLUMN_NAME_START_TIME, symptomModel.getStartTime());
-        values.put(Contract.Symptom.COLUMN_NAME_END_DATE, symptomModel.getEndDate());
-        values.put(Contract.Symptom.COLUMN_NAME_END_TIME, symptomModel.getEndTime());
+        values.put(Contract.Symptom.COLUMN_NAME_DURATION, symptomModel.getDuration());
         values.put(Contract.Symptom.COLUMN_NAME_CAUSING_DRUG, symptomModel.getCausingDrug());
         values.put(Contract.Symptom.COLUMN_NAME_CAUSING_FOOD, symptomModel.getCausingFood());
         values.put(Contract.Symptom.COLUMN_NAME_POS_X, symptomModel.getCirclePosX());
@@ -66,8 +65,9 @@ public class SymptomDaoImpl implements SymptomDao{
         float circlePosX, circlePosY, circleRadius;
         String description, intensity, causingDrug, causingFood;
         int intermittence;
-        long startDate, startTime, endDate, endTime;
+        long startDate, startTime;
         int circleSide;
+        int duration;
         while(cursor.moveToNext()){
             id = cursor.getInt(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_ID_PK));
             description = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_DESCRIPTION));
@@ -75,15 +75,14 @@ public class SymptomDaoImpl implements SymptomDao{
             causingDrug = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_CAUSING_DRUG));
             causingFood = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_CAUSING_FOOD));
             intermittence = cursor.getInt(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_INTERMITTENCE));
-            circlePosX = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_POS_X));
-            circlePosY = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_POS_Y));
-            circleSide = cursor.getInt(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_SIDE));
-            circleRadius = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CIRCLE_RADIUS));
-            startDate = cursor.getLong(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CREATION_DATE));
-            startTime = cursor.getLong(cursor.getColumnIndex(Contract.Symptom_TMP.COLUMN_NAME_CREATION_TIME));
-            endDate = cursor.getLong(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_END_DATE));
-            endTime = cursor.getLong(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_END_TIME));
-            result.add(new SymptomModel(id, circlePosX, circlePosY, startDate, startTime, endDate, endTime, description,
+            circlePosX = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_POS_X));
+            circlePosY = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_POS_Y));
+            circleSide = cursor.getInt(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_SIDE));
+            circleRadius = cursor.getFloat(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_CIRCLE_RADIUS));
+            startDate = cursor.getLong(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_START_DATE));
+            startTime = cursor.getLong(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_START_TIME));
+            duration = cursor.getInt(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_DURATION));
+            result.add(new SymptomModel(id, circlePosX, circlePosY, startDate, startTime, duration, description,
                     intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide));
         }
         return result;

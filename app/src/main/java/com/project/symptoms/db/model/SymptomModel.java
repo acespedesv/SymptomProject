@@ -3,22 +3,22 @@ package com.project.symptoms.db.model;
 public class SymptomModel {
     private int symptomId;
     private float circlePosX, circlePosY;
-    private long startDate, startTime, endDate, endTime;
+    private long startDate, startTime;
     private String description, intensity, causingDrug, causingFood;
     private int intermittence;
     private float circleRadius;
     private int circleSide;
+    private int duration;
 
     public SymptomModel(int symptomId, float circlePosX, float circlePosY, long startDate, long startTime,
-                        long endDate, long endTime, String description, String intensity,
+                        int duration, String description, String intensity,
                         String causingDrug, String causingFood, int intermittence, float circleRadius, int circleSide) {
         this.symptomId = symptomId;
         this.circlePosX = circlePosX;
         this.circlePosY = circlePosY;
         this.startDate = startDate;
         this.startTime = startTime;
-        this.endDate = endDate;
-        this.endTime = endTime;
+        this.duration = duration;
         this.description = description;
         this.intensity = intensity;
         this.causingDrug = causingDrug;
@@ -28,15 +28,14 @@ public class SymptomModel {
         this.circleSide = circleSide;
     }
 
-    public SymptomModel(float circlePosX, float circlePosY, long startDate, long startTime, long endDate,
-                        long endTime, String description, String intensity, String causingDrug,
-                        String causingFood, int intermittence, float circleRadius, int circleSide) {
+    public SymptomModel(float circlePosX, float circlePosY, long startDate, long startTime, int duration,
+                        String description, String intensity, String causingDrug, String causingFood,
+                        int intermittence, float circleRadius, int circleSide) {
         this.circlePosX = circlePosX;
         this.circlePosY = circlePosY;
         this.startDate = startDate;
         this.startTime = startTime;
-        this.endDate = endDate;
-        this.endTime = endTime;
+        this.duration = duration;
         this.description = description;
         this.intensity = intensity;
         this.causingDrug = causingDrug;
@@ -86,21 +85,9 @@ public class SymptomModel {
         this.startTime = startTime;
     }
 
-    public long getEndDate() {
-        return endDate;
-    }
+    public int getDuration() { return duration; }
 
-    public void setEndDate(long endDate) {
-        this.endDate = endDate;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
+    public void setDuration(int duration) { this.duration = duration; }
 
     public String getDescription() {
         return description;
