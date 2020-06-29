@@ -34,13 +34,10 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     private Switch intermittenceSwitchView;
     private EditText symptomDescriptionView, symptomMedicamentView, symptomFoodView;
     private TextView startDateView, startTimeView;
-    private ArrayList<BodyView.Circle> currentCircles;
     private BodyView.Circle currentCircle;
     private String mainActivityDate, mainActivityTime;
     private int bodyState;
     private EditText symptomDurationView;
-    private Drawable textViewEnabledDrawable;
-    private Drawable textViewDisabledDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +49,6 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void setUpViews(){
-        textViewEnabledDrawable = getResources().getDrawable(R.drawable.text_view_style, getTheme());
-        textViewDisabledDrawable = getResources().getDrawable(R.drawable.text_view_disabled_style, getTheme());
         saveButton = findViewById(R.id.save_button);
         startDateView = findViewById(R.id.start_date);
         startTimeView = findViewById(R.id.start_time);
@@ -84,12 +79,6 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         startDateView.setClickable(false);
 
         startTimeView.setText(time);
-    }
-
-    // Read circles data from Bundle and rebuild the array list
-    private void initCircles(Bundle bundle) {
-        currentCircles = new ArrayList<>();
-        for (int i = 0; i < bundle.size(); i++){ currentCircles.add((BodyView.Circle)bundle.getParcelable("Circle_"+i)); }
     }
 
     private void setUpListeners(){
