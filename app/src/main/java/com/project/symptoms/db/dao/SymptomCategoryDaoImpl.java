@@ -22,7 +22,6 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
     public long insert(SymptomCategoryModel symptomCategoryModel) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Contract.Category.COLUMN_NAME_ID_PK, symptomCategoryModel.getCategoryId());
         values.put(Contract.Category.COLUMN_NAME_NAME, symptomCategoryModel.getName());
         long newId = db.insert(Contract.Category.TABLE_NAME,null, values);
         db.close();
