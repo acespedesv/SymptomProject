@@ -25,7 +25,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         values.put(Contract.CategoryOption.COLUMN_NAME_ID_PK, symptomCategoryOptionModel.getCategoryOptionId());
         values.put(Contract.CategoryOption.COLUMN_NAME_CATEGORY_ID_FK, symptomCategoryOptionModel.getCategoryFkId());
         values.put(Contract.CategoryOption.COLUMN_NAME_NAME, symptomCategoryOptionModel.getCategoryOptionName());
-        long newId = db.insert(Contract.Category.TABLE_NAME,null, values);
+        long newId = db.insert(Contract.CategoryOption.TABLE_NAME,null, values);
         db.close();
         return newId;
     }
