@@ -51,7 +51,7 @@ public class SymptomDaoImpl implements SymptomDao{
     @Override
     public List<SymptomModel> listAll(long dateTime, int circleSide) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = "creation_date = ? AND circle_side = ?";
+        String whereClause = "start_date = ? AND circle_side = ?";
         String[] whereArgs = new String[] {Long.toString(dateTime), Integer.toString(circleSide)};
         Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<SymptomModel> result = buildListFromCursor(cursor);
