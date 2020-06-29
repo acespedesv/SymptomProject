@@ -80,7 +80,7 @@ public class Contract {
     public static final String SQL_CREATE_CATEGORY =
             "CREATE TABLE " + Category.TABLE_NAME + " (" +
                     Category.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    Category.COLUMN_NAME_NAME + "TEXT)";
+                    Category.COLUMN_NAME_NAME + " TEXT)";
 
     public static final String SQL_DELETE_CATEGORY =
             "DROP TABLE IF EXISTS " + Category.TABLE_NAME;
