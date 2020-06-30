@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.project.symptoms.R;
-import com.project.symptoms.activity.SymptomForm.SymptomOption;
+import com.project.symptoms.db.model.SymptomCategoryOptionModel;
 
 public class SymptomOptionView extends RelativeLayout  implements View.OnClickListener{
 
@@ -72,9 +72,9 @@ public class SymptomOptionView extends RelativeLayout  implements View.OnClickLi
         }
     }
 
-    public void setSymptomOption(SymptomOption symptomOption){
-        this.icon.setImageResource(symptomOption.imageResId);
-        this.label.setText(symptomOption.label);
+    public void setSymptomOption(SymptomCategoryOptionModel model){
+        this.icon.setImageResource(R.drawable.ic_acne); //TODO FIX THIS
+        this.label.setText(model.getCategoryOptionName());
     }
 
     @Override

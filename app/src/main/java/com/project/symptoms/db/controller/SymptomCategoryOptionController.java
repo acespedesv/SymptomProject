@@ -53,12 +53,14 @@ public class SymptomCategoryOptionController {
         for (String name: categoryNames) { namesHashMap.put(name, namesMatrix[matrixIndex++]); }
         
         try{
-            for (String categoryName : namesHashMap.keySet()) {
-                symptomCategoryModel = symptomCategoryController.getSymptomCategoryByName(categoryName); // Get model to use it's PK as FK
-                int fk = symptomCategoryModel.getCategoryId();
-                for (String optionName: namesHashMap.get(categoryName)) {
-                    symptomCategoryOptionModel = new SymptomCategoryOptionModel(fk, optionName);
-                    symptomCategoryOptionDao.insert(symptomCategoryOptionModel);
+            if(listAll().size() == 0){
+                for (String categoryName : namesHashMap.keySet()) {
+                    symptomCategoryModel = symptomCategoryController.getSymptomCategoryByName(categoryName); // Get model to use it's PK as FK
+                    int fk = symptomCategoryModel.getCategoryId();
+                    for (String optionName: namesHashMap.get(categoryName)) {
+                        symptomCategoryOptionModel = new SymptomCategoryOptionModel(fk, optionName);
+                        symptomCategoryOptionDao.insert(symptomCategoryOptionModel);
+                    }
                 }
             }
         }catch (Exception e){
@@ -77,12 +79,24 @@ public class SymptomCategoryOptionController {
         }
         return result;
     }
-    public SymptomCategoryOptionModel getSymptomCategoryByName(String name) {
+
+    public SymptomCategoryOptionModel getSymptomCategoryOptionByName(String name) {
         SymptomCategoryOptionModel result = null;
         try{
             result = symptomCategoryOptionDao.selectSymptomCategoryOption(name);
         }catch (Exception e){
             e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<SymptomCategoryOptionModel> listByCategory(int categoryId){
+        List<SymptomCategoryOptionModel> all = listAll();
+        List<SymptomCategoryOptionModel> result = new ArrayList<>();
+        for(SymptomCategoryOptionModel each : all){
+            if(each.getCategoryFkId() == categoryId){
+                result.add(each);
+            }
         }
         return result;
     }

@@ -39,9 +39,11 @@ public class SymptomCategoryController {
                 context.getResources().getString(R.string.triggering_feeling),
                 context.getResources().getString(R.string.triggering_weather_condition)};
         try{
-            for (String name: names) {
-                symptomCategoryModel = new SymptomCategoryModel(name);
-                symptomCategoryDao.insert(symptomCategoryModel);
+            if(listAll().size() == 0){
+                for (String name: names) {
+                    symptomCategoryModel = new SymptomCategoryModel(name);
+                    symptomCategoryDao.insert(symptomCategoryModel);
+                }
             }
         }catch (Exception e){
             success = false;
