@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,10 +44,12 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     private String mainActivityDate, mainActivityTime;
     private int bodyState;
     private EditText symptomDurationView;
+    private ArrayList<SymptomOptionView> options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        options = new ArrayList<>();
         setContentView(R.layout.symptom_form);
         loadSymptomCategories();
         setUpViews();
@@ -96,6 +99,8 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void saveSymptomsData() {
+        logSelectedOptions();
+
         setUpBundleData();
 
         String stringDuration = symptomDurationView.getText().toString();
@@ -111,6 +116,14 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         if(newId != -1){
             String text = getResources().getString(R.string.value_successfully_saved);
             Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void logSelectedOptions() {
+        for(SymptomOptionView option : options){
+            if(option.isChecked()){
+                Log.i("#","Checked "+option.getName());
+            }
         }
     }
 
@@ -145,9 +158,11 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         optionsRow.setOrientation(LinearLayout.HORIZONTAL);
         optionsRow.setGravity(Gravity.CENTER);
 
-        for (SymptomCategoryOptionModel option : optionModels)
-            optionsRow.addView(createViewFromModel(option));
-
+        for (SymptomCategoryOptionModel option : optionModels) {
+            SymptomOptionView newOption = createViewFromModel(option);
+            optionsRow.addView(newOption);
+            options.add(newOption);
+        }
         HorizontalScrollView scrollView = new HorizontalScrollView(this);
         scrollView.addView(optionsRow);
 
@@ -163,7 +178,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
 
-    private View createViewFromModel(SymptomCategoryOptionModel option){
+    private SymptomOptionView createViewFromModel(SymptomCategoryOptionModel option){
         SymptomOptionView optionView =  new SymptomOptionView(this);
         optionView.setSymptomOption(option);
         return optionView;

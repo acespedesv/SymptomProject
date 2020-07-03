@@ -72,9 +72,17 @@ public class SymptomOptionView extends RelativeLayout  implements View.OnClickLi
         }
     }
 
+    public boolean isChecked(){
+        return isChecked;
+    }
+
     public void setSymptomOption(SymptomCategoryOptionModel model){
-        this.icon.setImageResource(R.drawable.ic_acne); //TODO FIX THIS
+        this.icon.setImageResource(getContext().getResources().getIdentifier("ic_acne","drawable",getContext().getPackageName())); //TODO FIX THIS
         this.label.setText(model.getCategoryOptionName());
+    }
+
+    public String getName(){
+        return this.label.getText().toString();
     }
 
     @Override
