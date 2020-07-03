@@ -15,4 +15,6 @@ public interface SymptomDao {
     boolean delete(long id) throws Exception;
 
     boolean update(long id, SymptomModel newValues) throws Exception;
+
+    SymptomModel getById(long id) throws Exception;
 }

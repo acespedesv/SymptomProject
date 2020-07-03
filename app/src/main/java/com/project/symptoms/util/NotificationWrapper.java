@@ -96,7 +96,7 @@ public class NotificationWrapper {
         int frequency = getCurrentFrequency();
 
         OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(SymptomCheckerWorker.class)
-                .setInputData(buildInputData(symptomId))
+                .setInputData(buildWorkerParameters(symptomId))
                 .setInitialDelay(frequency, getCurrentTimeUnit())
                 .build();
         WorkManager.getInstance(context).enqueue(oneTimeWorkRequest);
@@ -125,10 +125,10 @@ public class NotificationWrapper {
 
     }
 
-    private Data buildInputData(int symptomId) {
+    private Data buildWorkerParameters(int symptomId) {
         return new Data.Builder()
-                .putString("message","The notification")
-                .putInt("symptom_id",symptomId)
+                .putString(SymptomCheckerWorker.MESSAGE_KEY,"The notification")
+                .putInt(SymptomCheckerWorker.SYMPTOM_ID_KEY,symptomId)
                 .build();
     }
 

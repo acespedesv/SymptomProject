@@ -28,9 +28,9 @@ public class SymptomController {
 
         long newId = -1;
         try{
-            Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
-            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
-            SymptomModel symptomModel = new SymptomModel(posX, posY, finalDate.getTime(), finalTime.getTime(), circleRadius, circleSide);
+            Date startDate = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(date,time);
+            long endTime = -1;
+            SymptomModel symptomModel = new SymptomModel(posX, posY, startDate.getTime(), endTime, circleRadius, circleSide);
             newId = symptomDao.insert(symptomModel);
         }catch (Exception e){
             e.printStackTrace();
@@ -52,6 +52,16 @@ public class SymptomController {
         List<SymptomModel> result = new ArrayList<>();
         try{
             result = symptomDao.listAll(date, circleSide);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public SymptomModel findById(long symptomId){
+        SymptomModel result = null;
+        try{
+            result = symptomDao.getById(symptomId);
         }catch (Exception e){
             e.printStackTrace();
         }

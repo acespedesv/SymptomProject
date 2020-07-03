@@ -8,18 +8,20 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.project.symptoms.R;
+import com.project.symptoms.db.controller.SymptomController;
+import com.project.symptoms.db.model.SymptomModel;
 
 public class SymptomCheckerWorker extends Worker {
+    public static final String MESSAGE_KEY =  "message";
+    public static final String SYMPTOM_ID_KEY =  "symptom_id";
+
     String notificationMessage;
     int symptomId;
 
-    // TODO remove this
-    public static boolean tmp = true;
-
     public SymptomCheckerWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        this.notificationMessage = workerParams.getInputData().getString("message");
-        this.symptomId = workerParams.getInputData().getInt("symptom_id",-1);
+        this.notificationMessage = workerParams.getInputData().getString(MESSAGE_KEY);
+        this.symptomId = workerParams.getInputData().getInt(SYMPTOM_ID_KEY,-1);
     }
 
     @NonNull
@@ -27,7 +29,6 @@ public class SymptomCheckerWorker extends Worker {
     public Result doWork() {
         if(symptomStillOpen()){
             Log.i("#","Still open");
-            tmp = false;
             NotificationWrapper.getInstance(getApplicationContext()).notify(buildTitle(), buildMessageFor(symptomId));
             NotificationWrapper.getInstance(getApplicationContext()).startReminderFor(symptomId);
         }
@@ -41,10 +42,11 @@ public class SymptomCheckerWorker extends Worker {
 
     // TODO check from to the database
     private boolean symptomStillOpen(){
-        return tmp;
+        SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).findById(symptomId);
+        return symptom.getEndTime() < 0;
     }
 
-    private String buildMessageFor(int symtomId){
+    private String buildMessageFor(int symptomId){
         String format = getApplicationContext().getResources().getString(R.string.symptom_reminder_format);
         return String.format(format,"X","DATE");
     }
