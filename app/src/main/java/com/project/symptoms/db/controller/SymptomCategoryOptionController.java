@@ -5,6 +5,8 @@ import android.content.Context;
 import com.project.symptoms.db.dao.SymptomCategoryOptionDaoImpl;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 import com.project.symptoms.db.model.SymptomCategoryOptionModel;
+import com.project.symptoms.dto.CategoryDTO;
+import com.project.symptoms.dto.SymptomOptionDTO;
 import com.project.symptoms.util.SymptomCategoriesUtils;
 
 import java.util.ArrayList;
@@ -32,40 +34,30 @@ public class SymptomCategoryOptionController {
     // Return the id of the new row when inserting successfully
     public boolean insert(){
         boolean success = true;
-        SymptomCategoryOptionModel symptomCategoryOptionModel;
-        SymptomCategoryModel symptomCategoryModel;
+        boolean initialInsertionAlreadyDone = listAll().size() > 0;
+        if(! initialInsertionAlreadyDone){
+            HashMap<CategoryDTO, SymptomOptionDTO[]> initialHashMap = getInitialOptionsHashMap();
 
-        // Prepare data for insertion
-        String[] categoryNames = SymptomCategoriesUtils.getCategoryNames(context.getResources());
-        String[] painTypeNames = SymptomCategoriesUtils.getPainTypeNames(context.getResources());
-        String[] digestiveNames = SymptomCategoriesUtils.getDigestiveTypeNames(context.getResources());
-        String[] respiratoryNames = SymptomCategoriesUtils.getRespiratoryTypeNames(context.getResources());
-        String[] sensoryNames = SymptomCategoriesUtils.getSensoryTypeNames(context.getResources());
-        String[] emotionalNames = SymptomCategoriesUtils.getEmotionalTypeNames(context.getResources());
-        String[] dermatologicalNames = SymptomCategoriesUtils.getDermatologicalTypeNames(context.getResources());
-        String[] triggeringActivitiesNames = SymptomCategoriesUtils.getTriggeringActivityTypeNames(context.getResources());
-        String[] triggeringEmotionsNames = SymptomCategoriesUtils.getTriggeringEmotionTypeNames(context.getResources());
-        String[] triggeringWeatherStateNames = SymptomCategoriesUtils.getTriggeringWeatherStateTypeNames(context.getResources());
-        String[][] namesMatrix = new String[][]{painTypeNames, digestiveNames, respiratoryNames, sensoryNames, emotionalNames, dermatologicalNames, triggeringActivitiesNames,
-        triggeringEmotionsNames, triggeringWeatherStateNames};
-        HashMap<String, String[]> namesHashMap = new HashMap<>();
-        int matrixIndex = 0;
-        for (String name: categoryNames) { namesHashMap.put(name, namesMatrix[matrixIndex++]); }
-        
-        try{
-            if(listAll().size() == 0){
-                for (String categoryName : namesHashMap.keySet()) {
-                    symptomCategoryModel = symptomCategoryController.getSymptomCategoryByName(categoryName); // Get model to use it's PK as FK
-                    int fk = symptomCategoryModel.getCategoryId();
-                    for (String optionName: namesHashMap.get(categoryName)) {
-                        symptomCategoryOptionModel = new SymptomCategoryOptionModel(fk, optionName);
+            SymptomCategoryOptionModel symptomCategoryOptionModel;
+            SymptomCategoryModel symptomCategoryModel;
+
+            try{
+
+                for (CategoryDTO category : initialHashMap.keySet()) {
+                    String categoryName = context.getResources().getString(category.nameStringId);
+                    symptomCategoryModel = symptomCategoryController.getSymptomCategoryByName(categoryName); // Get model to use its PK as FK
+                    int categoryId = symptomCategoryModel.getCategoryId();
+
+                    for (SymptomOptionDTO option : initialHashMap.get(category)) {
+                        String optionLabel = context.getResources().getString(option.labelStringId);
+                        symptomCategoryOptionModel = new SymptomCategoryOptionModel(categoryId, optionLabel, option.resourceIconId);
                         symptomCategoryOptionDao.insert(symptomCategoryOptionModel);
                     }
                 }
+            }catch (Exception e){
+                success = false;
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            success = false;
-            e.printStackTrace();
         }
         return success;
     }
@@ -78,6 +70,32 @@ public class SymptomCategoryOptionController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private HashMap<CategoryDTO, SymptomOptionDTO[]> getInitialOptionsHashMap(){
+        // Prepare data for insertion
+        CategoryDTO[] categories = SymptomCategoriesUtils.getCategoryNames();
+
+        SymptomOptionDTO[] painTypeNames = SymptomCategoriesUtils.getPainTypeNames();
+        SymptomOptionDTO[] digestiveNames = SymptomCategoriesUtils.getDigestiveTypeNames();
+        SymptomOptionDTO[] respiratoryNames = SymptomCategoriesUtils.getRespiratoryTypeNames();
+        SymptomOptionDTO[] sensoryNames = SymptomCategoriesUtils.getSensoryTypeNames();
+        SymptomOptionDTO[] emotionalNames = SymptomCategoriesUtils.getEmotionalTypeNames();
+        SymptomOptionDTO[] dermatologicalNames = SymptomCategoriesUtils.getDermatologicalTypeNames();
+        SymptomOptionDTO[] triggeringActivitiesNames = SymptomCategoriesUtils.getTriggeringActivityTypeNames();
+        SymptomOptionDTO[] triggeringEmotionsNames = SymptomCategoriesUtils.getTriggeringEmotionTypeNames();
+        SymptomOptionDTO[] triggeringWeatherStateNames = SymptomCategoriesUtils.getTriggeringWeatherStateTypeNames();
+
+        SymptomOptionDTO[][] namesMatrix = new SymptomOptionDTO[][]{painTypeNames, digestiveNames, respiratoryNames, sensoryNames, emotionalNames, dermatologicalNames, triggeringActivitiesNames,
+                triggeringEmotionsNames, triggeringWeatherStateNames};
+
+        HashMap<CategoryDTO, SymptomOptionDTO[]> namesHashMap = new HashMap<>();
+
+        int matrixIndex = 0;
+        for (CategoryDTO categoryDTO : categories) {
+            namesHashMap.put(categoryDTO, namesMatrix[matrixIndex++]);
+        }
+        return namesHashMap;
     }
 
     public SymptomCategoryOptionModel getSymptomCategoryOptionByName(String name) {

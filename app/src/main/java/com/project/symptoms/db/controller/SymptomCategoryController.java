@@ -1,10 +1,13 @@
 package com.project.symptoms.db.controller;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomCategoryDaoImpl;
 import com.project.symptoms.db.model.SymptomCategoryModel;
+import com.project.symptoms.dto.CategoryDTO;
+import com.project.symptoms.util.SymptomCategoriesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,26 +31,21 @@ public class SymptomCategoryController {
     // Return the id of the new row when inserting successfully
     public boolean insert(){
         boolean success = true;
-        SymptomCategoryModel symptomCategoryModel;
-        String[] names = {context.getResources().getString(R.string.pain_type),
-                context.getResources().getString(R.string.digestive_pain),
-                context.getResources().getString(R.string.respiratory_pain),
-                context.getResources().getString(R.string.sensory_pain),
-                context.getResources().getString(R.string.emotional_pain),
-                context.getResources().getString(R.string.dermatological_pain),
-                context.getResources().getString(R.string.triggering_activity),
-                context.getResources().getString(R.string.triggering_feeling),
-                context.getResources().getString(R.string.triggering_weather_condition)};
-        try{
-            if(listAll().size() == 0){
-                for (String name: names) {
-                    symptomCategoryModel = new SymptomCategoryModel(name);
+        boolean initialInsertionAlreadyDone = listAll().size() > 0;
+        if(! initialInsertionAlreadyDone){
+            try {
+                Resources res = context.getResources();
+                SymptomCategoryModel symptomCategoryModel;
+                CategoryDTO[] allCategories = SymptomCategoriesUtils.getCategoryNames();
+                for (CategoryDTO categoryDTO : allCategories) {
+                    String categoryName = res.getString(categoryDTO.nameStringId);
+                    symptomCategoryModel = new SymptomCategoryModel(categoryName);
                     symptomCategoryDao.insert(symptomCategoryModel);
                 }
+            }catch (Exception e){
+                success = false;
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            success = false;
-            e.printStackTrace();
         }
         return success;
     }

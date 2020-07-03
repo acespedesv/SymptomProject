@@ -90,6 +90,8 @@ public class Contract {
         public static final String COLUMN_NAME_ID_PK = "category_option_id";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_CATEGORY_ID_FK = "category_id";
+        public static final String COLUMN_NAME_ICON_RESOURCE_ID = "icon_resource_id";
+
     }
 
     public static final String SQL_CREATE_CATEGORY_OPTION =
@@ -97,6 +99,7 @@ public class Contract {
                     CategoryOption.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     CategoryOption.COLUMN_NAME_NAME + " TEXT, " +
                     CategoryOption.COLUMN_NAME_CATEGORY_ID_FK + " INTEGER," +
+                    CategoryOption.COLUMN_NAME_ICON_RESOURCE_ID + " INTEGER," +
                     "FOREIGN KEY (" + CategoryOption.COLUMN_NAME_CATEGORY_ID_FK + ") " +
                     "REFERENCES " + Category.TABLE_NAME + "(" + Category.COLUMN_NAME_ID_PK + "))";
 

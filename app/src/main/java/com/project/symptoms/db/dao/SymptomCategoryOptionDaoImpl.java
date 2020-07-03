@@ -24,6 +24,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         ContentValues values = new ContentValues();
         values.put(Contract.CategoryOption.COLUMN_NAME_CATEGORY_ID_FK, symptomCategoryOptionModel.getCategoryFkId());
         values.put(Contract.CategoryOption.COLUMN_NAME_NAME, symptomCategoryOptionModel.getCategoryOptionName());
+        values.put(Contract.CategoryOption.COLUMN_NAME_ICON_RESOURCE_ID, symptomCategoryOptionModel.getIconResourceId());
         long newId = db.insert(Contract.CategoryOption.TABLE_NAME,null, values);
         db.close();
         return newId;
@@ -51,28 +52,25 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
 
     private List<SymptomCategoryOptionModel> buildListFromCursor(Cursor cursor) {
         List<SymptomCategoryOptionModel> result = new ArrayList<>();
-        int id, fk;
-        String name;
         while (cursor.moveToNext()) {
-            id = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_ID_PK));
-            fk = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_CATEGORY_ID_FK));
-            name = cursor.getString(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_NAME));
-            result.add(new SymptomCategoryOptionModel(id, fk, name));
+            result.add(buildModelFromCursor(cursor));
         }
         return result;
     }
 
+    /**
+     * Assumes moveToNext() already called
+     */
     private SymptomCategoryOptionModel buildModelFromCursor(Cursor cursor) {
-        SymptomCategoryOptionModel symptomCategoryModel = null;
-        int id, fk;
+        SymptomCategoryOptionModel symptomCategoryOptionModel = null;
+        int id, fk, iconResourceId;
         String name;
-        if (cursor.moveToFirst()){
-            id = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_ID_PK));
-            fk = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_CATEGORY_ID_FK));
-            name = cursor.getString(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_NAME));
-            symptomCategoryModel = new SymptomCategoryOptionModel(id, fk, name);
-        }
-        return symptomCategoryModel;
+        id = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_ID_PK));
+        fk = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_CATEGORY_ID_FK));
+        name = cursor.getString(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_NAME));
+        iconResourceId = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_ICON_RESOURCE_ID));
+        symptomCategoryOptionModel = new SymptomCategoryOptionModel(id, fk, name, iconResourceId);
+        return symptomCategoryOptionModel;
     }
 
     @Override
