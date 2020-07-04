@@ -4,6 +4,7 @@ import android.content.Context;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.util.NotificationWrapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,8 +14,10 @@ public class SymptomController {
 
     private static SymptomController instance;
     private SymptomDaoImpl symptomDao;
+    private Context context;
 
     private SymptomController(Context context){
+        this.context = context;
         symptomDao = new SymptomDaoImpl(context);
     }
 
@@ -32,6 +35,7 @@ public class SymptomController {
             long endTime = -1;
             SymptomModel symptomModel = new SymptomModel(posX, posY, startDate.getTime(), endTime, circleRadius, circleSide);
             newId = symptomDao.insert(symptomModel);
+            NotificationWrapper.getInstance(this.context).startReminderFor(newId);
         }catch (Exception e){
             e.printStackTrace();
         }

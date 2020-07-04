@@ -92,7 +92,7 @@ public class NotificationWrapper {
     /**
      * Program a worker to check if the symptom has finished yet and notify if it has not
      */
-    public void startReminderFor(int symptomId){
+    public void startReminderFor(long symptomId){
         int frequency = getCurrentFrequency();
 
         OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(SymptomCheckerWorker.class)
@@ -125,10 +125,10 @@ public class NotificationWrapper {
 
     }
 
-    private Data buildWorkerParameters(int symptomId) {
+    private Data buildWorkerParameters(long symptomId) {
         return new Data.Builder()
                 .putString(SymptomCheckerWorker.MESSAGE_KEY,"The notification")
-                .putInt(SymptomCheckerWorker.SYMPTOM_ID_KEY,symptomId)
+                .putLong(SymptomCheckerWorker.SYMPTOM_ID_KEY,symptomId)
                 .build();
     }
 

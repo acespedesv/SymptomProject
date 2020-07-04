@@ -16,12 +16,12 @@ public class SymptomCheckerWorker extends Worker {
     public static final String SYMPTOM_ID_KEY =  "symptom_id";
 
     String notificationMessage;
-    int symptomId;
+    long symptomId;
 
     public SymptomCheckerWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         this.notificationMessage = workerParams.getInputData().getString(MESSAGE_KEY);
-        this.symptomId = workerParams.getInputData().getInt(SYMPTOM_ID_KEY,-1);
+        this.symptomId = workerParams.getInputData().getLong(SYMPTOM_ID_KEY,-1);
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public class SymptomCheckerWorker extends Worker {
         return symptom.getEndTime() < 0;
     }
 
-    private String buildMessageFor(int symptomId){
+    private String buildMessageFor(long symptomId){
         String format = getApplicationContext().getResources().getString(R.string.symptom_reminder_format);
         return String.format(format,"X","DATE");
     }
