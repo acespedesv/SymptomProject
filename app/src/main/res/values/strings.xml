@@ -27,6 +27,8 @@
     <string name="menu_name">Menu</string>
     <string name="action_about">Acerca de</string>
     <string name="action_notifications">Notificaciones</string>
+    <string name="notifications_frequency">Frecuencia de notificaciones</string>
+    <string name="notifications_frequency_summary">Recordar síntomas sin finalización cada ciertas horas</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="blood_pressure_button">Presión</string>
     <string name="glucose_button">Glucosa</string>
@@ -44,5 +46,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">SYMP APP</string>
     <string name="first_step">Primer paso</string>
+    <string name="developed_by">Desarrollado por</string>
     <string name="body_selection">Selección de silueta</string>
 </resources>

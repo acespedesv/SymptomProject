@@ -148,11 +148,23 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.action_settings:
+                startSettingsActivity();
+                break;
+            case R.id.action_about:
+                startAboutActivity();
+                break;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startAboutActivity() {
+        startActivity(new Intent(this, About.class));
+    }
+
+    private void startSettingsActivity() {
+        // TODO implement this
     }
 
     public void launchCircleSizeSelectionDialog(){
