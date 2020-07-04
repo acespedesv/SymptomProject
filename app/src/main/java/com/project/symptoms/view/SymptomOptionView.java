@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.project.symptoms.R;
-import com.project.symptoms.activity.SymptomForm.SymptomOption;
+import com.project.symptoms.db.model.SymptomCategoryOptionModel;
 
 public class SymptomOptionView extends RelativeLayout  implements View.OnClickListener{
 
@@ -48,10 +48,10 @@ public class SymptomOptionView extends RelativeLayout  implements View.OnClickLi
         inflater.inflate(R.layout.symptom_option,this);
 
         isChecked = false;
-        this.label = (TextView) findViewWithTag("label");
-        this.backgroundCircle = (ImageView) findViewWithTag("background_circle");
-        this.borderCircle = (ImageView) findViewWithTag("border_circle");
-        this.icon = (ImageView) findViewWithTag("icon");
+        this.label = findViewWithTag("label");
+        this.backgroundCircle = findViewWithTag("background_circle");
+        this.borderCircle = findViewWithTag("border_circle");
+        this.icon = findViewWithTag("icon");
         setOnClickListener(this);
 
     }
@@ -72,9 +72,17 @@ public class SymptomOptionView extends RelativeLayout  implements View.OnClickLi
         }
     }
 
-    public void setSymptomOption(SymptomOption symptomOption){
-        this.icon.setImageResource(symptomOption.imageResId);
-        this.label.setText(symptomOption.label);
+    public boolean isChecked(){
+        return isChecked;
+    }
+
+    public void setSymptomOption(SymptomCategoryOptionModel model){
+        this.icon.setImageResource(model.getIconResourceId()); //TODO FIX THIS
+        this.label.setText(model.getCategoryOptionName());
+    }
+
+    public String getName(){
+        return this.label.getText().toString();
     }
 
     @Override

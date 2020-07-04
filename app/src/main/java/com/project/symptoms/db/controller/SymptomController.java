@@ -23,14 +23,17 @@ public class SymptomController {
         return instance;
     }
 
-    // Return the id of the new row
-    public long insert(float posX, float posY, float circleRadius, String date, String time, int circleSide){
+    // Return the id of the new row when inserting successfully
+    public long insert(float circlePosX, float circlePosY, String startDate, String startTime,
+                       int duration, String description, String intensity,
+                       String causingDrug, String causingFood, int intermittence, float circleRadius, int circleSide){
 
         long newId = -1;
         try{
-            Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
-            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
-            SymptomModel symptomModel = new SymptomModel(posX, posY, finalDate.getTime(), finalTime.getTime(), circleRadius, circleSide);
+            Date finalStartDate = DateTimeUtils.getInstance().getDateFromString(startDate);
+            Date finalStartTime = DateTimeUtils.getInstance().getTimeFromString(startTime);
+            SymptomModel symptomModel = new SymptomModel(circlePosX, circlePosY, finalStartDate.getTime(), finalStartTime.getTime(),
+                    duration, description, intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide);
             newId = symptomDao.insert(symptomModel);
         }catch (Exception e){
             e.printStackTrace();
