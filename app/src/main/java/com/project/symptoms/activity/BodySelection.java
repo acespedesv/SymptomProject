@@ -20,8 +20,6 @@ public class BodySelection extends FragmentActivity{
     int selectedColor = Color.parseColor("#8DBF41");
     int normalColor = Color.parseColor("#d6d7d7");
 
-    TextView currentSelectionText;
-
     // Rows
     final int FEMALE = 0;
     final int MALE = 1;
@@ -43,11 +41,6 @@ public class BodySelection extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.body_selection);
 
-
-        currentSelectionText = findViewById(R.id.current_selection);
-        currentSelectionText.setText("Ninguno");
-
-
         final ImageButton maleButton = findViewById(R.id.male_button);
         final ImageButton femaleButton = findViewById(R.id.female_button);
 
@@ -55,11 +48,10 @@ public class BodySelection extends FragmentActivity{
             @Override
             public void onClick(View v) {
                 selectedBodyType = FEMALE;
-                updateSelectionText();
-
+                v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
+                maleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
                 // Swap color
-                 v.setBackgroundColor(selectedColor);
-                 maleButton.setBackgroundColor(normalColor);
+                // v.setBackgroundColor(selectedColor);
             }
         });
 
@@ -67,11 +59,11 @@ public class BodySelection extends FragmentActivity{
             @Override
             public void onClick(View v) {
                 selectedBodyType = MALE;
-                updateSelectionText();
-
+                v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
+                femaleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
                 // Swap color
-                v.setBackgroundColor(selectedColor);
-                femaleButton.setBackgroundColor(normalColor);
+                // v.setBackgroundColor(selectedColor);
+                // femaleButton.setBackgroundColor(normalColor);
             }
         });
 
@@ -90,12 +82,5 @@ public class BodySelection extends FragmentActivity{
             }
         });
 
-    }
-
-    /**
-     * Reflect the current selection on the screen
-     */
-    private void updateSelectionText(){
-        currentSelectionText.setText(bodyTypes[selectedBodyType][NAME]);
     }
 }
