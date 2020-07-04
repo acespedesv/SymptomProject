@@ -5,17 +5,19 @@ public class PressureModel {
     private int pressure_id;
     private int systolic;
     private int diastolic;
-    private long datetime;
+    private long date;
+    private long time;
 
-    public PressureModel(int pressure_id, int systolic, int diastolic, long datetime){
+    public PressureModel(int pressure_id, int systolic, int diastolic, long date, long time){
         this.pressure_id = pressure_id;
         this.systolic = systolic;
         this.diastolic = diastolic;
-        this.datetime = datetime;
+        this.date = date;
+        this.time = time;
     }
 
-    public PressureModel(int systolic, int diastolic, long datetime){
-        this(0, systolic, diastolic, datetime);
+    public PressureModel(int systolic, int diastolic, long date, long time){
+        this(0, systolic, diastolic, date, time);
     }
 
 
@@ -43,11 +45,15 @@ public class PressureModel {
         this.diastolic = diastolic;
     }
 
-    public long getDatetime() {
-        return datetime;
+    public long getDate() {
+        return date;
     }
 
-    public void setDatetime(long datetime) {
-        this.datetime = datetime;
+    public void setDate(long datetime) {
+        this.date = datetime;
     }
+
+    public long getTime() { return time; }
+
+    public void setTime(long time) { this.time = time; }
 }
