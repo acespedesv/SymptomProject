@@ -150,7 +150,8 @@ public class Contract {
         public static final String TABLE_NAME = "glucose";
         public static final String COLUMN_NAME_ID_PK = "glucose_id";
         public static final String COLUMN_NAME_VALUE = "value";
-        public static final String COLUMN_NAME_DATETIME = "datetime";
+        public static final String COLUMN_NAME_DATE = "date";
+        public static final String COLUMN_NAME_TIME = "time";
 
     }
 
@@ -158,7 +159,8 @@ public class Contract {
             "CREATE TABLE " + Glucose.TABLE_NAME + " (" +
                     Glucose.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     Glucose.COLUMN_NAME_VALUE + " INTEGER," +
-                    Glucose.COLUMN_NAME_DATETIME + " INTEGER)";
+                    Glucose.COLUMN_NAME_DATE + " INTEGER," +
+                    Glucose.COLUMN_NAME_TIME + " INTEGER)";
 
     public static final String SQL_DELETE_GLUCOSE =
             "DROP TABLE IF EXISTS " + Pressure.TABLE_NAME;
