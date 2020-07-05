@@ -97,4 +97,23 @@ public class SymptomDaoImpl implements SymptomDao{
     public boolean update(int id, SymptomModel newValues) throws Exception {
         return false;
     }
+
+    @Override
+    public SymptomModel getById(long id) throws Exception{
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = "symptom_id = ?";
+        String[] whereArgs = new String[] {""+id};
+        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+
+        List<SymptomModel> result = buildListFromCursor(cursor);
+        SymptomModel model;
+        if (result.size() == 1){
+            model = result.get(0);
+        }
+        else{
+            throw new Exception("No matching Symptom with id "+id);
+        }
+        db.close();
+        return model;
+    }
 }

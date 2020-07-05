@@ -41,7 +41,7 @@ public class SymptomCategoriesUtils {
                 new SymptomOptionDTO(R.string.diarrhea, R.drawable.ic_diarrea),
                 new SymptomOptionDTO(R.string.vomit, R.drawable.ic_vomito),
                 new SymptomOptionDTO(R.string.difficulty_to_swallow, R.drawable.ic_dificultad_para_tragar),
-                new SymptomOptionDTO(R.string.bleeding, R.drawable.ic_sangrad),
+                new SymptomOptionDTO(R.string.bleeding, R.drawable.ic_sangrado),
                 new SymptomOptionDTO(R.string.incontinence, R.drawable.ic_incontinencia),
                 new SymptomOptionDTO(R.string.mouth_ulcers, R.drawable.ic_ulceras_bucales)
         };

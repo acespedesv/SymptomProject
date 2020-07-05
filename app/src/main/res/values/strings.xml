@@ -18,6 +18,21 @@
     <string name="reaction_food">Alimento causante:</string>
     <string name="reaction_food_hint">Nombre del alimento</string>
 
+    <!--  Settings Activity  -->
+    <string name="symptom_reminder_format">El síntoma %s registrado el día %s se encuentra activo. Ingrese a la aplicación para realizar el cambio correspondiente</string>
+    <string name="frequency_title">Recordatorio de síntomas</string>
+    <string name="frequency_summary">Horas luego de registrar un síntoma sin finalización</string>
+    <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
+
+    <!-- PREFERENCES KEYS -->
+    <string name="preference_reminder_frequency_key">reminder_frequency</string>
+    <string name="preference_selected_body_type_key">selected_body_type</string>
+
+    <!-- PREFERENCES DEFAULT VALUES -->
+    <string name="preference_reminder_frequency_default">8</string>
+    <string name="preference_selected_body_type_default">Ninguno</string>
+
+
     <!-- Symptom Categories -->
     <string name="pain_type">Tipo de dolor</string>
     <string name="digestive_pain">Padecimiento digestivo</string>

@@ -25,6 +25,8 @@ public class DateTimeUtils implements
 
     public  final SimpleDateFormat DATE_PARSER = new SimpleDateFormat("yyyy/MM/dd");
 
+    public final SimpleDateFormat DATE_FORMAT_FOR_NOTIFICATIONS = new SimpleDateFormat("dd/MM/yyyy");
+
     private  TextView dateView;
     private  TextView timeView;
 

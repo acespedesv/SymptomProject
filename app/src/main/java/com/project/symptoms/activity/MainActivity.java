@@ -60,6 +60,15 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // This is needed to be done again because of the context used in DateTimeUtils
+        // changes when another view is also registered as picker
+        // TODO FIX THIS ISSUE in DateTimeUtils
+        DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
+    }
+
     private void launchBodySelection(){
         startActivity(new Intent(this, BodySelection.class));
     }
@@ -164,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void startSettingsActivity() {
-        // TODO implement this
+        startActivity(new Intent(this, Settings.class));
     }
 
     public void launchCircleSizeSelectionDialog(){
