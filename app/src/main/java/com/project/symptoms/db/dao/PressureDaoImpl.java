@@ -27,7 +27,8 @@ public class PressureDaoImpl implements PressureDao {
         ContentValues values = new ContentValues();
         values.put(Contract.Pressure.COLUMN_NAME_DIASTOLIC, pressureModel.getDiastolic());
         values.put(Contract.Pressure.COLUMN_NAME_SYSTOLIC, pressureModel.getSystolic());
-        values.put(Contract.Pressure.COLUMN_NAME_DATETIME, pressureModel.getDatetime());
+        values.put(Contract.Pressure.COLUMN_NAME_DATE, pressureModel.getDate());
+        values.put(Contract.Pressure.COLUMN_NAME_TIME, pressureModel.getTime());
         long newId = db.insert(Contract.Pressure.TABLE_NAME,null, values);
         db.close();
         return newId;
@@ -46,13 +47,14 @@ public class PressureDaoImpl implements PressureDao {
     private List<PressureModel> buildListFromCursor(Cursor cursor){
         List<PressureModel> result = new ArrayList<>();
         int id, systolic, diastolic;
-        long datetime;
+        long date, time;
         while(cursor.moveToNext()){
             id = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_ID_PK));
             systolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_SYSTOLIC));
             diastolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DIASTOLIC));
-            datetime = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DATETIME));
-            result.add(new PressureModel(id, systolic, diastolic, datetime));
+            date = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DATE));
+            time = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_TIME));
+            result.add(new PressureModel(id, systolic, diastolic, date, time));
         }
         return result;
     }

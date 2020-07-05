@@ -3,20 +3,20 @@ package com.project.symptoms.db.model;
 public class GlucoseModel {
     private int id;
     private int value;
-    private long datetime;
+    private long date;
+    private long time;
 
-    public GlucoseModel(int id, int value, long datetime) {
+    public GlucoseModel(int id, int value, long date, long time) {
         this.id = id;
         this.value = value;
-        this.datetime = datetime;
+        this.date = date;
+        this.time = time;
     }
 
-    public GlucoseModel() {
-    }
-
-    public GlucoseModel(int value, long datetime) {
+    public GlucoseModel(int value, long date, long time) {
         this.value = value;
-        this.datetime = datetime;
+        this.date = date;
+        this.time = time;
     }
 
     public GlucoseModel(int value) {
@@ -39,11 +39,15 @@ public class GlucoseModel {
         this.value = value;
     }
 
-    public long getDatetime() {
-        return datetime;
+    public long getDate() {
+        return date;
     }
 
-    public void setDatetime(long datetime) {
-        this.datetime = datetime;
+    public void setDate(long date) {
+        this.date = date;
     }
+
+    public long getTime() { return time; }
+
+    public void setTime(long time) { this.time = time; }
 }

@@ -131,7 +131,8 @@ public class Contract {
         public static final String COLUMN_NAME_ID_PK = "pressure_id";
         public static final String COLUMN_NAME_SYSTOLIC = "systolic";
         public static final String COLUMN_NAME_DIASTOLIC = "diastolic";
-        public static final String COLUMN_NAME_DATETIME = "datetime";
+        public static final String COLUMN_NAME_DATE = "date";
+        public static final String COLUMN_NAME_TIME = "time";
     }
 
     public static final String SQL_CREATE_PRESSURE =
@@ -139,7 +140,8 @@ public class Contract {
                     Pressure.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     Pressure.COLUMN_NAME_SYSTOLIC + " INTEGER," +
                     Pressure.COLUMN_NAME_DIASTOLIC + " INTEGER," +
-                    Pressure.COLUMN_NAME_DATETIME + " INTEGER)"; // TODO: Is this an Integer?
+                    Pressure.COLUMN_NAME_DATE + " INTEGER," +
+                    Pressure.COLUMN_NAME_TIME + " INTEGER)";
 
     public static final String SQL_DELETE_PRESSURE =
             "DROP TABLE IF EXISTS " + Pressure.TABLE_NAME;
@@ -148,7 +150,8 @@ public class Contract {
         public static final String TABLE_NAME = "glucose";
         public static final String COLUMN_NAME_ID_PK = "glucose_id";
         public static final String COLUMN_NAME_VALUE = "value";
-        public static final String COLUMN_NAME_DATETIME = "datetime";
+        public static final String COLUMN_NAME_DATE = "date";
+        public static final String COLUMN_NAME_TIME = "time";
 
     }
 
@@ -156,7 +159,8 @@ public class Contract {
             "CREATE TABLE " + Glucose.TABLE_NAME + " (" +
                     Glucose.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     Glucose.COLUMN_NAME_VALUE + " INTEGER," +
-                    Glucose.COLUMN_NAME_DATETIME + " INTEGER)";
+                    Glucose.COLUMN_NAME_DATE + " INTEGER," +
+                    Glucose.COLUMN_NAME_TIME + " INTEGER)";
 
     public static final String SQL_DELETE_GLUCOSE =
             "DROP TABLE IF EXISTS " + Pressure.TABLE_NAME;

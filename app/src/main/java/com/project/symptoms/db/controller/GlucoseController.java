@@ -29,8 +29,9 @@ public class GlucoseController {
         long newId = -1;
 
         try {
-            Date completeDateTime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(dateText, hourText);
-            GlucoseModel glucoseModel = new GlucoseModel(glucoseValue, completeDateTime.getTime());
+            Date finalDate = DateTimeUtils.getInstance().getDateFromString(dateText);
+            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(hourText);
+            GlucoseModel glucoseModel = new GlucoseModel(glucoseValue, finalDate.getTime(), finalTime.getTime());
             newId = glucoseDao.insert(glucoseModel);
         } catch (Exception e) {
             e.printStackTrace();

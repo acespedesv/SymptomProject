@@ -1,5 +1,6 @@
 package com.project.symptoms.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -59,8 +60,8 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         long id = GlucoseController.getInstance(this).insert(glucoseValue, date, hour);
         Toast.makeText(getApplicationContext(), "ID" + id, Toast.LENGTH_SHORT).show();
 
-        /*Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        startActivity(mainActivityIntent);*/
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(mainActivityIntent);
     }
 
     private void updateData() {

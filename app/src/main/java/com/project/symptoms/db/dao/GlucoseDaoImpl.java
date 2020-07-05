@@ -23,7 +23,8 @@ public class GlucoseDaoImpl implements GlucoseDao {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(Contract.Glucose.COLUMN_NAME_VALUE, glucoseModel.getValue());
-        values.put(Contract.Glucose.COLUMN_NAME_DATETIME, glucoseModel.getDatetime());
+        values.put(Contract.Glucose.COLUMN_NAME_DATE, glucoseModel.getDate());
+        values.put(Contract.Glucose.COLUMN_NAME_TIME, glucoseModel.getTime());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(Contract.Glucose.TABLE_NAME, null, values);
@@ -37,7 +38,8 @@ public class GlucoseDaoImpl implements GlucoseDao {
         //New value for one column
         ContentValues values = new ContentValues();
         values.put(Contract.Glucose.COLUMN_NAME_VALUE, glucoseModel.getValue());
-        values.put(Contract.Glucose.COLUMN_NAME_DATETIME, glucoseModel.getDatetime());
+        values.put(Contract.Glucose.COLUMN_NAME_DATE, glucoseModel.getDate());
+            values.put(Contract.Glucose.COLUMN_NAME_TIME, glucoseModel.getTime());
 
         String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Integer.toString(glucoseModel.getId())};
@@ -62,7 +64,8 @@ public class GlucoseDaoImpl implements GlucoseDao {
         String[] columns = {
                 //BaseColumns._ID,
                 Contract.Glucose.COLUMN_NAME_VALUE,
-                Contract.Glucose.COLUMN_NAME_DATETIME
+                Contract.Glucose.COLUMN_NAME_DATE,
+                Contract.Glucose.COLUMN_NAME_TIME
         };
 
         String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
@@ -84,6 +87,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
         cursor.moveToFirst();
         String value = cursor.getString(0);
         String dateTime = cursor.getString(1);
+        cursor.close();
         return new GlucoseModel(id, Integer.parseInt(value), Long.parseLong(dateTime));
     }
 }
