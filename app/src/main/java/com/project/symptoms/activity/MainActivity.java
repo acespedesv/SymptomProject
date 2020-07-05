@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void startSettingsActivity() {
-        // TODO implement this
+        startActivity(new Intent(this, Settings.class));
     }
 
     public void launchCircleSizeSelectionDialog(){

@@ -61,4 +61,14 @@ public class SymptomController {
         return result;
     }
 
+    public SymptomModel findById(long symptomId){
+        SymptomModel result = null;
+        try{
+            result = symptomDao.getById(symptomId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

@@ -27,4 +27,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Used in Settings Activity
+    implementation 'androidx.preference:preference:1.1.0'
+
+    // Required to send notifications
+    implementation "com.android.support:support-compat:28.0.0"
+
+    // Required to use WorkManager
+    def work_version = "2.3.4"
+    implementation "androidx.work:work-runtime:$work_version"
 }
