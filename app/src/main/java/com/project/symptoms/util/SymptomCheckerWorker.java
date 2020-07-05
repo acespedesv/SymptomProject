@@ -11,16 +11,15 @@ import com.project.symptoms.R;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SymptomModel;
 
+import java.util.Date;
+
 public class SymptomCheckerWorker extends Worker {
-    public static final String MESSAGE_KEY =  "message";
     public static final String SYMPTOM_ID_KEY =  "symptom_id";
 
-    String notificationMessage;
     long symptomId;
 
     public SymptomCheckerWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        this.notificationMessage = workerParams.getInputData().getString(MESSAGE_KEY);
         this.symptomId = workerParams.getInputData().getLong(SYMPTOM_ID_KEY,-1);
     }
 
@@ -46,8 +45,13 @@ public class SymptomCheckerWorker extends Worker {
     }
 
     private String buildMessageFor(long symptomId){
+        SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).findById(symptomId);
+
+        Date startDate = new Date(symptom.getStartDate());
+        String dateString = DateTimeUtils.getInstance().DATE_FORMAT_FOR_NOTIFICATIONS.format(startDate);
+
         String format = getApplicationContext().getResources().getString(R.string.symptom_reminder_format);
-        return String.format(format,"X","DATE");
+        return String.format(format, symptom.getDescription(), dateString);
     }
 
     private String buildTitle(){

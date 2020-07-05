@@ -1,9 +1,14 @@
 package com.project.symptoms.db.controller;
 
+import android.app.Notification;
 import android.content.Context;
+import android.widget.Toast;
+
+import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.util.NotificationWrapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,8 +18,10 @@ public class SymptomController {
 
     private static SymptomController instance;
     private SymptomDaoImpl symptomDao;
+    private Context context;
 
     private SymptomController(Context context){
+        this.context = context;
         symptomDao = new SymptomDaoImpl(context);
     }
 
@@ -35,6 +42,11 @@ public class SymptomController {
             SymptomModel symptomModel = new SymptomModel(circlePosX, circlePosY, finalStartDate.getTime(), finalStartTime.getTime(),
                     duration, description, intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide);
             newId = symptomDao.insert(symptomModel);
+            if(symptomModel.getDuration() < 0){
+                NotificationWrapper.getInstance(this.context).startReminderFor(newId);
+                NotificationWrapper.getInstance(this.context).showReminderSetToast();
+
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

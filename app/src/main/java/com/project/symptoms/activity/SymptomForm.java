@@ -117,7 +117,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
         if(newId != -1){
             String text = getResources().getString(R.string.value_successfully_saved);
-            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -100,21 +100,19 @@ public class NotificationWrapper {
                 .setInitialDelay(frequency, getCurrentTimeUnit())
                 .build();
         WorkManager.getInstance(context).enqueue(oneTimeWorkRequest);
-
-        showReminderSetToast(frequency);
     }
 
-    private void showReminderSetToast(int frequency) {
+    public void showReminderSetToast() {
+        int frequency = getCurrentFrequency();
         String format = context.getString(R.string.reminder_set_format);
         String text = String.format(format, frequency);
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
     private TimeUnit getCurrentTimeUnit() {
         return TimeUnit.HOURS;
     }
 
-    // TODO: user here the frequency set in preferences
     private int getCurrentFrequency() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String key = context.getString(R.string.preference_reminder_frequency_key);
@@ -127,7 +125,6 @@ public class NotificationWrapper {
 
     private Data buildWorkerParameters(long symptomId) {
         return new Data.Builder()
-                .putString(SymptomCheckerWorker.MESSAGE_KEY,"The notification")
                 .putLong(SymptomCheckerWorker.SYMPTOM_ID_KEY,symptomId)
                 .build();
     }

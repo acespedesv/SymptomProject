@@ -77,7 +77,7 @@ public class SymptomOptionView extends RelativeLayout  implements View.OnClickLi
     }
 
     public void setSymptomOption(SymptomCategoryOptionModel model){
-        this.icon.setImageResource(model.getIconResourceId()); //TODO FIX THIS
+        this.icon.setImageResource(model.getIconResourceId());
         this.label.setText(model.getCategoryOptionName());
     }
 

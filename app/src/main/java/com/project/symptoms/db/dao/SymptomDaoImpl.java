@@ -101,7 +101,7 @@ public class SymptomDaoImpl implements SymptomDao{
     @Override
     public SymptomModel getById(long id) throws Exception{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = "symtom_id = ?";
+        String whereClause = "symptom_id = ?";
         String[] whereArgs = new String[] {""+id};
         Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
 
