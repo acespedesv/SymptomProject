@@ -66,8 +66,10 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         symptomMedicamentView = findViewById(R.id.symp_medicament);
         symptomFoodView = findViewById(R.id.symp_food);
         symptomDurationView = findViewById(R.id.symp_duration);
-        DateTimeUtils.getInstance().registerAsTimePicker(startDateView);
+        DateTimeUtils.getInstance().registerAsDatePicker(startDateView);
         DateTimeUtils.getInstance().registerAsTimePicker(startTimeView);
+        mainActivityDate = getIntent().getStringExtra("Date");
+        mainActivityTime = getIntent().getStringExtra("Time");
         setStartDateTime(mainActivityDate, mainActivityTime);
     }
 
