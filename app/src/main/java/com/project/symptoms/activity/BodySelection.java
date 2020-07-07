@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.project.symptoms.R;
 import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.db.controller.GlucoseLevelsController;
+import com.project.symptoms.db.controller.BloodPressureLevelsController;
 
 public class BodySelection extends FragmentActivity{
 
@@ -44,7 +45,8 @@ public class BodySelection extends FragmentActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         DBHelper database = new DBHelper(this);
-        long id = GlucoseLevelsController.getInstance(this).insert();
+        GlucoseLevelsController.getInstance(this).insert();
+        BloodPressureLevelsController.getInstance(this).insert();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.body_selection);
 

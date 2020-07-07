@@ -38,17 +38,16 @@ public class GlucoseLevelsDaoImpl implements GlucoseLevelsDao {
     public List<GlucoseLevels> listAll(){
         List<GlucoseLevels> result = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Contract.GlucoseLevels.TABLE_NAME, null);
+        Cursor cursor = db.query(Contract.GlucoseLevels.TABLE_NAME, null, null, null, null, null, null);
         if(cursor != null && cursor.getCount()>0){
             cursor.moveToFirst();
         }do {
+            assert cursor != null;
             result.add(new GlucoseLevels(cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3)));
         }while (cursor.moveToNext());
       
-        return result;  
+        return result;
     }
-
-
 }
