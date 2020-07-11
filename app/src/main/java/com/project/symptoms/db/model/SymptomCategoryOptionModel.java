@@ -2,10 +2,11 @@ package com.project.symptoms.db.model;
 
 public class SymptomCategoryOptionModel {
 
-    private long categoryOptionId, categoryFkId, iconResourceId;
+    private long categoryOptionId, categoryFkId;
+    private int iconResourceId;
     private String categoryOptionName;
 
-    public SymptomCategoryOptionModel(long categoryOptionId, long categoryFkId, String categoryOptionName, long iconResourceId) {
+    public SymptomCategoryOptionModel(long categoryOptionId, long categoryFkId, String categoryOptionName, int iconResourceId) {
         this.categoryOptionId = categoryOptionId;
         this.categoryFkId = categoryFkId;
         this.categoryOptionName = categoryOptionName;
@@ -30,7 +31,7 @@ public class SymptomCategoryOptionModel {
 
     public void setCategoryOptionName(String categoryOptionName) { this.categoryOptionName = categoryOptionName; }
 
-    public long getIconResourceId() {
+    public int getIconResourceId() {
         return iconResourceId;
     }
 
