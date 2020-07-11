@@ -12,8 +12,8 @@ public interface SelectedCategoryOptionDao {
 
     List<SelectedCategoryOptionModel> listAll() throws Exception;
 
-    boolean delete(int symptomId, int categoryId) throws Exception;
+    boolean delete(long symptomId, long categoryId) throws Exception;
 
-    boolean update(int id, SelectedCategoryOptionModel newValues) throws Exception;
+    boolean update(long id, SelectedCategoryOptionModel newValues) throws Exception;
 
 }

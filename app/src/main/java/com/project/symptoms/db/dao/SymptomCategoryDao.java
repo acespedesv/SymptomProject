@@ -12,7 +12,7 @@ public interface SymptomCategoryDao {
 
     List<SymptomCategoryModel> listAll() throws Exception;
 
-    boolean delete(int id) throws Exception;
+    boolean delete(long id) throws Exception;
 
-    boolean update(int id, SymptomCategoryModel newValues) throws Exception;
+    boolean update(long id, SymptomCategoryModel newValues) throws Exception;
 }

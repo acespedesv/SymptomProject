@@ -23,14 +23,14 @@ public class SelectedCategoryOptionController {
         return instance;
     }
 
-    public long insert(int symptomId, int categoryId){
+    public long insert(long symptomId, long categoryId){
         long newId = -1;
         try { newId = selectedCategoryOptionDao.insert(new SelectedCategoryOptionModel(symptomId, categoryId)); }
         catch (Exception e){ e.printStackTrace(); }
         return newId;
     }
 
-    public boolean delete(int symptomId, int categoryId){
+    public boolean delete(long symptomId, long categoryId){
         try {
             selectedCategoryOptionDao.delete(symptomId, categoryId);
             return true;
@@ -40,7 +40,7 @@ public class SelectedCategoryOptionController {
         }
     }
 
-    public List<SelectedCategoryOptionModel> listAll(){
+    public List<SelectedCategoryOptionModel> getAll(){
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         try{
             result = selectedCategoryOptionDao.listAll();
@@ -50,7 +50,7 @@ public class SelectedCategoryOptionController {
         return result;
     }
 
-    public List<SelectedCategoryOptionModel> listAllBySymptom(int symptomId){
+    public List<SelectedCategoryOptionModel> getAllBySymptom(int symptomId){
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         try{
             result = selectedCategoryOptionDao.listAllBySymptom(symptomId);

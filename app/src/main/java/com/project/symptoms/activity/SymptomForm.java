@@ -20,9 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.symptoms.R;
+import com.project.symptoms.db.Contract;
+import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomCategoryController;
 import com.project.symptoms.db.controller.SymptomCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
+import com.project.symptoms.db.model.SelectedCategoryOptionModel;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 import com.project.symptoms.db.model.SymptomCategoryOptionModel;
 import com.project.symptoms.fragment.MainMenuFragment;
@@ -95,30 +98,43 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSymptomsData();
+                String text = saveSymptomsData() ?
+                        getResources().getString(R.string.value_successfully_saved) :
+                        getResources().getString(R.string.value_saving_failed);
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void saveSymptomsData() {
-        logSelectedOptions();
-
+    private boolean saveSymptomsData() {
         setUpBundleData();
+        SymptomController symptomController = SymptomController.getInstance(this);
+        SelectedCategoryOptionController selectedCategoryOptionController = SelectedCategoryOptionController.getInstance(this);
+        SymptomCategoryOptionController symptomCategoryOptionController = SymptomCategoryOptionController.getInstance(this);
 
         String stringDuration = symptomDurationView.getText().toString();
         int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
-
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
 
-        long newId = SymptomController.getInstance(this).insert(currentCircle.x, currentCircle.y,
+        // Insert in symptom table
+        long symptomId = symptomController.insert(currentCircle.x, currentCircle.y,
                 mainActivityDate, mainActivityTime, finalDuration, symptomDescriptionView.getText().toString(),
                 findViewById(intensityCheckedViewId).toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
                 intermittenceSwitchView.isChecked() ? 1 : 0, currentCircle.radius, bodyState);
 
-        if(newId != -1){
-            String text = getResources().getString(R.string.value_successfully_saved);
-//            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+        if (symptomId == -1) return false;
+
+        // Insert in selected category table
+        for(SymptomOptionView option : options){
+            if(option.isChecked()){
+                SymptomCategoryOptionModel currentCategoryOption = symptomCategoryOptionController.getSymptomCategoryOptionByName(option.getName());
+                long categoryId = selectedCategoryOptionController.insert(symptomId, currentCategoryOption.getCategoryOptionId());
+                if (categoryId == -1) return false;
+            }
         }
+
+        return true;
+
     }
 
     private void logSelectedOptions() {

@@ -61,17 +61,17 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
     }
 
     @Override
-    public boolean delete(int symptomId, int categoryId) throws Exception {
+    public boolean delete(long symptomId, long categoryId) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = Contract.SelectedCategoryOption.COLUMN_NAME_SYMPTOM_ID_FK + " = ? AND "
                 + Contract.SelectedCategoryOption.COLUMN_NAME_CATEGORY_OPTION_ID_FK + " = ?";
-        String[] selectionArgs = {Integer.toString(symptomId), Integer.toString(categoryId)};
+        String[] selectionArgs = {Long.toString(symptomId), Long.toString(categoryId)};
         int rowsAffected = db.delete(Contract.SelectedCategoryOption.TABLE_NAME, selection, selectionArgs);
         return rowsAffected == 1; // this operation should only delete 1 row in the table
     }
 
     @Override
-    public boolean update(int id, SelectedCategoryOptionModel newValues) throws Exception {
+    public boolean update(long id, SelectedCategoryOptionModel newValues) throws Exception {
         return false;
     }
 }
