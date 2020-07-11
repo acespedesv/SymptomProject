@@ -2,9 +2,6 @@ package com.project.symptoms.db.controller;
 
 import android.app.Notification;
 import android.content.Context;
-import android.widget.Toast;
-
-import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
