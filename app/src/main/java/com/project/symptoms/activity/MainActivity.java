@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.i("#", "Button pressed");
                 try {
                     deleteSymptom(1);
                 } catch (ParseException e) {
@@ -247,12 +246,12 @@ public class MainActivity extends AppCompatActivity implements
         builder.setMessage(R.string.alert_sure_about_deleting)
                 .setPositiveButton(R.string.alert_positive_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
-                        SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
-                        try {
-                            updateSymptomsInBodyView();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                        boolean symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
+                        boolean categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
+                        if (symptomDeletionSuccess && categoriesDeletionSuccess){
+                            Log.i("#", "Deletion success");
+                            try { updateSymptomsInBodyView(); }
+                            catch (ParseException e) { e.printStackTrace(); }
                         }
                     }
                 })
@@ -260,7 +259,8 @@ public class MainActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                     }
-                });
+                })
+        .show();
     }
 
 }
