@@ -2,6 +2,7 @@ package com.project.symptoms.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -165,6 +166,8 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                     }
                 }
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivityIntent);
             }
         });
     }
