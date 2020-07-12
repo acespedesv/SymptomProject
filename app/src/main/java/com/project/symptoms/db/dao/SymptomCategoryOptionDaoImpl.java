@@ -36,6 +36,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         String whereClause = "name = ?";
         String[] whereArgs = new String[] {name};
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        cursor.moveToFirst();
         SymptomCategoryOptionModel result = buildModelFromCursor(cursor);
         db.close();
         return result;
@@ -56,6 +57,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         String whereClause = "category_option_id = ?";
         String[] whereArgs = new String[] {Long.toString(categoryOptionId)};
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        cursor.moveToFirst();
         SymptomCategoryOptionModel result = buildModelFromCursor(cursor);
         db.close();
         return result;
