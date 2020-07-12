@@ -34,13 +34,13 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "symptom_id = ?";
         String[] whereArgs = new String[] {Long.toString(symptomId)};
-        Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
-        List<SelectedCategoryOptionModel> result = buildModelFromCursor(cursor);
+        Cursor cursor = db.query(Contract.SelectedCategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        List<SelectedCategoryOptionModel> result = buildListFromCursor(cursor);
         db.close();
         return result;
     }
 
-    private List<SelectedCategoryOptionModel> buildModelFromCursor(Cursor cursor) {
+    private List<SelectedCategoryOptionModel> buildListFromCursor(Cursor cursor) {
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         int symptomId, categoryId;
         while (cursor.moveToNext()) {
@@ -55,7 +55,7 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
     public List<SelectedCategoryOptionModel> listAll() throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, null, null, null, null, null);
-        List<SelectedCategoryOptionModel> result = buildModelFromCursor(cursor);
+        List<SelectedCategoryOptionModel> result = buildListFromCursor(cursor);
         db.close();
         return result;
     }
