@@ -90,7 +90,10 @@ public class SymptomDaoImpl implements SymptomDao{
 
     @Override
     public boolean delete(long id) throws Exception {
-        return false;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selection = Contract.Symptom.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {Long.toString(id)};
+        return db.delete(Contract.Symptom.TABLE_NAME, selection, selectionArgs) != -1;
     }
 
     @Override

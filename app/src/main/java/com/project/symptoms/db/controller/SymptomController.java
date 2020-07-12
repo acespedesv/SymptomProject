@@ -91,4 +91,15 @@ public class SymptomController {
         return false;
     }
 
+    public boolean deleteSymptomById(long symptomId){
+        try {
+            symptomDao.delete(symptomId);
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

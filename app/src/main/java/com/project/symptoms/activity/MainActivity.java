@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.db.DBHelper;
@@ -91,7 +93,12 @@ public class MainActivity extends AppCompatActivity implements
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                updateSymptom(1);
+                try {
+                    deleteSymptom(1);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+//                updateSymptom(1);
 //                bodyView.flip();
 //                try {
 //                    updateSymptomsInBodyView();
@@ -229,4 +236,11 @@ public class MainActivity extends AppCompatActivity implements
         newIntent.putExtras(data);
         startActivity(newIntent);
     }
+
+    private void deleteSymptom(long symptomId) throws ParseException {
+        SymptomController.getInstance(this).deleteSymptomById(symptomId);
+        SelectedCategoryOptionController.getInstance(this).deleteAllBySymptom(symptomId);
+        updateSymptomsInBodyView();
+    }
+
 }

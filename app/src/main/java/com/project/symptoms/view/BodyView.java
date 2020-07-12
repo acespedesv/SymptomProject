@@ -198,12 +198,9 @@ public class BodyView extends View {
 
         int sideMargin = (int) (remainingFreeWidth / 2);
 
-        int left = sideMargin;
         int right = 3*sideMargin;
         int top = 0;
-        int bottom = final_height;
-
-        return new Rect(left,top,right,bottom);
+        return new Rect(sideMargin,top,right, final_height);
     }
 
 
@@ -214,13 +211,9 @@ public class BodyView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float xPos = event.getX(), yPos = event.getY();
-            // Let user choose circle size
-
             try {
                 BodyFragment bodyFragment = (BodyFragment) parentFragment;
-
-                String str = String.format("bodyview:/clicked?x=%f&y=%f",
-                xPos, yPos);
+                String str = String.format("bodyview:/clicked?x=%f&y=%f", xPos, yPos);
                 Uri uri = Uri.parse(str);
                 bodyFragment.onButtonPressed(uri);
             }catch (Exception e){
