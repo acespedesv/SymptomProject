@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Create the database
-        DBHelper database = new DBHelper(this);
         init();
         try {
             updateSymptomsInBodyView();
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         // This is needed to be done again because of the context used in DateTimeUtils
-        // changes when another view is also registered as picker
+        // changes when another view is also registcered as piker
         // TODO FIX THIS ISSUE in DateTimeUtils
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
     }
@@ -220,6 +218,13 @@ public class MainActivity extends AppCompatActivity implements
         data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
         data.putInt("State", circleSide);
         newIntent.putExtras(data);
+        startActivity(newIntent);
+    }
+
+    private void updateSymptom(long symptomId){
+        Intent newIntent = new Intent(this, SymptomForm.class);
+        Bundle data = new Bundle();
+        data.putLong("symptom_id", symptomId);
         startActivity(newIntent);
     }
 }

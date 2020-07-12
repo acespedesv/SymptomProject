@@ -50,7 +50,7 @@ public class SelectedCategoryOptionController {
         return result;
     }
 
-    public List<SelectedCategoryOptionModel> getAllBySymptom(int symptomId){
+    public List<SelectedCategoryOptionModel> getAllBySymptom(long symptomId){
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         try{
             result = selectedCategoryOptionDao.listAllBySymptom(symptomId);

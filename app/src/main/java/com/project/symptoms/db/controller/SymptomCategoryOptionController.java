@@ -62,16 +62,6 @@ public class SymptomCategoryOptionController {
         return success;
     }
 
-    public List<SymptomCategoryOptionModel> listAll(){
-        List<SymptomCategoryOptionModel> result = new ArrayList<>();
-        try{
-            result = symptomCategoryOptionDao.listAll();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     private HashMap<CategoryDTO, SymptomOptionDTO[]> getInitialOptionsHashMap(){
         // Prepare data for insertion
         CategoryDTO[] categories = SymptomCategoriesUtils.getCategoryNames();
@@ -98,6 +88,26 @@ public class SymptomCategoryOptionController {
         return namesHashMap;
     }
 
+    public List<SymptomCategoryOptionModel> listAll(){
+        List<SymptomCategoryOptionModel> result = new ArrayList<>();
+        try{
+            result = symptomCategoryOptionDao.listAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public SymptomCategoryOptionModel getById(long categoryOptionId){
+        SymptomCategoryOptionModel result = null;
+        try{
+            result = symptomCategoryOptionDao.listById(categoryOptionId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public SymptomCategoryOptionModel getSymptomCategoryOptionByName(String name) {
         SymptomCategoryOptionModel result = null;
         try{
@@ -111,10 +121,9 @@ public class SymptomCategoryOptionController {
     public List<SymptomCategoryOptionModel> listByCategory(int categoryId){
         List<SymptomCategoryOptionModel> all = listAll();
         List<SymptomCategoryOptionModel> result = new ArrayList<>();
+
         for(SymptomCategoryOptionModel each : all){
-            if(each.getCategoryFkId() == categoryId){
-                result.add(each);
-            }
+            if(each.getCategoryFkId() == categoryId){ result.add(each); }
         }
         return result;
     }

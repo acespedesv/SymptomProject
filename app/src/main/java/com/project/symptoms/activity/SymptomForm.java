@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,13 +29,16 @@ import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SelectedCategoryOptionModel;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 import com.project.symptoms.db.model.SymptomCategoryOptionModel;
+import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.view.BodyView;
 import com.project.symptoms.view.SymptomOptionView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
 
@@ -48,15 +52,31 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     private int bodyState;
     private EditText symptomDurationView;
     private ArrayList<SymptomOptionView> options;
+    private HashMap<String, SymptomOptionView> optionsViewHashMap;
+
+    private SymptomController symptomController;
+    private SelectedCategoryOptionController selectedCategoryOptionController;
+    private SymptomCategoryOptionController symptomCategoryOptionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        options = new ArrayList<>();
         setContentView(R.layout.symptom_form);
-        loadSymptomCategories();
+
+        options = new ArrayList<>();
+        optionsViewHashMap = new HashMap<>();
         setUpViews();
+        loadSymptomCategories();
         setUpListeners();
+
+        symptomController = SymptomController.getInstance(this);
+        selectedCategoryOptionController = SelectedCategoryOptionController.getInstance(this);
+        symptomCategoryOptionController = SymptomCategoryOptionController.getInstance(this);
+
+        // If I receive an id that means I need to update that symptom and load the data into the form
+        long symptomId = getIntent().getLongExtra("symptom_id", -1);
+        if (symptomId > 0) loadFormForUpdate(symptomId);
+        else loadDefaultForm();
     }
 
     private void setUpViews(){
@@ -71,9 +91,39 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         symptomDurationView = findViewById(R.id.symp_duration);
         DateTimeUtils.getInstance().registerAsDatePicker(startDateView);
         DateTimeUtils.getInstance().registerAsTimePicker(startTimeView);
-        mainActivityDate = getIntent().getStringExtra("Date");
-        mainActivityTime = getIntent().getStringExtra("Time");
+    }
+
+    // Finish form set up for inserting
+    private void loadDefaultForm(){
+        setUpBundleData();
         setStartDateTime(mainActivityDate, mainActivityTime);
+    }
+
+    // Finish form set up for updating
+    private void loadFormForUpdate(long symptomId){
+        saveButton.setText(R.string.update_button_text);
+        SymptomModel symptomModel = symptomController.findById(symptomId);
+        symptomDescriptionView.setText(symptomModel.getDescription());
+        HashMap<String, Integer> intensityHashMap = new HashMap<>();
+        intensityHashMap.put(getString(R.string.low), 0);
+        intensityHashMap.put(getString(R.string.medium), 1);
+        intensityHashMap.put(getString(R.string.high), 2);
+        RadioButton intensityRadioButton = (RadioButton)intensityRadioGroupView.getChildAt(intensityHashMap.get(symptomModel.getIntensity()));
+        intensityRadioButton.setChecked(true);
+        startDateView.setText(DateTimeUtils.getInstance().getStringDateFromLong(symptomModel.getStartDate()));
+        startTimeView.setText(DateTimeUtils.getInstance().getStringTimeFromLong(symptomModel.getStartTime()));
+        symptomDurationView.setText(getString(R.string.duration_hours, Integer.toString(symptomModel.getDuration())));
+        symptomMedicamentView.setText(symptomModel.getCausingDrug());
+        symptomFoodView.setText(symptomModel.getCausingFood());
+        checkRespectiveSymptomOptionViews(symptomId);
+    }
+
+    private void checkRespectiveSymptomOptionViews(long symptomId){
+        for (SelectedCategoryOptionModel optionModel: selectedCategoryOptionController.getAllBySymptom(symptomId)) {
+            String optionName = symptomCategoryOptionController.getById(optionModel.getCategoryOptionId()).getCategoryOptionName();
+            SymptomOptionView currentSymptomOptionView = optionsViewHashMap.get(optionName);
+            if (currentSymptomOptionView != null) currentSymptomOptionView.setChecked(true);
+        }
     }
 
     private void setUpBundleData(){
@@ -107,11 +157,6 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private boolean saveSymptomsData() {
-        setUpBundleData();
-        SymptomController symptomController = SymptomController.getInstance(this);
-        SelectedCategoryOptionController selectedCategoryOptionController = SelectedCategoryOptionController.getInstance(this);
-        SymptomCategoryOptionController symptomCategoryOptionController = SymptomCategoryOptionController.getInstance(this);
-
         String stringDuration = symptomDurationView.getText().toString();
         int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
@@ -125,24 +170,39 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         if (symptomId == -1) return false;
 
         // Insert in selected category table
-        for(SymptomOptionView option : options){
-            if(option.isChecked()){
-                SymptomCategoryOptionModel currentCategoryOption = symptomCategoryOptionController.getSymptomCategoryOptionByName(option.getName());
+        for (Map.Entry entry: optionsViewHashMap.entrySet()) {
+            SymptomOptionView currentSymptomOptionView = ((SymptomOptionView)entry.getValue());
+            if(currentSymptomOptionView.isChecked()){
+                SymptomCategoryOptionModel currentCategoryOption = symptomCategoryOptionController.getSymptomCategoryOptionByName(currentSymptomOptionView.getName());
                 long categoryId = selectedCategoryOptionController.insert(symptomId, currentCategoryOption.getCategoryOptionId());
                 if (categoryId == -1) return false;
             }
         }
+
+        // Insert in selected category table
+//        for(SymptomOptionView option : options){
+//            if(option.isChecked()){
+//                SymptomCategoryOptionModel currentCategoryOption = symptomCategoryOptionController.getSymptomCategoryOptionByName(option.getName());
+//                long categoryId = selectedCategoryOptionController.insert(symptomId, currentCategoryOption.getCategoryOptionId());
+//                if (categoryId == -1) return false;
+//            }
+//        }
 
         return true;
 
     }
 
     private void logSelectedOptions() {
-        for(SymptomOptionView option : options){
-            if(option.isChecked()){
-                Log.i("#","Checked "+option.getName());
-            }
+        for (Map.Entry entry: optionsViewHashMap.entrySet()) {
+            SymptomOptionView currentSymptomOptionView = ((SymptomOptionView)entry.getValue());
+            if(currentSymptomOptionView.isChecked()){ Log.i("#","Checked " + currentSymptomOptionView.getName()); }
         }
+
+//        for(SymptomOptionView option : options){
+//            if(option.isChecked()){
+//                Log.i("#","Checked "+option.getName());
+//            }
+//        }
     }
 
     private void loadSymptomCategories() {
@@ -179,8 +239,15 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         for (SymptomCategoryOptionModel option : optionModels) {
             SymptomOptionView newOption = createViewFromModel(option);
             optionsRow.addView(newOption);
-            options.add(newOption);
+            optionsViewHashMap.put(newOption.getName(), newOption);
         }
+
+//        for (SymptomCategoryOptionModel option : optionModels) {
+//            SymptomOptionView newOption = createViewFromModel(option);
+//            optionsRow.addView(newOption);
+//            options.add(newOption);
+//        }
+
         HorizontalScrollView scrollView = new HorizontalScrollView(this);
         scrollView.addView(optionsRow);
 

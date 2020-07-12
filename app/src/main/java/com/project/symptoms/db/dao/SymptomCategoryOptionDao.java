@@ -12,6 +12,8 @@ public interface SymptomCategoryOptionDao {
 
     List<SymptomCategoryOptionModel> listAll() throws Exception;
 
+    SymptomCategoryOptionModel listById(long categoryOptionId) throws Exception;
+
     boolean delete(int id) throws Exception;
 
     boolean update(int id, SymptomCategoryOptionModel newValues) throws Exception;

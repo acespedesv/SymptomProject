@@ -8,7 +8,7 @@ public interface SelectedCategoryOptionDao {
 
     long insert(SelectedCategoryOptionModel selectedCategoryOptionModel) throws Exception;
 
-    List<SelectedCategoryOptionModel> listAllBySymptom(int symptomId) throws Exception;
+    List<SelectedCategoryOptionModel> listAllBySymptom(long symptomId) throws Exception;
 
     List<SelectedCategoryOptionModel> listAll() throws Exception;
 

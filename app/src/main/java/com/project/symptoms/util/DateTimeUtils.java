@@ -174,4 +174,8 @@ public class DateTimeUtils implements
 
     public Date getTimeFromString(String time) throws ParseException { return TIME_FORMATTER.parse(time); }
 
+    public String getStringDateFromLong(long date){ return DATE_PARSER.format(date); }
+
+    public String getStringTimeFromLong(long time){ return TIME_FORMATTER.format(time); }
+
 }

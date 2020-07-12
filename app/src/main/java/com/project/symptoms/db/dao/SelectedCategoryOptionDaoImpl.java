@@ -30,10 +30,10 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
     }
 
     @Override
-    public List<SelectedCategoryOptionModel> listAllBySymptom(int symptomId) throws Exception {
+    public List<SelectedCategoryOptionModel> listAllBySymptom(long symptomId) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "symptom_id = ?";
-        String[] whereArgs = new String[] {Integer.toString(symptomId)};
+        String[] whereArgs = new String[] {Long.toString(symptomId)};
         Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<SelectedCategoryOptionModel> result = buildModelFromCursor(cursor);
         db.close();

@@ -50,6 +50,17 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         return result;
     }
 
+    @Override
+    public SymptomCategoryOptionModel listById(long categoryOptionId) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = "category_option_id = ?";
+        String[] whereArgs = new String[] {Long.toString(categoryOptionId)};
+        Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        SymptomCategoryOptionModel result = buildModelFromCursor(cursor);
+        db.close();
+        return result;
+    }
+
     private List<SymptomCategoryOptionModel> buildListFromCursor(Cursor cursor) {
         List<SymptomCategoryOptionModel> result = new ArrayList<>();
         while (cursor.moveToNext()) {
