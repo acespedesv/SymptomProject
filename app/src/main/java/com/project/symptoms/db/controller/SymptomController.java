@@ -80,4 +80,15 @@ public class SymptomController {
         return result;
     }
 
+    public boolean updateSymptom(long id, SymptomModel symptomModel){
+        try {
+            symptomDao.update(id, symptomModel);
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

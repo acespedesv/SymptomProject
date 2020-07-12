@@ -60,4 +60,14 @@ public class SelectedCategoryOptionController {
         return result;
     }
 
+    public boolean deleteAllBySymptom(long symptomId){
+        try {
+            selectedCategoryOptionDao.deleteAllBySymptom(symptomId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

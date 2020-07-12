@@ -12,9 +12,9 @@ public interface SymptomDao {
 
     List<SymptomModel> listAll(long dateTime, int circleSide) throws Exception;
 
-    boolean delete(int id) throws Exception;
+    boolean delete(long id) throws Exception;
 
-    boolean update(int id, SymptomModel newValues) throws Exception;
+    boolean update(long id, SymptomModel newValues) throws Exception;
 
     SymptomModel getById(long id) throws Exception;
 }

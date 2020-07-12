@@ -71,6 +71,15 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
     }
 
     @Override
+    public boolean deleteAllBySymptom(long symptomId) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selection = Contract.SelectedCategoryOption.COLUMN_NAME_SYMPTOM_ID_FK + " = ?";
+        String[] selectionArgs = {Long.toString(symptomId)};
+        int rowsAffected = db.delete(Contract.SelectedCategoryOption.TABLE_NAME, selection, selectionArgs);
+        return rowsAffected >= 1; // this operation should only delete 1 row in the table
+    }
+
+    @Override
     public boolean update(long id, SelectedCategoryOptionModel newValues) throws Exception {
         return false;
     }
