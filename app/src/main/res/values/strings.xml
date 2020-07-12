@@ -163,4 +163,10 @@
     <string name="developed_by">Desarrollado por</string>
     <string name="body_selection">Selección de silueta</string>
     <string name="duration_hours">%1$s hrs</string>
+
+    <!--  Alert dialogs  -->
+    <string name="alert_sure_about_deleting">¿Seguro que desea eliminar este síntoma?</string>
+    <string name="alert_positive_button">Aceptar</string>
+    <string name="alert_negative_button">Cancelar</string>
+
 </resources>

@@ -1,9 +1,11 @@
 package com.project.symptoms.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -238,9 +240,25 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void deleteSymptom(long symptomId) throws ParseException {
-        SymptomController.getInstance(this).deleteSymptomById(symptomId);
-        SelectedCategoryOptionController.getInstance(this).deleteAllBySymptom(symptomId);
-        updateSymptomsInBodyView();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.alert_sure_about_deleting)
+                .setPositiveButton(R.string.alert_positive_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
+                        SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
+                        try {
+                            updateSymptomsInBodyView();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.alert_negative_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
     }
 
 }
