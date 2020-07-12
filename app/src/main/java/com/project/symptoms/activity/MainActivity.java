@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements
         Intent newIntent = new Intent(this, SymptomForm.class);
         Bundle data = new Bundle();
         data.putLong("symptom_id", symptomId);
+        newIntent.putExtras(data);
         startActivity(newIntent);
     }
 }
