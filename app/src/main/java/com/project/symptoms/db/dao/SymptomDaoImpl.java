@@ -115,7 +115,7 @@ public class SymptomDaoImpl implements SymptomDao{
         String selection = Contract.Symptom.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(id)};
 
-        int count = db.update(Contract.Glucose.TABLE_NAME, values, selection, selectionArgs);
+        int count = db.update(Contract.Symptom.TABLE_NAME, values, selection, selectionArgs);
         return count >= 1;
     }
 
