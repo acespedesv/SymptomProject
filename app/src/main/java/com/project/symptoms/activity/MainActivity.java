@@ -249,7 +249,6 @@ public class MainActivity extends AppCompatActivity implements
                         boolean symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
                         boolean categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
                         if (symptomDeletionSuccess && categoriesDeletionSuccess){
-                            Log.i("#", "Deletion success");
                             try { updateSymptomsInBodyView(); }
                             catch (ParseException e) { e.printStackTrace(); }
                         }
