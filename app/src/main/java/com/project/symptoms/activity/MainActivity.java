@@ -1,6 +1,8 @@
 package com.project.symptoms.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -187,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
         float x = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
         float y = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
         if( currentCircle == null)

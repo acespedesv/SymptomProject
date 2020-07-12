@@ -3,6 +3,7 @@ package com.project.symptoms.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -55,6 +56,8 @@ public class BodyView extends View {
     public enum BodyType{MALE, FEMALE};
     public enum State{FRONT, BACK};
 
+    private Bitmap bitmap;
+
 
     Fragment parentFragment;
 
@@ -103,6 +106,9 @@ public class BodyView extends View {
         redBrush.setAntiAlias(false);
         redBrush.setStyle(Paint.Style.FILL);
         redBrush.setColor(Color.RED);
+
+        this.setDrawingCacheEnabled(true);
+
 
         points = new ArrayList<>();
 
@@ -213,7 +219,20 @@ public class BodyView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            this.buildDrawingCache(true);
+            bitmap = this.getDrawingCache(true);
+
             float xPos = event.getX(), yPos = event.getY();
+
+            int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
+            int r = Color.red(pixel);
+            int g = Color.green(pixel);
+            int b = Color.blue(pixel);
+
+            //int rgb = Color.rgb(r,g,b);
+            System.out.println("PIXEL================= RRR" + r);
+            System.out.println("PIXEL==================GGG" + g);
+            System.out.println("PIXEL==================BBB" + b);
             // Let user choose circle size
 
             try {
