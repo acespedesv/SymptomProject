@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Log.i("#", "Button pressed");
                 try {
                     deleteSymptom(1);
                 } catch (ParseException e) {
@@ -239,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(newIntent);
     }
 
-    private void deleteSymptom(long symptomId) throws ParseException {
+    private void deleteSymptom(final long symptomId) throws ParseException {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_sure_about_deleting)
