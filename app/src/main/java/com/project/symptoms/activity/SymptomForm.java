@@ -55,6 +55,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     private SymptomCategoryOptionController symptomCategoryOptionController;
 
     private long symptomIdToUpdate;
+    SymptomModel symptomModelToUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,20 +100,20 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     // Finish form set-up for updating
     private void loadFormForUpdate(){
         saveButton.setText(R.string.update_button_text);
-        SymptomModel symptomModel = symptomController.findById(symptomIdToUpdate);
-        symptomDescriptionView.setText(symptomModel.getDescription());
+        symptomModelToUpdate = symptomController.findById(symptomIdToUpdate);
+        symptomDescriptionView.setText(symptomModelToUpdate.getDescription());
         HashMap<String, Integer> intensityHashMap = new HashMap<>();
         intensityHashMap.put(getString(R.string.low), 0);
         intensityHashMap.put(getString(R.string.medium), 1);
         intensityHashMap.put(getString(R.string.high), 2);
-        intermittenceSwitchView.setChecked(symptomModel.getIntermittence() == 1);
-        RadioButton intensityRadioButton = (RadioButton)intensityRadioGroupView.getChildAt(intensityHashMap.get(symptomModel.getIntensity()));
+        intermittenceSwitchView.setChecked(symptomModelToUpdate.getIntermittence() == 1);
+        RadioButton intensityRadioButton = (RadioButton)intensityRadioGroupView.getChildAt(intensityHashMap.get(symptomModelToUpdate.getIntensity()));
         intensityRadioButton.setChecked(true);
-        startDateView.setText(DateTimeUtils.getInstance().getStringDateFromLong(symptomModel.getStartDate()));
-        startTimeView.setText(DateTimeUtils.getInstance().getStringTimeFromLong(symptomModel.getStartTime()));
-        symptomDurationView.setText(String.format(Locale.getDefault(), "%d", symptomModel.getDuration()));
-        symptomMedicamentView.setText(symptomModel.getCausingDrug());
-        symptomFoodView.setText(symptomModel.getCausingFood());
+        startDateView.setText(DateTimeUtils.getInstance().getStringDateFromLong(symptomModelToUpdate.getStartDate()));
+        startTimeView.setText(DateTimeUtils.getInstance().getStringTimeFromLong(symptomModelToUpdate.getStartTime()));
+        symptomDurationView.setText(String.format(Locale.getDefault(), "%d", symptomModelToUpdate.getDuration()));
+        symptomMedicamentView.setText(symptomModelToUpdate.getCausingDrug());
+        symptomFoodView.setText(symptomModelToUpdate.getCausingFood());
         enableCheckRespectiveSymptomOptionViews();
     }
 
@@ -209,10 +210,10 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
         // Insert in symptom table
         // This symptom model holds the values that need are going to be updated
-        SymptomModel symptomModelHolder = new SymptomModel(currentCircle.x, currentCircle.y,
+        SymptomModel symptomModelHolder = new SymptomModel(symptomModelToUpdate.getCirclePosX(), symptomModelToUpdate.getCirclePosY(),
                 startDateLong, startTimeLong, finalDuration, symptomDescriptionView.getText().toString(),
                 intensityRadioButton.getText().toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
-                intermittenceSwitchView.isChecked() ? 1 : 0, currentCircle.radius, bodyState);
+                intermittenceSwitchView.isChecked() ? 1 : 0, symptomModelToUpdate.getCircleRadius(), symptomModelToUpdate.getCircleSide());
 
         return symptomController.updateSymptom(symptomIdToUpdate, symptomModelHolder) &&
                 selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate) &&
