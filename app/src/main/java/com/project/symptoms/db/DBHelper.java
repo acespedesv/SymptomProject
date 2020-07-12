@@ -23,6 +23,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(Contract.SQL_CREATE_SELECTED_CATEGORY_OPTION);
         db.execSQL(Contract.SQL_CREATE_PRESSURE);
         db.execSQL(Contract.SQL_CREATE_GLUCOSE);
+        db.execSQL(Contract.SQL_CREATE_GLUCOSE_LEVELS);
+        db.execSQL(Contract.SQL_CREATE_PRESSURE_LEVELS);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -35,6 +37,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(Contract.SQL_DELETE_SELECTED_CATEGORY_OPTION);
         db.execSQL(Contract.SQL_DELETE_PRESSURE);
         db.execSQL(Contract.SQL_DELETE_GLUCOSE);
+        db.execSQL(Contract.SQL_DELETE_GLUCOSE_LEVELS);
+        db.execSQL(Contract.SQL_DELETE_PRESSURE_LEVELS);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

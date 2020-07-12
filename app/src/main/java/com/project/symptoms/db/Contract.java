@@ -165,4 +165,43 @@ public class Contract {
     public static final String SQL_DELETE_GLUCOSE =
             "DROP TABLE IF EXISTS " + Pressure.TABLE_NAME;
 
+    public static class GlucoseLevels implements BaseColumns{
+        public static final String TABLE_NAME = "glucose_levels";
+        public static final String COLUMN_NAME_ID_PK = "glucose_level_id";
+        public static final String COLUMN_NAME_LEVEL = "level";
+        public static final String COLUMN_NAME_FASTING_PLASMA = "fasting_plasma";
+        public static final String COLUMN_NAME_TOLERANCE_TEST = "tolerance_test";
+    }
+
+    public static final String SQL_CREATE_GLUCOSE_LEVELS =
+            "CREATE TABLE " + GlucoseLevels.TABLE_NAME + " ("+
+            GlucoseLevels.COLUMN_NAME_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            GlucoseLevels.COLUMN_NAME_LEVEL + " TEXT," +
+            GlucoseLevels.COLUMN_NAME_FASTING_PLASMA + " TEXT," +
+            GlucoseLevels.COLUMN_NAME_TOLERANCE_TEST + " TEXT)";
+
+    public static final String SQL_DELETE_GLUCOSE_LEVELS =
+            "DROP TABLE IF EXISTS " + GlucoseLevels.TABLE_NAME;
+
+    public static class PressureLevels implements BaseColumns{
+        public static final String TABLE_NAME = "pressure_levels";
+        public static final String COLUMN_NAME_PRESSURE_ID_PK = "pressure_level_id";
+        public static final String COLUMN_NAME_CATEGORY = "category";
+        public static final String COLUMN_NAME_SYSTOLIC_MAXIMUM = "systolic_maximum";
+        public static final String COLUMN_NAME_SYSTOLIC_MINIMUM = "systolic_minimum";
+        public static final String COLUMN_NAME_DIASTOLIC_MAXIMUM = "diastolic_maximum";
+        public static final String COLUMN_NAME_DIASTOLIC_MINIMUM = "diastolic_minimum";
+    }
+
+    public static final String SQL_CREATE_PRESSURE_LEVELS =
+            "CREATE TABLE " + PressureLevels.TABLE_NAME + " ("+
+                    PressureLevels.COLUMN_NAME_PRESSURE_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    PressureLevels.COLUMN_NAME_CATEGORY + " TEXT," +
+                    PressureLevels.COLUMN_NAME_SYSTOLIC_MAXIMUM + " INTEGER," +
+                    PressureLevels.COLUMN_NAME_SYSTOLIC_MINIMUM + " INTEGER," +
+                    PressureLevels.COLUMN_NAME_DIASTOLIC_MAXIMUM + " INTEGER," +
+                    PressureLevels.COLUMN_NAME_DIASTOLIC_MINIMUM + " INTEGER)";
+
+    public static final String SQL_DELETE_PRESSURE_LEVELS =
+            "DROP TABLE IF EXISTS " + PressureLevels.TABLE_NAME;
 }

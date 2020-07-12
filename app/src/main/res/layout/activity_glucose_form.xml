@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.GlucoseForm"
-    tools:showIn="@layout/activity_glucose_form"
     android:background="@color/colorMainWhite">
 
     <include
@@ -69,6 +68,12 @@
                 android:cursorVisible="false"
                 android:textColorHint="@color/colorMainWhite"/>
 
+            <ImageButton
+                android:id="@+id/glucose_levels_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_dialog_info" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -118,8 +123,7 @@
                 android:fontFamily="@font/montserrat"
                 android:text="@string/save_button_text"
                 android:textStyle="bold"
-                android:textColor="@color/colorMainWhite"
-                android:onClick="onClick"/>
+                android:textColor="@color/colorMainWhite" />
 
         </LinearLayout>
 
