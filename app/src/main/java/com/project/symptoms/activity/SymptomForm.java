@@ -172,6 +172,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         for (Map.Entry entry: optionsViewHashMap.entrySet()) {
             SymptomOptionView currentSymptomOptionView = ((SymptomOptionView)entry.getValue());
             if(currentSymptomOptionView.isChecked()){
+                Log.i("#", currentSymptomOptionView.getName());
                 SymptomCategoryOptionModel currentCategoryOption = symptomCategoryOptionController.getSymptomCategoryOptionByName(currentSymptomOptionView.getName());
                 success = selectedCategoryOptionController.insert(symptomId, currentCategoryOption.getCategoryOptionId()) != -1;
             }
@@ -180,14 +181,15 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private boolean insertSymptomsData() {
+        logSelectedOptions();
         String stringDuration = symptomDurationView.getText().toString();
         int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
-
+        RadioButton intensityRadioButton = findViewById(intensityCheckedViewId);
         // Insert in symptom table
         long symptomId = symptomController.insert(currentCircle.x, currentCircle.y,
                 mainActivityDate, mainActivityTime, finalDuration, symptomDescriptionView.getText().toString(),
-                findViewById(intensityCheckedViewId).toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
+                intensityRadioButton.getText().toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
                 intermittenceSwitchView.isChecked() ? 1 : 0, currentCircle.radius, bodyState);
 
         // The symptomId should be inserted correctly as well as the category selected options
@@ -195,9 +197,11 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private boolean updateSymptomsData() throws ParseException {
+        logSelectedOptions();
         String stringDuration = symptomDurationView.getText().toString();
         int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
+        RadioButton intensityRadioButton = findViewById(intensityCheckedViewId);
         long startDateLong = DateTimeUtils.getInstance().getDateFromString(startDateView.getText().toString()).getTime();
         long startTimeLong = DateTimeUtils.getInstance().getTimeFromString(startTimeView.getText().toString()).getTime();
 
@@ -205,7 +209,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         // This symptom model holds the values that need are going to be updated
         SymptomModel symptomModelHolder = new SymptomModel(currentCircle.x, currentCircle.y,
                 startDateLong, startTimeLong, finalDuration, symptomDescriptionView.getText().toString(),
-                findViewById(intensityCheckedViewId).toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
+                intensityRadioButton.getText().toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
                 intermittenceSwitchView.isChecked() ? 1 : 0, currentCircle.radius, bodyState);
 
         return symptomController.updateSymptom(symptomIdToUpdate, symptomModelHolder) &&

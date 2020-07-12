@@ -73,7 +73,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
      * Assumes moveToNext() already called
      */
     private SymptomCategoryOptionModel buildModelFromCursor(Cursor cursor) {
-        SymptomCategoryOptionModel symptomCategoryOptionModel = null;
+        SymptomCategoryOptionModel symptomCategoryOptionModel;
         int id, fk, iconResourceId;
         String name;
         id = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_ID_PK));
