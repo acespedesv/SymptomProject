@@ -46,7 +46,6 @@ public class BloodPressureLevelsController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return 0;
     }
 

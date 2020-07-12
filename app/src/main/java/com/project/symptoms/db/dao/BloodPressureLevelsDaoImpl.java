@@ -25,14 +25,14 @@ public class BloodPressureLevelsDaoImpl implements BloodPressureLevelsDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Contract.PressureLevel.COLUMN_NAME_CATEGORY, pressureLevel.getCategory());
-        values.put(Contract.PressureLevel.COLUMN_NAME_SYSTOLIC_MAXIMUM, pressureLevel.getSystolicMaximum());
-        values.put(Contract.PressureLevel.COLUMN_NAME_SYSTOLIC_MINIMUM, pressureLevel.getSystolicMinimum());
-        values.put(Contract.PressureLevel.COLUMN_NAME_DIASTOLIC_MAXIMUM, pressureLevel.getDiastolicMaximum());
-        values.put(Contract.PressureLevel.COLUMN_NAME_DIASTOLIC_MINIMUM, pressureLevel.getDiastolicMinimum());
+        values.put(Contract.PressureLevels.COLUMN_NAME_CATEGORY, pressureLevel.getCategory());
+        values.put(Contract.PressureLevels.COLUMN_NAME_SYSTOLIC_MAXIMUM, pressureLevel.getSystolicMaximum());
+        values.put(Contract.PressureLevels.COLUMN_NAME_SYSTOLIC_MINIMUM, pressureLevel.getSystolicMinimum());
+        values.put(Contract.PressureLevels.COLUMN_NAME_DIASTOLIC_MAXIMUM, pressureLevel.getDiastolicMaximum());
+        values.put(Contract.PressureLevels.COLUMN_NAME_DIASTOLIC_MINIMUM, pressureLevel.getDiastolicMinimum());
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(Contract.PressureLevel.TABLE_NAME, null, values);
+        long newRowId = db.insert(Contract.PressureLevels.TABLE_NAME, null, values);
         db.close();
         return newRowId;
     }
@@ -41,7 +41,7 @@ public class BloodPressureLevelsDaoImpl implements BloodPressureLevelsDao {
     public List<BloodPressureLevels> listAll() throws Exception {
         List<BloodPressureLevels> result = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query(Contract.PressureLevel.TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(Contract.PressureLevels.TABLE_NAME, null, null, null, null, null, null);
         if(cursor != null && cursor.getCount()>0){
             cursor.moveToFirst();
         }do {

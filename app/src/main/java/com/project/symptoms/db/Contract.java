@@ -1,7 +1,6 @@
 package com.project.symptoms.db;
 
 import android.provider.BaseColumns;
-import android.widget.ScrollView;
 
 public class Contract {
 
@@ -167,7 +166,7 @@ public class Contract {
     public static final String SQL_DELETE_GLUCOSE_LEVELS =
             "DROP TABLE IF EXISTS " + GlucoseLevels.TABLE_NAME;
 
-    public static class PressureLevel implements BaseColumns{
+    public static class PressureLevels implements BaseColumns{
         public static final String TABLE_NAME = "pressure_levels";
         public static final String COLUMN_NAME_PRESSURE_ID_PK = "pressure_level_id";
         public static final String COLUMN_NAME_CATEGORY = "category";
@@ -178,14 +177,14 @@ public class Contract {
     }
 
     public static final String SQL_CREATE_PRESSURE_LEVELS =
-            "CREATE TABLE " + PressureLevel.TABLE_NAME + " ("+
-                    PressureLevel.COLUMN_NAME_PRESSURE_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    PressureLevel.COLUMN_NAME_CATEGORY + " TEXT," +
-                    PressureLevel.COLUMN_NAME_SYSTOLIC_MAXIMUM + " INTEGER," +
-                    PressureLevel.COLUMN_NAME_SYSTOLIC_MINIMUM + " INTEGER," +
-                    PressureLevel.COLUMN_NAME_DIASTOLIC_MAXIMUM + " INTEGER," +
-                    PressureLevel.COLUMN_NAME_DIASTOLIC_MINIMUM + " INTEGER)";
+            "CREATE TABLE " + PressureLevels.TABLE_NAME + " ("+
+                    PressureLevels.COLUMN_NAME_PRESSURE_ID_PK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    PressureLevels.COLUMN_NAME_CATEGORY + " TEXT," +
+                    PressureLevels.COLUMN_NAME_SYSTOLIC_MAXIMUM + " INTEGER," +
+                    PressureLevels.COLUMN_NAME_SYSTOLIC_MINIMUM + " INTEGER," +
+                    PressureLevels.COLUMN_NAME_DIASTOLIC_MAXIMUM + " INTEGER," +
+                    PressureLevels.COLUMN_NAME_DIASTOLIC_MINIMUM + " INTEGER)";
 
     public static final String SQL_DELETE_PRESSURE_LEVELS =
-            "DROP TABLE IF EXISTS " + PressureLevel.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + PressureLevels.TABLE_NAME;
 }

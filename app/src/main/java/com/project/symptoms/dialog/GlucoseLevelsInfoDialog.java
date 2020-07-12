@@ -2,7 +2,6 @@ package com.project.symptoms.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,11 +18,12 @@ public class GlucoseLevelsInfoDialog {
 
     private Context context;
     private GlucoseLevelsAdapter glucoseLevelsAdapter;
+    final Dialog dialog;
 
     public GlucoseLevelsInfoDialog(Context context){
         this.context = context;
 
-        final Dialog dialog = new Dialog(context);
+        dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -37,18 +37,16 @@ public class GlucoseLevelsInfoDialog {
                 dialog.dismiss();
             }
         });
+        listAll();
 
         dialog.show();
+    }
 
+    private void listAll() {
         List<GlucoseLevels> glucoseLevelsList = GlucoseLevelsController.getInstance(context).listAll();
         glucoseLevelsAdapter = new GlucoseLevelsAdapter(context, glucoseLevelsList);
 
         ListView listViewLevels = dialog.findViewById(R.id.glucose_levels_list_view);
         listViewLevels.setAdapter(glucoseLevelsAdapter);
-
-    }
-
-    private void listAll() {
-
     }
 }

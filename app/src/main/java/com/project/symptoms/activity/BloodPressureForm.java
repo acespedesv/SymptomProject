@@ -74,7 +74,6 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         }
 
         checkValues(systolicValue, diastolicValue);
-
     }
 
     private void checkValues(int systolicValue, int diastolicValue) {
@@ -123,6 +122,7 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
                     systolicValue >= hypotension.getSystolicMinimum()) ||
                     (diastolicValue <= hypotension.getDiastolicMaximum() &&
                             diastolicValue >= hypotension.getDiastolicMinimum())){
+
                 pressureAlert.setMessage(message + hypotension.getCategory() + recommendation);
             }
 
