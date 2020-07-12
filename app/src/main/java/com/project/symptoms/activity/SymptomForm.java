@@ -34,6 +34,7 @@ import com.project.symptoms.view.SymptomOptionView;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SymptomForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener{
@@ -104,11 +105,12 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         intensityHashMap.put(getString(R.string.low), 0);
         intensityHashMap.put(getString(R.string.medium), 1);
         intensityHashMap.put(getString(R.string.high), 2);
+        intermittenceSwitchView.setChecked(symptomModel.getIntermittence() == 1);
         RadioButton intensityRadioButton = (RadioButton)intensityRadioGroupView.getChildAt(intensityHashMap.get(symptomModel.getIntensity()));
         intensityRadioButton.setChecked(true);
         startDateView.setText(DateTimeUtils.getInstance().getStringDateFromLong(symptomModel.getStartDate()));
         startTimeView.setText(DateTimeUtils.getInstance().getStringTimeFromLong(symptomModel.getStartTime()));
-        symptomDurationView.setText(getString(R.string.duration_hours, Integer.toString(symptomModel.getDuration())));
+        symptomDurationView.setText(String.format(Locale.getDefault(), "%d", symptomModel.getDuration()));
         symptomMedicamentView.setText(symptomModel.getCausingDrug());
         symptomFoodView.setText(symptomModel.getCausingFood());
         enableCheckRespectiveSymptomOptionViews();
