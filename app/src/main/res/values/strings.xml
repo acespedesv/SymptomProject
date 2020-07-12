@@ -1,19 +1,131 @@
 <resources>
     <string name="app_name">Symptoms</string>
+
+    <!-- Symptom Form -->
     <string name="symptom_form">Registro de síntoma</string>
     <string name="symptom_description">Descripción del Síntoma:</string>
-    <string name="symptom_description_hint">Escriba aquí la descripción del sintoma</string>
+    <string name="symptom_description_hint">Describa brevemente el síntoma</string>
     <string name="intensity">Intensidad:</string>
     <string name="low">Baja</string>
     <string name="medium">Media</string>
     <string name="high">Alta</string>
-    <string name="intermittent">Intermitencia:</string>
-    <string name="start_hour">Hora de Inicio:</string>
-    <string name="end_hour">Hora Fin:</string>
-    <string name="reaction_medicament">Reacción a medicamento:</string>
-    <string name="reaction_medicament_hint">Escriba aquí del medicamento</string>
-    <string name="reaction_food">Reacción Alérgica Alimentaria:</string>
-    <string name="reaction_food_hint">Escriba aquí del alimento</string>
+    <string name="intermittent">¿Intermitente?</string>
+    <string name="start">Fecha/Hora inicio:</string>
+    <string name="duration">Duración del padecimiento (hrs):</string>
+    <string name="duration_hint">Indique las horas (se puede llenar luego)</string>
+    <string name="reaction_medicament">Medicamento causante:</string>
+    <string name="reaction_medicament_hint">Nombre del medicamento</string>
+    <string name="reaction_food">Alimento causante:</string>
+    <string name="reaction_food_hint">Nombre del alimento</string>
+
+    <!--  Settings Activity  -->
+    <string name="symptom_reminder_format">El síntoma %s registrado el día %s se encuentra activo. Ingrese a la aplicación para realizar el cambio correspondiente</string>
+    <string name="frequency_title">Recordatorio de síntomas</string>
+    <string name="frequency_summary">Horas luego de registrar un síntoma sin finalización</string>
+    <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
+
+    <!-- PREFERENCES KEYS -->
+    <string name="preference_reminder_frequency_key">reminder_frequency</string>
+    <string name="preference_selected_body_type_key">selected_body_type</string>
+
+    <!-- PREFERENCES DEFAULT VALUES -->
+    <string name="preference_reminder_frequency_default">8</string>
+    <string name="preference_selected_body_type_default">Ninguno</string>
+
+
+    <!-- Symptom Categories -->
+    <string name="pain_type">Tipo de dolor</string>
+    <string name="digestive_pain">Padecimiento digestivo</string>
+    <string name="respiratory_pain">Padecimiento respiratorio</string>
+    <string name="sensory_pain">Padecimiento sensorial</string>
+    <string name="emotional_pain">Padecimiento emocional</string>
+    <string name="dermatological_pain">Padecimiento dermatológico</string>
+    <string name="triggering_activity">Actividad detonante</string>
+    <string name="triggering_feeling">Emoción detonante</string>
+    <string name="triggering_weather_condition">Estado climático detonante</string>
+
+    <!-- Symptom Categories Options -->
+
+    <!-- Tipo de dolor -->
+    <string name="sharp_pain">Agudo</string>
+    <string name="throbbing_pain">Punzante</string>
+    <string name="palpitating_pain">Palpitante</string>
+    <string name="oppressive_pain">Opresivo</string>
+    <string name="electric_pain">Eléctrico</string>
+
+    <!-- Digestivo -->
+    <string name="sickness">Náuseas</string>
+    <string name="bad_breath">Mal aliento</string>
+    <string name="heartburn">Agruras</string>
+    <string name="sourness">Acidez</string>
+    <string name="reflux">Reflujo</string>
+    <string name="inflammation">Inflamación</string>
+    <string name="constipation">Estreñimiento</string>
+    <string name="diarrhea">Diarrea</string>
+    <string name="vomit">Vómito</string>
+    <string name="difficulty_to_swallow">Dificultad para tragar</string>
+    <string name="bleeding">Sangrado</string>
+    <string name="incontinence">Incontinencia</string>
+    <string name="mouth_ulcers">Úlceras bucales</string>
+
+    <!-- Respiratorio -->
+    <string name="shortness_of_breath">Falta de aire</string>
+    <string name="flu">Catarro</string>
+    <string name="cough">Tos</string>
+    <string name="phlegm">Flema</string>
+    <string name="congestion">Congestión</string>
+    <string name="irritation">Irritación</string>
+    <string name="hissing">Silbido</string>
+
+    <!-- Sensorial -->
+    <string name="dizziness">Mareo</string>
+    <string name="visual_disturbances">Alteraciones visuales</string>
+    <string name="hearing_disturbances">Alteraciones auditivas</string>
+    <string name="tingling">Hormigueo</string>
+    <string name="numbness">Adormecimiento</string>
+    <string name="rigidity">Rigidez</string>
+    <string name="heaviness">Pesadez</string>
+    <string name="weakness">Debilidad</string>
+
+    <!-- Emocional -->
+    <string name="anxiety">Ansiedad</string>
+    <string name="depression">Despresión</string>
+    <string name="insomnia">Insomnio</string>
+    <string name="drowsiness">Somnolencia</string>
+    <string name="humor_changes">Cambios de humor</string>
+    <string name="exhaustion">Agotamiento</string>
+
+    <!-- Dermatologico -->
+    <string name="bruising">Hematomas</string>
+    <string name="rash">Sarpullido</string>
+    <string name="spots">Manchas</string>
+    <string name="redness">Enrojecimiento</string>
+    <string name="acne">Acné</string>
+    <string name="hair_loss">Caída del cabello</string>
+    <string name="ulcers">Úlceras</string>
+    <string name="skin_lumps">Bultos en la piel</string>
+    <string name="urticaria">Urticaria</string>
+    <string name="itch">Comezón</string>
+
+    <!-- Actividad detonante -->
+    <string name="waking_up">Al despertar</string>
+    <string name="sleeping">Al dormir</string>
+    <string name="physical_activity">Durante actividad física</string>
+    <string name="after_physical_activity">Después actividad física</string>
+
+    <!-- Emocion detonante -->
+    <string name="scare">Susto</string>
+    <string name="anger">Enojo</string>
+    <string name="sadness">Tristeza</string>
+    <string name="stress">Estrés</string>
+    <string name="anguish">Angustia</string>
+
+    <!-- Estado climatico detonante -->
+    <string name="cold">Frío</string>
+    <string name="hot">Calor</string>
+    <string name="humidity">Humedad</string>
+    <string name="dryness">Sequedad</string>
+
     <string name="title_activity_glucose_form">GlucoseForm</string>
     <string name="glucose_form_title">Registro de Glucosa</string>
     <string name="blood_pressure_form_title">Registro de Presión Arterial</string>
@@ -27,6 +139,8 @@
     <string name="menu_name">Menu</string>
     <string name="action_about">Acerca de</string>
     <string name="action_notifications">Notificaciones</string>
+    <string name="notifications_frequency">Frecuencia de notificaciones</string>
+    <string name="notifications_frequency_summary">Recordar síntomas sin finalización cada ciertas horas</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="blood_pressure_button">Presión</string>
     <string name="glucose_button">Glucosa</string>
@@ -38,7 +152,7 @@
     <string name="proceed">Continuar</string>
     <string name="male">Hombre</string>
     <string name="female">Mujer</string>
-    <string name="select_body_message">Deslice y seleccione su cuerpo:</string>
+    <string name="select_body_message">Deslice y seleccione</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="value_successfully_saved">Valor guardado exitosamente</string>
     <string name="dummy_button">Dummy Button</string>
@@ -48,4 +162,6 @@
     <string name="fasting_test">Prueba en ayunas</string>
     <string name="tolerance_test">Prueba de Tolerancia</string>
     <string name="continue_button">Continuar</string>
+    <string name="developed_by">Desarrollado por</string>
+    <string name="body_selection">Selección de silueta</string>
 </resources>

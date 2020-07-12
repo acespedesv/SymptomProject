@@ -34,8 +34,9 @@ public class PressureController {
 
         long newId = -1;
         try{
-            Date completeDatetime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(date, time);
-            PressureModel pressureModel = new PressureModel(systolic, diastolic, completeDatetime.getTime());
+            Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
+            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
+            PressureModel pressureModel = new PressureModel(systolic, diastolic, finalDate.getTime(), finalTime.getTime());
             newId = pressureDao.insert(pressureModel);
         }catch (Exception e){
             e.printStackTrace();
@@ -56,9 +57,9 @@ public class PressureController {
     }
 
     // Return if whether succeeded or not
-    public boolean update(long pressureId, int systolic, int diastolic, long datetime){
+    public boolean update(long pressureId, int systolic, int diastolic, long date, long time){
         try {
-            PressureModel newPressureModel = new PressureModel(systolic, diastolic, datetime);
+            PressureModel newPressureModel = new PressureModel(systolic, diastolic, date, time);
             pressureDao.update(pressureId, newPressureModel);
             return true;
         }catch (Exception e ){
