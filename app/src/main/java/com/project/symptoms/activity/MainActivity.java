@@ -91,19 +91,20 @@ public class MainActivity extends AppCompatActivity implements
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                bodyView.flip();
-                try {
-                    updateSymptomsInBodyView();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                updateSymptom(1);
+//                bodyView.flip();
+//                try {
+//                    updateSymptomsInBodyView();
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 
         dateTextView = findViewById(R.id.current_date);
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
 
-        // Capture when text view to be able to update the symptoms showed in the body view
+        // Capture when text view for the date changes to be able to update the symptoms showed in the body view
         dateTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
