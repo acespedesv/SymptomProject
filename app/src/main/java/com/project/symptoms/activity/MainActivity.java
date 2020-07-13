@@ -96,18 +96,12 @@ public class MainActivity extends AppCompatActivity implements
         flipButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                bodyView.flip();
                 try {
-                    deleteSymptom(1);
+                    updateSymptomsInBodyView();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-//                updateSymptom(1);
-//                bodyView.flip();
-//                try {
-//                    updateSymptomsInBodyView();
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
             }
         });
 
