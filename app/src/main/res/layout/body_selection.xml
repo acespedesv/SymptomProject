@@ -27,7 +27,7 @@
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
-        android:layout_height="500dp"
+        android:layout_height="525dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@id/continue_button"
         app:layout_constraintEnd_toEndOf="parent"
