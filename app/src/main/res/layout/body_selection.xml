@@ -6,7 +6,7 @@
     android:background="@drawable/ic_background">
 
     <TextView
-        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_chainStyle="spread"
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -27,7 +27,7 @@
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@id/continue_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/white_button"
         android:fontFamily="@font/montserrat"
         android:paddingHorizontal="35dp"
