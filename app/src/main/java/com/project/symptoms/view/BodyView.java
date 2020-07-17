@@ -58,7 +58,6 @@ public class BodyView extends View {
 
     private Bitmap bitmap;
 
-
     Fragment parentFragment;
 
     public BodyView(Context context) {
@@ -106,9 +105,6 @@ public class BodyView extends View {
         redBrush.setAntiAlias(false);
         redBrush.setStyle(Paint.Style.FILL);
         redBrush.setColor(Color.RED);
-
-        this.setDrawingCacheEnabled(true);
-
 
         points = new ArrayList<>();
 
@@ -218,37 +214,38 @@ public class BodyView extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            this.buildDrawingCache(true);
-            bitmap = this.getDrawingCache(true);
+        boolean positionPermitted = false;
+        this.destroyDrawingCache();
+        this.setDrawingCacheEnabled(true);
+        this.buildDrawingCache(true);
 
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float xPos = event.getX(), yPos = event.getY();
 
-            int pixel = bitmap.getPixel((int) event.getX(), (int) event.getY());
+            bitmap = this.getDrawingCache();
+            int pixel = bitmap.getPixel((int) xPos, (int) yPos);
             int r = Color.red(pixel);
             int g = Color.green(pixel);
             int b = Color.blue(pixel);
 
-            //int rgb = Color.rgb(r,g,b);
-            System.out.println("PIXEL================= RRR" + r);
-            System.out.println("PIXEL==================GGG" + g);
-            System.out.println("PIXEL==================BBB" + b);
-            // Let user choose circle size
+            if (r == 230 && g == 230 && b == 230){
+                try {
+                    BodyFragment bodyFragment = (BodyFragment) parentFragment;
 
-            try {
-                BodyFragment bodyFragment = (BodyFragment) parentFragment;
+                    String str = String.format("bodyview:/clicked?x=%f&y=%f",
+                            xPos, yPos);
+                    Uri uri = Uri.parse(str);
+                    bodyFragment.onButtonPressed(uri);
+                    positionPermitted = true;
 
-                String str = String.format("bodyview:/clicked?x=%f&y=%f",
-                xPos, yPos);
-                Uri uri = Uri.parse(str);
-                bodyFragment.onButtonPressed(uri);
-            }catch (Exception e){
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-        return true;
-
+        return positionPermitted;
     }
+
 
 
     public void setParentFragment(Fragment parentFragment) {
