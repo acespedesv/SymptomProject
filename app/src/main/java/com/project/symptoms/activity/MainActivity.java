@@ -51,13 +51,23 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Create the database
-        DBHelper database = new DBHelper(this);
+        //DBHelper database = new DBHelper(this);
+
         init();
         try {
             updateSymptomsInBodyView();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // This is needed to be done again because of the context used in DateTimeUtils
+        // changes when another view is also registered as picker
+        // TODO FIX THIS ISSUE in DateTimeUtils
+        DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
     }
 
     private void launchBodySelection(){
@@ -148,11 +158,23 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.action_settings:
+                startSettingsActivity();
+                break;
+            case R.id.action_about:
+                startAboutActivity();
+                break;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startAboutActivity() {
+        startActivity(new Intent(this, About.class));
+    }
+
+    private void startSettingsActivity() {
+        startActivity(new Intent(this, Settings.class));
     }
 
     public void launchCircleSizeSelectionDialog(){

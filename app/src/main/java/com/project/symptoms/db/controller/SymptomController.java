@@ -1,9 +1,14 @@
 package com.project.symptoms.db.controller;
 
+import android.app.Notification;
 import android.content.Context;
+import android.widget.Toast;
+
+import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.util.NotificationWrapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,8 +18,10 @@ public class SymptomController {
 
     private static SymptomController instance;
     private SymptomDaoImpl symptomDao;
+    private Context context;
 
     private SymptomController(Context context){
+        this.context = context;
         symptomDao = new SymptomDaoImpl(context);
     }
 
@@ -23,15 +30,23 @@ public class SymptomController {
         return instance;
     }
 
-    // Return the id of the new row
-    public long insert(float posX, float posY, float circleRadius, String date, String time, int circleSide){
+    // Return the id of the new row when inserting successfully
+    public long insert(float circlePosX, float circlePosY, String startDate, String startTime,
+                       int duration, String description, String intensity,
+                       String causingDrug, String causingFood, int intermittence, float circleRadius, int circleSide){
 
         long newId = -1;
         try{
-            Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
-            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
-            SymptomModel symptomModel = new SymptomModel(posX, posY, finalDate.getTime(), finalTime.getTime(), circleRadius, circleSide);
+            Date finalStartDate = DateTimeUtils.getInstance().getDateFromString(startDate);
+            Date finalStartTime = DateTimeUtils.getInstance().getTimeFromString(startTime);
+            SymptomModel symptomModel = new SymptomModel(circlePosX, circlePosY, finalStartDate.getTime(), finalStartTime.getTime(),
+                    duration, description, intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide);
             newId = symptomDao.insert(symptomModel);
+            if(symptomModel.getDuration() < 0){
+                NotificationWrapper.getInstance(this.context).startReminderFor(newId);
+                NotificationWrapper.getInstance(this.context).showReminderSetToast();
+
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -52,6 +67,16 @@ public class SymptomController {
         List<SymptomModel> result = new ArrayList<>();
         try{
             result = symptomDao.listAll(date, circleSide);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public SymptomModel findById(long symptomId){
+        SymptomModel result = null;
+        try{
+            result = symptomDao.getById(symptomId);
         }catch (Exception e){
             e.printStackTrace();
         }

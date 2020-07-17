@@ -14,11 +14,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.project.symptoms.R;
+import com.project.symptoms.db.DBHelper;
+import com.project.symptoms.db.controller.GlucoseLevelsController;
+import com.project.symptoms.db.controller.BloodPressureLevelsController;
+import com.project.symptoms.db.controller.SymptomCategoryController;
+import com.project.symptoms.db.controller.SymptomCategoryOptionController;
 
 public class BodySelection extends FragmentActivity{
 
     int selectedColor = Color.parseColor("#8DBF41");
     int normalColor = Color.parseColor("#d6d7d7");
+    SymptomCategoryController symptomCategoryController;
+    SymptomCategoryOptionController symptomCategoryOptionController;
 
     // Rows
     final int FEMALE = 0;
@@ -38,6 +45,10 @@ public class BodySelection extends FragmentActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        DBHelper database = new DBHelper(this);
+        GlucoseLevelsController.getInstance(this).insert();
+        BloodPressureLevelsController.getInstance(this).insert();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.body_selection);
 
@@ -50,8 +61,6 @@ public class BodySelection extends FragmentActivity{
                 selectedBodyType = FEMALE;
                 v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
                 maleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
-                // Swap color
-                // v.setBackgroundColor(selectedColor);
             }
         });
 
@@ -61,9 +70,6 @@ public class BodySelection extends FragmentActivity{
                 selectedBodyType = MALE;
                 v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
                 femaleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
-                // Swap color
-                // v.setBackgroundColor(selectedColor);
-                // femaleButton.setBackgroundColor(normalColor);
             }
         });
 
@@ -82,5 +88,17 @@ public class BodySelection extends FragmentActivity{
             }
         });
 
+        initialDBInsertion();
+
+    }
+
+    // Perform initial DB insertion (symptom categories and symptom category options)
+    // Hast to be in that order > 1. SymptomCategory 2. SymptomCategoryOption
+    private void initialDBInsertion(){
+        symptomCategoryController = SymptomCategoryController.getInstance(this);
+        symptomCategoryController.insert();
+        symptomCategoryOptionController = SymptomCategoryOptionController.getInstance(this);
+        symptomCategoryOptionController.insert();
     }
 }
+
