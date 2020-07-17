@@ -18,14 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.symptoms.db.controller.GlucoseController;
 import com.project.symptoms.R;
-import com.project.symptoms.db.controller.GlucoseLevelsController;
-import com.project.symptoms.db.model.Glucose;
-import com.project.symptoms.db.model.GlucoseLevels;
 import com.project.symptoms.dialog.GlucoseLevelsInfoDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
 
-import java.util.List;
 
 public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
