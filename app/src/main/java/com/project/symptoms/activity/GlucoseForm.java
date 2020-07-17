@@ -1,10 +1,14 @@
 package com.project.symptoms.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -14,8 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.symptoms.db.controller.GlucoseController;
 import com.project.symptoms.R;
+import com.project.symptoms.dialog.GlucoseLevelsInfoDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
+
 
 public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
@@ -24,6 +30,7 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
     EditText measureText;
     TextView dateView;
     TextView timeView;
+    protected Button saveButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +42,7 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
 
         DateTimeUtils.getInstance().registerAsDatePicker(dateView);
         DateTimeUtils.getInstance().registerAsTimePicker(timeView);
-
+        init();
 
         /*Glucose glucose = GlucoseController.getInstance(this).select(4);
         measureText = findViewById(R.id.glucose_measure);
@@ -43,16 +50,33 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
 
     }
 
-    public void onClick(View view) {
+    private void init(){
         toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        measureText = findViewById(R.id.glucose_measure);
-        //updateData();
-        saveData();
+        saveButton = findViewById(R.id.save_button);
+        ImageButton glucoseLevels = findViewById(R.id.glucose_levels_button);
+
+        glucoseLevels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              new GlucoseLevelsInfoDialog(GlucoseForm.this);
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveData();
+            }
+        });
     }
 
     private void saveData() {
+        measureText = findViewById(R.id.glucose_measure);
+        dateView = findViewById(R.id.date_input);
+        timeView = findViewById(R.id.time_input);
+
         int glucoseValue = Integer.parseInt(measureText.getText().toString());
         String date = dateView.getText().toString();
         String hour = timeView.getText().toString();
@@ -72,6 +96,8 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         int id = GlucoseController.getInstance(this).update(1, glucoseValue, date, hour);
         Toast.makeText(getApplicationContext(), "ID" + id, Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
