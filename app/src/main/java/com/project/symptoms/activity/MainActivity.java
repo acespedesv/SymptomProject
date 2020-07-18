@@ -15,7 +15,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.View;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements
     private BodyView.Circle currentCircle;
     private TextView dateTextView;
     private int currentBodySide;
-    private long lastSymptomSelectedId;
+    private long nearestSymptomToSelectedId; // Holds the id for the symptom the user long presses
+    private float posXOnTouch, posYOnTouch;
 
 
     @Override
@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void init() {
+        posXOnTouch = -1;
+        posYOnTouch = -1;
         bodyView = findViewById(R.id.bodyView);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -128,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+        nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
         registerForContextMenu(bodyView);
 
     }
@@ -153,9 +155,20 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if (lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
-            menu.setHeaderTitle(R.string.symptom_menu_title);
-            getMenuInflater().inflate(R.menu.symptom_menu, menu);
+
+        try { getSymptomModelByCoordinates(posXOnTouch, posYOnTouch);
+        } catch (ParseException e) { e.printStackTrace(); }
+
+        if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+                menu.setHeaderTitle(R.string.symptom_menu_title);
+                getMenuInflater().inflate(R.menu.symptom_menu, menu);
+        }
+        else{
+            if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
+            currentCircle.x = posXOnTouch;
+            currentCircle.y = posYOnTouch;
+            bodyView.setTemporaryPoint(currentCircle);
+            launchCircleSizeSelectionDialog();
         }
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -164,12 +177,12 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.edit_symptom:
-                updateSymptom(lastSymptomSelectedId);
+                updateSymptom(nearestSymptomToSelectedId);
             case R.id.finish_symptom:
                 Toast.makeText(this, "Finalizar síntoma", Toast.LENGTH_LONG).show();
             case R.id.delete_symptom:
                 try {
-                    deleteSymptom(lastSymptomSelectedId);
+                    deleteSymptom(nearestSymptomToSelectedId);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -212,27 +225,16 @@ public class MainActivity extends AppCompatActivity implements
                 Double.compare(symptomDistancePair1.distance, symptomDistancePair2.distance));
 
         // Get the first id which is the nearest symptom id
-        lastSymptomSelectedId = distances.get(0).symptomId;
-        return SymptomController.getInstance(this).findById(lastSymptomSelectedId);
+        nearestSymptomToSelectedId = distances.get(0).symptomId;
+        return SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
 
     }
 
+    // Receives the posX and posY from the body view where the user touched
     @Override
     public void onFragmentInteraction(Uri uri) {
-        float x = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
-        float y = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
-
-        try { getSymptomModelByCoordinates(x, y); }
-        catch (ParseException e) { e.printStackTrace(); }
-
-        if(lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
-            if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
-            currentCircle.x = x;
-            currentCircle.y = y;
-            bodyView.setTemporaryPoint(currentCircle);
-            launchCircleSizeSelectionDialog();
-        }
-
+        posXOnTouch = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
+        posYOnTouch = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
     }
 
     @Override
@@ -269,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(newIntent);
 
         // Reset the value
-        lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+        nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
     }
 
     private void deleteSymptom(final long symptomId) throws ParseException {
@@ -293,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements
         .show();
 
         // Reset the value
-        lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+        nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
     }
 
     // Class used to hold distances between symptoms coordinates
