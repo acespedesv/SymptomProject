@@ -171,14 +171,17 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()){
             case R.id.edit_symptom:
                 updateSymptom(nearestSymptomToSelectedId);
+                break;
             case R.id.finish_symptom:
                 Toast.makeText(this, "Finalizar síntoma", Toast.LENGTH_LONG).show();
+                break;
             case R.id.delete_symptom:
                 try {
                     deleteSymptom(nearestSymptomToSelectedId);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
