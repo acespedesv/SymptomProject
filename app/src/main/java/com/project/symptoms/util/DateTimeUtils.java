@@ -170,6 +170,22 @@ public class DateTimeUtils implements
         return completeDatetime;
     }
 
+    public Date getTomorrowsDateFromString(String date) throws ParseException {
+        Date currentDate = getDateFromString(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        return calendar.getTime();
+    }
+
+    public Date getYesterdaysDateFromString(String date) throws ParseException {
+        Date currentDate = getDateFromString(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DAY_OF_YEAR, -1);
+        return calendar.getTime();
+    }
+
     public Date getDateFromString(String date) throws ParseException { return DATE_FORMATTER.parse(date); }
 
     public Date getTimeFromString(String time) throws ParseException { return TIME_FORMATTER.parse(time); }
@@ -177,5 +193,7 @@ public class DateTimeUtils implements
     public String getStringDateFromLong(long date){ return DATE_FORMATTER.format(date); }
 
     public String getStringTimeFromLong(long time){ return TIME_FORMATTER.format(time); }
+
+    public String getStringDateFromDate(Date date){ return DATE_FORMATTER.format(date); }
 
 }
