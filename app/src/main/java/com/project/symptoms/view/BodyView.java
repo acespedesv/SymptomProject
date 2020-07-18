@@ -2,6 +2,7 @@ package com.project.symptoms.view;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -199,11 +200,20 @@ public class BodyView extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        this.destroyDrawingCache();
+        this.setDrawingCacheEnabled(true);
+        this.buildDrawingCache(true);
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float xPos = event.getX(), yPos = event.getY();
+            Bitmap bitmap = this.getDrawingCache();
+            int pixel = bitmap.getPixel((int) xPos, (int) yPos);
+            int r = Color.red(pixel);
+            int g = Color.green(pixel);
+            int b = Color.blue(pixel);
             try {
                 BodyFragment bodyFragment = (BodyFragment) parentFragment;
-                String str = String.format("bodyview:/clicked?x=%f&y=%f", xPos, yPos);
+                String str = String.format("bodyview:/clicked?x=%f&y=%f&r=%i&g=%i&b=%i", xPos, yPos, r, g, b);
                 Uri uri = Uri.parse(str);
                 bodyFragment.onViewPressed(uri);
             }catch (Exception e){

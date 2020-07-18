@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements
     private int currentBodySide;
     private long nearestSymptomToSelectedId; // Holds the id for the symptom the user long presses
     private float posXOnTouch, posYOnTouch;
+    private int r, g, b; // Color code for the pixel where the user touched
 
 
     @Override
@@ -83,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements
     private void init() {
         posXOnTouch = -1;
         posYOnTouch = -1;
+        r = -1;
+        g = -1;
+        b = -1;
+
         bodyView = findViewById(R.id.bodyView);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -154,14 +160,42 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id){
+            case R.id.action_settings:
+                startSettingsActivity();
+                break;
+            case R.id.action_about:
+                startAboutActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
-        try { getSymptomModelByCoordinates(posXOnTouch, posYOnTouch);
-        } catch (ParseException e) { e.printStackTrace(); }
+        if (isColorWhite(r, g, b)){
+            try { getSymptomModelByCoordinates(posXOnTouch, posYOnTouch);
+            } catch (ParseException e) { e.printStackTrace(); }
 
-        if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
-            menu.setHeaderTitle(R.string.symptom_menu_title);
-            getMenuInflater().inflate(R.menu.symptom_menu, menu);
+            if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+                menu.setHeaderTitle(R.string.symptom_menu_title);
+                getMenuInflater().inflate(R.menu.symptom_menu, menu);
+            }
         }
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -226,13 +260,24 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    private boolean isColorRed(int r, int g, int b){
+        return r == 255 && g == 0 && b == 0;
+    }
+
+    private boolean isColorWhite(int r, int g, int b){
+        return r == 255 && g == 255 && b == 255;
+    }
+
     // Receives the posX and posY from the body view where the user touched
     @Override
     public void onFragmentInteraction(Uri uri) {
         posXOnTouch = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
         posYOnTouch = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
+        r = Integer.parseInt(uri.getQueryParameter("r").replace(",","."));
+        g = Integer.parseInt(uri.getQueryParameter("g").replace(",","."));
+        b = Integer.parseInt(uri.getQueryParameter("b").replace(",","."));
 
-        if(nearestSymptomToSelectedId == DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+        if(isColorRed(r, g, b)){
             if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
             currentCircle.x = posXOnTouch;
             currentCircle.y = posYOnTouch;
