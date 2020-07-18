@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements
         CircleSizeSelectionDialog.OnCircleSizeSelectedListener,
         CircleSizeSelectionDialog.OnCircleSizeUpdatedListener {
 
+    private final long DEFAULT_SELECTED_SYMPTOM_ID_VALUE = -1;
     private BodyView bodyView;
     private Toolbar toolbar;
     private CircleSizeSelectionDialog sizeSelectionDialog;
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
         registerForContextMenu(bodyView);
 
     }
@@ -151,8 +153,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle(R.string.symptom_menu_title);
-        getMenuInflater().inflate(R.menu.symptom_menu, menu);
+        if (lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+            menu.setHeaderTitle(R.string.symptom_menu_title);
+            getMenuInflater().inflate(R.menu.symptom_menu, menu);
+        }
     }
 
     @Override
@@ -160,18 +164,16 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()){
             case R.id.edit_symptom:
                 updateSymptom(lastSymptomSelectedId);
-                return true;
             case R.id.finish_symptom:
                 Toast.makeText(this, "Finalizar síntoma", Toast.LENGTH_LONG).show();
-                return true;
             case R.id.delete_symptom:
                 try {
                     deleteSymptom(lastSymptomSelectedId);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-            default: return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -279,6 +281,9 @@ public class MainActivity extends AppCompatActivity implements
         data.putLong("symptom_id", symptomId);
         newIntent.putExtras(data);
         startActivity(newIntent);
+
+        // Reset the value
+        lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
     }
 
     private void deleteSymptom(final long symptomId) throws ParseException {
@@ -300,6 +305,9 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 })
         .show();
+
+        // Reset the value
+        lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
     }
 
     // Class used to hold distances between symptoms coordinates
