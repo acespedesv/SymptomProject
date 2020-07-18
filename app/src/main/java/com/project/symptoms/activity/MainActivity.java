@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements
     private CircleSizeSelectionDialog sizeSelectionDialog;
     private BodyView.Circle currentCircle;
     private TextView dateTextView;
+    private ImageView yesterdayButton;
+    private ImageView tomorrowButton;
     private int currentBodySide;
     private long nearestSymptomToSelectedId; // Holds the id for the symptom the user long presses
     private float posXOnTouch, posYOnTouch;
@@ -118,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         dateTextView = findViewById(R.id.current_date);
+        yesterdayButton = findViewById(R.id.left_button);
+        tomorrowButton = findViewById(R.id.right_button);
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
 
         // Capture when text view for the date changes to be able to update the symptoms showed in the body view
@@ -136,9 +140,31 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        yesterdayButton.setOnClickListener(v -> {
+            try { goToYesterday(v); } catch (ParseException e) { e.printStackTrace(); }
+        });
+
+        tomorrowButton.setOnClickListener(v -> {
+            try { goToTomorrow(v); } catch (ParseException e) { e.printStackTrace(); }
+        });
+
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
         registerForContextMenu(bodyView);
 
+    }
+
+    public void goToYesterday(View view) throws ParseException {
+        Date yesterdaysDate = DateTimeUtils.getInstance().getYesterdaysDateFromString(dateTextView.getText().toString());
+        String yesterdayDateString = DateTimeUtils.getInstance().getStringDateFromDate(yesterdaysDate);
+        dateTextView.setText(yesterdayDateString);
+        updateSymptomsInBodyView();
+    }
+
+    public void goToTomorrow(View view) throws ParseException {
+        Date tomorrowsDate = DateTimeUtils.getInstance().getTomorrowsDateFromString(dateTextView.getText().toString());
+        String tomorrowDateString = DateTimeUtils.getInstance().getStringDateFromDate(tomorrowsDate);
+        dateTextView.setText(tomorrowDateString);
+        updateSymptomsInBodyView();
     }
 
     // Get all symptoms for current date from DB and add them to the BodyView
