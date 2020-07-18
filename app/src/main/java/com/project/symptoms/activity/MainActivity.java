@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,17 +13,17 @@ import androidx.appcompat.widget.Toolbar;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SymptomModel;
-import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
@@ -33,6 +34,7 @@ import com.project.symptoms.view.BodyView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements
     private CircleSizeSelectionDialog sizeSelectionDialog;
     private BodyView.Circle currentCircle;
     private TextView dateTextView;
-    private int circleSide;
+    private int currentBodySide;
+    private long lastSymptomSelectedId;
 
 
     @Override
@@ -124,16 +127,17 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        registerForContextMenu(bodyView);
+
     }
 
     // Get all symptoms for current date from DB and add them to the BodyView
     private void updateSymptomsInBodyView() throws ParseException {
-        circleSide = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
-
+        currentBodySide = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
 
         // Get current date from text view to filter the data in DB
         Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
-        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), circleSide);
+        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), currentBodySide);
 
         // Instantiate new circles from DB data and replace them in the BodyView
         ArrayList<BodyView.Circle> circles = new ArrayList<>();
@@ -146,6 +150,31 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.setHeaderTitle(R.string.symptom_menu_title);
+        getMenuInflater().inflate(R.menu.symptom_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.edit_symptom:
+                updateSymptom(lastSymptomSelectedId);
+                return true;
+            case R.id.finish_symptom:
+                Toast.makeText(this, "Finalizar síntoma", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.delete_symptom:
+                try {
+                    deleteSymptom(lastSymptomSelectedId);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            default: return true;
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -154,12 +183,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_settings:
                 startSettingsActivity();
@@ -186,6 +210,29 @@ public class MainActivity extends AppCompatActivity implements
             sizeSelectionDialog.setOnCircleSizeUpdateListener(this);
         }
         sizeSelectionDialog.show();
+    }
+
+    private SymptomModel getSymptomModelByCoordinates(float posX, float posY) throws ParseException {
+        long today = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString()).getTime();
+        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, 1);
+        List<SymptomDistancePair> distances = new ArrayList<>();
+
+        // Use pythagoras formula to calculate distances between points
+        for (SymptomModel symptomModel : todaySymptoms) {
+            float xDistance = Math.abs(posX - symptomModel.getCirclePosX());
+            float yDistance = Math.abs(posY - symptomModel.getCirclePosY());
+            double totalDistance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
+            distances.add(new SymptomDistancePair(totalDistance, symptomModel.getSymptomId()));
+        }
+
+        // Using lambda expression to sort the list of pairs by distance
+        Collections.sort(distances, (symptomDistancePair1, symptomDistancePair2) ->
+                Double.compare(symptomDistancePair1.distance, symptomDistancePair2.distance));
+
+        // Get the first id which is the nearest symptom id
+        lastSymptomSelectedId = distances.get(0).symptomId;
+        return SymptomController.getInstance(this).findById(lastSymptomSelectedId);
+
     }
 
     @Override
@@ -221,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements
         data.putParcelable("Circle", currentCircle);
         data.putString("Date", dateTextView.getText().toString());
         data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
-        data.putInt("State", circleSide);
+        data.putInt("State", currentBodySide);
         newIntent.putExtras(data);
         startActivity(newIntent);
     }
@@ -235,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void deleteSymptom(final long symptomId) throws ParseException {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_sure_about_deleting)
                 .setPositiveButton(R.string.alert_positive_button, new DialogInterface.OnClickListener() {
@@ -254,6 +300,16 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 })
         .show();
+    }
+
+    // Class used to hold distances between symptoms coordinates
+    private static class SymptomDistancePair{
+        double distance;
+        int symptomId;
+        SymptomDistancePair(double distance, int symptomId){
+            this.distance = distance;
+            this.symptomId = symptomId;
+        }
     }
 
 }

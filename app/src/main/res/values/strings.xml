@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Symptoms</string>
 
+    <!-- Symptom menu -->
+    <string name="delete_symptom">Borrar síntoma</string>
+    <string name="edit_symptom">Editar síntoma</string>
+    <string name="finish_symptom">Finalizar síntoma</string>
+    <string name="symptom_menu_title">Selección de síntoma</string>
+
     <!-- Symptom Form -->
     <string name="symptom_form">Registro de síntoma</string>
     <string name="symptom_description">Descripción del Síntoma:</string>
