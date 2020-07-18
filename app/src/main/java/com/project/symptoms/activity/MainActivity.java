@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
-        if (isColorWhite(r, g, b)){
+        if (isColorRed(r, g, b)){
             try { getSymptomModelByCoordinates(posXOnTouch, posYOnTouch);
             } catch (ParseException e) { e.printStackTrace(); }
 
@@ -268,6 +268,10 @@ public class MainActivity extends AppCompatActivity implements
         return r == 255 && g == 255 && b == 255;
     }
 
+    private boolean isColorGrey(int r, int g, int b){
+        return r == 230 && g == 230 && b == 230;
+    }
+
     // Receives the posX and posY from the body view where the user touched
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -277,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements
         g = Integer.parseInt(uri.getQueryParameter("g").replace(",","."));
         b = Integer.parseInt(uri.getQueryParameter("b").replace(",","."));
 
-        if(isColorRed(r, g, b)){
+        if(isColorGrey(r, g, b)){
             if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
             currentCircle.x = posXOnTouch;
             currentCircle.y = posYOnTouch;
