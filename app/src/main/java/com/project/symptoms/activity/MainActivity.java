@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements
     private TextView dateTextView;
     private int currentBodySide;
     private long lastSymptomSelectedId;
-    private boolean longClick;
 
 
     @Override
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void init() {
-        longClick = false;
         bodyView = findViewById(R.id.bodyView);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -155,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        longClick = true;
         if (lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
             menu.setHeaderTitle(R.string.symptom_menu_title);
             getMenuInflater().inflate(R.menu.symptom_menu, menu);
@@ -225,18 +222,17 @@ public class MainActivity extends AppCompatActivity implements
         float x = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
         float y = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
 
-        if(longClick) {
-            try { getSymptomModelByCoordinates(x, y); }
-            catch (ParseException e) { e.printStackTrace(); }
-        }
-        else {
+        try { getSymptomModelByCoordinates(x, y); }
+        catch (ParseException e) { e.printStackTrace(); }
+
+        if(lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
             if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
             currentCircle.x = x;
             currentCircle.y = y;
             bodyView.setTemporaryPoint(currentCircle);
             launchCircleSizeSelectionDialog();
         }
-        longClick = false;
+
     }
 
     @Override
