@@ -153,10 +153,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if (lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
-            menu.setHeaderTitle(R.string.symptom_menu_title);
-            getMenuInflater().inflate(R.menu.symptom_menu, menu);
-        }
+//        if (lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+//            menu.setHeaderTitle(R.string.symptom_menu_title);
+//            getMenuInflater().inflate(R.menu.symptom_menu, menu);
+//        }
+        menu.setHeaderTitle(R.string.symptom_menu_title);
+        getMenuInflater().inflate(R.menu.symptom_menu, menu);
     }
 
     @Override
