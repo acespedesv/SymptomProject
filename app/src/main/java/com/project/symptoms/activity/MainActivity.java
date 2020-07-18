@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView dateTextView;
     private int currentBodySide;
     private long lastSymptomSelectedId;
+    private boolean longClick;
 
 
     @Override
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         // This is needed to be done again because of the context used in DateTimeUtils
-        // changes when another view is also registcered as piker
+        // changes when another view is also registered as piker
         // TODO FIX THIS ISSUE in DateTimeUtils
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
     }
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void init() {
+        longClick = false;
         bodyView = findViewById(R.id.bodyView);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
-        registerForContextMenu(findViewById(R.id.body_fragment));
+        registerForContextMenu(bodyView);
 
     }
 
@@ -153,12 +155,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        if (lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
-//            menu.setHeaderTitle(R.string.symptom_menu_title);
-//            getMenuInflater().inflate(R.menu.symptom_menu, menu);
-//        }
-        menu.setHeaderTitle(R.string.symptom_menu_title);
-        getMenuInflater().inflate(R.menu.symptom_menu, menu);
+        longClick = true;
+        if (lastSymptomSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+            menu.setHeaderTitle(R.string.symptom_menu_title);
+            getMenuInflater().inflate(R.menu.symptom_menu, menu);
+        }
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override
@@ -174,27 +176,6 @@ public class MainActivity extends AppCompatActivity implements
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.action_settings:
-                startSettingsActivity();
-                break;
-            case R.id.action_about:
-                startAboutActivity();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -243,12 +224,19 @@ public class MainActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
         float x = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
         float y = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
-        if( currentCircle == null)
-            currentCircle = new BodyView.Circle(0,0,10);
-        currentCircle.x = x;
-        currentCircle.y = y;
-        bodyView.setTemporaryPoint(currentCircle);
-        launchCircleSizeSelectionDialog();
+
+        if(longClick) {
+            try { getSymptomModelByCoordinates(x, y); }
+            catch (ParseException e) { e.printStackTrace(); }
+        }
+        else {
+            if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
+            currentCircle.x = x;
+            currentCircle.y = y;
+            bodyView.setTemporaryPoint(currentCircle);
+            launchCircleSizeSelectionDialog();
+        }
+        longClick = false;
     }
 
     @Override

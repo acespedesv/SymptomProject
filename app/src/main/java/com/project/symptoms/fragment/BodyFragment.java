@@ -34,31 +34,7 @@ public class BodyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle(R.string.symptom_menu_title);
-        getActivity().getMenuInflater().inflate(R.menu.symptom_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.edit_symptom:
-                Toast.makeText(getContext(), "Editar síntoma", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.finish_symptom:
-                Toast.makeText(getContext(), "Finalizar síntoma", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.delete_symptom:
-                Toast.makeText(getContext(), "Borrar síntoma", Toast.LENGTH_LONG).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,12 +43,11 @@ public class BodyFragment extends Fragment {
         // Enable the BodyView to communicate to it's parent
         BodyView bodyView = layout.findViewById(R.id.bodyView);
         bodyView.setParentFragment(this);
-        registerForContextMenu(bodyView);
         return layout;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    // When the body view is pressed
+    public void onViewPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
@@ -106,7 +81,6 @@ public class BodyFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

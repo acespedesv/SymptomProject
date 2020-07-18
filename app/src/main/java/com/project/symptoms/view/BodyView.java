@@ -2,7 +2,6 @@ package com.project.symptoms.view;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,25 +11,17 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.project.symptoms.R;
-import com.project.symptoms.activity.SymptomForm;
 import com.project.symptoms.fragment.BodyFragment;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Currency;
 
 public class BodyView extends View {
 
@@ -54,7 +45,6 @@ public class BodyView extends View {
     // Enums to limit the options to use
     public enum BodyType{MALE, FEMALE};
     public enum State{FRONT, BACK};
-
 
     Fragment parentFragment;
 
@@ -215,15 +205,14 @@ public class BodyView extends View {
                 BodyFragment bodyFragment = (BodyFragment) parentFragment;
                 String str = String.format("bodyview:/clicked?x=%f&y=%f", xPos, yPos);
                 Uri uri = Uri.parse(str);
-                bodyFragment.onButtonPressed(uri);
+                bodyFragment.onViewPressed(uri);
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
-        return true;
+        return super.onTouchEvent(event);
 
     }
-
 
     public void setParentFragment(Fragment parentFragment) {
         this.parentFragment = parentFragment;
