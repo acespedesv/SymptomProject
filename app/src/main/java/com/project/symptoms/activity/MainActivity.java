@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
         if (isColorRed(r, g, b)){
-            try { getSymptomModelByCoordinates(posXOnTouch, posYOnTouch);
+            try { getNearestSymptomToCoordinates(posXOnTouch, posYOnTouch);
             } catch (ParseException e) { e.printStackTrace(); }
 
             if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements
         sizeSelectionDialog.show();
     }
 
-    private SymptomModel getSymptomModelByCoordinates(float posX, float posY) throws ParseException {
+    private SymptomModel getNearestSymptomToCoordinates(float posX, float posY) throws ParseException {
         long today = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString()).getTime();
         List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, 1);
         List<SymptomDistancePair> distances = new ArrayList<>();
