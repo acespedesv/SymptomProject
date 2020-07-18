@@ -89,13 +89,37 @@ public class SymptomDaoImpl implements SymptomDao{
     }
 
     @Override
-    public boolean delete(int id) throws Exception {
-        return false;
+    public boolean delete(long id) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selection = Contract.Symptom.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {Long.toString(id)};
+        return db.delete(Contract.Symptom.TABLE_NAME, selection, selectionArgs) != -1;
     }
 
     @Override
-    public boolean update(int id, SymptomModel newValues) throws Exception {
-        return false;
+    public boolean update(long id, SymptomModel symptomModel) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        //New values for one column
+        ContentValues values = new ContentValues();
+        values.put(Contract.Symptom.COLUMN_NAME_DESCRIPTION, symptomModel.getDescription());
+        values.put(Contract.Symptom.COLUMN_NAME_INTENSITY, symptomModel.getIntensity());
+        values.put(Contract.Symptom.COLUMN_NAME_INTERMITTENCE, symptomModel.getIntermittence());
+        values.put(Contract.Symptom.COLUMN_NAME_START_DATE, symptomModel.getStartDate());
+        values.put(Contract.Symptom.COLUMN_NAME_START_TIME, symptomModel.getStartTime());
+        values.put(Contract.Symptom.COLUMN_NAME_DURATION, symptomModel.getDuration());
+        values.put(Contract.Symptom.COLUMN_NAME_CAUSING_DRUG, symptomModel.getCausingDrug());
+        values.put(Contract.Symptom.COLUMN_NAME_CAUSING_FOOD, symptomModel.getCausingFood());
+        values.put(Contract.Symptom.COLUMN_NAME_POS_X, symptomModel.getCirclePosX());
+        values.put(Contract.Symptom.COLUMN_NAME_POS_Y, symptomModel.getCirclePosY());
+        values.put(Contract.Symptom.COLUMN_NAME_SIDE, symptomModel.getCircleSide());
+        values.put(Contract.Symptom.COLUMN_NAME_CIRCLE_RADIUS, symptomModel.getCircleRadius());
+
+        String selection = Contract.Symptom.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {Long.toString(id)};
+
+        int count = db.update(Contract.Symptom.TABLE_NAME, values, selection, selectionArgs);
+        return count >= 1;
     }
 
     @Override

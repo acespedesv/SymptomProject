@@ -1,23 +1,29 @@
 package com.project.symptoms.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SymptomModel;
-import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
@@ -28,6 +34,7 @@ import com.project.symptoms.view.BodyView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,21 +45,22 @@ public class MainActivity extends AppCompatActivity implements
         CircleSizeSelectionDialog.OnCircleSizeSelectedListener,
         CircleSizeSelectionDialog.OnCircleSizeUpdatedListener {
 
+    private final long DEFAULT_SELECTED_SYMPTOM_ID_VALUE = -1;
     private BodyView bodyView;
     private Toolbar toolbar;
     private CircleSizeSelectionDialog sizeSelectionDialog;
     private BodyView.Circle currentCircle;
     private TextView dateTextView;
-    private int circleSide;
+    private int currentBodySide;
+    private long nearestSymptomToSelectedId; // Holds the id for the symptom the user long presses
+    private float posXOnTouch, posYOnTouch;
+    private int r, g, b; // Color code for the pixel where the user touched
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Create the database
-        //DBHelper database = new DBHelper(this);
-
         init();
         try {
             updateSymptomsInBodyView();
@@ -75,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void init() {
+        posXOnTouch = -1;
+        posYOnTouch = -1;
+        r = -1;
+        g = -1;
+        b = -1;
+
         bodyView = findViewById(R.id.bodyView);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements
         dateTextView = findViewById(R.id.current_date);
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
 
-        // Capture when text view to be able to update the symptoms showed in the body view
+        // Capture when text view for the date changes to be able to update the symptoms showed in the body view
         dateTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -122,16 +136,18 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+        registerForContextMenu(bodyView);
+
     }
 
     // Get all symptoms for current date from DB and add them to the BodyView
     private void updateSymptomsInBodyView() throws ParseException {
-        circleSide = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
-
+        currentBodySide = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
 
         // Get current date from text view to filter the data in DB
         Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
-        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), circleSide);
+        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), currentBodySide);
 
         // Instantiate new circles from DB data and replace them in the BodyView
         ArrayList<BodyView.Circle> circles = new ArrayList<>();
@@ -169,6 +185,41 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        if (isColorRed(r, g, b)){
+            try { getNearestSymptomToCoordinates(posXOnTouch, posYOnTouch);
+            } catch (ParseException e) { e.printStackTrace(); }
+
+            if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+                menu.setHeaderTitle(R.string.symptom_menu_title);
+                getMenuInflater().inflate(R.menu.symptom_menu, menu);
+            }
+        }
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.edit_symptom:
+                updateSymptom(nearestSymptomToSelectedId);
+                break;
+            case R.id.finish_symptom:
+                Toast.makeText(this, "Finalizar síntoma", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.delete_symptom:
+                try {
+                    deleteSymptom(nearestSymptomToSelectedId);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void startAboutActivity() {
         startActivity(new Intent(this, About.class));
     }
@@ -186,16 +237,57 @@ public class MainActivity extends AppCompatActivity implements
         sizeSelectionDialog.show();
     }
 
+    private SymptomModel getNearestSymptomToCoordinates(float posX, float posY) throws ParseException {
+        long today = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString()).getTime();
+        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, 1);
+        List<SymptomDistancePair> distances = new ArrayList<>();
+
+        // Use pythagoras formula to calculate distances between points
+        for (SymptomModel symptomModel : todaySymptoms) {
+            float xDistance = Math.abs(posX - symptomModel.getCirclePosX());
+            float yDistance = Math.abs(posY - symptomModel.getCirclePosY());
+            double totalDistance = Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
+            distances.add(new SymptomDistancePair(totalDistance, symptomModel.getSymptomId()));
+        }
+
+        // Using lambda expression to sort the list of pairs by distance
+        Collections.sort(distances, (symptomDistancePair1, symptomDistancePair2) ->
+                Double.compare(symptomDistancePair1.distance, symptomDistancePair2.distance));
+
+        // Get the first id which is the nearest symptom id
+        nearestSymptomToSelectedId = distances.get(0).symptomId;
+        return SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
+
+    }
+
+    private boolean isColorRed(int r, int g, int b){
+        return r == 255 && g == 0 && b == 0;
+    }
+
+    private boolean isColorWhite(int r, int g, int b){
+        return r == 255 && g == 255 && b == 255;
+    }
+
+    private boolean isColorGrey(int r, int g, int b){
+        return r == 230 && g == 230 && b == 230;
+    }
+
+    // Receives the posX and posY from the body view where the user touched
     @Override
     public void onFragmentInteraction(Uri uri) {
-        float x = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
-        float y = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
-        if( currentCircle == null)
-            currentCircle = new BodyView.Circle(0,0,10);
-        currentCircle.x = x;
-        currentCircle.y = y;
-        bodyView.setTemporaryPoint(currentCircle);
-        launchCircleSizeSelectionDialog();
+        posXOnTouch = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
+        posYOnTouch = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
+        r = Integer.parseInt(uri.getQueryParameter("r").replace(",","."));
+        g = Integer.parseInt(uri.getQueryParameter("g").replace(",","."));
+        b = Integer.parseInt(uri.getQueryParameter("b").replace(",","."));
+
+        if(isColorGrey(r, g, b)){
+            if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
+            currentCircle.x = posXOnTouch;
+            currentCircle.y = posYOnTouch;
+            bodyView.setTemporaryPoint(currentCircle);
+            launchCircleSizeSelectionDialog();
+        }
     }
 
     @Override
@@ -219,8 +311,54 @@ public class MainActivity extends AppCompatActivity implements
         data.putParcelable("Circle", currentCircle);
         data.putString("Date", dateTextView.getText().toString());
         data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
-        data.putInt("State", circleSide);
+        data.putInt("State", currentBodySide);
         newIntent.putExtras(data);
         startActivity(newIntent);
     }
+
+    private void updateSymptom(long symptomId){
+        Intent newIntent = new Intent(this, SymptomForm.class);
+        Bundle data = new Bundle();
+        data.putLong("symptom_id", symptomId);
+        newIntent.putExtras(data);
+        startActivity(newIntent);
+
+        // Reset the value
+        nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+    }
+
+    private void deleteSymptom(final long symptomId) throws ParseException {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.alert_sure_about_deleting)
+                .setPositiveButton(R.string.alert_positive_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        boolean symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
+                        boolean categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
+                        if (symptomDeletionSuccess && categoriesDeletionSuccess){
+                            try { updateSymptomsInBodyView(); }
+                            catch (ParseException e) { e.printStackTrace(); }
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.alert_negative_button, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                })
+        .show();
+
+        // Reset the value
+        nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+    }
+
+    // Class used to hold distances between symptoms coordinates
+    private static class SymptomDistancePair{
+        double distance;
+        int symptomId;
+        SymptomDistancePair(double distance, int symptomId){
+            this.distance = distance;
+            this.symptomId = symptomId;
+        }
+    }
+
 }

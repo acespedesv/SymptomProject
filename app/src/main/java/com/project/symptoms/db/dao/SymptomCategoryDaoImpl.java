@@ -73,12 +73,12 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
     }
 
     @Override
-    public boolean delete(int id) throws Exception {
+    public boolean delete(long id) throws Exception {
         return false;
     }
 
     @Override
-    public boolean update(int id, SymptomCategoryModel newValues) throws Exception {
+    public boolean update(long id, SymptomCategoryModel newValues) throws Exception {
         return false;
     }
 }

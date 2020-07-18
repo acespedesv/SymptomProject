@@ -16,7 +16,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL(Contract.SQL_CREATE_SYMPTOM_TMP);
         db.execSQL(Contract.SQL_CREATE_SYMPTOM);
         db.execSQL(Contract.SQL_CREATE_CATEGORY);
         db.execSQL(Contract.SQL_CREATE_CATEGORY_OPTION);
@@ -30,7 +29,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        db.execSQL(Contract.SQL_DELETE_SYMPTOM_TMP);
         db.execSQL(Contract.SQL_DELETE_SYMPTOM);
         db.execSQL(Contract.SQL_DELETE_CATEGORY);
         db.execSQL(Contract.SQL_DELETE_CATEGORY_OPTION);

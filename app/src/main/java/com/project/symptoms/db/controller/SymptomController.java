@@ -2,9 +2,6 @@ package com.project.symptoms.db.controller;
 
 import android.app.Notification;
 import android.content.Context;
-import android.widget.Toast;
-
-import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
@@ -81,6 +78,28 @@ public class SymptomController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public boolean updateSymptom(long id, SymptomModel symptomModel){
+        try {
+            symptomDao.update(id, symptomModel);
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteSymptomById(long symptomId){
+        try {
+            symptomDao.delete(symptomId);
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

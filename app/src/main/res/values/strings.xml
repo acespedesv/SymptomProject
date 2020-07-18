@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Symptoms</string>
 
+    <!-- Symptom menu -->
+    <string name="delete_symptom">Borrar síntoma</string>
+    <string name="edit_symptom">Editar síntoma</string>
+    <string name="finish_symptom">Finalizar síntoma</string>
+    <string name="symptom_menu_title">Selección de síntoma</string>
+
     <!-- Symptom Form -->
     <string name="symptom_form">Registro de síntoma</string>
     <string name="symptom_description">Descripción del Síntoma:</string>
@@ -132,6 +138,7 @@
     <string name="sample_date">Miércoles 15 de Febrero</string>
     <string name="sample_hour">21:00</string>
     <string name="save_button_text">Guardar</string>
+    <string name="update_button_text">Actualizar</string>
     <string name="sample_pressure_diastolic_value">#</string>
     <string name="sample_glucose_measure">#</string>
     <string name="sample_pressure_systolic_value">90</string>
@@ -155,6 +162,7 @@
     <string name="select_body_message">Deslice y seleccione</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="value_successfully_saved">Valor guardado exitosamente</string>
+    <string name="value_saving_failed">El valor no se pudo guardar exitosamente</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">SYMP APP</string>
     <string name="first_step">Primer paso</string>
@@ -164,4 +172,11 @@
     <string name="continue_button">Continuar</string>
     <string name="developed_by">Desarrollado por</string>
     <string name="body_selection">Selección de silueta</string>
+    <string name="duration_hours">%1$s hrs</string>
+
+    <!--  Alert dialogs  -->
+    <string name="alert_sure_about_deleting">¿Seguro que desea eliminar este síntoma?</string>
+    <string name="alert_positive_button">Aceptar</string>
+    <string name="alert_negative_button">Cancelar</string>
+
 </resources>

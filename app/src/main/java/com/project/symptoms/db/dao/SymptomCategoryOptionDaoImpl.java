@@ -36,6 +36,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         String whereClause = "name = ?";
         String[] whereArgs = new String[] {name};
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        cursor.moveToFirst();
         SymptomCategoryOptionModel result = buildModelFromCursor(cursor);
         db.close();
         return result;
@@ -46,6 +47,18 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, null, null, null, null, null);
         List<SymptomCategoryOptionModel> result = buildListFromCursor(cursor);
+        db.close();
+        return result;
+    }
+
+    @Override
+    public SymptomCategoryOptionModel listById(long categoryOptionId) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = "category_option_id = ?";
+        String[] whereArgs = new String[] {Long.toString(categoryOptionId)};
+        Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        cursor.moveToFirst();
+        SymptomCategoryOptionModel result = buildModelFromCursor(cursor);
         db.close();
         return result;
     }
@@ -62,7 +75,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
      * Assumes moveToNext() already called
      */
     private SymptomCategoryOptionModel buildModelFromCursor(Cursor cursor) {
-        SymptomCategoryOptionModel symptomCategoryOptionModel = null;
+        SymptomCategoryOptionModel symptomCategoryOptionModel;
         int id, fk, iconResourceId;
         String name;
         id = cursor.getInt(cursor.getColumnIndex(Contract.CategoryOption.COLUMN_NAME_ID_PK));

@@ -28,7 +28,6 @@ public class SymptomCategoryController {
         return instance;
     }
 
-    // Return the id of the new row when inserting successfully
     public boolean insert(){
         boolean success = true;
         boolean initialInsertionAlreadyDone = listAll().size() > 0;
@@ -59,6 +58,7 @@ public class SymptomCategoryController {
         }
         return result;
     }
+
     public SymptomCategoryModel getSymptomCategoryByName(String name) {
         SymptomCategoryModel result = null;
         try{
