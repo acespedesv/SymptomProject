@@ -162,7 +162,9 @@
     <string name="select_body_message">Deslice y seleccione</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="value_successfully_saved">Valor guardado exitosamente</string>
+    <string name="value_successfully_updated">Valor actualizado exitosamente</string>
     <string name="value_saving_failed">El valor no se pudo guardar exitosamente</string>
+    <string name="value_updating_failed">El valor no se pudo actualizar exitosamente</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">SYMP APP</string>
     <string name="first_step">Primer paso</string>

@@ -159,8 +159,8 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 else {
                     try {
                         text = updateSymptomsData() ?
-                                getResources().getString(R.string.value_successfully_saved) :
-                                getResources().getString(R.string.value_saving_failed);
+                                getResources().getString(R.string.value_successfully_updated) :
+                                getResources().getString(R.string.value_updating_failed);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
