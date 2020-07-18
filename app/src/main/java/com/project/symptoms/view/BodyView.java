@@ -213,7 +213,7 @@ public class BodyView extends View {
             int b = Color.blue(pixel);
             try {
                 BodyFragment bodyFragment = (BodyFragment) parentFragment;
-                String str = String.format("bodyview:/clicked?x=%f&y=%f&r=%i&g=%i&b=%i", xPos, yPos, r, g, b);
+                String str = String.format("bodyview:/clicked?x=%f&y=%f&r=%d&g=%d&b=%d", xPos, yPos, r, g, b);
                 Uri uri = Uri.parse(str);
                 bodyFragment.onViewPressed(uri);
             }catch (Exception e){
