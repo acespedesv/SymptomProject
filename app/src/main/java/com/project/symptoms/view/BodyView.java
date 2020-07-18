@@ -215,6 +215,7 @@ public class BodyView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean positionPermitted = false;
+
         this.destroyDrawingCache();
         this.setDrawingCacheEnabled(true);
         this.buildDrawingCache(true);
