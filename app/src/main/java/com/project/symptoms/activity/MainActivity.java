@@ -160,15 +160,8 @@ public class MainActivity extends AppCompatActivity implements
         } catch (ParseException e) { e.printStackTrace(); }
 
         if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
-                menu.setHeaderTitle(R.string.symptom_menu_title);
-                getMenuInflater().inflate(R.menu.symptom_menu, menu);
-        }
-        else{
-            if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
-            currentCircle.x = posXOnTouch;
-            currentCircle.y = posYOnTouch;
-            bodyView.setTemporaryPoint(currentCircle);
-            launchCircleSizeSelectionDialog();
+            menu.setHeaderTitle(R.string.symptom_menu_title);
+            getMenuInflater().inflate(R.menu.symptom_menu, menu);
         }
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -235,6 +228,14 @@ public class MainActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
         posXOnTouch = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
         posYOnTouch = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
+
+        if(nearestSymptomToSelectedId == DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+            if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
+            currentCircle.x = posXOnTouch;
+            currentCircle.y = posYOnTouch;
+            bodyView.setTemporaryPoint(currentCircle);
+            launchCircleSizeSelectionDialog();
+        }
     }
 
     @Override
