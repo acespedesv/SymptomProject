@@ -233,7 +233,8 @@ public class MainActivity extends AppCompatActivity implements
                 updateSymptom(nearestSymptomToSelectedId);
                 break;
             case R.id.finish_symptom:
-                Toast.makeText(this, "Finalizar síntoma", Toast.LENGTH_LONG).show();
+                if(finishSymptom(nearestSymptomToSelectedId)) Toast.makeText(this, R.string.symptom_finished, Toast.LENGTH_LONG).show();
+                else Toast.makeText(this, R.string.symptom_not_finished, Toast.LENGTH_LONG).show();
                 break;
             case R.id.delete_symptom:
                 try {
@@ -336,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements
         Bundle data = new Bundle();
         data.putParcelable("Circle", currentCircle);
         data.putString("Date", dateTextView.getText().toString());
-        data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
+        data.putString("Time", DateTimeUtils.getInstance().getCurrentTimeAsString());
         data.putInt("State", currentBodySide);
         newIntent.putExtras(data);
         startActivity(newIntent);
@@ -351,6 +352,14 @@ public class MainActivity extends AppCompatActivity implements
 
         // Reset the value
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+    }
+
+    private boolean finishSymptom(long nearestSymptomToSelectedId) {
+        SymptomModel symptomModel = SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
+        long startTime = symptomModel.getStartTime();
+        long currentTime = DateTimeUtils.getInstance().getCurrentDateTimeAsLong();
+        symptomModel.setDuration(DateTimeUtils.getInstance().getHoursDifference(startTime, currentTime));
+        return SymptomController.getInstance(this).updateSymptom(nearestSymptomToSelectedId, symptomModel);
     }
 
     private void deleteSymptom(final long symptomId) throws ParseException {
