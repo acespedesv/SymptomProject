@@ -189,7 +189,8 @@ public class BodyView extends View {
 
         int sideMargin = (int) (remainingFreeWidth / 2);
 
-        int right = 3*sideMargin;
+        int left = sideMargin;
+        int right = 3*left;
         int top = 0;
         return new Rect(sideMargin,top,right, final_height);
     }

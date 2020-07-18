@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         // This is needed to be done again because of the context used in DateTimeUtils
-        // changes when another view is also registered as piker
+        // changes when another view is also registered as picker
         // TODO FIX THIS ISSUE in DateTimeUtils
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
     }
