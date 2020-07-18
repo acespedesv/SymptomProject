@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         lastSymptomSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
-        registerForContextMenu(bodyView);
+        registerForContextMenu(findViewById(R.id.body_fragment));
 
     }
 
