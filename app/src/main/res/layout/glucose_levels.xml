@@ -8,49 +8,56 @@
 
     <LinearLayout
         android:layout_width="405dp"
-        android:layout_height="279dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:orientation="vertical"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:text="Valores de referencia"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:layout_height="wrap_content"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="61dp"
+            android:padding="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/level"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                android:paddingEnd="0dp"
+                android:gravity="center"
                 android:text="@string/level_column"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/plasma_test"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="0dp"
+                android:gravity="center"
                 android:text="@string/fasting_test"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="@string/tolerance_test"
                 android:textSize="18sp"
                 android:textStyle="bold" />
