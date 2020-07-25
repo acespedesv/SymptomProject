@@ -98,11 +98,16 @@ public class DateTimeUtils implements
         return Calendar.getInstance().getTimeInMillis();
     }
 
-    public int getHoursDifference(long dateTime1, long dateTime2){
+    public int getTimeDifference(long dateTime1, long dateTime2){
         long diff = dateTime1 - dateTime2;
         long seconds = diff / 1000;
         long minutes = seconds / 60;
-        return (int) minutes / 60;
+        long hours = minutes / 60;
+        if(hours < 1){
+            if(minutes < 1){ return (int)seconds; }
+            return (int)minutes;
+        }
+        return (int)hours;
     }
 
     public void registerAsTimePicker(TextView v){

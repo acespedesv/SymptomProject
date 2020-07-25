@@ -358,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements
         SymptomModel symptomModel = SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
         long startTime = symptomModel.getStartTime();
         long currentTime = DateTimeUtils.getInstance().getCurrentDateTimeAsLong();
-        symptomModel.setDuration(DateTimeUtils.getInstance().getHoursDifference(startTime, currentTime));
+        symptomModel.setDuration(DateTimeUtils.getInstance().getTimeDifference(startTime, currentTime));
         return SymptomController.getInstance(this).updateSymptom(nearestSymptomToSelectedId, symptomModel);
     }
 

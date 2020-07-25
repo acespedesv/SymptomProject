@@ -17,7 +17,7 @@
     <string name="high">Alta</string>
     <string name="intermittent">¿Intermitente?</string>
     <string name="start">Fecha/Hora inicio:</string>
-    <string name="duration">Duración del padecimiento (hrs):</string>
+    <string name="duration">Duración del padecimiento:</string>
     <string name="duration_hint">Indique las horas (se puede llenar luego)</string>
     <string name="reaction_medicament">Medicamento causante:</string>
     <string name="reaction_medicament_hint">Nombre del medicamento</string>
