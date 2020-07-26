@@ -72,6 +72,8 @@
                 android:id="@+id/glucose_levels_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/colorMainWhite"
+                android:tint="@color/colorDarkBlue"
                 app:srcCompat="@android:drawable/ic_dialog_info" />
 
         </RelativeLayout>

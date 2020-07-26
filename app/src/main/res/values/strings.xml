@@ -171,8 +171,8 @@
     <string name="dummy_content">SYMP APP</string>
     <string name="first_step">Primer paso</string>
     <string name="level_column">Nivel</string>
-    <string name="fasting_test">Prueba en ayunas</string>
-    <string name="tolerance_test">Prueba de Tolerancia</string>
+    <string name="fasting_test">En ayunas</string>
+    <string name="tolerance_test">Postcomida</string>
     <string name="continue_button">Continuar</string>
     <string name="developed_by">Desarrollado por</string>
     <string name="body_selection">Selección de silueta</string>
