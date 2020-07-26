@@ -232,10 +232,6 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.edit_symptom:
                 updateSymptom(nearestSymptomToSelectedId);
                 break;
-            case R.id.finish_symptom:
-                if(finishSymptom(nearestSymptomToSelectedId)) Toast.makeText(this, R.string.symptom_finished, Toast.LENGTH_LONG).show();
-                else Toast.makeText(this, R.string.symptom_not_finished, Toast.LENGTH_LONG).show();
-                break;
             case R.id.delete_symptom:
                 try {
                     deleteSymptom(nearestSymptomToSelectedId);
@@ -266,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private SymptomModel getNearestSymptomToCoordinates(float posX, float posY) throws ParseException {
         long today = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString()).getTime();
-        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, 1);
+        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, currentBodySide);
         List<SymptomDistancePair> distances = new ArrayList<>();
 
         // Use pythagoras formula to calculate distances between points
