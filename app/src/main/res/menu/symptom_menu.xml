@@ -9,12 +9,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/finish_symptom"
-        android:icon="@drawable/ic_stop_black_24dp"
-        android:title="@string/finish_symptom"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/delete_symptom"
         android:icon="@drawable/ic_delete_black_24dp"
         android:title="@string/delete_symptom"

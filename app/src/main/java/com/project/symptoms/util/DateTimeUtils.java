@@ -73,7 +73,7 @@ public class DateTimeUtils implements
 
     }
 
-    public String getCurrentDate(){
+    public String getCurrentDateAsString(){
         int current_year = Calendar.getInstance().get(Calendar.YEAR);
         int current_month = Calendar.getInstance().get(Calendar.MONTH);
         int current_day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -88,10 +88,26 @@ public class DateTimeUtils implements
         return date;
     }
 
-    public String getCurrentTime(){
+    public String getCurrentTimeAsString(){
         int current_hour = Calendar.getInstance().get(Calendar.HOUR);
         int current_minute = Calendar.getInstance().get(Calendar.MINUTE);
         return TIME_FORMATTER.format(new Date(0,0,0, current_hour, current_minute));
+    }
+
+    public long getCurrentDateTimeAsLong(){
+        return Calendar.getInstance().getTimeInMillis();
+    }
+
+    public int getTimeDifference(long dateTime1, long dateTime2){
+        long diff = dateTime1 - dateTime2;
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        if(hours < 1){
+            if(minutes < 1){ return (int)seconds; }
+            return (int)minutes;
+        }
+        return (int)hours;
     }
 
     public void registerAsTimePicker(TextView v){

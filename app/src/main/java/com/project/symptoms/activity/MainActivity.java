@@ -232,9 +232,6 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.edit_symptom:
                 updateSymptom(nearestSymptomToSelectedId);
                 break;
-            case R.id.finish_symptom:
-                Toast.makeText(this, "Finalizar síntoma", Toast.LENGTH_LONG).show();
-                break;
             case R.id.delete_symptom:
                 try {
                     deleteSymptom(nearestSymptomToSelectedId);
@@ -265,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private SymptomModel getNearestSymptomToCoordinates(float posX, float posY) throws ParseException {
         long today = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString()).getTime();
-        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, 1);
+        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, currentBodySide);
         List<SymptomDistancePair> distances = new ArrayList<>();
 
         // Use pythagoras formula to calculate distances between points
@@ -336,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements
         Bundle data = new Bundle();
         data.putParcelable("Circle", currentCircle);
         data.putString("Date", dateTextView.getText().toString());
-        data.putString("Time", DateTimeUtils.getInstance().getCurrentTime());
+        data.putString("Time", DateTimeUtils.getInstance().getCurrentTimeAsString());
         data.putInt("State", currentBodySide);
         newIntent.putExtras(data);
         startActivity(newIntent);
@@ -351,6 +348,14 @@ public class MainActivity extends AppCompatActivity implements
 
         // Reset the value
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+    }
+
+    private boolean finishSymptom(long nearestSymptomToSelectedId) {
+        SymptomModel symptomModel = SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
+        long startTime = symptomModel.getStartTime();
+        long currentTime = DateTimeUtils.getInstance().getCurrentDateTimeAsLong();
+        symptomModel.setDuration(DateTimeUtils.getInstance().getTimeDifference(startTime, currentTime));
+        return SymptomController.getInstance(this).updateSymptom(nearestSymptomToSelectedId, symptomModel);
     }
 
     private void deleteSymptom(final long symptomId) throws ParseException {

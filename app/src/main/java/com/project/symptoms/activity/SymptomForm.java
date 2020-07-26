@@ -112,7 +112,10 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         intensityRadioButton.setChecked(true);
         startDateView.setText(DateTimeUtils.getInstance().getStringDateFromLong(symptomModelToUpdate.getStartDate()));
         startTimeView.setText(DateTimeUtils.getInstance().getStringTimeFromLong(symptomModelToUpdate.getStartTime()));
-        symptomDurationView.setText(String.format(Locale.getDefault(), "%d", symptomModelToUpdate.getDuration()));
+        if(symptomModelToUpdate.getDuration() != 0){
+            symptomDurationView.setText(String.format(Locale.getDefault(),
+                    "%d", symptomModelToUpdate.getDuration()));
+        }
         symptomMedicamentView.setText(symptomModelToUpdate.getCausingDrug());
         symptomFoodView.setText(symptomModelToUpdate.getCausingFood());
         enableCheckRespectiveSymptomOptionViews();
@@ -189,7 +192,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     private boolean insertSymptomsData() {
         logSelectedOptions();
         String stringDuration = symptomDurationView.getText().toString();
-        int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
+        int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : 0;
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
         RadioButton intensityRadioButton = findViewById(intensityCheckedViewId);
         // Insert in symptom table
