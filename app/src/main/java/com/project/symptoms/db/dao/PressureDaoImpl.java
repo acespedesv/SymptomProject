@@ -58,15 +58,15 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public boolean delete(long id) throws Exception {
+    public int delete(long id) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(id)};
-        return db.delete(Contract.Pressure.TABLE_NAME, selection, selectionArgs) != -1;
+        return db.delete(Contract.Pressure.TABLE_NAME, selection, selectionArgs);
     }
 
     @Override
-    public boolean update(long id, PressureModel pressureModel) throws Exception {
+    public int update(long id, PressureModel pressureModel) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //New values for one column
@@ -79,8 +79,7 @@ public class PressureDaoImpl implements PressureDao {
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(id)};
 
-        int count = db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
-        return count >= 1;
+        return db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
     }
 
 }

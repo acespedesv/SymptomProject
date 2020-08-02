@@ -47,8 +47,7 @@ public class PressureController {
     // Return if whether succeeded or not
     public boolean delete(long pressureId){
         try {
-            pressureDao.delete(pressureId);
-            return true;
+            return pressureDao.delete(pressureId) != 1;
         }catch (Exception e ){
             e.printStackTrace();
             return false;
@@ -60,8 +59,7 @@ public class PressureController {
     public boolean update(long pressureId, int systolic, int diastolic, long date, long time){
         try {
             PressureModel newPressureModel = new PressureModel(systolic, diastolic, date, time);
-            pressureDao.update(pressureId, newPressureModel);
-            return true;
+            return pressureDao.update(pressureId, newPressureModel) >= 1;
         }catch (Exception e ){
             e.printStackTrace();
             return false;
