@@ -16,10 +16,9 @@ public class PressureDaoImpl implements PressureDao {
 
     private DBHelper dbHelper;
 
-    public PressureDaoImpl(Context context){
-        dbHelper = new DBHelper(context);
+    public PressureDaoImpl(DBHelper dbHelper){
+        this.dbHelper = dbHelper;
     }
-
 
     @Override
     public long insert(PressureModel pressureModel) throws Exception {
@@ -32,7 +31,6 @@ public class PressureDaoImpl implements PressureDao {
         long newId = db.insert(Contract.Pressure.TABLE_NAME,null, values);
         db.close();
         return newId;
-
     }
 
     @Override
@@ -61,12 +59,28 @@ public class PressureDaoImpl implements PressureDao {
 
     @Override
     public boolean delete(long id) throws Exception {
-        return true;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {Long.toString(id)};
+        return db.delete(Contract.Pressure.TABLE_NAME, selection, selectionArgs) != -1;
     }
 
     @Override
-    public boolean update(long id, PressureModel newValues) throws Exception {
-        return true;
+    public boolean update(long id, PressureModel pressureModel) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        //New values for one column
+        ContentValues values = new ContentValues();
+        values.put(Contract.Pressure.COLUMN_NAME_DIASTOLIC, pressureModel.getDiastolic());
+        values.put(Contract.Pressure.COLUMN_NAME_SYSTOLIC, pressureModel.getSystolic());
+        values.put(Contract.Pressure.COLUMN_NAME_TIME, pressureModel.getTime());
+        values.put(Contract.Pressure.COLUMN_NAME_DATE, pressureModel.getDate());
+
+        String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {Long.toString(id)};
+
+        int count = db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
+        return count >= 1;
     }
 
 }

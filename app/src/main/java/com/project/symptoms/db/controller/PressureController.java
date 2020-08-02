@@ -2,6 +2,7 @@ package com.project.symptoms.db.controller;
 
 import android.content.Context;
 
+import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.db.dao.PressureDao;
 import com.project.symptoms.db.dao.PressureDaoImpl;
 import com.project.symptoms.db.model.PressureModel;
@@ -23,7 +24,7 @@ public class PressureController {
     public static PressureController getInstance(Context context){
         if(instance == null){
             instance = new PressureController();
-            pressureDao = new PressureDaoImpl(context);
+            pressureDao = new PressureDaoImpl(new DBHelper(context));
         }
         return instance;
     }
@@ -31,7 +32,6 @@ public class PressureController {
 
     // Return the id of the new row
     public long insert(int systolic, int diastolic, String date, String time){
-
         long newId = -1;
         try{
             Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
