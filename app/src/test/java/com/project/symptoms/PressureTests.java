@@ -159,7 +159,7 @@ public class PressureTests {
     /**
      * Return a mocked cursor that behaves as if it's representing the parameters
      */
-    public Cursor createMockCursorForSelectTest(PressureModel modelsToReturn[]){
+    private Cursor createMockCursorForSelectTest(PressureModel modelsToReturn[]){
 
         String[] modelFields = {Contract.Pressure.COLUMN_NAME_ID_PK,
                 Contract.Pressure.COLUMN_NAME_SYSTOLIC,

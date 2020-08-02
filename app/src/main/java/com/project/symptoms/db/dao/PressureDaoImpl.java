@@ -54,6 +54,7 @@ public class PressureDaoImpl implements PressureDao {
             time = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_TIME));
             result.add(new PressureModel(id, systolic, diastolic, date, time));
         }
+        cursor.close();
         return result;
     }
 
@@ -62,6 +63,7 @@ public class PressureDaoImpl implements PressureDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(id)};
+        db.close();
         return db.delete(Contract.Pressure.TABLE_NAME, selection, selectionArgs);
     }
 
@@ -78,7 +80,7 @@ public class PressureDaoImpl implements PressureDao {
 
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(id)};
-
+        db.close();
         return db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
     }
 
