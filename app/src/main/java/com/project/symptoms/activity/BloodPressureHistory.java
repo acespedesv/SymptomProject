@@ -8,7 +8,6 @@ import com.project.symptoms.db.controller.PressureController;
 import com.project.symptoms.util.DateTimeUtils;
 import java.util.List;
 
-import static com.project.symptoms.activity.BloodPressureForm.ARGUMENT_KEY_PRESSURE_ID;
 
 public class BloodPressureHistory extends HistoryBase {
     @Override
@@ -20,7 +19,7 @@ public class BloodPressureHistory extends HistoryBase {
     @Override
     public void onEdit(long id) {
         Intent intent = new Intent(this, BloodPressureForm.class);
-        intent.putExtra(ARGUMENT_KEY_PRESSURE_ID, id);
+        intent.putExtra(getString(R.string.intent_key_pressure_id), id);
         startActivity(intent);
     }
 

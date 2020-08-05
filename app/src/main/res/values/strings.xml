@@ -101,6 +101,7 @@
     <!-- =============================== -->
     <string name="title_activity_glucose_form">GlucoseForm</string>
     <string name="glucose_form_title">Registro de Glucosa</string>
+    <string name="intent_key_glucose_id">glucose_id</string>
 
 
     <!-- =============================== -->
@@ -115,6 +116,7 @@
     <!--      Blood Pressure Form        -->
     <!-- =============================== -->
     <string name="blood_pressure_form_title">Registro de Presión Arterial</string>
+    <string name="intent_key_pressure_id">pressure_id</string>
 
 
 

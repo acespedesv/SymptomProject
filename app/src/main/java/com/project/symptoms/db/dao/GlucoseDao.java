@@ -3,6 +3,7 @@ package com.project.symptoms.db.dao;
 import com.project.symptoms.db.model.GlucoseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface GlucoseDao {
 
@@ -14,6 +15,6 @@ public interface GlucoseDao {
 
     GlucoseModel select(long id) throws Exception;
 
-    ArrayList<GlucoseModel> listAll() throws Exception;
+    List<GlucoseModel> listAll() throws Exception;
 
 }

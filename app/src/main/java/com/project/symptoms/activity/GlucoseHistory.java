@@ -7,7 +7,7 @@ import com.project.symptoms.adapter.GlucoseAdapter;
 import com.project.symptoms.db.controller.GlucoseController;
 import com.project.symptoms.util.DateTimeUtils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GlucoseHistory extends HistoryBase {
     @Override
@@ -19,7 +19,7 @@ public class GlucoseHistory extends HistoryBase {
     @Override
     public void onEdit(long id) {
         Intent intent = new Intent(this, GlucoseForm.class);
-        intent.putExtra(GlucoseForm.ARGUMENT_KEY_GLUCOSE_ID, id);
+        intent.putExtra(getString(R.string.intent_key_glucose_id), id);
         startActivity(intent);
     }
 
@@ -34,7 +34,7 @@ public class GlucoseHistory extends HistoryBase {
 
     @Override
     public void fetchModels() {
-        ArrayList models = GlucoseController.getInstance(this).listAll();
+        List models = GlucoseController.getInstance(this).listAll();
         listView.setAdapter(new GlucoseAdapter(models, DateTimeUtils.getInstance()));
     }
 

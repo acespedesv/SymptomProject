@@ -9,6 +9,7 @@ import com.project.symptoms.util.DateTimeUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class GlucoseController {
 
@@ -77,8 +78,8 @@ public class GlucoseController {
         return updatedRows;
     }
 
-    public ArrayList<GlucoseModel> listAll(){
-        ArrayList<GlucoseModel> result = null;
+    public List<GlucoseModel> listAll(){
+        List<GlucoseModel> result = null;
         try {
             result = glucoseDao.listAll();
         } catch (Exception e) {

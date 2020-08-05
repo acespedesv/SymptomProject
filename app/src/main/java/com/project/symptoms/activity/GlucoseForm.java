@@ -1,7 +1,5 @@
 package com.project.symptoms.activity;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,15 +21,14 @@ import com.project.symptoms.dialog.GlucoseLevelsInfoDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
 
-import java.util.Date;
-
 
 public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
-    public final static String ARGUMENT_KEY_GLUCOSE_ID = "glucose_id";
+
 
     private long glucoseId; // When called for edit
     private final long NO_ID = -1;
+    private final long FAILURE = -1;
 
     Toolbar toolbar;
     EditText measureText;
@@ -52,8 +49,7 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         DateTimeUtils.getInstance().registerAsTimePicker(timeView);
         init();
 
-
-        glucoseId = getIntent().getLongExtra(ARGUMENT_KEY_GLUCOSE_ID, NO_ID);
+        glucoseId = getIntent().getLongExtra(getString(R.string.intent_key_glucose_id), NO_ID);
         if(glucoseId != NO_ID){
             populateForEdit(glucoseId);
         }
@@ -69,7 +65,6 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
 
     private void init(){
         toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         saveButton = findViewById(R.id.save_button);
         ImageButton glucoseLevels = findViewById(R.id.glucose_levels_button);
@@ -99,7 +94,7 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         String hour = timeView.getText().toString();
 
         String messageToShow = "";
-        long result = -1;
+        long result = FAILURE;
         if(glucoseId == NO_ID) {
             result = GlucoseController.getInstance(this).insert(glucoseValue, date, hour);
             messageToShow = getString(R.string.value_successfully_saved);
@@ -108,7 +103,7 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
             result = GlucoseController.getInstance(this).update(glucoseId, glucoseValue, date, hour);
             messageToShow = getString(R.string.value_successfully_updated);
         }
-        if(result != -1){
+        if(result != FAILURE){
             Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
         }
         Intent mainActivityIntent = new Intent(this, MainActivity.class);

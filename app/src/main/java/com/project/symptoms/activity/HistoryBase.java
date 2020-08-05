@@ -3,7 +3,6 @@ package com.project.symptoms.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -18,13 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.project.symptoms.R;
-import com.project.symptoms.adapter.GlucoseAdapter;
-import com.project.symptoms.db.controller.GlucoseController;
-import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.fragment.MainMenuFragment;
-import com.project.symptoms.util.DateTimeUtils;
-
-import java.util.ArrayList;
 
 public abstract class HistoryBase extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
@@ -33,7 +26,7 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_glucose_history);
+        setContentView(R.layout.activity_history_base);
 
         setTitle(getTitleResourceId());
 

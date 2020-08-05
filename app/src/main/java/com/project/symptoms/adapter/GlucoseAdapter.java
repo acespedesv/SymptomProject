@@ -7,13 +7,14 @@ import com.project.symptoms.activity.HistoryBase;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.util.DateTimeUtils;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GlucoseAdapter extends BaseAdapter {
 
-    ArrayList<GlucoseModel> models;
+    List<GlucoseModel> models;
     DateTimeUtils dateTimeUtils;
 
-    public GlucoseAdapter(ArrayList<GlucoseModel> models, DateTimeUtils dateTimeUtils) {
+    public GlucoseAdapter(List<GlucoseModel> models, DateTimeUtils dateTimeUtils) {
         super();
         this.models = models;
         this.dateTimeUtils = dateTimeUtils;
@@ -42,7 +43,8 @@ public class GlucoseAdapter extends BaseAdapter {
         String readableDate = dateTimeUtils.DATE_PARSER.format(glucoseModel.getDate());
         String readableTime = dateTimeUtils.TIME_FORMATTER.format(glucoseModel.getTime());
         String values[] = new String[]{ ""+glucoseModel.getValue(), readableDate, readableTime};
-        return HistoryBase.buildLinearLayout(parent, values, 10);
+        int verticalPadding = 10;
+        return HistoryBase.buildLinearLayout(parent, values, verticalPadding);
     }
 
 

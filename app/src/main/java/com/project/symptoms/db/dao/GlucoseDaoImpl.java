@@ -11,6 +11,7 @@ import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.db.model.GlucoseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GlucoseDaoImpl implements GlucoseDao {
     private DBHelper dbHelper;
@@ -92,7 +93,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
     }
 
     @Override
-    public ArrayList<GlucoseModel> listAll() throws Exception {
+    public List<GlucoseModel> listAll() throws Exception {
         Cursor cursor = queryAll();
         ArrayList<GlucoseModel> result = new ArrayList<>();
         while(cursor.moveToNext()){
@@ -102,7 +103,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
         return result;
     }
 
-    public GlucoseModel buildModelFromCursor(Cursor cursor){
+    private GlucoseModel buildModelFromCursor(Cursor cursor){
         long id = cursor.getLong(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_ID_PK));
         int value = cursor.getInt(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_VALUE));
         long date = cursor.getLong(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_DATE));
@@ -110,7 +111,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
         return new GlucoseModel(id, value, date, time);
     }
 
-    public Cursor queryAll(){
+    private Cursor queryAll(){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] columns = {

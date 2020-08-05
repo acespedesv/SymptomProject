@@ -46,7 +46,8 @@ public class BloodPressureAdapter extends BaseAdapter {
         String readableDate = dateTimeUtils.DATE_PARSER.format(pressureModel.getDate());
         String readableTime = dateTimeUtils.TIME_FORMATTER.format(pressureModel.getTime());
         String values[] = new String[]{ ""+pressureModel.getSystolic(), ""+pressureModel.getDiastolic(), readableDate, readableTime};
-        return HistoryBase.buildLinearLayout(parent, values, 10);
+        int verticalPadding = 10;
+        return HistoryBase.buildLinearLayout(parent, values, verticalPadding);
     }
 
 

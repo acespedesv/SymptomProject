@@ -30,10 +30,10 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
 
     protected Toolbar toolbar;
     protected Button saveButton;
-    public final static String ARGUMENT_KEY_PRESSURE_ID = "glucose_id";
 
     private long pressureId; // When called for edit
     private final long NO_ID = -1;
+    private final long FAILURE = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
 
         init();
 
-        pressureId = getIntent().getLongExtra(ARGUMENT_KEY_PRESSURE_ID, NO_ID);
+        pressureId = getIntent().getLongExtra(getString(R.string.intent_key_pressure_id), NO_ID);
         if(pressureId != NO_ID){
             populateForEdit(pressureId);
         }
@@ -93,7 +93,7 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         String date = dateView.getText().toString();
 
         String messageToShow = "";
-        long result = -1;
+        long result = FAILURE;
         if(pressureId == NO_ID) {
             result = PressureController.getInstance(this).insert(systolicValue, diastolicValue, date, time);
             messageToShow = getString(R.string.value_successfully_saved);
@@ -102,7 +102,7 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
             result = PressureController.getInstance(this).update(pressureId, systolicValue, diastolicValue, date, time );
             messageToShow = getString(R.string.value_successfully_updated);
         }
-        if(result != -1){
+        if(result != FAILURE){
             Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
         }
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
