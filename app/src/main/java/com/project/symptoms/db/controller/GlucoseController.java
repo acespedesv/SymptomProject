@@ -7,6 +7,7 @@ import com.project.symptoms.db.dao.GlucoseDaoImpl;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.util.DateTimeUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class GlucoseController {
@@ -39,7 +40,7 @@ public class GlucoseController {
         return newId;
     }
 
-    public int delete(int id) {
+    public int delete(long id) {
         int quantity = -1;
         try {
             quantity = glucoseDao.delete(id);
@@ -50,7 +51,7 @@ public class GlucoseController {
         return quantity;
     }
 
-    public GlucoseModel select(int id) {
+    public GlucoseModel select(long id) {
         GlucoseModel glucoseModel = null;
         try {
             glucoseModel = glucoseDao.select(id);
@@ -61,16 +62,28 @@ public class GlucoseController {
         return glucoseModel;
     }
 
-    public int update(int id, int glucoseValue, String dateText, String hourText) {
-        int updatedId = -1;
-
+    public int update(long id, int glucoseValue, String dateText, String hourText) {
+        //TODO validate ID
+        int updatedRows = -1;
         try {
-            Date completeDateTime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(dateText, hourText);
-            GlucoseModel glucoseModel = new GlucoseModel(id, glucoseValue, completeDateTime.getTime());
-            updatedId = glucoseDao.update(glucoseModel);
+            Date date = DateTimeUtils.getInstance().getDateFromString(dateText);
+            Date time = DateTimeUtils.getInstance().getTimeFromString(hourText);
+            GlucoseModel glucoseModel = new GlucoseModel(id, glucoseValue, date.getTime(), time.getTime());
+            glucoseDao.update(glucoseModel);
+            updatedRows = 1;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return updatedId;
+        return updatedRows;
+    }
+
+    public ArrayList<GlucoseModel> listAll(){
+        ArrayList<GlucoseModel> result = null;
+        try {
+            result = glucoseDao.listAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

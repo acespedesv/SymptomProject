@@ -2,14 +2,14 @@ package com.project.symptoms.db.model;
 
 public class PressureModel {
 
-    private int pressure_id;
+    private long pressureId;
     private int systolic;
     private int diastolic;
     private long date;
     private long time;
 
-    public PressureModel(int pressure_id, int systolic, int diastolic, long date, long time){
-        this.pressure_id = pressure_id;
+    public PressureModel(long pressureId, int systolic, int diastolic, long date, long time){
+        this.pressureId = pressureId;
         this.systolic = systolic;
         this.diastolic = diastolic;
         this.date = date;
@@ -21,12 +21,12 @@ public class PressureModel {
     }
 
 
-    public int getPressure_id() {
-        return pressure_id;
+    public long getId() {
+        return pressureId;
     }
 
-    public void setPressure_id(int pressure_id) {
-        this.pressure_id = pressure_id;
+    public void setId(long pressureId) {
+        this.pressureId = pressureId;
     }
 
     public int getSystolic() {

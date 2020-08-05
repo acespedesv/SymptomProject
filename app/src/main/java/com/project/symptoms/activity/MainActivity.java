@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         init();
         try {

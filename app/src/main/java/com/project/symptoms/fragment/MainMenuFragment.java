@@ -1,7 +1,10 @@
 package com.project.symptoms.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,12 +13,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.project.symptoms.R;
 import com.project.symptoms.activity.BloodPressureForm;
+import com.project.symptoms.activity.BloodPressureHistory;
 import com.project.symptoms.activity.GlucoseForm;
+import com.project.symptoms.activity.GlucoseHistory;
 
 
 /**
@@ -64,13 +71,29 @@ public class MainMenuFragment extends Fragment {
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openHistoryActivity();
+                openHistoryMenu();
             }
         });
     }
 
-    private void openHistoryActivity() {
-        //TODO: Implement this
+    private void openHistoryMenu() {
+        Dialog dialog = new  BottomSheetDialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.history_selection_dialog);
+        dialog.findViewById(R.id.glucose_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), GlucoseHistory.class));
+            }
+        });
+        dialog.findViewById(R.id.pressure_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), BloodPressureHistory.class));
+            }
+        });
+        dialog.setCancelable(true);
+        dialog.show();
     }
 
     private void openGlucoseFormActivity() {

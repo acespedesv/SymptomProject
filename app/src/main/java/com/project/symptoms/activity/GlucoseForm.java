@@ -18,15 +18,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.symptoms.db.controller.GlucoseController;
 import com.project.symptoms.R;
+import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.dialog.GlucoseLevelsInfoDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
 
+import java.util.Date;
+
 
 public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
-    Toolbar toolbar;
+    public final static String ARGUMENT_KEY_GLUCOSE_ID = "glucose_id";
 
+    private long glucoseId; // When called for edit
+    private final long NO_ID = -1;
+
+    Toolbar toolbar;
     EditText measureText;
     TextView dateView;
     TextView timeView;
@@ -39,15 +46,25 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
 
         dateView = findViewById(R.id.date_input);
         timeView = findViewById(R.id.time_input);
+        measureText = findViewById(R.id.glucose_measure);
 
         DateTimeUtils.getInstance().registerAsDatePicker(dateView);
         DateTimeUtils.getInstance().registerAsTimePicker(timeView);
         init();
 
-        /*Glucose glucose = GlucoseController.getInstance(this).select(4);
-        measureText = findViewById(R.id.glucose_measure);
-        measureText.setText(Integer.toString(glucose.getValue()));*/
 
+        glucoseId = getIntent().getLongExtra(ARGUMENT_KEY_GLUCOSE_ID, NO_ID);
+        if(glucoseId != NO_ID){
+            populateForEdit(glucoseId);
+        }
+
+    }
+
+    private void populateForEdit(long glucoseId) {
+        GlucoseModel model = GlucoseController.getInstance(this).select(glucoseId);
+        measureText.setText(""+model.getValue());
+        dateView.setText(DateTimeUtils.getInstance().DATE_FORMATTER.format(model.getDate()));
+        timeView.setText(DateTimeUtils.getInstance().TIME_FORMATTER.format(model.getTime()));
     }
 
     private void init(){
@@ -81,9 +98,19 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         String date = dateView.getText().toString();
         String hour = timeView.getText().toString();
 
-        long id = GlucoseController.getInstance(this).insert(glucoseValue, date, hour);
-        Toast.makeText(getApplicationContext(), "ID" + id, Toast.LENGTH_SHORT).show();
-
+        String messageToShow = "";
+        long result = -1;
+        if(glucoseId == NO_ID) {
+            result = GlucoseController.getInstance(this).insert(glucoseValue, date, hour);
+            messageToShow = getString(R.string.value_successfully_saved);
+        }
+        else{
+            result = GlucoseController.getInstance(this).update(glucoseId, glucoseValue, date, hour);
+            messageToShow = getString(R.string.value_successfully_updated);
+        }
+        if(result != -1){
+            Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
+        }
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(mainActivityIntent);
     }

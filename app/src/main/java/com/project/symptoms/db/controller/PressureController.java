@@ -56,16 +56,19 @@ public class PressureController {
 
     }
 
-    // Return if whether succeeded or not
-    public boolean update(long pressureId, int systolic, int diastolic, long date, long time){
+    // Return if whether succeeded or not TODO generalize this
+    public long update(long pressureId, int systolic, int diastolic, String date, String time){
+        long result = -1;
         try {
-            PressureModel newPressureModel = new PressureModel(systolic, diastolic, date, time);
-            pressureDao.update(pressureId, newPressureModel);
-            return true;
+            Date dateDate = DateTimeUtils.getInstance().DATE_FORMATTER.parse(date);
+            Date timeDate = DateTimeUtils.getInstance().TIME_FORMATTER.parse(time);
+            PressureModel newPressureModel = new PressureModel(pressureId,
+                    systolic, diastolic, dateDate.getTime(), timeDate.getTime());
+            result = pressureDao.update(pressureId, newPressureModel) ? 1 : -1;
         }catch (Exception e ){
             e.printStackTrace();
-            return false;
         }
+        return result;
     }
 
     public List<PressureModel> listAll(){
@@ -76,6 +79,15 @@ public class PressureController {
             e.printStackTrace();
         }
         return result;
+    }
 
+    public PressureModel select(long id){
+        PressureModel result = null;
+        try{
+            result = pressureDao.select(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }

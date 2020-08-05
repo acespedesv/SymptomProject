@@ -4,10 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.db.model.GlucoseModel;
+
+import java.util.ArrayList;
 
 public class GlucoseDaoImpl implements GlucoseDao {
     private DBHelper dbHelper;
@@ -42,27 +45,27 @@ public class GlucoseDaoImpl implements GlucoseDao {
             values.put(Contract.Glucose.COLUMN_NAME_TIME, glucoseModel.getTime());
 
         String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
-        String[] selectionArgs = {Integer.toString(glucoseModel.getId())};
+        String[] selectionArgs = {Long.toString(glucoseModel.getId())};
 
         int count = db.update(Contract.Glucose.TABLE_NAME, values, selection, selectionArgs);
         return count;
     }
 
-    public int delete(int id) throws Exception {
+    public int delete(long id) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Define 'where' part of query.
         String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
         // Specify arguments in placeholder order.
-        String[] selectionArgs = {Integer.toString(id)};
+        String[] selectionArgs = {Long.toString(id)};
         // Issue SQL statement.
         return db.delete(Contract.Glucose.TABLE_NAME, selection, selectionArgs); //deletedRows;
     }
 
-    public GlucoseModel select(int id) throws Exception {
+    public GlucoseModel select(long id) throws Exception {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] columns = {
-                //BaseColumns._ID,
+                Contract.Glucose.COLUMN_NAME_ID_PK,
                 Contract.Glucose.COLUMN_NAME_VALUE,
                 Contract.Glucose.COLUMN_NAME_DATE,
                 Contract.Glucose.COLUMN_NAME_TIME
@@ -85,9 +88,50 @@ public class GlucoseDaoImpl implements GlucoseDao {
         );
 
         cursor.moveToFirst();
-        String value = cursor.getString(0);
-        String dateTime = cursor.getString(1);
-        cursor.close();
-        return new GlucoseModel(id, Integer.parseInt(value), Long.parseLong(dateTime));
+        return buildModelFromCursor(cursor);
     }
+
+    @Override
+    public ArrayList<GlucoseModel> listAll() throws Exception {
+        Cursor cursor = queryAll();
+        ArrayList<GlucoseModel> result = new ArrayList<>();
+        while(cursor.moveToNext()){
+            result.add(buildModelFromCursor(cursor));
+        }
+        cursor.close();
+        return result;
+    }
+
+    public GlucoseModel buildModelFromCursor(Cursor cursor){
+        long id = cursor.getLong(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_ID_PK));
+        int value = cursor.getInt(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_VALUE));
+        long date = cursor.getLong(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_DATE));
+        long time = cursor.getLong(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_TIME));
+        return new GlucoseModel(id, value, date, time);
+    }
+
+    public Cursor queryAll(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] columns = {
+                Contract.Glucose.COLUMN_NAME_ID_PK,
+                Contract.Glucose.COLUMN_NAME_VALUE,
+                Contract.Glucose.COLUMN_NAME_DATE,
+                Contract.Glucose.COLUMN_NAME_TIME
+        };
+
+        // TODO: SORT BY DATE
+
+        Cursor cursor = db.query(
+                Contract.Glucose.TABLE_NAME,   // The table to query
+                columns,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                  // don't filter by row groups
+                null               // The sort order
+        );
+        return cursor;
+    }
+
 }
