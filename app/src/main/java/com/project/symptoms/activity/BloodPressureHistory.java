@@ -29,8 +29,8 @@ public class BloodPressureHistory extends HistoryBase {
         return new String[]{
                 getString(R.string.pressure_measure_systolic),
                 getString(R.string.pressure_measure_diastolic),
-                getString(R.string.column_heading_date),
-                getString(R.string.column_heading_time)
+                getString(R.string.date),
+                getString(R.string.time)
         };
     }
 

@@ -107,35 +107,17 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
 
     }
 
-    // Override
+
+    // Methods to override in subclasses
+
     public abstract void onDelete(long id);
-//    public abstract void onDelete(long id){
-//        GlucoseController.getInstance(this).delete(id);
-//        fetchModels();
-//    }
 
-    // Override
     public abstract void onEdit(long id);
-//    public void onEdit(long id){
-//        startActivity(new Intent(this, GlucoseForm.class));
-//    }
 
-    // Override
     public abstract String[] getColumnsHeaders();
-//    private String[] getColumnsHeaders() {
-//        return new String[]{
-//                getString(R.string.glucose_measure),
-//                getString(R.string.column_heading_date),
-//                getString(R.string.column_heading_time)
-//        };
-//    }
 
-    // Override
     public abstract void fetchModels();
-//    public void fetchModels(){
-//        ArrayList models = GlucoseController.getInstance(this).listAll();
-//        listView.setAdapter(new GlucoseAdapter(models, DateTimeUtils.getInstance()));
-//    }
 
     public abstract int getTitleResourceId();
+
 }
