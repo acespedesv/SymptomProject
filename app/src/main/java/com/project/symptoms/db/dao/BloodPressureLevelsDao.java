@@ -8,5 +8,5 @@ public interface BloodPressureLevelsDao {
 
     long insert(BloodPressureLevels pressureLevel) throws Exception;
 
-    List<BloodPressureLevels> listAll() throws Exception;
+    List<BloodPressureLevels> selectAll() throws Exception;
 }

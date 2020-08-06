@@ -15,6 +15,6 @@ public interface GlucoseDao {
 
     GlucoseModel select(long id) throws Exception;
 
-    List<GlucoseModel> listAll() throws Exception;
+    List<GlucoseModel> selectAll() throws Exception;
 
 }

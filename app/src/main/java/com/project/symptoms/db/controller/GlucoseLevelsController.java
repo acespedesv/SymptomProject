@@ -45,7 +45,7 @@ public class GlucoseLevelsController {
     public List<GlucoseLevels> listAll(){
         List<GlucoseLevels> result = new ArrayList<>();
         try{
-            result = glucoseLevelsDao.listAll();
+            result = glucoseLevelsDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }

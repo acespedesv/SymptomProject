@@ -43,7 +43,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
     }
 
     @Override
-    public List<SymptomCategoryOptionModel> listAll() {
+    public List<SymptomCategoryOptionModel> selectAll() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, null, null, null, null, null);
         List<SymptomCategoryOptionModel> result = buildListFromCursor(cursor);
@@ -52,7 +52,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
     }
 
     @Override
-    public SymptomCategoryOptionModel listById(long categoryOptionId) throws Exception {
+    public SymptomCategoryOptionModel select(long categoryOptionId) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "category_option_id = ?";
         String[] whereArgs = new String[] {Long.toString(categoryOptionId)};
@@ -86,13 +86,4 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         return symptomCategoryOptionModel;
     }
 
-    @Override
-    public boolean delete(int id) throws Exception {
-        return false;
-    }
-
-    @Override
-    public boolean update(int id, SymptomCategoryOptionModel newValues) throws Exception {
-        return false;
-    }
 }

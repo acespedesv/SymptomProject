@@ -36,7 +36,7 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public List<PressureModel> listAll() throws Exception {
+    public List<PressureModel> selectAll() throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, null);
         List<PressureModel> result = buildListFromCursor(cursor);
@@ -53,32 +53,32 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public boolean delete(long id) throws Exception {
+    public int delete(long id) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Define 'where' part of query.
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
         // Specify arguments in placeholder order.
         String[] selectionArgs = {Long.toString(id)};
         // Issue SQL statement.
-        db.delete(Contract.Pressure.TABLE_NAME, selection, selectionArgs); //deletedRows;
-        return true;
+        int affected = db.delete(Contract.Pressure.TABLE_NAME, selection, selectionArgs); //deletedRows;
+        return affected;
     }
 
     @Override
-    public boolean update(long id, PressureModel newValues) throws Exception {
+    public int update(PressureModel model) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Contract.Pressure.COLUMN_NAME_DIASTOLIC, newValues.getDiastolic());
-        values.put(Contract.Pressure.COLUMN_NAME_SYSTOLIC, newValues.getSystolic());
-        values.put(Contract.Pressure.COLUMN_NAME_DATE, newValues.getDate());
-        values.put(Contract.Pressure.COLUMN_NAME_TIME, newValues.getTime());
+        values.put(Contract.Pressure.COLUMN_NAME_DIASTOLIC, model.getDiastolic());
+        values.put(Contract.Pressure.COLUMN_NAME_SYSTOLIC, model.getSystolic());
+        values.put(Contract.Pressure.COLUMN_NAME_DATE, model.getDate());
+        values.put(Contract.Pressure.COLUMN_NAME_TIME, model.getTime());
 
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
-        String[] selectionArgs = {""+id};
+        String[] selectionArgs = {""+model.getId()};
 
         int count = db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
-        return count == 1;
+        return count;
     }
 
     @Override

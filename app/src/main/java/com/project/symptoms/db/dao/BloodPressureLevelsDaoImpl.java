@@ -38,7 +38,7 @@ public class BloodPressureLevelsDaoImpl implements BloodPressureLevelsDao {
     }
 
     @Override
-    public List<BloodPressureLevels> listAll() throws Exception {
+    public List<BloodPressureLevels> selectAll() throws Exception {
         List<BloodPressureLevels> result = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.PressureLevels.TABLE_NAME, null, null, null, null, null, null);

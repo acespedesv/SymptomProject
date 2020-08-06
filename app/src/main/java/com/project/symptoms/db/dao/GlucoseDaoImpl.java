@@ -93,7 +93,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
     }
 
     @Override
-    public List<GlucoseModel> listAll() throws Exception {
+    public List<GlucoseModel> selectAll() throws Exception {
         Cursor cursor = queryAll();
         ArrayList<GlucoseModel> result = new ArrayList<>();
         while(cursor.moveToNext()){

@@ -26,25 +26,31 @@ public class SymptomCheckerWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        if(symptomStillOpen()){
-            Log.i("#","Still open");
-            NotificationWrapper.getInstance(getApplicationContext()).notify(buildTitle(), buildMessageFor(symptomId));
-            NotificationWrapper.getInstance(getApplicationContext()).startReminderFor(symptomId);
+        boolean isOpen = false;
+        try{
+            isOpen = symptomStillOpen();
+            if(isOpen){
+                Log.i("#","Still open");
+                NotificationWrapper.getInstance(getApplicationContext()).notify(buildTitle(), buildMessageFor(symptomId));
+                NotificationWrapper.getInstance(getApplicationContext()).startReminderFor(symptomId);
+            }
+            else{
+                Log.i("#","Symptom finished");
+            }
+            return Result.success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.failure();
         }
-        else{
-            Log.i("#","Symptom finished");
-        }
-
-        return Result.success();
 
     }
 
-    private boolean symptomStillOpen(){
+    private boolean symptomStillOpen() throws Exception{
         SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).findById(symptomId);
         return symptom.getDuration() < 0;
     }
 
-    private String buildMessageFor(long symptomId){
+    private String buildMessageFor(long symptomId) throws Exception{
         SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).findById(symptomId);
 
         Date startDate = new Date(symptom.getStartDate());

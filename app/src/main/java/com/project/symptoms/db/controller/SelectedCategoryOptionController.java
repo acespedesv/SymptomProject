@@ -43,7 +43,7 @@ public class SelectedCategoryOptionController {
     public List<SelectedCategoryOptionModel> getAll(){
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         try{
-            result = selectedCategoryOptionDao.listAll();
+            result = selectedCategoryOptionDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -53,7 +53,7 @@ public class SelectedCategoryOptionController {
     public List<SelectedCategoryOptionModel> getAllBySymptom(long symptomId){
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         try{
-            result = selectedCategoryOptionDao.listAllBySymptom(symptomId);
+            result = selectedCategoryOptionDao.selectAllBySymptom(symptomId);
         }catch (Exception e){
             e.printStackTrace();
         }

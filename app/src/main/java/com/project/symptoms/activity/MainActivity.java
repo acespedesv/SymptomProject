@@ -64,11 +64,7 @@ public class MainActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_main);
         init();
-        try {
-            updateSymptomsInBodyView();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        updateSymptomsInBodyView();
     }
 
     @Override
@@ -111,11 +107,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 bodyView.flip();
-                try {
-                    updateSymptomsInBodyView();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                updateSymptomsInBodyView();
             }
         });
 
@@ -132,11 +124,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    updateSymptomsInBodyView();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                updateSymptomsInBodyView();
             }
         });
 
@@ -168,13 +156,17 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     // Get all symptoms for current date from DB and add them to the BodyView
-    private void updateSymptomsInBodyView() throws ParseException {
+    private void updateSymptomsInBodyView(){
         currentBodySide = (bodyView.getState() == BodyView.State.BACK) ? 0 : 1;
-
+        List<SymptomModel> symptomModels;
         // Get current date from text view to filter the data in DB
-        Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
-        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), currentBodySide);
-
+        try {
+            Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
+            symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), currentBodySide);
+        }catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
         // Instantiate new circles from DB data and replace them in the BodyView
         ArrayList<BodyView.Circle> circles = new ArrayList<>();
         for (SymptomModel symptomModel: symptomModels) {
@@ -216,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements
 
         if (isColorRed(r, g, b)){
             try { getNearestSymptomToCoordinates(posXOnTouch, posYOnTouch);
-            } catch (ParseException e) { e.printStackTrace(); }
+            } catch (Exception e) { e.printStackTrace(); }
 
             if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
                 menu.setHeaderTitle(R.string.symptom_menu_title);
@@ -234,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.delete_symptom:
                 try {
-                    deleteSymptom(nearestSymptomToSelectedId);
+                    showSymptomDeletionConfirmation(nearestSymptomToSelectedId);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -260,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements
         sizeSelectionDialog.show();
     }
 
-    private SymptomModel getNearestSymptomToCoordinates(float posX, float posY) throws ParseException {
+    private SymptomModel getNearestSymptomToCoordinates(float posX, float posY) throws Exception {
         long today = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString()).getTime();
         List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, currentBodySide);
         List<SymptomDistancePair> distances = new ArrayList<>();
@@ -350,25 +342,13 @@ public class MainActivity extends AppCompatActivity implements
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
     }
 
-    private boolean finishSymptom(long nearestSymptomToSelectedId) {
-        SymptomModel symptomModel = SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
-        long startTime = symptomModel.getStartTime();
-        long currentTime = DateTimeUtils.getInstance().getCurrentDateTimeAsLong();
-        symptomModel.setDuration(DateTimeUtils.getInstance().getTimeDifference(startTime, currentTime));
-        return SymptomController.getInstance(this).updateSymptom(nearestSymptomToSelectedId, symptomModel);
-    }
 
-    private void deleteSymptom(final long symptomId) throws ParseException {
+    private void showSymptomDeletionConfirmation(final long symptomId) throws ParseException {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_sure_about_deleting)
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
-                        boolean categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
-                        if (symptomDeletionSuccess && categoriesDeletionSuccess){
-                            try { updateSymptomsInBodyView(); }
-                            catch (ParseException e) { e.printStackTrace(); }
-                        }
+                        deleteSymptom(id);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -380,6 +360,16 @@ public class MainActivity extends AppCompatActivity implements
 
         // Reset the value
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+    }
+
+    private void deleteSymptom(long symptomId){
+        try {
+           SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
+           SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
+           updateSymptomsInBodyView();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Class used to hold distances between symptoms coordinates

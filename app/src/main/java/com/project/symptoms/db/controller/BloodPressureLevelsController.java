@@ -52,7 +52,7 @@ public class BloodPressureLevelsController {
     public List<BloodPressureLevels> listAll(){
         List<BloodPressureLevels> result = new ArrayList<>();
         try{
-            result = bloodPressureLevelsDao.listAll();
+            result = bloodPressureLevelsDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }

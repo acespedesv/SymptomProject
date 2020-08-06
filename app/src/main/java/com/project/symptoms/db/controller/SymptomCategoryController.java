@@ -3,7 +3,6 @@ package com.project.symptoms.db.controller;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.project.symptoms.R;
 import com.project.symptoms.db.dao.SymptomCategoryDaoImpl;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 import com.project.symptoms.dto.CategoryDTO;
@@ -52,7 +51,7 @@ public class SymptomCategoryController {
     public List<SymptomCategoryModel> listAll(){
         List<SymptomCategoryModel> result = new ArrayList<>();
         try{
-            result = symptomCategoryDao.listAll();
+            result = symptomCategoryDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }

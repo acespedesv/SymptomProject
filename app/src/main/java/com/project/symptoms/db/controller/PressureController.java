@@ -30,64 +30,34 @@ public class PressureController {
 
 
     // Return the id of the new row
-    public long insert(int systolic, int diastolic, String date, String time){
-
-        long newId = -1;
-        try{
-            Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
-            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
-            PressureModel pressureModel = new PressureModel(systolic, diastolic, finalDate.getTime(), finalTime.getTime());
-            newId = pressureDao.insert(pressureModel);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public long insert(int systolic, int diastolic, String date, String time) throws Exception{
+        Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
+        Date finalTime = DateTimeUtils.getInstance().getTimeFromString(time);
+        PressureModel pressureModel = new PressureModel(systolic, diastolic, finalDate.getTime(), finalTime.getTime());
+        long newId = pressureDao.insert(pressureModel);
         return newId;
     }
 
     // Return if whether succeeded or not
-    public boolean delete(long pressureId){
-        try {
-            pressureDao.delete(pressureId);
-            return true;
-        }catch (Exception e ){
-            e.printStackTrace();
-            return false;
-        }
-
+    public int delete(long pressureId) throws Exception{
+        return pressureDao.delete(pressureId);
     }
 
     // Return if whether succeeded or not TODO generalize this
-    public long update(long pressureId, int systolic, int diastolic, String date, String time){
-        long result = -1;
-        try {
-            Date dateDate = DateTimeUtils.getInstance().DATE_FORMATTER.parse(date);
-            Date timeDate = DateTimeUtils.getInstance().TIME_FORMATTER.parse(time);
-            PressureModel newPressureModel = new PressureModel(pressureId,
-                    systolic, diastolic, dateDate.getTime(), timeDate.getTime());
-            result = pressureDao.update(pressureId, newPressureModel) ? 1 : -1;
-        }catch (Exception e ){
-            e.printStackTrace();
-        }
+    public int update(long pressureId, int systolic, int diastolic, String date, String time) throws Exception{
+        Date dateDate = DateTimeUtils.getInstance().DATE_FORMATTER.parse(date);
+        Date timeDate = DateTimeUtils.getInstance().TIME_FORMATTER.parse(time);
+        PressureModel newPressureModel = new PressureModel(pressureId,
+                systolic, diastolic, dateDate.getTime(), timeDate.getTime());
+        int result = pressureDao.update(newPressureModel);
         return result;
     }
 
-    public List<PressureModel> listAll(){
-        List<PressureModel> result = new ArrayList<>();
-        try{
-            result = pressureDao.listAll();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
+    public List<PressureModel> listAll() throws  Exception{
+        return pressureDao.selectAll();
     }
 
-    public PressureModel select(long id){
-        PressureModel result = null;
-        try{
-            result = pressureDao.select(id);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
+    public PressureModel select(long id) throws Exception{
+        return pressureDao.select(id);
     }
 }

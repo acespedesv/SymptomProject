@@ -8,13 +8,13 @@ public interface SymptomDao {
 
     long insert(SymptomModel symptomModel) throws Exception;
 
-    List<SymptomModel> listAll() throws Exception;
+    List<SymptomModel> selectAll() throws Exception;
 
-    List<SymptomModel> listAll(long dateTime, int circleSide) throws Exception;
+    List<SymptomModel> selectAll(long dateTime, int circleSide) throws Exception;
 
-    boolean delete(long id) throws Exception;
+    int delete(long id) throws Exception;
 
-    boolean update(long id, SymptomModel newValues) throws Exception;
+    int update(SymptomModel model) throws Exception;
 
-    SymptomModel getById(long id) throws Exception;
+    SymptomModel select(long id) throws Exception;
 }

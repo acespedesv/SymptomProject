@@ -40,7 +40,7 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
     }
 
     @Override
-    public List<SymptomCategoryModel> listAll() {
+    public List<SymptomCategoryModel> selectAll() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, null, null, null, null, null);
         List<SymptomCategoryModel> result = buildListFromCursor(cursor);
@@ -72,13 +72,4 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
         return symptomCategoryModel;
     }
 
-    @Override
-    public boolean delete(long id) throws Exception {
-        return false;
-    }
-
-    @Override
-    public boolean update(long id, SymptomCategoryModel newValues) throws Exception {
-        return false;
-    }
 }

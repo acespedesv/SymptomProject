@@ -10,12 +10,8 @@ public interface SymptomCategoryOptionDao {
 
     SymptomCategoryOptionModel selectSymptomCategoryOption(String name) throws Exception;
 
-    List<SymptomCategoryOptionModel> listAll() throws Exception;
+    List<SymptomCategoryOptionModel> selectAll() throws Exception;
 
-    SymptomCategoryOptionModel listById(long categoryOptionId) throws Exception;
-
-    boolean delete(int id) throws Exception;
-
-    boolean update(int id, SymptomCategoryOptionModel newValues) throws Exception;
+    SymptomCategoryOptionModel select(long categoryOptionId) throws Exception;
 
 }

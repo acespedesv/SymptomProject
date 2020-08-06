@@ -91,7 +91,7 @@ public class SymptomCategoryOptionController {
     public List<SymptomCategoryOptionModel> listAll(){
         List<SymptomCategoryOptionModel> result = new ArrayList<>();
         try{
-            result = symptomCategoryOptionDao.listAll();
+            result = symptomCategoryOptionDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class SymptomCategoryOptionController {
     public SymptomCategoryOptionModel getById(long categoryOptionId){
         SymptomCategoryOptionModel result = null;
         try{
-            result = symptomCategoryOptionDao.listById(categoryOptionId);
+            result = symptomCategoryOptionDao.select(categoryOptionId);
         }catch (Exception e){
             e.printStackTrace();
         }

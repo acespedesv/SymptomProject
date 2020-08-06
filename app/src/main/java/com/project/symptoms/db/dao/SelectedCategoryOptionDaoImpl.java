@@ -30,7 +30,7 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
     }
 
     @Override
-    public List<SelectedCategoryOptionModel> listAllBySymptom(long symptomId) throws Exception {
+    public List<SelectedCategoryOptionModel> selectAllBySymptom(long symptomId) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "symptom_id = ?";
         String[] whereArgs = new String[] {Long.toString(symptomId)};
@@ -52,7 +52,7 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
     }
 
     @Override
-    public List<SelectedCategoryOptionModel> listAll() throws Exception {
+    public List<SelectedCategoryOptionModel> selectAll() throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, null, null, null, null, null);
         List<SelectedCategoryOptionModel> result = buildListFromCursor(cursor);
@@ -61,26 +61,22 @@ public class SelectedCategoryOptionDaoImpl implements SelectedCategoryOptionDao{
     }
 
     @Override
-    public boolean delete(long symptomId, long categoryId) throws Exception {
+    public int delete(long symptomId, long categoryId) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = Contract.SelectedCategoryOption.COLUMN_NAME_SYMPTOM_ID_FK + " = ? AND "
                 + Contract.SelectedCategoryOption.COLUMN_NAME_CATEGORY_OPTION_ID_FK + " = ?";
         String[] selectionArgs = {Long.toString(symptomId), Long.toString(categoryId)};
         int rowsAffected = db.delete(Contract.SelectedCategoryOption.TABLE_NAME, selection, selectionArgs);
-        return rowsAffected == 1; // this operation should only delete 1 row in the table
+        return rowsAffected; // this operation should only delete 1 row in the table
     }
 
     @Override
-    public boolean deleteAllBySymptom(long symptomId) throws Exception {
+    public int deleteAllBySymptom(long symptomId) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = Contract.SelectedCategoryOption.COLUMN_NAME_SYMPTOM_ID_FK + " = ?";
         String[] selectionArgs = {Long.toString(symptomId)};
         int rowsAffected = db.delete(Contract.SelectedCategoryOption.TABLE_NAME, selection, selectionArgs);
-        return rowsAffected >= 1; // this operation should only delete 1 row in the table
+        return rowsAffected; // this operation should only delete 1 row in the table
     }
 
-    @Override
-    public boolean update(long id, SelectedCategoryOptionModel newValues) throws Exception {
-        return false;
-    }
 }

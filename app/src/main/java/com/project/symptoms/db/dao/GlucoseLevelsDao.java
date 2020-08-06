@@ -8,5 +8,5 @@ public interface GlucoseLevelsDao {
 
     long insert(GlucoseLevels glucose) throws Exception;
 
-    List<GlucoseLevels> listAll() throws Exception;
+    List<GlucoseLevels> selectAll() throws Exception;
 }

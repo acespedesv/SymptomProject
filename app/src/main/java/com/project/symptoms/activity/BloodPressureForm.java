@@ -50,7 +50,11 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
 
         pressureId = getIntent().getLongExtra(getString(R.string.intent_key_pressure_id), NO_ID);
         if(pressureId != NO_ID){
-            populateForEdit(pressureId);
+            try {
+                populateForEdit(pressureId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -62,12 +66,16 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
+                try {
+                    saveData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    private void populateForEdit(long pressureId) {
+    private void populateForEdit(long pressureId) throws Exception {
         PressureModel model = PressureController.getInstance(this).select(pressureId);
         EditText systolicView = findViewById(R.id.systolic);
         EditText diastolicView = findViewById(R.id.diastolic);
@@ -80,7 +88,7 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         timeView.setText(DateTimeUtils.getInstance().TIME_FORMATTER.format(model.getTime()));
     }
 
-    private void saveData(){
+    private void saveData() throws Exception {
         // Gather all the data fields
         EditText systolicView = findViewById(R.id.systolic);
         EditText diastolicView = findViewById(R.id.diastolic);

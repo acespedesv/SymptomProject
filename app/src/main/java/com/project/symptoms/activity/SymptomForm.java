@@ -74,7 +74,13 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
         // If I receive an id that means I need to update that symptom and load the data into the form
         symptomIdToUpdate = getIntent().getLongExtra("symptom_id", -1);
-        if (symptomIdToUpdate > 0) loadFormForUpdate();
+        if (symptomIdToUpdate > 0) {
+            try{
+                loadFormForUpdate();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         else loadDefaultForm();
     }
 
@@ -99,7 +105,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     // Finish form set-up for updating
-    private void loadFormForUpdate(){
+    private void loadFormForUpdate() throws Exception{
         saveButton.setText(R.string.update);
         symptomModelToUpdate = symptomController.findById(symptomIdToUpdate);
         symptomDescriptionView.setText(symptomModelToUpdate.getDescription());
@@ -151,28 +157,33 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = "";
-                // The form will insert a new Symptom
-                if(saveButton.getText().equals(getString(R.string.save))) {
-                    text = insertSymptomsData() ?
-                            getResources().getString(R.string.value_successfully_saved) :
-                            getResources().getString(R.string.value_saving_failed);
-                }
-                // Thw form will update an existing symptom
-                else {
-                    try {
-                        text = updateSymptomsData() ?
-                                getResources().getString(R.string.value_successfully_updated) :
-                                getResources().getString(R.string.value_updating_failed);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivityIntent);
+                onSaveButtonPressed();
             }
         });
+    }
+
+    private void onSaveButtonPressed(){
+        String text = "";
+        // The form will insert a new Symptom
+        if(saveButton.getText().equals(getString(R.string.save))) {
+            try{
+                insertSymptomsData();
+                text = getResources().getString(R.string.value_successfully_saved);
+            }catch (Exception e){
+                text = getResources().getString(R.string.value_saving_failed);
+            }
+        }// The form will update an existing symptom
+        else {
+            try {
+                updateSymptomsData();
+                text = getResources().getString(R.string.value_successfully_updated);
+            } catch (Exception e) {
+                text = getResources().getString(R.string.value_updating_failed);
+            }
+        }
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+        Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(mainActivityIntent);
     }
 
     private boolean insertSelectedCategoryOptions(long symptomId){
@@ -189,7 +200,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         return success;
     }
 
-    private boolean insertSymptomsData() {
+    private boolean insertSymptomsData() throws Exception {
         logSelectedOptions();
         String stringDuration = symptomDurationView.getText().toString();
         int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : 0;
@@ -205,7 +216,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         return (symptomId != -1 && insertSelectedCategoryOptions(symptomId));
     }
 
-    private boolean updateSymptomsData() throws ParseException {
+    private void updateSymptomsData() throws Exception {
         logSelectedOptions();
         String stringDuration = symptomDurationView.getText().toString();
         int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
@@ -221,9 +232,11 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 intensityRadioButton.getText().toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
                 intermittenceSwitchView.isChecked() ? 1 : 0, symptomModelToUpdate.getCircleRadius(), symptomModelToUpdate.getCircleSide());
 
-        return symptomController.updateSymptom(symptomIdToUpdate, symptomModelHolder) &&
-                selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate) &&
-                insertSelectedCategoryOptions(symptomIdToUpdate);
+        symptomModelHolder.setSymptomId((int)symptomIdToUpdate);
+
+        symptomController.updateSymptom( symptomModelHolder);
+        selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate);
+        insertSelectedCategoryOptions(symptomIdToUpdate);
 
     }
 

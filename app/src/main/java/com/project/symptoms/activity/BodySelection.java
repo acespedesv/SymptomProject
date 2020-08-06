@@ -46,7 +46,6 @@ public class BodySelection extends FragmentActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        DBHelper database = new DBHelper(this);
         GlucoseLevelsController.getInstance(this).insert();
         BloodPressureLevelsController.getInstance(this).insert();
         super.onCreate(savedInstanceState);

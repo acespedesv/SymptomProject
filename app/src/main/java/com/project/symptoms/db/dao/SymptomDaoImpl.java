@@ -40,7 +40,7 @@ public class SymptomDaoImpl implements SymptomDao{
     }
 
     @Override
-    public List<SymptomModel> listAll() {
+    public List<SymptomModel> selectAll() throws Exception{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, null, null, null, null, null);
         List<SymptomModel> result = buildListFromCursor(cursor);
@@ -49,7 +49,7 @@ public class SymptomDaoImpl implements SymptomDao{
     }
 
     @Override
-    public List<SymptomModel> listAll(long dateTime, int circleSide) {
+    public List<SymptomModel> selectAll(long dateTime, int circleSide) throws Exception{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "start_date = ? AND circle_side = ?";
         String[] whereArgs = new String[] {Long.toString(dateTime), Integer.toString(circleSide)};
@@ -89,15 +89,15 @@ public class SymptomDaoImpl implements SymptomDao{
     }
 
     @Override
-    public boolean delete(long id) throws Exception {
+    public int delete(long id) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = Contract.Symptom.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(id)};
-        return db.delete(Contract.Symptom.TABLE_NAME, selection, selectionArgs) != -1;
+        return db.delete(Contract.Symptom.TABLE_NAME, selection, selectionArgs);
     }
 
     @Override
-    public boolean update(long id, SymptomModel symptomModel) throws Exception {
+    public int update(SymptomModel symptomModel) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //New values for one column
@@ -116,14 +116,14 @@ public class SymptomDaoImpl implements SymptomDao{
         values.put(Contract.Symptom.COLUMN_NAME_CIRCLE_RADIUS, symptomModel.getCircleRadius());
 
         String selection = Contract.Symptom.COLUMN_NAME_ID_PK + " = ?";
-        String[] selectionArgs = {Long.toString(id)};
+        String[] selectionArgs = {Long.toString(symptomModel.getSymptomId())};
 
         int count = db.update(Contract.Symptom.TABLE_NAME, values, selection, selectionArgs);
-        return count >= 1;
+        return count;
     }
 
     @Override
-    public SymptomModel getById(long id) throws Exception{
+    public SymptomModel select(long id) throws Exception{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "symptom_id = ?";
         String[] whereArgs = new String[] {""+id};
