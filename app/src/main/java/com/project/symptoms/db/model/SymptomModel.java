@@ -10,30 +10,22 @@ public class SymptomModel {
     private int circleSide;
     private int duration;
 
-    public SymptomModel(int symptomId, float circlePosX, float circlePosY, long startDate, long startTime,
-                        int duration, String description, String intensity,
-                        String causingDrug, String causingFood, int intermittence, float circleRadius, int circleSide) {
-        this.symptomId = symptomId;
-        this.circlePosX = circlePosX;
-        this.circlePosY = circlePosY;
-        this.startDate = startDate;
-        this.startTime = startTime;
-        this.duration = duration;
-        this.description = description;
-        this.intensity = intensity;
-        this.causingDrug = causingDrug;
-        this.causingFood = causingFood;
-        this.intermittence = intermittence;
-        this.circleRadius = circleRadius;
-        this.circleSide = circleSide;
-    }
-
-    public SymptomModel(float circlePosX, float circlePosY, long startDate, long startTime, int duration,
-                        String description, String intensity, String causingDrug, String causingFood,
-                        int intermittence, float circleRadius, int circleSide) {
-
-        this(-1, circlePosX, circlePosY, startDate, startTime, duration,
-                description, intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide);
+    // Intentionally avoided a constructor with all attributes because it yields a so long line and
+    // makes it tedious to track the order of each argument. Instead use setters for each attribute
+    public SymptomModel(){
+        symptomId = -1;
+        circlePosX = -1;
+        circlePosY = -1;
+        startDate = -1;
+        startTime = -1;
+        description = "";
+        intensity = "";
+        causingDrug = "";
+        causingFood = "";
+        intermittence = -1;
+        circleRadius = -1;
+        circleSide = -1;
+        duration = -1;
     }
 
     public int getSymptomId() {

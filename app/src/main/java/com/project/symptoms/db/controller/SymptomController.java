@@ -36,13 +36,25 @@ public class SymptomController {
         try{
             Date finalStartDate = DateTimeUtils.getInstance().getDateFromString(startDate);
             Date finalStartTime = DateTimeUtils.getInstance().getTimeFromString(startTime);
-            SymptomModel symptomModel = new SymptomModel(circlePosX, circlePosY, finalStartDate.getTime(), finalStartTime.getTime(),
-                    duration, description, intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide);
+
+            SymptomModel symptomModel = new SymptomModel();
+            symptomModel.setCirclePosX(circlePosX);
+            symptomModel.setCirclePosY(circlePosY);
+            symptomModel.setCircleRadius(circleRadius);
+            symptomModel.setCircleSide(circleSide);
+            symptomModel.setStartDate(finalStartDate.getTime());
+            symptomModel.setStartTime(finalStartTime.getTime());
+            symptomModel.setDuration(duration);
+            symptomModel.setIntensity(intensity);
+            symptomModel.setDescription(description);
+            symptomModel.setCausingDrug(causingDrug);
+            symptomModel.setCausingFood(causingFood);
+            symptomModel.setIntermittence(intermittence);
+
             newId = symptomDao.insert(symptomModel);
             if(symptomModel.getDuration() < 0){
                 NotificationWrapper.getInstance(this.context).startReminderFor(newId);
                 NotificationWrapper.getInstance(this.context).showReminderSetToast();
-
             }
         }catch (Exception e){
             e.printStackTrace();
