@@ -31,18 +31,9 @@ public class SymptomModel {
     public SymptomModel(float circlePosX, float circlePosY, long startDate, long startTime, int duration,
                         String description, String intensity, String causingDrug, String causingFood,
                         int intermittence, float circleRadius, int circleSide) {
-        this.circlePosX = circlePosX;
-        this.circlePosY = circlePosY;
-        this.startDate = startDate;
-        this.startTime = startTime;
-        this.duration = duration;
-        this.description = description;
-        this.intensity = intensity;
-        this.causingDrug = causingDrug;
-        this.causingFood = causingFood;
-        this.intermittence = intermittence;
-        this.circleRadius = circleRadius;
-        this.circleSide = circleSide;
+
+        this(-1, circlePosX, circlePosY, startDate, startTime, duration,
+                description, intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide);
     }
 
     public int getSymptomId() {

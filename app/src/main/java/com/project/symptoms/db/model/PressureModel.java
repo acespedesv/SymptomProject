@@ -17,7 +17,7 @@ public class PressureModel {
     }
 
     public PressureModel(int systolic, int diastolic, long date, long time){
-        this(0, systolic, diastolic, date, time); // Todo: is it correct to put an id = 0?
+        this(-1, systolic, diastolic, date, time);
     }
 
 

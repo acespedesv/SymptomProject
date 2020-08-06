@@ -14,13 +14,12 @@ public class GlucoseModel {
     }
 
     public GlucoseModel(int value, long date, long time) {
-        this.value = value;
-        this.date = date;
-        this.time = time;
+        this(-1, value, date, time);
     }
 
     public GlucoseModel(int value) {
-        this.value = value;
+
+        this(-1, value, -1, -1);
     }
 
     public long getId() {
