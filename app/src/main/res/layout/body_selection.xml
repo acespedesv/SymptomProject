@@ -72,7 +72,7 @@
         android:background="@drawable/white_button"
         android:fontFamily="@font/montserrat"
         android:paddingHorizontal="35dp"
-        android:text="@string/proceed"
+        android:text="@string/continue_text"
         android:textColor="@color/colorDarkBlue"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

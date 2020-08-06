@@ -100,7 +100,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
     // Finish form set-up for updating
     private void loadFormForUpdate(){
-        saveButton.setText(R.string.update_button_text);
+        saveButton.setText(R.string.update);
         symptomModelToUpdate = symptomController.findById(symptomIdToUpdate);
         symptomDescriptionView.setText(symptomModelToUpdate.getDescription());
         HashMap<String, Integer> intensityHashMap = new HashMap<>();
@@ -153,7 +153,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
             public void onClick(View v) {
                 String text = "";
                 // The form will insert a new Symptom
-                if(saveButton.getText().equals(getString(R.string.save_button_text))) {
+                if(saveButton.getText().equals(getString(R.string.save))) {
                     text = insertSymptomsData() ?
                             getResources().getString(R.string.value_successfully_saved) :
                             getResources().getString(R.string.value_saving_failed);
