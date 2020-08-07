@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 public class GlucoseDaoImplTest {
@@ -28,16 +29,22 @@ public class GlucoseDaoImplTest {
         GlucoseDaoImpl glucoseDao = new GlucoseDaoImpl(context);
         DBHelper helper = new DBHelper(context);
         writableDatabase = helper.getWritableDatabase();
-        writableDatabase.beginTransaction();
+        writableDatabase.beginTransaction(); //Only use transactions in writes because reads won't change anything
         glucoseDao.setDbHelper(helper);
 
         dao = glucoseDao;
     }
 
     @Test
-    public void testInsert(){
+    public void givenAModelWhenInsertThenReturnsValidId(){
         try {
-            long id = dao.insert(new GlucoseModel(60, 20, 10));
+            // Given
+            GlucoseModel aModel = new GlucoseModel(60, 20, 10);
+
+            // When
+            long id = dao.insert(aModel);
+
+            // Then
             assertNotEquals(-1, id);
         }catch (Exception e) {
             e.printStackTrace();
@@ -46,11 +53,18 @@ public class GlucoseDaoImplTest {
     }
 
     @Test
-    public void testDelete(){
+    public void givenAnInsertedModelWhenDeleteThenReturnsOne(){
         try {
-            long id = dao.insert(new GlucoseModel(99, 20, 10));
+            // Given
+            GlucoseModel aModel = new GlucoseModel(60, 20, 10);
+            long id = dao.insert(aModel);
+
+            // When
             int deletedRows = dao.delete(id);
+
+            // Then
             assertEquals(1, deletedRows);
+
         }catch (Exception e){
             e.printStackTrace();
             fail();
@@ -58,12 +72,17 @@ public class GlucoseDaoImplTest {
     }
 
     @Test
-    public void testUpdate(){
+    public void givenAnInsertedModelWhenUpdateThenReturnOne(){
         try {
+            // Given
             GlucoseModel model = new GlucoseModel(60, 20, 10);
             long id = dao.insert(model);
             model.setId(id);
+
+            // When
             int updatedRows = dao.update(model);
+
+            // Then
             assertEquals(1, updatedRows);
         }catch (Exception e){
             e.printStackTrace();
@@ -72,13 +91,18 @@ public class GlucoseDaoImplTest {
     }
 
     @Test
-    public void testSelectById(){
+    public void givenAnInsertedModelWhenSelectByIdThenReturnAModel(){
         try{
+            // Given
             GlucoseModel model = new GlucoseModel(60, 20, 10);
             long id = dao.insert(model);
             model.setId(id);
+
+            // When
             GlucoseModel result = dao.select(id);
 
+            // Then
+            assertNotNull(result);
             assertEquals(model.getId(), result.getId());
             assertEquals(model.getValue(), result.getValue());
             assertEquals(model.getDate(), result.getDate());

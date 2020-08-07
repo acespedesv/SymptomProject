@@ -15,14 +15,17 @@ public class GlucoseController {
 
     private static GlucoseController instance;
     private static GlucoseDao glucoseDao;
+    private static DateTimeUtils dateTimeUtils;
 
     private GlucoseController() {
+
     }
 
     public static GlucoseController getInstance(Context context) {
         if (instance == null) {
             instance = new GlucoseController();
             glucoseDao = new GlucoseDaoImpl(context);
+            DateTimeUtils.getInstance();
         }
         return instance;
     }
@@ -31,8 +34,8 @@ public class GlucoseController {
         long newId = -1;
 
         try {
-            Date finalDate = DateTimeUtils.getInstance().getDateFromString(dateText);
-            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(hourText);
+            Date finalDate = dateTimeUtils.getDateFromString(dateText);
+            Date finalTime = dateTimeUtils.getTimeFromString(hourText);
             GlucoseModel glucoseModel = new GlucoseModel(glucoseValue, finalDate.getTime(), finalTime.getTime());
             newId = glucoseDao.insert(glucoseModel);
         } catch (Exception e) {
@@ -67,8 +70,8 @@ public class GlucoseController {
         //TODO validate ID
         int updatedRows = -1;
         try {
-            Date date = DateTimeUtils.getInstance().getDateFromString(dateText);
-            Date time = DateTimeUtils.getInstance().getTimeFromString(hourText);
+            Date date = dateTimeUtils.getDateFromString(dateText);
+            Date time = dateTimeUtils.getTimeFromString(hourText);
             GlucoseModel glucoseModel = new GlucoseModel(id, glucoseValue, date.getTime(), time.getTime());
             glucoseDao.update(glucoseModel);
             updatedRows = 1;
@@ -86,5 +89,13 @@ public class GlucoseController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void setGlucoseDao(GlucoseDao glucoseDao){
+        GlucoseController.glucoseDao = glucoseDao;
+    }
+
+    public void setDateTimeUtils(DateTimeUtils utils){
+        GlucoseController.dateTimeUtils = utils;
     }
 }
