@@ -22,12 +22,11 @@ public class PressureTests {
 
     private static SQLiteDatabase writableDatabase;
     private static PressureDao dao;
-    private static PressureDaoImpl pressureDaoImpl;
 
     @BeforeClass
     public static void beforeAllTests(){
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        pressureDaoImpl = new PressureDaoImpl(context);
+        PressureDaoImpl pressureDaoImpl = new PressureDaoImpl(context);
         writableDatabase = pressureDaoImpl.getDbHelper().getWritableDatabase();
         dao = pressureDaoImpl;
     }
