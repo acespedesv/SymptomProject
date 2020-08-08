@@ -8,7 +8,7 @@ public interface PressureDao {
 
     long insert(PressureModel pressureModel) throws Exception;
 
-    List<PressureModel> select() throws Exception;
+    List<PressureModel> selectAll() throws Exception;
 
     PressureModel select(long id) throws Exception;
 

@@ -71,7 +71,7 @@ public class PressureController {
         return result;
     }
 
-    public List<PressureModel> select(){
+    public List<PressureModel> selectAll(){
         List<PressureModel> result = new ArrayList<>();
         try{
             result = pressureDao.select();

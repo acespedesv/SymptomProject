@@ -33,7 +33,7 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public List<PressureModel> select() throws Exception {
+    public List<PressureModel> selectAll() throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, null);
         List<PressureModel> result = buildListFromCursor(cursor);
