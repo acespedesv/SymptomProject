@@ -29,7 +29,6 @@ public class PressureDaoImpl implements PressureDao {
         values.put(Contract.Pressure.COLUMN_NAME_DATE, pressureModel.getDate());
         values.put(Contract.Pressure.COLUMN_NAME_TIME, pressureModel.getTime());
         long newId = db.insert(Contract.Pressure.TABLE_NAME,null, values);
-        db.close();
         return newId;
     }
 
@@ -39,7 +38,6 @@ public class PressureDaoImpl implements PressureDao {
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, null);
         List<PressureModel> result = buildListFromCursor(cursor);
         if (result.size() < 1) throw new Exception("Empty result list");
-        db.close();
         return result;
     }
 
@@ -53,7 +51,6 @@ public class PressureDaoImpl implements PressureDao {
         PressureModel model;
         if (result.size() == 1){ model = result.get(0); }
         else{ throw new Exception("No matching Symptom with id "+id); }
-        db.close();
         return model;
     }
 
@@ -78,7 +75,6 @@ public class PressureDaoImpl implements PressureDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(id)};
-        db.close();
         return db.delete(Contract.Pressure.TABLE_NAME, selection, selectionArgs);
     }
 
@@ -95,7 +91,6 @@ public class PressureDaoImpl implements PressureDao {
 
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {Long.toString(pressureModel.getPressure_id())};
-        db.close();
         return db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
     }
 
