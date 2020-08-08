@@ -5,6 +5,7 @@ import android.content.Context;
 import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.db.dao.PressureDao;
 import com.project.symptoms.db.dao.PressureDaoImpl;
+import com.project.symptoms.db.dao.SymptomDao;
 import com.project.symptoms.db.model.PressureModel;
 import com.project.symptoms.util.DateTimeUtils;
 
@@ -74,6 +75,15 @@ public class PressureController {
             e.printStackTrace();
         }
         return result;
-
     }
+
+    public PressureModel select(long id){
+        try {
+            return pressureDao.select(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

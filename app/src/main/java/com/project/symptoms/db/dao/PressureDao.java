@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface PressureDao {
 
-
     long insert(PressureModel pressureModel) throws Exception;
 
     List<PressureModel> select() throws Exception;

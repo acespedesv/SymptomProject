@@ -22,13 +22,14 @@ public class PressureTests {
 
     private static SQLiteDatabase writableDatabase;
     private static PressureDao dao;
+    private static PressureDaoImpl pressureDaoImpl;
 
     @BeforeClass
     public static void beforeAllTests(){
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        PressureDaoImpl pressureDao = new PressureDaoImpl(context);
-        writableDatabase = pressureDao.getDbHelper().getWritableDatabase();
-        dao = pressureDao;
+        pressureDaoImpl = new PressureDaoImpl(context);
+        writableDatabase = pressureDaoImpl.getDbHelper().getWritableDatabase();
+        dao = pressureDaoImpl;
     }
 
     @Before
@@ -52,6 +53,7 @@ public class PressureTests {
 
             // Then
             assertNotEquals(-1, id);
+            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e) {
             e.printStackTrace();
@@ -71,6 +73,7 @@ public class PressureTests {
 
             // Then
             assertEquals(1, deletedRows);
+            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -91,6 +94,7 @@ public class PressureTests {
 
             // Then
             assertEquals(1, updatedRows);
+            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -116,6 +120,7 @@ public class PressureTests {
             // Then
             assertNotNull(listOfModels);
             assertEquals(amountOfModels, listOfModels.size());
+            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -125,6 +130,7 @@ public class PressureTests {
 
     @After
     public void cleanUp(){
+        if (!writableDatabase.isOpen()) writableDatabase = pressureDaoImpl.getDbHelper().getWritableDatabase();
         writableDatabase.endTransaction();
     }
 
