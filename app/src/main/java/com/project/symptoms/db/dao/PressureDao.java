@@ -9,11 +9,11 @@ public interface PressureDao {
 
     long insert(PressureModel pressureModel) throws Exception;
 
-    List<PressureModel> listAll() throws Exception;
+    List<PressureModel> select() throws Exception;
 
     int delete(long id) throws Exception;
 
-    int update(long id, PressureModel newValues) throws Exception;
+    int update(PressureModel newValues) throws Exception;
 
 
 }

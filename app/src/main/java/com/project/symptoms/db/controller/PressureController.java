@@ -24,7 +24,7 @@ public class PressureController {
     public static PressureController getInstance(Context context){
         if(instance == null){
             instance = new PressureController();
-            pressureDao = new PressureDaoImpl(new DBHelper(context));
+            pressureDao = new PressureDaoImpl(context);
         }
         return instance;
     }
@@ -58,18 +58,18 @@ public class PressureController {
     // Return if whether succeeded or not
     public boolean update(long pressureId, int systolic, int diastolic, long date, long time){
         try {
-            PressureModel newPressureModel = new PressureModel(systolic, diastolic, date, time);
-            return pressureDao.update(pressureId, newPressureModel) >= 1;
+            PressureModel newPressureModel = new PressureModel(pressureId, systolic, diastolic, date, time);
+            return pressureDao.update(newPressureModel) >= 1;
         }catch (Exception e ){
             e.printStackTrace();
             return false;
         }
     }
 
-    public List<PressureModel> listAll(){
+    public List<PressureModel> select(){
         List<PressureModel> result = new ArrayList<>();
         try{
-            result = pressureDao.listAll();
+            result = pressureDao.select();
         }catch (Exception e){
             e.printStackTrace();
         }

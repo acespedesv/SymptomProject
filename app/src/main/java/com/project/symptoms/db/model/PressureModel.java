@@ -2,13 +2,13 @@ package com.project.symptoms.db.model;
 
 public class PressureModel {
 
-    private int pressure_id;
+    private long pressure_id;
     private int systolic;
     private int diastolic;
     private long date;
     private long time;
 
-    public PressureModel(int pressure_id, int systolic, int diastolic, long date, long time){
+    public PressureModel(long pressure_id, int systolic, int diastolic, long date, long time){
         this.pressure_id = pressure_id;
         this.systolic = systolic;
         this.diastolic = diastolic;
@@ -21,11 +21,11 @@ public class PressureModel {
     }
 
 
-    public int getPressure_id() {
+    public long getPressure_id() {
         return pressure_id;
     }
 
-    public void setPressure_id(int pressure_id) {
+    public void setPressure_id(long pressure_id) {
         this.pressure_id = pressure_id;
     }
 

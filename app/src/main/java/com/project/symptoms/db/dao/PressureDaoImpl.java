@@ -16,8 +16,8 @@ public class PressureDaoImpl implements PressureDao {
 
     private DBHelper dbHelper;
 
-    public PressureDaoImpl(DBHelper dbHelper){
-        this.dbHelper = dbHelper;
+    public PressureDaoImpl(Context context){
+        this.dbHelper = new DBHelper(context);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public List<PressureModel> listAll() throws Exception {
+    public List<PressureModel> select() throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, null);
         List<PressureModel> result = buildListFromCursor(cursor);
@@ -68,7 +68,7 @@ public class PressureDaoImpl implements PressureDao {
     }
 
     @Override
-    public int update(long id, PressureModel pressureModel) throws Exception {
+    public int update(PressureModel pressureModel) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //New values for one column
@@ -79,9 +79,17 @@ public class PressureDaoImpl implements PressureDao {
         values.put(Contract.Pressure.COLUMN_NAME_DATE, pressureModel.getDate());
 
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
-        String[] selectionArgs = {Long.toString(id)};
+        String[] selectionArgs = {Long.toString(pressureModel.getPressure_id())};
         db.close();
         return db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void setDbHelper(DBHelper dbHelper){
+        this.dbHelper = dbHelper;
+    }
+
+    public DBHelper getDbHelper(){
+        return dbHelper;
     }
 
 }
