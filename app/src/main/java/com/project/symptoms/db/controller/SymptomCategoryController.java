@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.project.symptoms.R;
+import com.project.symptoms.db.dao.SymptomCategoryDao;
 import com.project.symptoms.db.dao.SymptomCategoryDaoImpl;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 import com.project.symptoms.dto.CategoryDTO;
@@ -15,7 +16,7 @@ import java.util.List;
 public class SymptomCategoryController {
 
     private static SymptomCategoryController instance; // Todo: Fix warning
-    private SymptomCategoryDaoImpl symptomCategoryDao;
+    private SymptomCategoryDao symptomCategoryDao;
     private Context context;
 
     private SymptomCategoryController(Context context){
