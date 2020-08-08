@@ -1,6 +1,7 @@
 package com.project.symptoms.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.project.symptoms.R;
 import com.project.symptoms.adapter.GlucoseAdapter;
@@ -10,10 +11,21 @@ import com.project.symptoms.util.DateTimeUtils;
 import java.util.List;
 
 public class GlucoseHistory extends HistoryBase {
+    GlucoseAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        updateModelsAccordingToLimit();
+        this.adapter = new GlucoseAdapter(this.models, DateTimeUtils.getInstance());
+        listView.setAdapter(adapter);
+    }
+
+
     @Override
     public void onDelete(long id) {
         GlucoseController.getInstance(this).delete(id);
-        fetchModels();
+        updateRows();
     }
 
     @Override
@@ -33,13 +45,30 @@ public class GlucoseHistory extends HistoryBase {
     }
 
     @Override
-    public void fetchModels() {
-        List models = GlucoseController.getInstance(this).listAll();
-        listView.setAdapter(new GlucoseAdapter(models, DateTimeUtils.getInstance()));
+    public void updateRows() {
+        updateModelsAccordingToLimit();
+        listView.setAdapter(new GlucoseAdapter(this.models, DateTimeUtils.getInstance()));
     }
 
     @Override
     public int getTitleResourceId() {
         return R.string.glucose_history_title;
+    }
+
+    @Override
+    public void onLoadMoreClicked() {
+        maxRowsToShow += pageSize;
+        int previousValue = models.size();
+        updateModelsAccordingToLimit();
+        if(previousValue == models.size())
+            hideLoadMoreButton();
+        else
+            updateRows();
+    }
+
+
+    @Override
+    public List getAllModels() {
+        return GlucoseController.getInstance(this).listAll();
     }
 }

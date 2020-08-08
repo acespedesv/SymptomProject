@@ -1,6 +1,7 @@
 package com.project.symptoms.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.project.symptoms.R;
 import com.project.symptoms.adapter.BloodPressureAdapter;
@@ -10,10 +11,20 @@ import java.util.List;
 
 
 public class BloodPressureHistory extends HistoryBase {
+    BloodPressureAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        updateModelsAccordingToLimit();
+        this.adapter = new BloodPressureAdapter(this.models, DateTimeUtils.getInstance());
+        listView.setAdapter(adapter);
+    }
+
     @Override
     public void onDelete(long id) {
         PressureController.getInstance(this).delete(id);
-        fetchModels();
+        updateRows();
     }
 
     @Override
@@ -34,13 +45,30 @@ public class BloodPressureHistory extends HistoryBase {
     }
 
     @Override
-    public void fetchModels() {
-        List models = PressureController.getInstance(this).selectAll();
-        listView.setAdapter(new BloodPressureAdapter(models, DateTimeUtils.getInstance()));
+    public void updateRows() {
+        updateModelsAccordingToLimit();
+        listView.setAdapter(new BloodPressureAdapter(this.models, DateTimeUtils.getInstance()));
+    }
+
+    @Override
+    public void onLoadMoreClicked() {
+        maxRowsToShow += pageSize;
+        int previousValue = models.size();
+        updateModelsAccordingToLimit();
+        if(previousValue == models.size())
+            hideLoadMoreButton();
+        else
+            updateRows();
     }
 
     @Override
     public int getTitleResourceId() {
         return R.string.pressure_history_title;
+    }
+
+
+    @Override
+    public List getAllModels() {
+        return PressureController.getInstance(this).selectAll();
     }
 }
