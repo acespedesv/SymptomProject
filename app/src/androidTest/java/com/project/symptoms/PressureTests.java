@@ -48,7 +48,6 @@ public class PressureTests {
 
             // Then
             assertNotEquals(-1, id);
-            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +67,6 @@ public class PressureTests {
 
             // Then
             assertEquals(1, deletedRows);
-            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -89,7 +87,6 @@ public class PressureTests {
 
             // Then
             assertEquals(1, updatedRows);
-            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -115,7 +112,6 @@ public class PressureTests {
             // Then
             assertNotNull(listOfModels);
             assertEquals(amountOfModels, listOfModels.size());
-            assertFalse(writableDatabase.isOpen());
 
         }catch (Exception e){
             e.printStackTrace();
