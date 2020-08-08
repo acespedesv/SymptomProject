@@ -45,8 +45,8 @@ public class PressureDaoImpl implements PressureDao {
     public PressureModel select(long id) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "pressure_id = ?";
-        String[] whereArgs = new String[] {""+id};
-        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        String[] whereArgs = new String[] {Long.toString(id)};
+        Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<PressureModel> result = buildListFromCursor(cursor);
         PressureModel model;
         if (result.size() == 1){ model = result.get(0); }
