@@ -35,7 +35,7 @@ public class BloodPressureHistory extends HistoryBase {
 
     @Override
     public void fetchModels() {
-        List models = PressureController.getInstance(this).listAll();
+        List models = PressureController.getInstance(this).select();
         listView.setAdapter(new BloodPressureAdapter(models, DateTimeUtils.getInstance()));
     }
 
