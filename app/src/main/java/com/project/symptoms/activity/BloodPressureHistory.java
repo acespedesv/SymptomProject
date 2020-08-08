@@ -69,6 +69,6 @@ public class BloodPressureHistory extends HistoryBase {
 
     @Override
     public List getAllModels() {
-        return PressureController.getInstance(this).listAll();
+        return PressureController.getInstance(this).selectAll();
     }
 }

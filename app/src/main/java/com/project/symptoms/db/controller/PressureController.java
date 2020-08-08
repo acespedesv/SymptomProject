@@ -2,8 +2,10 @@ package com.project.symptoms.db.controller;
 
 import android.content.Context;
 
+import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.db.dao.PressureDao;
 import com.project.symptoms.db.dao.PressureDaoImpl;
+import com.project.symptoms.db.dao.SymptomDao;
 import com.project.symptoms.db.model.PressureModel;
 import com.project.symptoms.util.DateTimeUtils;
 
@@ -31,7 +33,6 @@ public class PressureController {
 
     // Return the id of the new row
     public long insert(int systolic, int diastolic, String date, String time){
-
         long newId = -1;
         try{
             Date finalDate = DateTimeUtils.getInstance().getDateFromString(date);
@@ -47,8 +48,7 @@ public class PressureController {
     // Return if whether succeeded or not
     public boolean delete(long pressureId){
         try {
-            pressureDao.delete(pressureId);
-            return true;
+            return pressureDao.delete(pressureId) != 1;
         }catch (Exception e ){
             e.printStackTrace();
             return false;
@@ -64,17 +64,17 @@ public class PressureController {
             Date timeDate = DateTimeUtils.getInstance().TIME_FORMATTER.parse(time);
             PressureModel newPressureModel = new PressureModel(pressureId,
                     systolic, diastolic, dateDate.getTime(), timeDate.getTime());
-            result = pressureDao.update(pressureId, newPressureModel) ? 1 : -1;
+            result = pressureDao.update(newPressureModel) == 1 ? 1 : -1;
         }catch (Exception e ){
             e.printStackTrace();
         }
         return result;
     }
 
-    public List<PressureModel> listAll(){
+    public List<PressureModel> selectAll(){
         List<PressureModel> result = new ArrayList<>();
         try{
-            result = pressureDao.listAll();
+            result = pressureDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -90,4 +90,5 @@ public class PressureController {
         }
         return result;
     }
+
 }

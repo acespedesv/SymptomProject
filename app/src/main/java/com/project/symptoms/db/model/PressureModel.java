@@ -8,6 +8,7 @@ public class PressureModel {
     private long date;
     private long time;
 
+
     public PressureModel(long pressureId, int systolic, int diastolic, long date, long time){
         this.pressureId = pressureId;
         this.systolic = systolic;
@@ -19,7 +20,6 @@ public class PressureModel {
     public PressureModel(int systolic, int diastolic, long date, long time){
         this(-1, systolic, diastolic, date, time);
     }
-
 
     public long getId() {
         return pressureId;
