@@ -26,7 +26,7 @@ import java.util.List;
 public abstract class HistoryBase extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
     ListView listView;
-    int pageSize = 10;
+    int pageSize = 120;
     int maxRowsToShow = pageSize;
     Button loadMoreButton;
     List models;
