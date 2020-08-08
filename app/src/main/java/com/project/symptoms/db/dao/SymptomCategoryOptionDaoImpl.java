@@ -26,7 +26,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         values.put(Contract.CategoryOption.COLUMN_NAME_NAME, symptomCategoryOptionModel.getCategoryOptionName());
         values.put(Contract.CategoryOption.COLUMN_NAME_ICON_RESOURCE_ID, symptomCategoryOptionModel.getIconResourceId());
         long newId = db.insert(Contract.CategoryOption.TABLE_NAME,null, values);
-        db.close();
+//        db.close();
         return newId;
     }
 
@@ -38,7 +38,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         cursor.moveToFirst();
         SymptomCategoryOptionModel result = buildModelFromCursor(cursor);
-        db.close();
+//        db.close();
         return result;
     }
 
@@ -47,7 +47,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, null, null, null, null, null);
         List<SymptomCategoryOptionModel> result = buildListFromCursor(cursor);
-        db.close();
+//        db.close();
         return result;
     }
 
@@ -59,7 +59,7 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
         Cursor cursor = db.query(Contract.CategoryOption.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         cursor.moveToFirst();
         SymptomCategoryOptionModel result = buildModelFromCursor(cursor);
-        db.close();
+//        db.close();
         return result;
     }
 
@@ -94,5 +94,9 @@ public class SymptomCategoryOptionDaoImpl implements SymptomCategoryOptionDao {
     @Override
     public boolean update(int id, SymptomCategoryOptionModel newValues) throws Exception {
         return false;
+    }
+
+    public void setDbHelper(DBHelper dbHelper) {
+        this.dbHelper = dbHelper;
     }
 }
