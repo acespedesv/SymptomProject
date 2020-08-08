@@ -32,7 +32,6 @@ public class GlucoseDaoImpl implements GlucoseDao {
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(Contract.Glucose.TABLE_NAME, null, values);
-        db.close();
         return newRowId;
     }
 
@@ -135,4 +134,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
         return cursor;
     }
 
+    public void setDbHelper(DBHelper dbHelper) {
+        this.dbHelper = dbHelper;
+    }
 }
