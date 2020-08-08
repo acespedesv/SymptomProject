@@ -15,9 +15,7 @@ public class GlucoseLevels {
     }
 
     public GlucoseLevels(String level, String fastingPlasma, String toleranceTest) {
-        this.level = level;
-        this.fastingPlasma = fastingPlasma;
-        this.toleranceTest = toleranceTest;
+        this(-1, level, fastingPlasma, toleranceTest);
     }
 
     public int getId() {

@@ -69,6 +69,7 @@ public class SymptomDaoImpl implements SymptomDao{
         int circleSide;
         int duration;
         while(cursor.moveToNext()){
+
             id = cursor.getInt(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_ID_PK));
             description = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_DESCRIPTION));
             intensity = cursor.getString(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_INTENSITY));
@@ -82,8 +83,24 @@ public class SymptomDaoImpl implements SymptomDao{
             startDate = cursor.getLong(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_START_DATE));
             startTime = cursor.getLong(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_START_TIME));
             duration = cursor.getInt(cursor.getColumnIndex(Contract.Symptom.COLUMN_NAME_DURATION));
-            result.add(new SymptomModel(id, circlePosX, circlePosY, startDate, startTime, duration, description,
-                    intensity, causingDrug, causingFood, intermittence, circleRadius, circleSide));
+
+            SymptomModel model = new SymptomModel();
+            model.setSymptomId(id);
+            model.setCirclePosX(circlePosX);
+            model.setCirclePosY(circlePosY);
+            model.setCircleRadius(circleRadius);
+            model.setCircleSide(circleSide);
+            model.setStartDate(startDate);
+            model.setStartTime(startTime);
+            model.setDuration(duration);
+            model.setIntensity(intensity);
+            model.setDescription(description);
+            model.setCausingDrug(causingDrug);
+            model.setCausingFood(causingFood);
+            model.setIntermittence(intermittence);
+
+            result.add(model);
+
         }
         return result;
     }

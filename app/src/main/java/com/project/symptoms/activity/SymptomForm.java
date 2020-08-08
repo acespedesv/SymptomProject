@@ -3,6 +3,7 @@ package com.project.symptoms.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.text.SymbolTable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -216,10 +217,19 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
 
         // Insert in symptom table
         // This symptom model holds the values that need are going to be updated
-        SymptomModel symptomModelHolder = new SymptomModel(symptomModelToUpdate.getCirclePosX(), symptomModelToUpdate.getCirclePosY(),
-                startDateLong, startTimeLong, finalDuration, symptomDescriptionView.getText().toString(),
-                intensityRadioButton.getText().toString(), symptomMedicamentView.getText().toString(), symptomFoodView.getText().toString(),
-                intermittenceSwitchView.isChecked() ? 1 : 0, symptomModelToUpdate.getCircleRadius(), symptomModelToUpdate.getCircleSide());
+        SymptomModel symptomModelHolder = new SymptomModel();
+        symptomModelHolder.setCirclePosX(symptomModelToUpdate.getCirclePosX());
+        symptomModelHolder.setCirclePosY(symptomModelToUpdate.getCirclePosY());
+        symptomModelHolder.setCircleRadius(symptomModelToUpdate.getCircleRadius());
+        symptomModelHolder.setCircleSide(symptomModelToUpdate.getCircleSide());
+        symptomModelHolder.setStartDate(startDateLong);
+        symptomModelHolder.setStartTime(startTimeLong);
+        symptomModelHolder.setDuration(finalDuration);
+        symptomModelHolder.setIntensity(intensityRadioButton.getText().toString());
+        symptomModelHolder.setDescription(symptomDescriptionView.getText().toString());
+        symptomModelHolder.setCausingDrug(symptomMedicamentView.getText().toString());
+        symptomModelHolder.setCausingFood(symptomFoodView.getText().toString());
+        symptomModelHolder.setIntermittence(intermittenceSwitchView.isChecked() ? 1 : 0);
 
         return symptomController.updateSymptom(symptomIdToUpdate, symptomModelHolder) &&
                 selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate) &&
