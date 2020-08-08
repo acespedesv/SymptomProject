@@ -37,7 +37,7 @@ public class PressureTests {
     }
 
     @Test
-    public void givenAModelWhenInsertThenReturnsValidIdTest(){
+    public void givenAModel_WhenInsert_ThenReturnsValidId(){
         try {
             // Given
             PressureModel aModel = new PressureModel(110, 90, 1034343, 432543);
@@ -55,7 +55,7 @@ public class PressureTests {
     }
 
     @Test
-    public void givenAnInsertedModelWhenDeleteThenReturnsOneTest(){
+    public void givenAnInsertedModel_WhenDelete_ThenReturnsOne(){
         try {
             // Given
             PressureModel aModel = new PressureModel(110, 90, 1034343, 432543);
@@ -74,7 +74,7 @@ public class PressureTests {
     }
 
     @Test
-    public void givenAnInsertedModelWhenUpdateThenReturnOneTest(){
+    public void givenAnInsertedModel_WhenUpdate_ThenReturnOne(){
         try {
             // Given
             PressureModel aModel = new PressureModel(110, 90, 1034343, 432543);
@@ -94,7 +94,7 @@ public class PressureTests {
     }
 
     @Test
-    public void givenAnInsertedModelWhenSelectAllThenReturnAListOfModelsTest(){
+    public void givenAnInsertedModel_WhenSelectAll_ThenReturnAListOfModels(){
 
         try{
             // Given
@@ -117,6 +117,33 @@ public class PressureTests {
             fail();
         }
     }
+
+    @Test
+    public void givenAnInsertedModel_WhenSelectById_ThenReturnAModel(){
+        try{
+            // Given
+            PressureModel aModel = new PressureModel(110, 90, 1034343, 432543);
+            long id = dao.insert(aModel);
+            aModel.setPressure_id(id);
+
+            // When
+            PressureModel result = dao.select(id);
+
+            // Then
+            assertNotNull(result);
+            assertEquals(aModel.getPressure_id(), result.getPressure_id());
+            assertEquals(aModel.getSystolic(), result.getSystolic());
+            assertEquals(aModel.getDiastolic(), result.getDiastolic());
+            assertEquals(aModel.getDate(), result.getDate());
+            assertEquals(aModel.getTime(), result.getTime());
+
+        }catch (Exception e){
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+
 
     @After
     public void afterEachTest(){
