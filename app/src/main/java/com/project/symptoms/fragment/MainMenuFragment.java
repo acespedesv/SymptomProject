@@ -24,15 +24,6 @@ import com.project.symptoms.activity.BloodPressureHistory;
 import com.project.symptoms.activity.GlucoseForm;
 import com.project.symptoms.activity.GlucoseHistory;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MainMenuFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MainMenuFragment} factory method to
- * create an instance of this fragment.
- */
 public class MainMenuFragment extends Fragment {
 
     private TextView glucoseTextView, bloodPressureTextView;
@@ -132,18 +123,8 @@ public class MainMenuFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    // Needed for the fragment to communicate with the activity that includes it
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

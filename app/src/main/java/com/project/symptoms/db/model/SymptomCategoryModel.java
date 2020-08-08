@@ -11,7 +11,7 @@ public class SymptomCategoryModel {
     }
 
     public SymptomCategoryModel(String name) {
-        this.name = name;
+        this(-1, name);
     }
 
     public int getCategoryId() { return categoryId; }
