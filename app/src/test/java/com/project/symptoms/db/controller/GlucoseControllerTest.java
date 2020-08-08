@@ -33,7 +33,7 @@ public class GlucoseControllerTest{
     }
 
     @Test
-    public void GivenSomeRecordsWhenSelectAllReturnsAList() throws Exception{
+    public void GivenSomeRecords_WhenSelectAll_ThenReturnsAList() throws Exception{
         // Given
         List<GlucoseModel> fixedList = new ArrayList<GlucoseModel>(){{
             add(new GlucoseModel(10,20,30));
@@ -49,7 +49,7 @@ public class GlucoseControllerTest{
     }
 
     @Test // Not sure about this test
-    public void GivenARecordWhenUpdateThenReturnsOne() throws Exception{
+    public void GivenARecord_WhenUpdateThen_ReturnsOne() throws Exception{
         // Given
         long Id = 1;
         when(mockDao.update(new GlucoseModel(Id,2,3,4))).thenReturn(1);
@@ -63,7 +63,7 @@ public class GlucoseControllerTest{
     }
 
     @Test // Not sure about this test
-    public void GivenSomeDataWhenInsertThenReturnsAnId() throws Exception{
+    public void GivenSomeDataWhen_Insert_ThenReturnsAnId() throws Exception{
         // Given
         controller.setDateTimeUtils(createMockedDateTimeUtils());
 
@@ -75,7 +75,7 @@ public class GlucoseControllerTest{
     }
 
     @Test
-    public void GivenOneRecordWhenSelectThenReturnsAModel() throws  Exception{
+    public void GivenOneRecord_WhenSelect_ThenReturnsAModel() throws  Exception{
         // Given
         GlucoseModel model = new GlucoseModel(1,2,3,4);
         when(mockDao.select(1)).thenReturn(model);
@@ -93,7 +93,7 @@ public class GlucoseControllerTest{
     }
 
     @Test
-    public void GivenOneRecordWhenDeleteThenReturnsOne() throws Exception{
+    public void GivenOneRecord_WhenDelete_ThenReturnsOne() throws Exception{
         // Given
         GlucoseModel model = new GlucoseModel(1,2,3,4);
         when(mockDao.delete(1)).thenReturn(1);

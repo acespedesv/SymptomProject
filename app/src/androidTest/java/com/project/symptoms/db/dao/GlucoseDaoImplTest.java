@@ -36,7 +36,7 @@ public class GlucoseDaoImplTest {
     }
 
     @Test
-    public void givenAModelWhenInsertThenReturnsValidId(){
+    public void givenAModel_WhenInsert_ThenReturnsValidId(){
         try {
             // Given
             GlucoseModel aModel = new GlucoseModel(60, 20, 10);
@@ -53,7 +53,7 @@ public class GlucoseDaoImplTest {
     }
 
     @Test
-    public void givenAnInsertedModelWhenDeleteThenReturnsOne(){
+    public void givenAnInsertedModel_WhenDelete_ThenReturnsOne(){
         try {
             // Given
             GlucoseModel aModel = new GlucoseModel(60, 20, 10);
@@ -72,7 +72,7 @@ public class GlucoseDaoImplTest {
     }
 
     @Test
-    public void givenAnInsertedModelWhenUpdateThenReturnOne(){
+    public void givenAnInsertedModel_WhenUpdate_ThenReturnOne(){
         try {
             // Given
             GlucoseModel model = new GlucoseModel(60, 20, 10);
@@ -91,7 +91,7 @@ public class GlucoseDaoImplTest {
     }
 
     @Test
-    public void givenAnInsertedModelWhenSelectByIdThenReturnAModel(){
+    public void givenAnInsertedModel_WhenSelectById_ThenReturnAModel(){
         try{
             // Given
             GlucoseModel model = new GlucoseModel(60, 20, 10);
