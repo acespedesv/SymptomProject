@@ -125,9 +125,7 @@ public class PressureTests {
 
     @After
     public void afterEachTest(){
-        if(!writableDatabase.isOpen()) writableDatabase = pressureDaoImpl.getDbHelper().getWritableDatabase();
         writableDatabase.endTransaction();
-        writableDatabase.close();
     }
 
 }
