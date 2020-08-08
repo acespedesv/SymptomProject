@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Settings"></activity>
+        <activity android:name=".activity.HistoryBase"></activity>
+        <activity android:name=".activity.GlucoseHistory"></activity>
+        <activity android:name=".activity.BloodPressureHistory"></activity>
+        <activity android:name=".activity.Settings" />
         <activity android:name=".activity.About" />
         <activity android:name=".activity.SplashScreen">
             <intent-filter>

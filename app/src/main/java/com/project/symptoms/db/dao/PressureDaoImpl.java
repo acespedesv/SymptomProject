@@ -41,30 +41,10 @@ public class PressureDaoImpl implements PressureDao {
         return result;
     }
 
-    @Override
-    public PressureModel select(long id) throws Exception {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = "pressure_id = ?";
-        String[] whereArgs = new String[] {Long.toString(id)};
-        Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
-        List<PressureModel> result = buildListFromCursor(cursor);
-        PressureModel model;
-        if (result.size() == 1){ model = result.get(0); }
-        else{ throw new Exception("No matching Symptom with id "+id); }
-        return model;
-    }
-
     private List<PressureModel> buildListFromCursor(Cursor cursor){
         List<PressureModel> result = new ArrayList<>();
-        int id, systolic, diastolic;
-        long date, time;
         while(cursor.moveToNext()){
-            id = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_ID_PK));
-            systolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_SYSTOLIC));
-            diastolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DIASTOLIC));
-            date = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DATE));
-            time = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_TIME));
-            result.add(new PressureModel(id, systolic, diastolic, date, time));
+            result.add(buildModelFromCursor(cursor));
         }
         cursor.close();
         return result;
@@ -90,7 +70,7 @@ public class PressureDaoImpl implements PressureDao {
         values.put(Contract.Pressure.COLUMN_NAME_DATE, pressureModel.getDate());
 
         String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
-        String[] selectionArgs = {Long.toString(pressureModel.getPressure_id())};
+        String[] selectionArgs = {Long.toString(pressureModel.getId())};
         return db.update(Contract.Pressure.TABLE_NAME, values, selection, selectionArgs);
     }
 
@@ -101,5 +81,25 @@ public class PressureDaoImpl implements PressureDao {
     public DBHelper getDbHelper(){
         return dbHelper;
     }
+
+    @Override
+    public PressureModel select(long id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selection = Contract.Pressure.COLUMN_NAME_ID_PK + " = ?";
+        String[] selectionArgs = {Long.toString(id)};
+        Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        cursor.moveToNext();
+        return buildModelFromCursor(cursor);
+    }
+
+    private PressureModel buildModelFromCursor(Cursor cursor) {
+        long id = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_ID_PK));
+        int systolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_SYSTOLIC));
+        int diastolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DIASTOLIC));
+        long date = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_DATE));
+        long time = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_TIME));
+        return new PressureModel(id, systolic, diastolic, date, time);
+    }
+
 
 }

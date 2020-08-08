@@ -14,9 +14,7 @@ public class SymptomCategoryOptionModel {
     }
 
     public SymptomCategoryOptionModel(int categoryFkId, String categoryOptionName, int iconResourceId) {
-        this.categoryFkId = categoryFkId;
-        this.categoryOptionName = categoryOptionName;
-        this.iconResourceId = iconResourceId;
+        this(-1, categoryFkId, categoryOptionName, iconResourceId);
     }
 
     public long getCategoryOptionId() { return categoryOptionId; }

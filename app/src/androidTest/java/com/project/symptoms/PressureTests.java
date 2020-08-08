@@ -79,7 +79,7 @@ public class PressureTests {
             // Given
             PressureModel aModel = new PressureModel(110, 90, 1034343, 432543);
             long id = dao.insert(aModel);
-            aModel.setPressure_id(id);
+            aModel.setId(id);
 
             // When
             int updatedRows = dao.update(aModel);
@@ -124,14 +124,14 @@ public class PressureTests {
             // Given
             PressureModel aModel = new PressureModel(110, 90, 1034343, 432543);
             long id = dao.insert(aModel);
-            aModel.setPressure_id(id);
+            aModel.setId(id);
 
             // When
             PressureModel result = dao.select(id);
 
             // Then
             assertNotNull(result);
-            assertEquals(aModel.getPressure_id(), result.getPressure_id());
+            assertEquals(aModel.getId(), result.getId());
             assertEquals(aModel.getSystolic(), result.getSystolic());
             assertEquals(aModel.getDiastolic(), result.getDiastolic());
             assertEquals(aModel.getDate(), result.getDate());

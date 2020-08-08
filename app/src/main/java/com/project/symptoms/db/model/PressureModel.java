@@ -2,14 +2,15 @@ package com.project.symptoms.db.model;
 
 public class PressureModel {
 
-    private long pressure_id;
+    private long pressureId;
     private int systolic;
     private int diastolic;
     private long date;
     private long time;
 
-    public PressureModel(long pressure_id, int systolic, int diastolic, long date, long time){
-        this.pressure_id = pressure_id;
+
+    public PressureModel(long pressureId, int systolic, int diastolic, long date, long time){
+        this.pressureId = pressureId;
         this.systolic = systolic;
         this.diastolic = diastolic;
         this.date = date;
@@ -17,16 +18,15 @@ public class PressureModel {
     }
 
     public PressureModel(int systolic, int diastolic, long date, long time){
-        this(0, systolic, diastolic, date, time); // Todo: is it correct to put an id = 0?
+        this(-1, systolic, diastolic, date, time);
     }
 
-
-    public long getPressure_id() {
-        return pressure_id;
+    public long getId() {
+        return pressureId;
     }
 
-    public void setPressure_id(long pressure_id) {
-        this.pressure_id = pressure_id;
+    public void setId(long pressureId) {
+        this.pressureId = pressureId;
     }
 
     public int getSystolic() {

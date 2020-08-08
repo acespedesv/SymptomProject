@@ -7,20 +7,25 @@ import com.project.symptoms.db.dao.GlucoseDaoImpl;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.util.DateTimeUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class GlucoseController {
 
     private static GlucoseController instance;
     private static GlucoseDao glucoseDao;
+    private static DateTimeUtils dateTimeUtils;
 
     private GlucoseController() {
+
     }
 
     public static GlucoseController getInstance(Context context) {
         if (instance == null) {
             instance = new GlucoseController();
             glucoseDao = new GlucoseDaoImpl(context);
+            DateTimeUtils.getInstance();
         }
         return instance;
     }
@@ -29,8 +34,8 @@ public class GlucoseController {
         long newId = -1;
 
         try {
-            Date finalDate = DateTimeUtils.getInstance().getDateFromString(dateText);
-            Date finalTime = DateTimeUtils.getInstance().getTimeFromString(hourText);
+            Date finalDate = dateTimeUtils.getDateFromString(dateText);
+            Date finalTime = dateTimeUtils.getTimeFromString(hourText);
             GlucoseModel glucoseModel = new GlucoseModel(glucoseValue, finalDate.getTime(), finalTime.getTime());
             newId = glucoseDao.insert(glucoseModel);
         } catch (Exception e) {
@@ -39,7 +44,7 @@ public class GlucoseController {
         return newId;
     }
 
-    public int delete(int id) {
+    public int delete(long id) {
         int quantity = -1;
         try {
             quantity = glucoseDao.delete(id);
@@ -50,7 +55,7 @@ public class GlucoseController {
         return quantity;
     }
 
-    public GlucoseModel select(int id) {
+    public GlucoseModel select(long id) {
         GlucoseModel glucoseModel = null;
         try {
             glucoseModel = glucoseDao.select(id);
@@ -61,16 +66,36 @@ public class GlucoseController {
         return glucoseModel;
     }
 
-    public int update(int id, int glucoseValue, String dateText, String hourText) {
-        int updatedId = -1;
-
+    public int update(long id, int glucoseValue, String dateText, String hourText) {
+        //TODO validate ID
+        int updatedRows = -1;
         try {
-            Date completeDateTime = DateTimeUtils.getInstance().joinDateAndTimeFromStrings(dateText, hourText);
-            GlucoseModel glucoseModel = new GlucoseModel(id, glucoseValue, completeDateTime.getTime());
-            updatedId = glucoseDao.update(glucoseModel);
+            Date date = dateTimeUtils.getDateFromString(dateText);
+            Date time = dateTimeUtils.getTimeFromString(hourText);
+            GlucoseModel glucoseModel = new GlucoseModel(id, glucoseValue, date.getTime(), time.getTime());
+            glucoseDao.update(glucoseModel);
+            updatedRows = 1;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return updatedId;
+        return updatedRows;
+    }
+
+    public List<GlucoseModel> listAll(){
+        List<GlucoseModel> result = null;
+        try {
+            result = glucoseDao.listAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public void setGlucoseDao(GlucoseDao glucoseDao){
+        GlucoseController.glucoseDao = glucoseDao;
+    }
+
+    public void setDateTimeUtils(DateTimeUtils utils){
+        GlucoseController.dateTimeUtils = utils;
     }
 }

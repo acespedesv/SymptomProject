@@ -75,7 +75,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/filled_button"
             android:gravity="center"
-            android:text="@string/continue_button"
+            android:text="@string/continue_text"
             android:textColor="@color/colorMainWhite"
             android:textStyle="bold" />
 

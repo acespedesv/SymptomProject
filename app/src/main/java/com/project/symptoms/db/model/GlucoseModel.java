@@ -1,12 +1,12 @@
 package com.project.symptoms.db.model;
 
 public class GlucoseModel {
-    private int id;
+    private long id;
     private int value;
     private long date;
     private long time;
 
-    public GlucoseModel(int id, int value, long date, long time) {
+    public GlucoseModel(long id, int value, long date, long time) {
         this.id = id;
         this.value = value;
         this.date = date;
@@ -14,20 +14,19 @@ public class GlucoseModel {
     }
 
     public GlucoseModel(int value, long date, long time) {
-        this.value = value;
-        this.date = date;
-        this.time = time;
+        this(-1, value, date, time);
     }
 
     public GlucoseModel(int value) {
-        this.value = value;
+
+        this(-1, value, -1, -1);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
