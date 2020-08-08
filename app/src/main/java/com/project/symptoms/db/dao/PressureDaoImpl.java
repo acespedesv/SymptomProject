@@ -38,7 +38,10 @@ public class PressureDaoImpl implements PressureDao {
     @Override
     public List<PressureModel> listAll() throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, null);
+        String sortOrder =
+                Contract.Pressure.COLUMN_NAME_DATE + "+"+
+                        Contract.Pressure.COLUMN_NAME_TIME + " DESC";
+        Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, sortOrder);
         List<PressureModel> result = buildListFromCursor(cursor);
         db.close();
         return result;

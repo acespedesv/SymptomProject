@@ -74,9 +74,6 @@ public class GlucoseDaoImpl implements GlucoseDao {
         String selection = Contract.Glucose.COLUMN_NAME_ID_PK + " = ?";
         String[] selectionArgs = {"" + id};
 
-        /*String sortOrder =
-                FeedEntry.COLUMN_NAME_SUBTITLE + " DESC";*/
-
         Cursor cursor = db.query(
                 Contract.Glucose.TABLE_NAME,   // The table to query
                 columns,             // The array of columns to return (pass null to get all)
@@ -120,7 +117,9 @@ public class GlucoseDaoImpl implements GlucoseDao {
                 Contract.Glucose.COLUMN_NAME_TIME
         };
 
-        // TODO: SORT BY DATE
+        String sortOrder =
+                Contract.Glucose.COLUMN_NAME_DATE + "+"+
+                Contract.Glucose.COLUMN_NAME_TIME + " DESC";
 
         Cursor cursor = db.query(
                 Contract.Glucose.TABLE_NAME,   // The table to query
@@ -129,7 +128,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
                 null,          // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                  // don't filter by row groups
-                null               // The sort order
+                sortOrder               // The sort order
         );
         return cursor;
     }
