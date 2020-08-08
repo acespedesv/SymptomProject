@@ -18,6 +18,12 @@
     <color name="symptom_option_normal_border">#81bf41</color>
     <color name="symptom_option_selected_border">#82e61a</color>
 
+    <color name="history_table_odd_background">#1382ca</color>
+    <color name="history_table_even_background">#89c3e5</color>
+    <color name="history_table_header_background">#2948a8</color>
+
+
+
 
     <color name="black_overlay">#66000000</color>
 </resources>

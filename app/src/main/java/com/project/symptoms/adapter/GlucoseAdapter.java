@@ -3,6 +3,9 @@ package com.project.symptoms.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+
+import com.project.symptoms.R;
 import com.project.symptoms.activity.HistoryBase;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.util.DateTimeUtils;
@@ -38,15 +41,15 @@ public class GlucoseAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //TODO optimize reuse
-
         GlucoseModel glucoseModel = models.get(position);
         String readableDate = dateTimeUtils.DATE_PARSER.format(glucoseModel.getDate());
         String readableTime = dateTimeUtils.TIME_FORMATTER.format(glucoseModel.getTime());
         String values[] = new String[]{ ""+glucoseModel.getValue(), readableDate, readableTime};
         int verticalPadding = 10;
-        return HistoryBase.buildLinearLayout(parent, values, verticalPadding);
+        LinearLayout row = HistoryBase.buildLinearLayout(parent, values, verticalPadding);
+        int colorId = (position % 2 == 0) ? R.color.history_table_even_background : R.color.history_table_odd_background;
+        row.setBackgroundColor(parent.getContext().getColor(colorId));
+        return row;
     }
-
-
 
 }

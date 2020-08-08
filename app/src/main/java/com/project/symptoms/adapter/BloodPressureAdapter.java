@@ -3,7 +3,9 @@ package com.project.symptoms.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 
+import com.project.symptoms.R;
 import com.project.symptoms.activity.HistoryBase;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.db.model.PressureModel;
@@ -47,7 +49,10 @@ public class BloodPressureAdapter extends BaseAdapter {
         String readableTime = dateTimeUtils.TIME_FORMATTER.format(pressureModel.getTime());
         String values[] = new String[]{ ""+pressureModel.getSystolic(), ""+pressureModel.getDiastolic(), readableDate, readableTime};
         int verticalPadding = 10;
-        return HistoryBase.buildLinearLayout(parent, values, verticalPadding);
+        LinearLayout row = HistoryBase.buildLinearLayout(parent, values, verticalPadding);
+        int colorId = (position % 2 == 0) ? R.color.history_table_even_background : R.color.history_table_odd_background;
+        row.setBackgroundColor(parent.getContext().getColor(colorId));
+        return row;
     }
 
 
