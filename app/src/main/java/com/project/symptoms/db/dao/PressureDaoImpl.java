@@ -38,8 +38,23 @@ public class PressureDaoImpl implements PressureDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, null, null, null, null, null);
         List<PressureModel> result = buildListFromCursor(cursor);
+        if (result.size() < 1) throw new Exception("Empty result list");
         db.close();
         return result;
+    }
+
+    @Override
+    public PressureModel select(long id) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = "pressure_id = ?";
+        String[] whereArgs = new String[] {""+id};
+        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        List<PressureModel> result = buildListFromCursor(cursor);
+        PressureModel model;
+        if (result.size() == 1){ model = result.get(0); }
+        else{ throw new Exception("No matching Symptom with id "+id); }
+        db.close();
+        return model;
     }
 
     private List<PressureModel> buildListFromCursor(Cursor cursor){
