@@ -37,11 +37,6 @@ public class PressureTests {
         writableDatabase.beginTransaction();
     }
 
-    @After
-    public void afterEachTest(){
-        writableDatabase.endTransaction();
-    }
-
     @Test
     public void givenAModelWhenInsertThenReturnsValidIdTest(){
         try {
@@ -129,8 +124,7 @@ public class PressureTests {
     }
 
     @After
-    public void cleanUp(){
-        if (!writableDatabase.isOpen()) writableDatabase = pressureDaoImpl.getDbHelper().getWritableDatabase();
+    public void afterEachTest(){
         writableDatabase.endTransaction();
     }
 
