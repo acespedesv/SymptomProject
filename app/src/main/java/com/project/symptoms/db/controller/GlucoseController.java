@@ -87,4 +87,14 @@ public class GlucoseController {
         }
         return result;
     }
+
+    public List<GlucoseModel> listAll(int maxRecords){
+        List<GlucoseModel> result = null;
+        try {
+            result = glucoseDao.listAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

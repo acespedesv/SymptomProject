@@ -3,6 +3,7 @@ package com.project.symptoms.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,16 +18,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.project.symptoms.R;
+import com.project.symptoms.db.model.PressureModel;
 import com.project.symptoms.fragment.MainMenuFragment;
+
+import java.util.List;
 
 public abstract class HistoryBase extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
     ListView listView;
+    int pageSize = 10;
+    int maxRowsToShow = pageSize;
+    Button loadMoreButton;
+    List models;
+
+
+    protected void hideLoadMoreButton(){
+        listView.removeFooterView(loadMoreButton);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_base);
+
 
         setTitle(getTitleResourceId());
 
@@ -38,7 +53,7 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
     @Override
     protected void onResume() {
         super.onResume();
-        fetchModels();
+        updateRows();
     }
 
     public void setupListView(){
@@ -46,16 +61,23 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
         LinearLayout headings = buildLinearLayout(parentView,
                 getColumnsHeaders(),
                 20);
+        headings.setBackgroundColor(getColor(R.color.history_table_header_background));
         listView.addHeaderView(headings, null, false);
 
-        fetchModels();
+        loadMoreButton = new Button(this);
+        loadMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLoadMoreClicked();
+            }
+        });
+        loadMoreButton.setText(R.string.load_more);
+        listView.addFooterView(loadMoreButton);
 
-        Button button = new Button(this);
-        button.setText(R.string.load_more);
-        listView.addFooterView(button);
 
         registerForContextMenu(listView);
     }
+
 
     public static LinearLayout buildLinearLayout(View parent, String values[], int verticalPadding){
         LayoutInflater layoutInflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,6 +85,7 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
         for (String value: values) {
             TextView textView = new TextView(parent.getContext());
             textView.setText(value);
+            textView.setTextColor(parent.getContext().getColor(R.color.colorMainWhite));
             textView.setPadding(0, verticalPadding, 0, verticalPadding);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
             textView.setLayoutParams(params);
@@ -94,6 +117,18 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
         return true;
     }
 
+    public void updateModelsAccordingToLimit(){
+        List all = getAllModels();
+        if(all.size() == 0) {
+            this.models = all;
+            hideLoadMoreButton();
+        }
+        else{
+            int limit = Math.min(all.size(), maxRowsToShow);
+            this.models = all.subList(0, limit);
+        }
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -109,8 +144,12 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
 
     public abstract String[] getColumnsHeaders();
 
-    public abstract void fetchModels();
+    public abstract void updateRows();
+
+    public abstract void onLoadMoreClicked();
 
     public abstract int getTitleResourceId();
+
+    public abstract List getAllModels();
 
 }
