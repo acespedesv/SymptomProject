@@ -15,5 +15,7 @@ public interface PressureDao {
 
     boolean update(long id, PressureModel newValues) throws Exception;
 
+    PressureModel select(long id);
+
 
 }

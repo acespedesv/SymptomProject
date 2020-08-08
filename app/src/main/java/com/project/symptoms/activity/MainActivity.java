@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         init();
         try {
@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements
     private void deleteSymptom(final long symptomId) throws ParseException {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.alert_sure_about_deleting)
-                .setPositiveButton(R.string.alert_positive_button, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         boolean symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
                         boolean categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
@@ -371,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements
                         }
                     }
                 })
-                .setNegativeButton(R.string.alert_negative_button, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                     }

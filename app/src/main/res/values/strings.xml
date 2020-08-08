@@ -1,13 +1,39 @@
 <resources>
-    <string name="app_name">Symptoms</string>
 
-    <!-- Symptom menu -->
+    <!-- =============================== -->
+    <!--        Global Strings           -->
+    <!-- =============================== -->
+    <!-- Put here strings that can be reused in many parts of the app (context free strings) -->
+    <string name="app_name">Symptoms</string>
+    <string name="edit">Editar</string>
+    <string name="save">Guardar</string>
+    <string name="update">Actualizar</string>
+    <string name="delete">Eliminar</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="date">Fecha</string>
+    <string name="time">Hora</string>
+    <string name="load_more">Cargar más</string>
+    <string name="value_successfully_saved">Valor guardado exitosamente</string>
+    <string name="value_successfully_updated">Valor actualizado exitosamente</string>
+    <string name="value_saving_failed">El valor no se pudo guardar exitosamente</string>
+    <string name="value_updating_failed">El valor no se pudo actualizar exitosamente</string>
+    <string name="done">Listo</string>
+    <string name="continue_text">Continuar</string>
+
+
+    <!-- =============================== -->
+    <!--        Symptom Menu             -->
+    <!-- =============================== -->
     <string name="delete_symptom">Borrar síntoma</string>
     <string name="edit_symptom">Editar síntoma</string>
     <string name="finish_symptom">Finalizar síntoma</string>
     <string name="symptom_menu_title">Selección de síntoma</string>
 
-    <!-- Symptom Form -->
+
+    <!-- =============================== -->
+    <!--       Symptom Form              -->
+    <!-- =============================== -->
     <string name="symptom_form">Registro de síntoma</string>
     <string name="symptom_description">Descripción del Síntoma:</string>
     <string name="symptom_description_hint">Describa brevemente el síntoma</string>
@@ -23,23 +49,128 @@
     <string name="reaction_medicament_hint">Nombre del medicamento</string>
     <string name="reaction_food">Alimento causante:</string>
     <string name="reaction_food_hint">Nombre del alimento</string>
+    <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
 
-    <!--  Settings Activity  -->
+
+
+
+    <!-- =============================== -->
+    <!--        Glucose History          -->
+    <!-- =============================== -->
+    <string name="glucose_history_title">Historial de Glucosa</string>
+    <string name="glucose_measure">mmol/L</string>
+
+
+
+    <!-- =============================== -->
+    <!--        Pressure History         -->
+    <!-- =============================== -->
+    <string name="pressure_history_title">Historial de Presión</string>
+    <string name="pressure_measure_diastolic">Diástole</string>
+    <string name="pressure_measure_systolic">Sístole</string>
+
+
+    <!-- =============================== -->
+    <!--        Main Activity            -->
+    <!-- =============================== -->
+    <string name="action_settings">Configuraciones</string>
+    <string name="action_about">Acerca de</string>
+    <string name="menu_name">Menu</string>
+
+
+    <!-- =============================== -->
+    <!--        About Activity            -->
+    <!-- =============================== -->
+    <string name="developed_by">Desarrollado por</string>
+
+
+
+    <!-- =============================== -->
+    <!--        Settings Activity        -->
+    <!-- =============================== -->
     <string name="symptom_reminder_format">El síntoma %s registrado el día %s se encuentra activo. Ingrese a la aplicación para realizar el cambio correspondiente</string>
     <string name="frequency_title">Recordatorio de síntomas</string>
     <string name="frequency_summary">Horas luego de registrar un síntoma sin finalización</string>
-    <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
+    <string name="notifications_frequency">Frecuencia de notificaciones</string>
+    <string name="notifications_frequency_summary">Recordar síntomas sin finalización cada ciertas horas</string>
 
-    <!-- PREFERENCES KEYS -->
+
+
+    <!-- =============================== -->
+    <!--        Glucose Form             -->
+    <!-- =============================== -->
+    <string name="title_activity_glucose_form">GlucoseForm</string>
+    <string name="glucose_form_title">Registro de Glucosa</string>
+    <string name="intent_key_glucose_id">glucose_id</string>
+
+
+    <!-- =============================== -->
+    <!--       Main Menu Fragment        -->
+    <!-- =============================== -->
+    <string name="blood_pressure_button">Presión</string>
+    <string name="glucose_button">Glucosa</string>
+    <string name="history_button">Historial</string>
+
+
+    <!-- =============================== -->
+    <!--      Blood Pressure Form        -->
+    <!-- =============================== -->
+    <string name="blood_pressure_form_title">Registro de Presión Arterial</string>
+    <string name="intent_key_pressure_id">pressure_id</string>
+
+
+
+    <!-- =============================== -->
+    <!--        Body Selection           -->
+    <!-- =============================== -->
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+    <string name="select_body_message">Deslice y seleccione</string>
+
+
+
+    <!-- =============================== -->
+    <!--             Dialogs             -->
+    <!-- =============================== -->
+    <string name="alert_sure_about_deleting">¿Seguro que desea eliminar este síntoma?</string>
+    <string name="level_column">Nivel</string>
+    <string name="fasting_test">En ayunas</string>
+    <string name="tolerance_test">Postcomida</string>
+    <string name="bottom_sheet_title">Tamaño del área de dolor</string>
+
+
+
+
+    <!-- =============================== -->
+    <!--       Preferences Keys          -->
+    <!-- =============================== -->
     <string name="preference_reminder_frequency_key">reminder_frequency</string>
     <string name="preference_selected_body_type_key">selected_body_type</string>
 
-    <!-- PREFERENCES DEFAULT VALUES -->
+
+    <!-- =============================== -->
+    <!--      Preferences Defaults       -->
+    <!-- =============================== -->
     <string name="preference_reminder_frequency_default">8</string>
     <string name="preference_selected_body_type_default">Ninguno</string>
 
 
-    <!-- Symptom Categories -->
+    <!-- =============================== -->
+    <!--          Sample Data            -->
+    <!-- =============================== -->
+    <string name="sample_date">Miércoles 15 de Febrero</string>
+    <string name="sample_hour">21:00</string>
+    <string name="sample_pressure_diastolic_value">#</string>
+    <string name="sample_glucose_measure">#</string>
+    <string name="sample_pressure_systolic_value">90</string>
+    <string name="sample_calendar_day">02</string>
+
+
+
+
+    <!-- =============================== -->
+    <!--    Symptoms Categories Names    -->
+    <!-- =============================== -->
     <string name="pain_type">Tipo de dolor</string>
     <string name="digestive_pain">Padecimiento digestivo</string>
     <string name="respiratory_pain">Padecimiento respiratorio</string>
@@ -50,7 +181,9 @@
     <string name="triggering_feeling">Emoción detonante</string>
     <string name="triggering_weather_condition">Estado climático detonante</string>
 
-    <!-- Symptom Categories Options -->
+    <!-- =============================== -->
+    <!--    Symptoms Options Names       -->
+    <!-- =============================== -->
 
     <!-- Tipo de dolor -->
     <string name="sharp_pain">Agudo</string>
@@ -131,56 +264,5 @@
     <string name="hot">Calor</string>
     <string name="humidity">Humedad</string>
     <string name="dryness">Sequedad</string>
-
-    <string name="title_activity_glucose_form">GlucoseForm</string>
-    <string name="glucose_form_title">Registro de Glucosa</string>
-    <string name="blood_pressure_form_title">Registro de Presión Arterial</string>
-    <string name="sample_date">Miércoles 15 de Febrero</string>
-    <string name="sample_hour">21:00</string>
-    <string name="save_button_text">Guardar</string>
-    <string name="update_button_text">Actualizar</string>
-    <string name="sample_pressure_diastolic_value">#</string>
-    <string name="sample_glucose_measure">#</string>
-    <string name="sample_pressure_systolic_value">90</string>
-    <string name="action_settings">Configuraciones</string>
-    <string name="menu_name">Menu</string>
-    <string name="action_about">Acerca de</string>
-    <string name="action_notifications">Notificaciones</string>
-    <string name="notifications_frequency">Frecuencia de notificaciones</string>
-    <string name="notifications_frequency_summary">Recordar síntomas sin finalización cada ciertas horas</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="blood_pressure_button">Presión</string>
-    <string name="glucose_button">Glucosa</string>
-    <string name="history_button">Historial</string>
-    <string name="date_sample">Miércoles 19, Febrero</string>
-    <string name="calendar_day_sample">02</string>
-    <string name="bottom_sheet_title">Tamaño del área de dolor</string>
-    <string name="done_text">Listo</string>
-    <string name="proceed">Continuar</string>
-    <string name="male">Hombre</string>
-    <string name="female">Mujer</string>
-    <string name="select_body_message">Deslice y seleccione</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
-    <string name="symptom_finished">Síntoma finalizado</string>
-    <string name="symptom_not_finished">No se pudo finalizar el síntoma</string>
-    <string name="value_successfully_saved">Valor guardado exitosamente</string>
-    <string name="value_successfully_updated">Valor actualizado exitosamente</string>
-    <string name="value_saving_failed">El valor no se pudo guardar exitosamente</string>
-    <string name="value_updating_failed">El valor no se pudo actualizar exitosamente</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">SYMP APP</string>
-    <string name="first_step">Primer paso</string>
-    <string name="level_column">Nivel</string>
-    <string name="fasting_test">En ayunas</string>
-    <string name="tolerance_test">Postcomida</string>
-    <string name="continue_button">Continuar</string>
-    <string name="developed_by">Desarrollado por</string>
-    <string name="body_selection">Selección de silueta</string>
-    <string name="duration_hours">%1$s hrs</string>
-
-    <!--  Alert dialogs  -->
-    <string name="alert_sure_about_deleting">¿Seguro que desea eliminar este síntoma?</string>
-    <string name="alert_positive_button">Aceptar</string>
-    <string name="alert_negative_button">Cancelar</string>
 
 </resources>
