@@ -74,7 +74,7 @@ public class PressureController {
     public List<PressureModel> selectAll(){
         List<PressureModel> result = new ArrayList<>();
         try{
-            result = pressureDao.select();
+            result = pressureDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }
