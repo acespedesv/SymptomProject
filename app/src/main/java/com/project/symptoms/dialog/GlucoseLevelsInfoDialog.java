@@ -14,39 +14,33 @@ import com.project.symptoms.db.model.GlucoseLevels;
 
 import java.util.List;
 
-public class GlucoseLevelsInfoDialog {
+public class GlucoseLevelsInfoDialog extends Dialog{
 
-    private Context context;
     private GlucoseLevelsAdapter glucoseLevelsAdapter;
-    final Dialog dialog;
 
-    public GlucoseLevelsInfoDialog(Context context){
-        this.context = context;
+    public GlucoseLevelsInfoDialog(Context context) {
+        super(context);
 
-        dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setCancelable(false);
+        setContentView(R.layout.glucose_levels);
 
-        dialog.setContentView(R.layout.glucose_levels);
-        Button accept = (Button) dialog.findViewById(R.id.accept);
+        Button accept = findViewById(R.id.accept);
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
+            public void onClick(View v) { dismiss(); }
         });
+
         listAll();
 
-        dialog.show();
     }
 
     private void listAll() {
-        List<GlucoseLevels> glucoseLevelsList = GlucoseLevelsController.getInstance(context).listAll();
-        glucoseLevelsAdapter = new GlucoseLevelsAdapter(context, glucoseLevelsList);
+        List<GlucoseLevels> glucoseLevelsList = GlucoseLevelsController.getInstance(getContext()).listAll();
+        glucoseLevelsAdapter = new GlucoseLevelsAdapter(getContext(), glucoseLevelsList);
 
-        ListView listViewLevels = dialog.findViewById(R.id.glucose_levels_list_view);
+        ListView listViewLevels = findViewById(R.id.glucose_levels_list_view);
         listViewLevels.setAdapter(glucoseLevelsAdapter);
     }
 }
