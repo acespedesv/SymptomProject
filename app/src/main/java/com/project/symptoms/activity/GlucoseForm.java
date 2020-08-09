@@ -106,8 +106,6 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         if(result != FAILURE){
             Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
         }
-        Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        startActivity(mainActivityIntent);
     }
 
     private void updateData() {
