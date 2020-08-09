@@ -21,6 +21,24 @@
     <string name="done">Listo</string>
     <string name="continue_text">Continuar</string>
     <string name="warning">ALERTA</string>
+    <string name="storage_permission_denied">Permiso denegado</string>
+
+    <!-- =============================== -->
+    <!--          PDF Document           -->
+    <!-- =============================== -->
+    <string name="pdf_document_name">SymptomsApp_Historial_</string>
+    <string name="pdf_extension">pdf</string>
+    <string name="start_date">Desde: </string>
+    <string name="end_date">Hasta: </string>
+    <string name="date_range">Rango de fechas</string>
+    <string name="pdf_saved">Documento guardado en</string>
+    <string name="pdf_title">Symp App</string>
+    <string name="glucose_title">Glucosa en sangre</string>
+    <string name="pressure_title">Presión Sanguínea</string>
+    <string name="symptom_title">Síntomas</string>
+    <string name="glucose_table_date_column">Fecha de muestra</string>
+    <string name="glucose_table_value_column">Valor ml/dl</string>
+    <string name="pdf_subtitle">Reporte de síntomas, glucosa en sangre y presión arterial</string>
 
 
     <!-- =============================== -->
