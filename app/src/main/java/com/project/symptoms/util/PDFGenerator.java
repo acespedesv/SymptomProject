@@ -65,11 +65,11 @@ public class PDFGenerator {
             e.printStackTrace();
         }
 
-        Paragraph title = new Paragraph(appResources.getString(R.string.pdf_title));
+        Paragraph title = new Paragraph(appResources.getString(R.string.pdf_title), titlesFont);
         title.setAlignment(Element.ALIGN_CENTER);
-        title.setFont(titlesFont);
-        Paragraph subtitle = new Paragraph(appResources.getString(R.string.pdf_subtitle));
-        subtitle.setFont(subTitlesFont);
+        //title.setFont(titlesFont);
+        Paragraph subtitle = new Paragraph(appResources.getString(R.string.pdf_subtitle), subTitlesFont);
+        //subtitle.setFont(subTitlesFont);
         subtitle.setAlignment(Element.ALIGN_CENTER);
 
         try {
@@ -172,7 +172,7 @@ public class PDFGenerator {
     }
 
     private void insertUserDate(){
-        Paragraph userInfo = new Paragraph("Paciente: Isaac Mena López\nCédula: 402400867\nFecha de nacimient: 07/11/98");
+        Paragraph userInfo = new Paragraph("Paciente: Isaac Mena López\nCédula: 402400867\nFecha de nacimiento: 07/11/98");
         userInfo.setFont(subTitlesFont);
         userInfo.setAlignment(Element.ALIGN_CENTER);
         try {
