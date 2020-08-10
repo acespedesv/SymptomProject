@@ -3,7 +3,6 @@ package com.project.symptoms.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.text.SymbolTable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -152,29 +151,12 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = "";
-                // The form will insert a new Symptom
-                if(saveButton.getText().equals(getString(R.string.save))) {
-                    text = insertSymptomsData() ?
-                            getResources().getString(R.string.value_successfully_saved) :
-                            getResources().getString(R.string.value_saving_failed);
-                }
-                // Thw form will update an existing symptom
-                else {
-                    try {
-                        text = updateSymptomsData() ?
-                                getResources().getString(R.string.value_successfully_updated) :
-                                getResources().getString(R.string.value_updating_failed);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivityIntent);
+                onSaveButtonClicked();
             }
         });
     }
+
+
 
     private boolean insertSelectedCategoryOptions(long symptomId){
         boolean success = true;
@@ -188,6 +170,50 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
             }
         }
         return success;
+    }
+
+    private void onSaveButtonClicked(){
+        if(allRequiredFieldsAreFilled())
+            insertOrUpdateSymptom();
+        else
+            notifyIncompleteForm();
+    }
+
+    private boolean allRequiredFieldsAreFilled(){
+        return symptomDescriptionView.getText().length() >= 1;
+    }
+
+    // Move to top, set the field in red and show a toast
+    private void notifyIncompleteForm(){
+        findViewById(R.id.symptom_form).scrollTo(0,0);
+
+        symptomDescriptionView.getBackground().setTint(getColor(R.color.colorMainRed));
+
+        String message = getString(R.string.incomplete_form_message);
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+    }
+
+    // This should be called after the form was already validated
+    private void insertOrUpdateSymptom(){
+        String text = "";
+        // The form will insert a new Symptom
+        if(saveButton.getText().equals(getString(R.string.save))) {
+            text = insertSymptomsData() ?
+                    getResources().getString(R.string.value_successfully_saved) :
+                    getResources().getString(R.string.value_saving_failed);
+        }
+        // Thw form will update an existing symptom
+        else {
+            try {
+                text = updateSymptomsData() ?
+                        getResources().getString(R.string.value_successfully_updated) :
+                        getResources().getString(R.string.value_updating_failed);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     private boolean insertSymptomsData() {

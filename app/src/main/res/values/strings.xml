@@ -51,6 +51,7 @@
     <string name="reaction_food">Alimento causante:</string>
     <string name="reaction_food_hint">Nombre del alimento</string>
     <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
+    <string name="incomplete_form_message">El campo de descripción es requerido, por favor ingrese algún valor</string>
 
 
 
