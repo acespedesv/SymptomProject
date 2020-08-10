@@ -40,34 +40,34 @@ public class SelectedCategoryOptionController {
         }
     }
 
-    public List<SelectedCategoryOptionModel> getAll(){
+    public List<SelectedCategoryOptionModel> selectAll(){
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         try{
-            result = selectedCategoryOptionDao.listAll();
+            result = selectedCategoryOptionDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }
         return result;
     }
 
-    public List<SelectedCategoryOptionModel> getAllBySymptom(long symptomId){
+    public List<SelectedCategoryOptionModel> selectAllBySymptom(long symptomId){
         List<SelectedCategoryOptionModel> result = new ArrayList<>();
         try{
-            result = selectedCategoryOptionDao.listAllBySymptom(symptomId);
+            result = selectedCategoryOptionDao.selectBySymptomId(symptomId);
         }catch (Exception e){
             e.printStackTrace();
         }
         return result;
     }
 
-    public boolean deleteAllBySymptom(long symptomId){
+    public int deleteAllBySymptom(long symptomId){
+        int rowsDeleted = -1;
         try {
-            selectedCategoryOptionDao.deleteAllBySymptom(symptomId);
-            return true;
+            rowsDeleted = selectedCategoryOptionDao.deleteBySymptomId(symptomId);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return rowsDeleted;
     }
 
 }

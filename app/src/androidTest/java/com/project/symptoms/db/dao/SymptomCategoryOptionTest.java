@@ -1,4 +1,4 @@
-package com.project.symptoms;
+package com.project.symptoms.db.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
