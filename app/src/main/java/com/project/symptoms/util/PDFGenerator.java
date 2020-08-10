@@ -11,6 +11,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
@@ -120,8 +121,8 @@ public class PDFGenerator {
             PdfPTable glucoseData = new PdfPTable(2);
             glucoseData.setWidths(new int[]{5,5});
             glucoseData.setHeaderRows(1);
-            glucoseData.addCell(appResources.getString(R.string.glucose_table_date_column));
-            glucoseData.addCell(appResources.getString(R.string.glucose_table_value_column));
+            glucoseData.addCell(new Phrase(appResources.getString(R.string.glucose_table_date_column), commonTextFont));
+            glucoseData.addCell(new Phrase(appResources.getString(R.string.glucose_table_value_column), commonTextFont));
             mainPDFDocument.add(glucoseData);
         } catch (DocumentException e) {
             e.printStackTrace();
