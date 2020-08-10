@@ -119,8 +119,6 @@ public class PDFGenerator {
         try {
             mainPDFDocument.add(glucoseTitle);
             PdfPTable glucoseData = new PdfPTable(2);
-            glucoseData.setWidths(new int[]{5,5});
-            glucoseData.setHeaderRows(1);
             glucoseData.addCell(new Phrase(appResources.getString(R.string.glucose_table_date_column), commonTextFont));
             glucoseData.addCell(new Phrase(appResources.getString(R.string.glucose_table_value_column), commonTextFont));
             mainPDFDocument.add(glucoseData);
