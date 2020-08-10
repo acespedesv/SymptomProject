@@ -65,8 +65,6 @@ public class PDFGenerator {
             e.printStackTrace();
         }
 
-        mainPDFDocument.open();
-
         Paragraph title = new Paragraph(appResources.getString(R.string.pdf_title));
         title.setAlignment(Element.ALIGN_CENTER);
         title.setFont(titlesFont);
@@ -75,12 +73,12 @@ public class PDFGenerator {
         subtitle.setAlignment(Element.ALIGN_CENTER);
 
         try {
+            mainPDFDocument.open();
             mainPDFDocument.add(title);
             mainPDFDocument.add(subtitle);
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-        mainPDFDocument.close();
 
     }
 
@@ -111,7 +109,6 @@ public class PDFGenerator {
     }
 
     public boolean writeGlucoseHistoryToPDF(long startDate, long endDate){
-        mainPDFDocument.open();
 
         if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
         drawHorizontalLine();
@@ -147,16 +144,15 @@ public class PDFGenerator {
     }
 
     private void addDateRangeToPDF(long startDate, long endDate) {
-        if (!mainPDFDocument.isOpen()) mainPDFDocument.open();
         String startDateAsString = DateTimeUtils.getInstance().getStringDateFromLong(startDate);
-        String EndDateAsString = DateTimeUtils.getInstance().getStringDateFromLong(endDate);
+        String endDateAsString = DateTimeUtils.getInstance().getStringDateFromLong(endDate);
         Paragraph datesRange = new Paragraph(appResources.getString(R.string.date_range)
                 + "\n"
                 + appResources.getString(R.string.start_date)
                 + startDateAsString
                 + " "
                 + appResources.getString(R.string.end_date)
-                + endDate);
+                + endDateAsString);
         datesRange.setFont(subTitlesFont);
         datesRange.setAlignment(Element.ALIGN_CENTER);
         try {
@@ -164,22 +160,18 @@ public class PDFGenerator {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-        if (mainPDFDocument.isOpen()) mainPDFDocument.close();
     }
 
     private void drawHorizontalLine(){
-        if (!mainPDFDocument.isOpen()) mainPDFDocument.open();
         LineSeparator ls = new LineSeparator();
         try {
             mainPDFDocument.add(new Chunk(ls));
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-        if (mainPDFDocument.isOpen()) mainPDFDocument.close();
     }
 
     private void insertUserDate(){
-        if (!mainPDFDocument.isOpen()) mainPDFDocument.open();
         Paragraph userInfo = new Paragraph("Paciente: Isaac Mena López\nCédula: 402400867\nFecha de nacimient: 07/11/98");
         userInfo.setFont(subTitlesFont);
         userInfo.setAlignment(Element.ALIGN_CENTER);
@@ -188,7 +180,6 @@ public class PDFGenerator {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-        if (mainPDFDocument.isOpen()) mainPDFDocument.close();
     }
 
 }
