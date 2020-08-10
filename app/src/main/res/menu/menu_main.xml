@@ -22,6 +22,12 @@
                 android:icon="@drawable/ic_info"
                 app:showAsAction="ifRoom" />
 
+            <item
+                android:id="@+id/action_pdf"
+                android:title="@string/pdf_menu"
+                android:icon="@drawable/ic_info"
+                app:showAsAction="ifRoom" />
+
         </menu>
 
     </item>

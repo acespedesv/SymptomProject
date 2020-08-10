@@ -128,9 +128,9 @@ public class PDFGenerator {
             glucoseData.addCell(appResources.getString(R.string.glucose_table_date_column));
             glucoseData.addCell(appResources.getString(R.string.glucose_table_value_column));
             mainPDFDocument.add(glucoseData);
-
         } catch (DocumentException e) {
             e.printStackTrace();
+            return false;
         }
         mainPDFDocument.close();
         return true;
