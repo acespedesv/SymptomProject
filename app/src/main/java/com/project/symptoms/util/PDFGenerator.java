@@ -12,6 +12,8 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
@@ -114,13 +116,26 @@ public class PDFGenerator {
         insertUserDate();
         drawHorizontalLine();
 
-        Paragraph glucoseTitle = new Paragraph(appResources.getString(R.string.glucose_title), subTitlesFont);
+        Paragraph glucoseTitle = new Paragraph(appResources.getString(R.string.glucose_title) + "\n", subTitlesFont);
 
         try {
             mainPDFDocument.add(glucoseTitle);
             PdfPTable glucoseData = new PdfPTable(2);
-            glucoseData.addCell(new Phrase(appResources.getString(R.string.glucose_table_date_column), commonTextFont));
-            glucoseData.addCell(new Phrase(appResources.getString(R.string.glucose_table_value_column), commonTextFont));
+
+            PdfPCell dateHeaderCell = new PdfPCell();
+            dateHeaderCell.setBorder(Rectangle.BOTTOM | Rectangle.RIGHT);
+            dateHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_date_column), commonTextFont));
+
+            PdfPCell valueHeaderCell = new PdfPCell();
+            dateHeaderCell.setBorder(Rectangle.BOTTOM | Rectangle.LEFT);
+            valueHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            valueHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            valueHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_value_column), commonTextFont));
+
+            glucoseData.addCell(dateHeaderCell);
+            glucoseData.addCell(valueHeaderCell);
             mainPDFDocument.add(glucoseData);
         } catch (DocumentException e) {
             e.printStackTrace();
