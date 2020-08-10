@@ -60,16 +60,14 @@ public class PDFGenerator {
         documentPath = Environment.getExternalStorageDirectory() + "/" + documentName;
 
         mainPDFDocument = new Document();
-        try { PdfWriter.getInstance(mainPDFDocument, new FileOutputStream(documentPath)); }
+        try { PdfWriter.getInstance(mainPDFDocument, new FileOutputStream(documentPath)).setInitialLeading(20); }
         catch (FileNotFoundException | DocumentException e) {
             e.printStackTrace();
         }
 
         Paragraph title = new Paragraph(appResources.getString(R.string.pdf_title), titlesFont);
         title.setAlignment(Element.ALIGN_CENTER);
-        //title.setFont(titlesFont);
         Paragraph subtitle = new Paragraph(appResources.getString(R.string.pdf_subtitle), subTitlesFont);
-        //subtitle.setFont(subTitlesFont);
         subtitle.setAlignment(Element.ALIGN_CENTER);
 
         try {
@@ -115,12 +113,12 @@ public class PDFGenerator {
         insertUserDate();
         drawHorizontalLine();
 
-        Paragraph glucoseTitle = new Paragraph(appResources.getString(R.string.glucose_title));
-        glucoseTitle.setFont(titlesFont);
+        Paragraph glucoseTitle = new Paragraph(appResources.getString(R.string.glucose_title), subTitlesFont);
 
         try {
             mainPDFDocument.add(glucoseTitle);
             PdfPTable glucoseData = new PdfPTable(2);
+            glucoseData.setWidths(new int[]{5,5});
             glucoseData.setHeaderRows(1);
             glucoseData.addCell(appResources.getString(R.string.glucose_table_date_column));
             glucoseData.addCell(appResources.getString(R.string.glucose_table_value_column));
