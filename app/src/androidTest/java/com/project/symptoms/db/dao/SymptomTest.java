@@ -40,18 +40,6 @@ public class SymptomTest {
         //given
         long generatedId = -1;
         SymptomModel newSymptom = new SymptomModel();
-        newSymptom.setCirclePosX(0);
-        newSymptom.setCirclePosY(0);
-        newSymptom.setDuration(0);
-        newSymptom.setCircleRadius(10);
-        newSymptom.setDescription("Description");
-        newSymptom.setCausingDrug("causingDrug");
-        newSymptom.setCausingFood("causingFood");
-        newSymptom.setIntensity("low");
-        newSymptom.setIntermittence(1);
-        newSymptom.setCircleSide(1);
-        newSymptom.setStartDate(1000);
-        newSymptom.setStartTime(2000);
 
         //when
         try {
@@ -69,33 +57,7 @@ public class SymptomTest {
         //given
         List<SymptomModel> symptomModelList = null;
         SymptomModel symptom1 = new SymptomModel();
-        symptom1.setCirclePosX(0);
-        symptom1.setCirclePosY(0);
-        symptom1.setDuration(0);
-        symptom1.setCircleRadius(10);
-        symptom1.setDescription("Description");
-        symptom1.setCausingDrug("causingDrug");
-        symptom1.setCausingFood("causingFood");
-        symptom1.setIntensity("low");
-        symptom1.setIntermittence(1);
-        symptom1.setCircleSide(1);
-        symptom1.setStartDate(1000);
-        symptom1.setStartTime(2000);
-
         SymptomModel symptom2 = new SymptomModel();
-        symptom2.setCirclePosX(10);
-        symptom2.setCirclePosY(10);
-        symptom2.setDuration(0);
-        symptom2.setCircleRadius(10);
-        symptom2.setDescription("Description");
-        symptom2.setCausingDrug("causingDrug");
-        symptom2.setCausingFood("causingFood");
-        symptom2.setIntensity("low");
-        symptom2.setIntermittence(1);
-        symptom2.setCircleSide(1);
-        symptom2.setStartDate(1000);
-        symptom2.setStartTime(2000);
-
         try {
             symptomDao.insert(symptom1);
             symptomDao.insert(symptom2);
@@ -118,33 +80,12 @@ public class SymptomTest {
         //given
         List<SymptomModel> symptomModelList = null;
         SymptomModel symptom1 = new SymptomModel();
-        symptom1.setCirclePosX(0);
-        symptom1.setCirclePosY(0);
-        symptom1.setDuration(0);
-        symptom1.setCircleRadius(10);
-        symptom1.setDescription("Description");
-        symptom1.setCausingDrug("causingDrug");
-        symptom1.setCausingFood("causingFood");
-        symptom1.setIntensity("low");
-        symptom1.setIntermittence(1);
         symptom1.setCircleSide(1);
         symptom1.setStartDate(1000);
-        symptom1.setStartTime(2000);
 
         SymptomModel symptom2 = new SymptomModel();
-        symptom2.setCirclePosX(10);
-        symptom2.setCirclePosY(10);
-        symptom2.setDuration(0);
-        symptom2.setCircleRadius(10);
-        symptom2.setDescription("Description");
-        symptom2.setCausingDrug("causingDrug");
-        symptom2.setCausingFood("causingFood");
-        symptom2.setIntensity("low");
-        symptom2.setIntermittence(1);
         symptom2.setCircleSide(1);
         symptom2.setStartDate(0);
-        symptom2.setStartTime(0);
-
         try {
             symptomDao.insert(symptom1);
             symptomDao.insert(symptom2);
@@ -166,18 +107,6 @@ public class SymptomTest {
         long generatedId = -1;
         int totalRowsAffected = -1;
         SymptomModel symptom = new SymptomModel();
-        symptom.setCirclePosX(0);
-        symptom.setCirclePosY(0);
-        symptom.setDuration(0);
-        symptom.setCircleRadius(10);
-        symptom.setDescription("Description");
-        symptom.setCausingDrug("causingDrug");
-        symptom.setCausingFood("causingFood");
-        symptom.setIntensity("low");
-        symptom.setIntermittence(1);
-        symptom.setCircleSide(1);
-        symptom.setStartDate(1000);
-        symptom.setStartTime(2000);
 
         //when
         try {
@@ -198,17 +127,7 @@ public class SymptomTest {
         int totalRowsAffected = -1;
         String descriptionUpdated = "descriptionUpdated";
         SymptomModel symptom = new SymptomModel();
-        symptom.setCirclePosX(0);
-        symptom.setCirclePosY(0);
-        symptom.setDuration(0);
-        symptom.setCircleRadius(10);
-        symptom.setCausingDrug("causingDrug");
-        symptom.setCausingFood("causingFood");
-        symptom.setIntensity("low");
-        symptom.setIntermittence(1);
-        symptom.setCircleSide(1);
-        symptom.setStartDate(1000);
-        symptom.setStartTime(2000);
+
 
         //when
         try {
@@ -231,18 +150,6 @@ public class SymptomTest {
         long generatedId = -1;
         SymptomModel selectedSymptom = null;
         SymptomModel symptom = new SymptomModel();
-        symptom.setCirclePosX(0);
-        symptom.setCirclePosY(0);
-        symptom.setDuration(0);
-        symptom.setCircleRadius(10);
-        symptom.setDescription("description");
-        symptom.setCausingDrug("causingDrug");
-        symptom.setCausingFood("causingFood");
-        symptom.setIntensity("low");
-        symptom.setIntermittence(1);
-        symptom.setCircleSide(1);
-        symptom.setStartDate(1000);
-        symptom.setStartTime(2000);
 
         //when
         try {
