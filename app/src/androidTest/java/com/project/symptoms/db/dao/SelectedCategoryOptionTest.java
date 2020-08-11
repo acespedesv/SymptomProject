@@ -53,7 +53,7 @@ public class SelectedCategoryOptionTest {
     }
 
     @Test
-    public void givenExistedSymptomId_whenSelectAllBySymptom_thenReturnList() {
+    public void givenExistingSymptomId_whenSelectAllBySymptom_thenReturnList() {
         List<SelectedCategoryOptionModel> selectedCategoryOptionModelList = null;
         try {
             //given
@@ -71,7 +71,7 @@ public class SelectedCategoryOptionTest {
     }
 
     @Test
-    public void givenExistedSelectedCategoryOptions_whenSelectAll_thenReturnList() {
+    public void givenExistingSelectedCategoryOptions_whenSelectAll_thenReturnList() {
         List<SelectedCategoryOptionModel> selectedCategoryOptionModelList = null;
         try {
             //given
@@ -89,7 +89,7 @@ public class SelectedCategoryOptionTest {
     }
 
     @Test
-    public void givenExistedSelectedCategoryOption_whenDelete_thenReturnRowsDeleted() {
+    public void givenExistingSelectedCategoryOption_whenDelete_thenReturnRowsDeleted() {
         //given
         int rowsDeleted = -1;
         long symptomId = 1;
@@ -106,7 +106,7 @@ public class SelectedCategoryOptionTest {
         assertThat(rowsDeleted).isEqualTo(1);
     }
     @Test
-    public void givenExistedSelectedCategoryOption_whenDeleteBySymptomId_thenReturnRowsDeleted() {
+    public void givenExistingSelectedCategoryOption_whenDeleteBySymptomId_thenReturnRowsDeleted() {
         //given
         int rowsDeleted = -1;
         long symptomId = 1;

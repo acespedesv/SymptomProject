@@ -56,7 +56,7 @@ public class SymptomCategoryTest{
     }
 
     @Test
-    public void givenExistedCategory_whenSelectCategoryByName_thenReturnCategory(){
+    public void givenExistingCategory_whenSelectCategoryByName_thenReturnCategory(){
         //given
         String CategoryName = "CategoryName";
         SymptomCategoryModel Category = new SymptomCategoryModel(CategoryName);

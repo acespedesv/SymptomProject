@@ -56,7 +56,7 @@ public class SymptomCategoryOptionTest {
     }
 
     @Test
-    public void givenExistedSymptomCategoryOptionName_whenSelectByName_thenReturnSymptomCategoryOption() {
+    public void givenExistingSymptomCategoryOptionName_whenSelectByName_thenReturnSymptomCategoryOption() {
         //given
         String categoryOptionName = "categoryOptionName";
         SymptomCategoryOptionModel categoryOption = new SymptomCategoryOptionModel(1, categoryOptionName, 1);
@@ -99,7 +99,7 @@ public class SymptomCategoryOptionTest {
     }
 
     @Test
-    public void givenExistedSymptomCategoryOptionId_whenSelectById_thenReturnSymptomCategoryOption() {
+    public void givenExistingSymptomCategoryOptionId_whenSelectById_thenReturnSymptomCategoryOption() {
         //given
         long id = -1;
         SymptomCategoryOptionModel categoryOption = new SymptomCategoryOptionModel(1, "existedSymptomCategoryOptionName", 1);

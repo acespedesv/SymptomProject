@@ -24,7 +24,6 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
         ContentValues values = new ContentValues();
         values.put(Contract.Category.COLUMN_NAME_NAME, symptomCategoryModel.getName());
         long newId = db.insert(Contract.Category.TABLE_NAME,null, values);
-//        db.close();
         return newId;
     }
 
@@ -35,7 +34,6 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
         String[] whereArgs = new String[] {name};
         Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         SymptomCategoryModel result = buildModelFromCursor(cursor);
-//        db.close();
         return result;
     }
 
@@ -44,7 +42,6 @@ public class SymptomCategoryDaoImpl implements SymptomCategoryDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(Contract.Category.TABLE_NAME, null, null, null, null, null, null);
         List<SymptomCategoryModel> result = buildListFromCursor(cursor);
-//        db.close();
         return result;
     }
 

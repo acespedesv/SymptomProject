@@ -65,7 +65,7 @@ public class SymptomTest {
     }
 
     @Test
-    public void givenExistedSymptoms_whenListAll_thenReturnedList() {
+    public void givenExistingSymptoms_whenListAll_thenReturnedList() {
         //given
         List<SymptomModel> symptomModelList = null;
         SymptomModel symptom1 = new SymptomModel();
@@ -114,7 +114,7 @@ public class SymptomTest {
     }
 
     @Test
-    public void givenExistedSymptoms_whenListAllByDateAndSide_thenReturnedList() {
+    public void givenExistingSymptoms_whenListAllByDateAndSide_thenReturnedList() {
         //given
         List<SymptomModel> symptomModelList = null;
         SymptomModel symptom1 = new SymptomModel();
@@ -161,7 +161,7 @@ public class SymptomTest {
     }
 
     @Test
-    public void givenExistedSymptomId_whenDeleted_thenReturnTotalRowsAffected() {
+    public void givenExistingSymptomId_whenDeleted_thenReturnTotalRowsAffected() {
         //given
         long generatedId = -1;
         int totalRowsAffected = -1;
@@ -192,7 +192,7 @@ public class SymptomTest {
     }
 
     @Test
-    public void givenExitedSymptom_whenUpdate_thenReturnTotalRowsAffected() {
+    public void givenExistingSymptom_whenUpdate_thenReturnTotalRowsAffected() {
         //given
         long generatedId = -1;
         int totalRowsAffected = -1;
@@ -226,7 +226,7 @@ public class SymptomTest {
     }
 
     @Test
-    public void givenExistedSymptomId_whenSelectById_thenReturnSymptom() {
+    public void givenExistingSymptomId_whenSelectById_thenReturnSymptom() {
         //given
         long generatedId = -1;
         SymptomModel selectedSymptom = null;
