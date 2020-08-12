@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Environment;
 import android.util.Log;
 
-import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
