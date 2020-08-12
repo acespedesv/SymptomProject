@@ -100,7 +100,7 @@ public class PressureDaoImpl implements PressureDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = "date BETWEEN ? AND ?";
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
-        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<PressureModel> result = new ArrayList<>();
         while(cursor.moveToNext()){
             result.add(buildModelFromCursor(cursor));

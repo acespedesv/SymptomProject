@@ -82,6 +82,7 @@ public class PDFGenerator {
             mainPDFDocument.open();
             mainPDFDocument.add(title);
             mainPDFDocument.add(subtitle);
+            mainPDFDocument.close();
         } catch (DocumentException e) {
             e.printStackTrace();
         }
@@ -115,7 +116,7 @@ public class PDFGenerator {
     }
 
     public boolean writeGlucoseHistoryToPDF(long startDate, long endDate){
-
+        mainPDFDocument.open();
         if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
 
         drawHorizontalLine();
@@ -145,7 +146,8 @@ public class PDFGenerator {
             glucoseData.addCell(dateHeaderCell);
             glucoseData.addCell(valueHeaderCell);
 
-            List<GlucoseModel> models = glucoseController.select(startDate, endDate);
+            //List<GlucoseModel> models = glucoseController.select(startDate, endDate);
+            List<GlucoseModel> models = glucoseController.listAll();
             Log.e("PDF", "Models list size: " + models.size());
             for (GlucoseModel model: models) {
                 String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
