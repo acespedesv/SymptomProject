@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(pdfGenerator.writeGlucoseHistoryToPDF(todayDate, tomorrowDate))
+        if(pdfGenerator.generateCompletePDF(todayDate, tomorrowDate))
             Toast.makeText(this, getResources().getString(R.string.pdf_success), Toast.LENGTH_SHORT).show();
         else Toast.makeText(this, getResources().getString(R.string.pdf_failure), Toast.LENGTH_SHORT).show();
 

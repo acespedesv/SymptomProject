@@ -10,10 +10,8 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -25,6 +23,7 @@ import com.project.symptoms.db.controller.SymptomCategoryController;
 import com.project.symptoms.db.controller.SymptomCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.GlucoseModel;
+import com.project.symptoms.db.model.PressureModel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -73,20 +72,6 @@ public class PDFGenerator {
             e.printStackTrace();
         }
 
-        Paragraph title = new Paragraph(appResources.getString(R.string.pdf_title), titlesFont);
-        title.setAlignment(Element.ALIGN_CENTER);
-        Paragraph subtitle = new Paragraph(appResources.getString(R.string.pdf_subtitle), subTitlesFont);
-        subtitle.setAlignment(Element.ALIGN_CENTER);
-
-        try {
-            mainPDFDocument.open();
-            mainPDFDocument.add(title);
-            mainPDFDocument.add(subtitle);
-            mainPDFDocument.close();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void setUpFonts(){
@@ -112,15 +97,35 @@ public class PDFGenerator {
     }
 
     public boolean generateCompletePDF(long startDate, long endDate){
-        return true;
+
+        Paragraph title = new Paragraph(appResources.getString(R.string.pdf_title), titlesFont);
+        title.setAlignment(Element.ALIGN_CENTER);
+        Paragraph subtitle = new Paragraph(appResources.getString(R.string.pdf_subtitle), subTitlesFont);
+        subtitle.setAlignment(Element.ALIGN_CENTER);
+
+        mainPDFDocument.open();
+
+        try {
+            mainPDFDocument.add(title);
+            mainPDFDocument.add(subtitle);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        boolean output = writeGlucoseHistoryToPDF(startDate, endDate) &&
+                writeBloodPressureHistoryToPDF(startDate, endDate) &&
+                writeSymptomsHistoryToPDF(startDate, endDate);
+
+        mainPDFDocument.close();
+
+        return output;
     }
 
     public boolean writeGlucoseHistoryToPDF(long startDate, long endDate){
-        mainPDFDocument.open();
         if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
 
         drawHorizontalLine();
-        insertUserDate();
+        insertUserData();
         drawHorizontalLine();
 
         Phrase glucoseTitle = new Phrase(appResources.getString(R.string.glucose_title), subTitlesFont);
@@ -136,7 +141,7 @@ public class PDFGenerator {
             PdfPCell dateHeaderCell = new PdfPCell();
             dateHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
             dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_date_column), tableHeadersFont));
+            dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.table_date_column), tableHeadersFont));
 
             PdfPCell valueHeaderCell = new PdfPCell();
             valueHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
@@ -161,12 +166,61 @@ public class PDFGenerator {
             e.printStackTrace();
             return false;
         }
-        mainPDFDocument.close();
         return true;
     }
 
     public boolean writeBloodPressureHistoryToPDF(long startDate, long endDate){
+        if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
 
+        drawHorizontalLine();
+        insertUserData();
+        drawHorizontalLine();
+
+        Phrase glucoseTitle = new Phrase(appResources.getString(R.string.pressure_title), subTitlesFont);
+
+        try {
+
+            mainPDFDocument.add(NEWLINE);
+            mainPDFDocument.add(glucoseTitle);
+            mainPDFDocument.add(NEWLINE);
+
+            PdfPTable pressureData = new PdfPTable(3);
+
+            PdfPCell dateHeaderCell = new PdfPCell();
+            dateHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.table_date_column), tableHeadersFont));
+
+            PdfPCell systolicHeaderCell = new PdfPCell();
+            systolicHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            systolicHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            systolicHeaderCell.addElement(new Phrase(appResources.getString(R.string.pressure_table_systolic_column), tableHeadersFont));
+
+            PdfPCell diastolicHeaderCell = new PdfPCell();
+            diastolicHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            diastolicHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            diastolicHeaderCell.addElement(new Phrase(appResources.getString(R.string.pressure_table_diastolic_column), tableHeadersFont));
+
+            pressureData.addCell(dateHeaderCell);
+            pressureData.addCell(systolicHeaderCell);
+            pressureData.addCell(diastolicHeaderCell);
+
+            //List<GlucoseModel> models = glucoseController.select(startDate, endDate);
+            List<PressureModel> models = pressureController.selectAll();
+            Log.e("PDF", "Models list size: " + models.size());
+            for (PressureModel model: models) {
+                String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
+                pressureData.addCell(new Phrase(date, commonTextFont));
+                pressureData.addCell(new Phrase(Integer.toString(model.getSystolic()), commonTextFont));
+                pressureData.addCell(new Phrase(Integer.toString(model.getDiastolic()), commonTextFont));
+            }
+
+            mainPDFDocument.add(pressureData);
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
@@ -203,7 +257,7 @@ public class PDFGenerator {
         }
     }
 
-    private void insertUserDate(){
+    private void insertUserData(){
         Paragraph userInfo = new Paragraph("Paciente: Isaac Mena López\nCédula: 402400867\nFecha de nacimiento: 07/11/98");
         userInfo.setFont(subTitlesFont);
         userInfo.setAlignment(Element.ALIGN_CENTER);
