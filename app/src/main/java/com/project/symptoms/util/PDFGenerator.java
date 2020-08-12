@@ -246,6 +246,7 @@ public class PDFGenerator {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+        START_END_DATE_ADDED = true;
     }
 
     private void drawHorizontalLine(){
