@@ -112,6 +112,7 @@ public class PDFGenerator {
     public boolean writeGlucoseHistoryToPDF(long startDate, long endDate){
 
         if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
+
         drawHorizontalLine();
         insertUserDate();
         drawHorizontalLine();
@@ -125,13 +126,11 @@ public class PDFGenerator {
             glucoseData.setWidthPercentage(100);
 
             PdfPCell dateHeaderCell = new PdfPCell();
-            dateHeaderCell.setBorder(10);
             dateHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
             dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_date_column), commonTextFont));
 
             PdfPCell valueHeaderCell = new PdfPCell();
-            dateHeaderCell.setBorder(6);
             valueHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
             valueHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             valueHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_value_column), commonTextFont));
@@ -139,6 +138,9 @@ public class PDFGenerator {
             glucoseData.addCell(dateHeaderCell);
             glucoseData.addCell(valueHeaderCell);
             mainPDFDocument.add(glucoseData);
+
+
+
         } catch (DocumentException e) {
             e.printStackTrace();
             return false;

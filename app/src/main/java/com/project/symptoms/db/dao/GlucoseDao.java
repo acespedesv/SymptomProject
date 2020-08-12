@@ -17,4 +17,6 @@ public interface GlucoseDao {
 
     List<GlucoseModel> listAll() throws Exception;
 
+    List<GlucoseModel> select(long initialDate, long finalDate);
+
 }

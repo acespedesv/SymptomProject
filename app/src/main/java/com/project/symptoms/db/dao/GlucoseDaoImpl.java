@@ -99,6 +99,21 @@ public class GlucoseDaoImpl implements GlucoseDao {
         return result;
     }
 
+    @Override
+    public List<GlucoseModel> select(long initialDate, long finalDate) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = "date BETWEEN ? AND ?";
+        String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
+        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        List<GlucoseModel> result = new ArrayList<>();
+        while(cursor.moveToNext()){
+            result.add(buildModelFromCursor(cursor));
+        }
+        cursor.close();
+        db.close();
+        return result;
+    }
+
     private GlucoseModel buildModelFromCursor(Cursor cursor){
         long id = cursor.getLong(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_ID_PK));
         int value = cursor.getInt(cursor.getColumnIndex(Contract.Glucose.COLUMN_NAME_VALUE));
