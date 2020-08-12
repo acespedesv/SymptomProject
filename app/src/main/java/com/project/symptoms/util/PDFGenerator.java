@@ -126,6 +126,7 @@ public class PDFGenerator {
 
         try {
 
+            mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(glucoseTitle);
             mainPDFDocument.add(NEWLINE);
 
@@ -144,7 +145,7 @@ public class PDFGenerator {
             glucoseData.addCell(dateHeaderCell);
             glucoseData.addCell(valueHeaderCell);
 
-            List<GlucoseModel> models = glucoseController.listAll();
+            List<GlucoseModel> models = glucoseController.select(startDate, endDate);
             Log.e("PDF", "Models list size: " + models.size());
             for (GlucoseModel model: models) {
                 String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
