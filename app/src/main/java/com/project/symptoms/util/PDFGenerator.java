@@ -25,6 +25,7 @@ import com.project.symptoms.db.controller.SymptomCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.db.model.PressureModel;
+import com.project.symptoms.db.model.SymptomModel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -176,12 +177,12 @@ public class PDFGenerator {
     public boolean writeBloodPressureHistoryToPDF(long startDate, long endDate){
         if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
 
-        Phrase glucoseTitle = new Phrase(appResources.getString(R.string.pressure_title), subTitlesFont);
+        Phrase pressureTitle = new Phrase(appResources.getString(R.string.pressure_title), subTitlesFont);
 
         try {
 
             mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(glucoseTitle);
+            mainPDFDocument.add(pressureTitle);
             mainPDFDocument.add(NEWLINE);
 
             PdfPTable pressureData = new PdfPTable(3);
@@ -208,7 +209,7 @@ public class PDFGenerator {
             pressureData.addCell(systolicHeaderCell);
             pressureData.addCell(diastolicHeaderCell);
 
-            //List<GlucoseModel> models = glucoseController.select(startDate, endDate);
+            //List<PressureModel> models = pressureController.select(startDate, endDate);
             List<PressureModel> models = pressureController.selectAll();
             Log.e("PDF", "Models list size: " + models.size());
             for (PressureModel model: models) {
@@ -229,6 +230,28 @@ public class PDFGenerator {
 
     public boolean writeSymptomsHistoryToPDF(long startDate, long endDate){
 
+        if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
+
+        Phrase symptomTitle = new Phrase(appResources.getString(R.string.symptom_title), subTitlesFont);
+
+        try {
+
+            mainPDFDocument.add(NEWLINE);
+            mainPDFDocument.add(symptomTitle);
+            mainPDFDocument.add(NEWLINE);
+
+            //List<SymptomModel> models = symptomController.select(startDate, endDate);
+            List<SymptomModel> models = symptomController.listAll();
+            Log.e("PDF", "Models list size: " + models.size());
+            for (SymptomModel model: models) {
+
+            }
+
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 

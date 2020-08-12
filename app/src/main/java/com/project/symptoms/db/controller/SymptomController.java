@@ -82,6 +82,16 @@ public class SymptomController {
         return result;
     }
 
+    public List<SymptomModel> select(long initialDate, long finalDate) {
+        List<SymptomModel> result = null;
+        try {
+            result = symptomDao.select(initialDate, finalDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public SymptomModel findById(long symptomId){
         SymptomModel result = null;
         try{

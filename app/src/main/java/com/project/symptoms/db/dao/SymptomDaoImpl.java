@@ -59,6 +59,19 @@ public class SymptomDaoImpl implements SymptomDao{
         return result;
     }
 
+    @Override
+    public List<SymptomModel> select(long initialDate, long finalDate) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = Contract.Symptom.COLUMN_NAME_START_DATE + " BETWEEN ? AND ?";
+        String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
+        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        List<SymptomModel> result;
+        result = buildListFromCursor(cursor);
+        cursor.close();
+        db.close();
+        return result;
+    }
+
     private List<SymptomModel> buildListFromCursor(Cursor cursor){
         List<SymptomModel> result = new ArrayList<>();
         int id;

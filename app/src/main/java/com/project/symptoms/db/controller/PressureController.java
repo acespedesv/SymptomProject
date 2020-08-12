@@ -81,6 +81,16 @@ public class PressureController {
         return result;
     }
 
+    public List<PressureModel> select(long initialDate, long finalDate) {
+        List<PressureModel> result = null;
+        try {
+            result = pressureDao.select(initialDate, finalDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public PressureModel select(long id){
         PressureModel result = null;
         try{
