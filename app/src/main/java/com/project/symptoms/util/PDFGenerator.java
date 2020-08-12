@@ -23,9 +23,11 @@ import com.project.symptoms.db.controller.PressureController;
 import com.project.symptoms.db.controller.SymptomCategoryController;
 import com.project.symptoms.db.controller.SymptomCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
+import com.project.symptoms.db.model.GlucoseModel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.List;
 
 public class PDFGenerator {
 
@@ -137,9 +139,16 @@ public class PDFGenerator {
 
             glucoseData.addCell(dateHeaderCell);
             glucoseData.addCell(valueHeaderCell);
+
+            List<GlucoseModel> models = glucoseController.select(startDate, endDate);
+
+            for (GlucoseModel model: models) {
+                String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
+                glucoseData.addCell(new Phrase(date, commonTextFont));
+                glucoseData.addCell(new Phrase(model.getValue()));
+            }
+
             mainPDFDocument.add(glucoseData);
-
-
 
         } catch (DocumentException e) {
             e.printStackTrace();
