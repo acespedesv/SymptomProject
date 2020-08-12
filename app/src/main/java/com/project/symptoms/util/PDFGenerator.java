@@ -188,17 +188,20 @@ public class PDFGenerator {
             PdfPTable pressureData = new PdfPTable(3);
 
             PdfPCell dateHeaderCell = new PdfPCell();
-            dateHeaderCell.setHorizontalAlignment();
+            dateHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            dateHeaderCell.setUseAscender(true);
             dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.table_date_column), tableHeadersFont));
 
             PdfPCell systolicHeaderCell = new PdfPCell();
-            systolicHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            systolicHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            systolicHeaderCell.setUseAscender(true);
             systolicHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             systolicHeaderCell.addElement(new Phrase(appResources.getString(R.string.pressure_table_systolic_column), tableHeadersFont));
 
             PdfPCell diastolicHeaderCell = new PdfPCell();
-            diastolicHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            diastolicHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            diastolicHeaderCell.setUseAscender(true);
             diastolicHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             diastolicHeaderCell.addElement(new Phrase(appResources.getString(R.string.pressure_table_diastolic_column), tableHeadersFont));
 
