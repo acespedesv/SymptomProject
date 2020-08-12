@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Environment;
 import android.util.Log;
 
+import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -16,6 +17,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+
 import com.project.symptoms.R;
 import com.project.symptoms.db.controller.GlucoseController;
 import com.project.symptoms.db.controller.PressureController;
@@ -27,6 +29,7 @@ import com.project.symptoms.db.model.PressureModel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class PDFGenerator {
@@ -139,12 +142,14 @@ public class PDFGenerator {
             PdfPTable glucoseData = new PdfPTable(2);
 
             PdfPCell dateHeaderCell = new PdfPCell();
-            dateHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            dateHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            dateHeaderCell.setUseAscender(true);
             dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.table_date_column), tableHeadersFont));
 
             PdfPCell valueHeaderCell = new PdfPCell();
-            valueHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            valueHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            valueHeaderCell.setUseAscender(true);
             valueHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             valueHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_value_column), tableHeadersFont));
 
@@ -183,7 +188,7 @@ public class PDFGenerator {
             PdfPTable pressureData = new PdfPTable(3);
 
             PdfPCell dateHeaderCell = new PdfPCell();
-            dateHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+            dateHeaderCell.setHorizontalAlignment();
             dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.table_date_column), tableHeadersFont));
 
