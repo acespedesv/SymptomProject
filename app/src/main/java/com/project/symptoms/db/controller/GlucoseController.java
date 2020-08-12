@@ -25,7 +25,7 @@ public class GlucoseController {
         if (instance == null) {
             instance = new GlucoseController();
             glucoseDao = new GlucoseDaoImpl(context);
-            DateTimeUtils.getInstance();
+            dateTimeUtils = DateTimeUtils.getInstance();
         }
         return instance;
     }
