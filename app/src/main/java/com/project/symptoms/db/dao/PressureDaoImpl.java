@@ -95,6 +95,21 @@ public class PressureDaoImpl implements PressureDao {
         return buildModelFromCursor(cursor);
     }
 
+    @Override
+    public List<PressureModel> select(long initialDate, long finalDate) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = "date BETWEEN ? AND ?";
+        String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
+        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        List<PressureModel> result = new ArrayList<>();
+        while(cursor.moveToNext()){
+            result.add(buildModelFromCursor(cursor));
+        }
+        cursor.close();
+        db.close();
+        return result;
+    }
+
     private PressureModel buildModelFromCursor(Cursor cursor) {
         long id = cursor.getLong(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_ID_PK));
         int systolic = cursor.getInt(cursor.getColumnIndex(Contract.Pressure.COLUMN_NAME_SYSTOLIC));
