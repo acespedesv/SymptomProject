@@ -108,7 +108,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
                 Contract.Glucose.COLUMN_NAME_DATE
         };
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
-        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, columns, whereClause, whereArgs, null, null, null);
+        Cursor cursor = db.query(Contract.Glucose.TABLE_NAME, columns, whereClause, whereArgs, null, null, null);
         List<GlucoseModel> result = new ArrayList<>();
         while(cursor.moveToNext()){
             result.add(buildModelFromCursor(cursor));
