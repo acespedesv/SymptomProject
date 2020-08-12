@@ -112,6 +112,10 @@ public class PDFGenerator {
             e.printStackTrace();
         }
 
+        drawHorizontalLine();
+        insertUserData();
+        drawHorizontalLine();
+
         boolean output = writeGlucoseHistoryToPDF(startDate, endDate) &&
                 writeBloodPressureHistoryToPDF(startDate, endDate) &&
                 writeSymptomsHistoryToPDF(startDate, endDate);
@@ -123,10 +127,6 @@ public class PDFGenerator {
 
     public boolean writeGlucoseHistoryToPDF(long startDate, long endDate){
         if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
-
-        drawHorizontalLine();
-        insertUserData();
-        drawHorizontalLine();
 
         Phrase glucoseTitle = new Phrase(appResources.getString(R.string.glucose_title), subTitlesFont);
 
@@ -171,10 +171,6 @@ public class PDFGenerator {
 
     public boolean writeBloodPressureHistoryToPDF(long startDate, long endDate){
         if (!START_END_DATE_ADDED) addDateRangeToPDF(startDate, endDate);
-
-        drawHorizontalLine();
-        insertUserData();
-        drawHorizontalLine();
 
         Phrase glucoseTitle = new Phrase(appResources.getString(R.string.pressure_title), subTitlesFont);
 
