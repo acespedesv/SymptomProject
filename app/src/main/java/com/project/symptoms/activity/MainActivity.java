@@ -240,7 +240,15 @@ public class MainActivity extends AppCompatActivity implements
 
     private void generatePDF() {
         PDFGenerator pdfGenerator = new PDFGenerator(getApplicationContext());
-        if(pdfGenerator.writeGlucoseHistoryToPDF(156515, 456456))
+        long todayDate = DateTimeUtils.getInstance().getCurrentDateTimeAsLong();
+        String tomorrowDateAsString = DateTimeUtils.getInstance().getCurrentDateAsString();
+        long tomorrowDate = todayDate;
+        try {
+            tomorrowDate = DateTimeUtils.getInstance().getTomorrowsDateFromString(tomorrowDateAsString).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(pdfGenerator.writeGlucoseHistoryToPDF(todayDate, tomorrowDate))
             Toast.makeText(this, getResources().getString(R.string.pdf_success), Toast.LENGTH_SHORT).show();
         else Toast.makeText(this, getResources().getString(R.string.pdf_failure), Toast.LENGTH_SHORT).show();
 
