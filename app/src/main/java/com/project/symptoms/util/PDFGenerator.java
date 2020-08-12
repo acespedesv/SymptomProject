@@ -3,6 +3,7 @@ package com.project.symptoms.util;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.util.Log;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -141,11 +142,11 @@ public class PDFGenerator {
             glucoseData.addCell(valueHeaderCell);
 
             List<GlucoseModel> models = glucoseController.listAll();
-
+            Log.e("PDF", "Models list size: " + models.size());
             for (GlucoseModel model: models) {
                 String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
                 glucoseData.addCell(new Phrase(date, commonTextFont));
-                glucoseData.addCell(new Phrase(model.getValue()));
+                glucoseData.addCell(new Phrase(Integer.toString(model.getValue()), commonTextFont));
             }
 
             mainPDFDocument.add(glucoseData);
