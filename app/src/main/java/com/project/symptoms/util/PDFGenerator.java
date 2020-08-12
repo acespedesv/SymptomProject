@@ -50,6 +50,8 @@ public class PDFGenerator {
 
     private boolean START_END_DATE_ADDED = false;
 
+    public static final Chunk NEWLINE = new Chunk("\n");
+
     public PDFGenerator(Context context){
         pressureController = PressureController.getInstance(context);
         glucoseController = GlucoseController.getInstance(context);
@@ -120,23 +122,24 @@ public class PDFGenerator {
         insertUserDate();
         drawHorizontalLine();
 
-        Paragraph glucoseTitle = new Paragraph(appResources.getString(R.string.glucose_title), subTitlesFont);
+        Phrase glucoseTitle = new Phrase(appResources.getString(R.string.glucose_title), subTitlesFont);
 
         try {
+
             mainPDFDocument.add(glucoseTitle);
-            mainPDFDocument.add(Chunk.NEWLINE);
+            mainPDFDocument.add(NEWLINE);
+
             PdfPTable glucoseData = new PdfPTable(2);
-            glucoseData.setWidthPercentage(100);
 
             PdfPCell dateHeaderCell = new PdfPCell();
             dateHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
             dateHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_date_column), commonTextFont));
+            dateHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_date_column), tableHeadersFont));
 
             PdfPCell valueHeaderCell = new PdfPCell();
             valueHeaderCell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
             valueHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            valueHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_value_column), commonTextFont));
+            valueHeaderCell.addElement(new Phrase(appResources.getString(R.string.glucose_table_value_column), tableHeadersFont));
 
             glucoseData.addCell(dateHeaderCell);
             glucoseData.addCell(valueHeaderCell);
