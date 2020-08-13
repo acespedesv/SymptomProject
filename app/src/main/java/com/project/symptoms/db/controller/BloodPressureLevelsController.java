@@ -22,7 +22,7 @@ public class BloodPressureLevelsController {
     public static BloodPressureLevelsController getInstance(Context context){
         if(instance == null){
             instance = new BloodPressureLevelsController();
-            context = context;
+            instance.context = context;
             bloodPressureLevelsDao = new BloodPressureLevelsDaoImpl(context);
         }
         return instance;
