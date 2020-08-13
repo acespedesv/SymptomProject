@@ -28,6 +28,7 @@ public class BodyView extends View {
 
     // Used to draw the circles over the image
     private Paint redBrush;
+    private Paint redBrushBorder;
 
     // The image to draw on the screen
     private Drawable imageDrawable;
@@ -91,9 +92,12 @@ public class BodyView extends View {
 
     private void init(){
         redBrush = new Paint();
+        redBrushBorder = new Paint();
         redBrush.setAntiAlias(false);
         redBrush.setStyle(Paint.Style.FILL);
-        redBrush.setColor(Color.RED);
+        redBrush.setColor(Color.argb(70, 255, 0, 0));
+        redBrushBorder.setStyle(Paint.Style.STROKE);
+        redBrushBorder.setColor(Color.RED);
 
         points = new ArrayList<>();
 
@@ -165,13 +169,17 @@ public class BodyView extends View {
     }
 
     private void drawPermanentPoints(Canvas canvas) {
-        for(Circle point : points)
+        for(Circle point : points){
+            canvas.drawCircle(point.x, point.y, point.radius, redBrushBorder);
             canvas.drawCircle(point.x, point.y, point.radius, redBrush);
+        }
+
     }
 
     private void drawTemporaryPoint(Canvas canvas) {
-        if(temporaryPoint != null)
+        if(temporaryPoint != null){
             canvas.drawCircle(temporaryPoint.x, temporaryPoint.y, temporaryPoint.radius, redBrush);
+        }
     }
 
     private void drawBodyImage(Canvas canvas) {

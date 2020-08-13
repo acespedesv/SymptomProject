@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements
         DateTimeUtils.getInstance().registerAsDatePicker(dateTextView);
     }
 
-    private void launchBodySelection(){
+    private void launchBodySelection() {
         startActivity(new Intent(this, BodySelection.class));
     }
 
@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         // Make the view match the selected body type
-        if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
-        else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
+        if (body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
+        else if (body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
 
         // Setup the flip button
         ImageView flipButton = findViewById(R.id.flip_button);
-        flipButton.setOnClickListener(new View.OnClickListener(){
+        flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bodyView.flip();
@@ -127,9 +127,13 @@ public class MainActivity extends AppCompatActivity implements
         // Capture when text view for the date changes to be able to update the symptoms showed in the body view
         dateTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 try {
@@ -141,11 +145,19 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         yesterdayButton.setOnClickListener(v -> {
-            try { goToYesterday(v); } catch (ParseException e) { e.printStackTrace(); }
+            try {
+                goToYesterday(v);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
 
         tomorrowButton.setOnClickListener(v -> {
-            try { goToTomorrow(v); } catch (ParseException e) { e.printStackTrace(); }
+            try {
+                goToTomorrow(v);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
 
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
@@ -177,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Instantiate new circles from DB data and replace them in the BodyView
         ArrayList<BodyView.Circle> circles = new ArrayList<>();
-        for (SymptomModel symptomModel: symptomModels) {
+        for (SymptomModel symptomModel : symptomModels) {
             BodyView.Circle currentCircle = new BodyView.Circle(symptomModel.getCirclePosX(), symptomModel.getCirclePosY(), symptomModel.getCircleRadius());
             circles.add(currentCircle);
         }
@@ -200,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (id){
+        switch (id) {
             case R.id.action_settings:
                 startSettingsActivity();
                 break;
@@ -214,11 +226,14 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
-        if (isColorRed(r, g, b)){
-            try { getNearestSymptomToCoordinates(posXOnTouch, posYOnTouch);
-            } catch (ParseException e) { e.printStackTrace(); }
+        if (isColorRed(r)) {
+            try {
+                getNearestSymptomToCoordinates(posXOnTouch, posYOnTouch);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            if(nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE){
+            if (nearestSymptomToSelectedId != DEFAULT_SELECTED_SYMPTOM_ID_VALUE) {
                 menu.setHeaderTitle(R.string.symptom_menu_title);
                 getMenuInflater().inflate(R.menu.symptom_menu, menu);
             }
@@ -228,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.edit_symptom:
                 updateSymptom(nearestSymptomToSelectedId);
                 break;
@@ -251,8 +266,8 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(new Intent(this, Settings.class));
     }
 
-    public void launchCircleSizeSelectionDialog(){
-        if(sizeSelectionDialog == null){
+    public void launchCircleSizeSelectionDialog() {
+        if (sizeSelectionDialog == null) {
             sizeSelectionDialog = new CircleSizeSelectionDialog(this, R.style.BottomSheetDialogTheme);
             sizeSelectionDialog.setOnCircleSelectedListener(this);
             sizeSelectionDialog.setOnCircleSizeUpdateListener(this);
@@ -283,29 +298,31 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private boolean isColorRed(int r, int g, int b){
-        return r == 255 && g == 0 && b == 0;
+    private boolean isColorRed(int r) {
+        boolean red = false;
+        if (r == 237 || r == 255 || r == 242 || r == 246) red = true;
+        return red;
     }
 
-    private boolean isColorWhite(int r, int g, int b){
+    private boolean isColorWhite(int r, int g, int b) {
         return r == 255 && g == 255 && b == 255;
     }
 
-    private boolean isColorGrey(int r, int g, int b){
+    private boolean isColorGrey(int r, int g, int b) {
         return r == 230 && g == 230 && b == 230;
     }
 
     // Receives the posX and posY from the body view where the user touched
     @Override
     public void onFragmentInteraction(Uri uri) {
-        posXOnTouch = Float.parseFloat(uri.getQueryParameter("x").replace(",","."));
-        posYOnTouch = Float.parseFloat(uri.getQueryParameter("y").replace(",","."));
-        r = Integer.parseInt(uri.getQueryParameter("r").replace(",","."));
-        g = Integer.parseInt(uri.getQueryParameter("g").replace(",","."));
-        b = Integer.parseInt(uri.getQueryParameter("b").replace(",","."));
+        posXOnTouch = Float.parseFloat(uri.getQueryParameter("x").replace(",", "."));
+        posYOnTouch = Float.parseFloat(uri.getQueryParameter("y").replace(",", "."));
+        r = Integer.parseInt(uri.getQueryParameter("r").replace(",", "."));
+        g = Integer.parseInt(uri.getQueryParameter("g").replace(",", "."));
+        b = Integer.parseInt(uri.getQueryParameter("b").replace(",", "."));
 
-        if(isColorGrey(r, g, b)){
-            if( currentCircle == null) currentCircle = new BodyView.Circle(0,0,10);
+        if (isColorGrey(r, g, b)) {
+            if (currentCircle == null) currentCircle = new BodyView.Circle(0, 0, 10);
             currentCircle.x = posXOnTouch;
             currentCircle.y = posYOnTouch;
             bodyView.setTemporaryPoint(currentCircle);
@@ -339,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(newIntent);
     }
 
-    private void updateSymptom(long symptomId){
+    private void updateSymptom(long symptomId) {
         Intent newIntent = new Intent(this, SymptomForm.class);
         Bundle data = new Bundle();
         data.putLong("symptom_id", symptomId);
@@ -365,9 +382,12 @@ public class MainActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int id) {
                         boolean symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
                         boolean categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
-                        if (symptomDeletionSuccess && categoriesDeletionSuccess){
-                            try { updateSymptomsInBodyView(); }
-                            catch (ParseException e) { e.printStackTrace(); }
+                        if (symptomDeletionSuccess && categoriesDeletionSuccess) {
+                            try {
+                                updateSymptomsInBodyView();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 })
@@ -376,17 +396,18 @@ public class MainActivity extends AppCompatActivity implements
                         // User cancelled the dialog
                     }
                 })
-        .show();
+                .show();
 
         // Reset the value
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
     }
 
     // Class used to hold distances between symptoms coordinates
-    private static class SymptomDistancePair{
+    private static class SymptomDistancePair {
         double distance;
         int symptomId;
-        SymptomDistancePair(double distance, int symptomId){
+
+        SymptomDistancePair(double distance, int symptomId) {
             this.distance = distance;
             this.symptomId = symptomId;
         }
