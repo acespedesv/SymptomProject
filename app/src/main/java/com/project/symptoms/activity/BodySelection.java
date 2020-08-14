@@ -41,7 +41,6 @@ public class BodySelection extends FragmentActivity{
 
         setButtonsListeners();
 
-        initialDBInsertion();
 
     }
 
@@ -82,10 +81,11 @@ public class BodySelection extends FragmentActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(selectionAlreadyMade()){
+        if(selectionAlreadyMade())
             launchMainActivity();
+        else
+            initialDBInsertion();
         }
-    }
 
     private boolean selectionAlreadyMade(){
         return ! getBodyTypeInPreferences().equals(noneSelected);
