@@ -53,10 +53,6 @@ public class SymptomController {
             symptomModel.setIntermittence(intermittence);
 
             newId = symptomDao.insert(symptomModel);
-            if(symptomModel.getDuration() < 0){
-                NotificationWrapper.getInstance(this.context).startReminderFor(newId);
-                NotificationWrapper.getInstance(this.context).showReminderSetToast();
-            }
         }catch (Exception e){
             e.printStackTrace();
         }

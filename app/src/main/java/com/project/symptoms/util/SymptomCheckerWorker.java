@@ -41,7 +41,7 @@ public class SymptomCheckerWorker extends Worker {
 
     private boolean symptomStillOpen(){
         SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).select(symptomId);
-        return symptom.getDuration() < 0;
+        return symptom.getDuration() == 0;
     }
 
     private String buildMessageFor(long symptomId){
