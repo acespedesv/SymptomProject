@@ -170,8 +170,6 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                     }
                 }
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivityIntent);
             }
         });
     }
