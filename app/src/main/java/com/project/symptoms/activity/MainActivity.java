@@ -95,15 +95,19 @@ public class MainActivity extends AppCompatActivity implements
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type", "None");
+        String bodyTypeKey = getString(R.string.preference_selected_body_type_key);
+        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .getString(bodyTypeKey, "None");
 
-        if (body.equals("None")) {
-            launchBodySelection();
-        }
-
+        String male = getString(R.string.preference_selected_body_type_male);
+        String female = getString(R.string.preference_selected_body_type_female);
         // Make the view match the selected body type
-        if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
-        else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
+        if(body.equals(male))
+            bodyView.setBodyType(BodyView.BodyType.MALE);
+        else if(body.equals(female))
+            bodyView.setBodyType(BodyView.BodyType.FEMALE);
+        else
+            launchBodySelection();
 
         // Setup the flip button
         ImageView flipButton = findViewById(R.id.flip_button);
