@@ -106,7 +106,7 @@ public class PressureTests {
             }
 
             // When
-            List<PressureModel> listOfModels = dao.select();
+            List<PressureModel> listOfModels = dao.selectAll();
 
             // Then
             assertNotNull(listOfModels);
