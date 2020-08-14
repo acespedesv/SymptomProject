@@ -2,6 +2,7 @@ package com.project.symptoms.db.controller;
 
 import android.content.Context;
 
+import com.project.symptoms.R;
 import com.project.symptoms.db.dao.GlucoseLevelsDao;
 import com.project.symptoms.db.dao.GlucoseLevelsDaoImpl;
 import com.project.symptoms.db.model.GlucoseLevels;
@@ -13,6 +14,7 @@ public class GlucoseLevelsController {
 
     private static GlucoseLevelsController instance;
     private static GlucoseLevelsDao glucoseLevelsDao;
+    private static Context context;
 
     private GlucoseLevelsController() {
     }
@@ -20,6 +22,7 @@ public class GlucoseLevelsController {
     public static GlucoseLevelsController getInstance(Context context) {
         if (instance == null) {
             instance = new GlucoseLevelsController();
+            context = context;
             glucoseLevelsDao = new GlucoseLevelsDaoImpl(context);
         }
         return instance;
@@ -27,13 +30,16 @@ public class GlucoseLevelsController {
 
     public long insert(){
         try {
-            GlucoseLevels normal = new GlucoseLevels("Normal", "≤ 99", "≤ 139");
+            String normalText = context.getString(R.string.glucose_level_normal);
+            GlucoseLevels normal = new GlucoseLevels(normalText, "≤ 99", "≤ 139");
             glucoseLevelsDao.insert(normal);
 
-            GlucoseLevels preDiabetes = new GlucoseLevels("PreDiabetes", "100 - 125", "140 - 199");
+            String prediabetesText = context.getString(R.string.glucose_level_prediabetes);
+            GlucoseLevels preDiabetes = new GlucoseLevels(prediabetesText, "100 - 125", "140 - 199");
             glucoseLevelsDao.insert(preDiabetes);
 
-            GlucoseLevels diabetes = new GlucoseLevels("Diabetes", "≥ 126", "≥ 200");
+            String diabetesText = context.getString(R.string.glucose_level_diabetes);
+            GlucoseLevels diabetes = new GlucoseLevels(diabetesText, "≥ 126", "≥ 200");
             glucoseLevelsDao.insert(diabetes);
 
         } catch (Exception e) {

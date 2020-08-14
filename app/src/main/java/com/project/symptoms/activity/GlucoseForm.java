@@ -72,7 +72,7 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         glucoseLevels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              new GlucoseLevelsInfoDialog(GlucoseForm.this);
+              new GlucoseLevelsInfoDialog(GlucoseForm.this).show();
             }
         });
 

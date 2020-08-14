@@ -186,6 +186,14 @@
     <string name="blood_pressure_category_hypotension">Hipotensión</string>
 
 
+    <!-- =============================== -->
+    <!--        Glucose Levels           -->
+    <!-- =============================== -->
+    <string name="glucose_level_normal">Normal</string>
+    <string name="glucose_level_prediabetes">Prediabetes</string>
+    <string name="glucose_level_diabetes">Diabetes</string>
+
+
 
 
     <!-- =============================== -->
