@@ -1,7 +1,7 @@
 package com.project.symptoms.db.model;
 
 public class SymptomModel {
-    private int symptomId;
+    private long symptomId;
     private float circlePosX, circlePosY;
     private long startDate, startTime;
     private String description, intensity, causingDrug, causingFood;
@@ -28,11 +28,11 @@ public class SymptomModel {
         duration = -1;
     }
 
-    public int getSymptomId() {
+    public long getSymptomId() {
         return symptomId;
     }
 
-    public void setSymptomId(int symptomId) {
+    public void setSymptomId(long symptomId) {
         this.symptomId = symptomId;
     }
 

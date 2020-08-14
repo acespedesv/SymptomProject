@@ -95,15 +95,19 @@ public class MainActivity extends AppCompatActivity implements
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("body_type", "None");
+        String bodyTypeKey = getString(R.string.preference_selected_body_type_key);
+        final String body = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .getString(bodyTypeKey, "None");
 
-        if (body.equals("None")) {
-            launchBodySelection();
-        }
-
+        String male = getString(R.string.preference_selected_body_type_male);
+        String female = getString(R.string.preference_selected_body_type_female);
         // Make the view match the selected body type
-        if(body.equals("male")) bodyView.setBodyType(BodyView.BodyType.MALE);
-        else if(body.equals("female")) bodyView.setBodyType(BodyView.BodyType.FEMALE);
+        if(body.equals(male))
+            bodyView.setBodyType(BodyView.BodyType.MALE);
+        else if(body.equals(female))
+            bodyView.setBodyType(BodyView.BodyType.FEMALE);
+        else
+            launchBodySelection();
 
         // Setup the flip button
         ImageView flipButton = findViewById(R.id.flip_button);
@@ -173,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Get current date from text view to filter the data in DB
         Date currentDate = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString());
-        List<SymptomModel> symptomModels = SymptomController.getInstance(this).listAll(currentDate.getTime(), currentBodySide);
+        List<SymptomModel> symptomModels = SymptomController.getInstance(this).selectAllByDateAndSide(currentDate.getTime(), currentBodySide);
 
         // Instantiate new circles from DB data and replace them in the BodyView
         ArrayList<BodyView.Circle> circles = new ArrayList<>();
@@ -262,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private SymptomModel getNearestSymptomToCoordinates(float posX, float posY) throws ParseException {
         long today = DateTimeUtils.getInstance().getDateFromString(dateTextView.getText().toString()).getTime();
-        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).listAll(today, currentBodySide);
+        List<SymptomModel> todaySymptoms = SymptomController.getInstance(this).selectAllByDateAndSide(today, currentBodySide);
         List<SymptomDistancePair> distances = new ArrayList<>();
 
         // Use pythagoras formula to calculate distances between points
@@ -279,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Get the first id which is the nearest symptom id
         nearestSymptomToSelectedId = distances.get(0).symptomId;
-        return SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
+        return SymptomController.getInstance(this).select(nearestSymptomToSelectedId);
 
     }
 
@@ -350,12 +354,13 @@ public class MainActivity extends AppCompatActivity implements
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
     }
 
-    private boolean finishSymptom(long nearestSymptomToSelectedId) {
-        SymptomModel symptomModel = SymptomController.getInstance(this).findById(nearestSymptomToSelectedId);
+    private int finishSymptom(long nearestSymptomToSelectedId) {
+        SymptomModel symptomModel = SymptomController.getInstance(this).select(nearestSymptomToSelectedId);
         long startTime = symptomModel.getStartTime();
+        symptomModel.setSymptomId(nearestSymptomToSelectedId);
         long currentTime = DateTimeUtils.getInstance().getCurrentDateTimeAsLong();
         symptomModel.setDuration(DateTimeUtils.getInstance().getTimeDifference(startTime, currentTime));
-        return SymptomController.getInstance(this).updateSymptom(nearestSymptomToSelectedId, symptomModel);
+        return SymptomController.getInstance(this).update(symptomModel);
     }
 
     private void deleteSymptom(final long symptomId) throws ParseException {
@@ -363,9 +368,9 @@ public class MainActivity extends AppCompatActivity implements
         builder.setMessage(R.string.alert_sure_about_deleting)
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).deleteSymptomById(symptomId);
-                        boolean categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
-                        if (symptomDeletionSuccess && categoriesDeletionSuccess){
+                        int symptomDeletionSuccess = SymptomController.getInstance(getApplicationContext()).delete(symptomId);
+                        int categoriesDeletionSuccess = SelectedCategoryOptionController.getInstance(getApplicationContext()).deleteAllBySymptom(symptomId);
+                        if (symptomDeletionSuccess != -1 && categoriesDeletionSuccess != -1){
                             try { updateSymptomsInBodyView(); }
                             catch (ParseException e) { e.printStackTrace(); }
                         }
@@ -385,8 +390,8 @@ public class MainActivity extends AppCompatActivity implements
     // Class used to hold distances between symptoms coordinates
     private static class SymptomDistancePair{
         double distance;
-        int symptomId;
-        SymptomDistancePair(double distance, int symptomId){
+        long symptomId;
+        SymptomDistancePair(double distance, long symptomId){
             this.distance = distance;
             this.symptomId = symptomId;
         }
