@@ -2,6 +2,7 @@ package com.project.symptoms.db.controller;
 
 import android.content.Context;
 
+import com.project.symptoms.db.dao.SelectedCategoryOptionDao;
 import com.project.symptoms.db.dao.SelectedCategoryOptionDaoImpl;
 import com.project.symptoms.db.model.SelectedCategoryOptionModel;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class SelectedCategoryOptionController {
 
     private static SelectedCategoryOptionController instance;
-    private static SelectedCategoryOptionDaoImpl selectedCategoryOptionDao;
+    private static SelectedCategoryOptionDao selectedCategoryOptionDao;
 
     private SelectedCategoryOptionController(){}
 

@@ -1,6 +1,8 @@
 package com.project.symptoms.db.controller;
 
 import android.content.Context;
+
+import com.project.symptoms.db.dao.SymptomDao;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
@@ -13,7 +15,7 @@ import java.util.List;
 public class SymptomController {
 
     private static SymptomController instance;
-    private SymptomDaoImpl symptomDao;
+    private SymptomDao symptomDao;
     private Context context;
 
     private SymptomController(Context context){
