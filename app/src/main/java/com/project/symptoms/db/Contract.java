@@ -180,4 +180,27 @@ public class Contract {
 
     public static final String SQL_DELETE_PRESSURE_LEVELS =
             "DROP TABLE IF EXISTS " + PressureLevels.TABLE_NAME;
+
+    public static class SymptomView implements BaseColumns{
+        public static final String VIEW_NAME = "symptoms_description";
+        public static final String COLUMN_NAME_SYMPTOM_ID = "SymptomId";
+        public static final String COLUMN_NAME_CATEGORY_OPTION_ID = "CategoryOptionId";
+        public static final String COLUMN_NAME_CATEGORY_OPTION_NAME = "CategoryOptionName";
+        public static final String COLUMN_NAME_CATEGORY_ID = "CategoryId";
+        public static final String COLUMN_NAME_CATEGORY_NAME = "CategoryName";
+    }
+
+    public static final String SQL_CREATE_SYMPTOMS_VIEW =
+            "CREATE VIEW " + SymptomView.VIEW_NAME + " AS" +
+            " (SELECT" +
+            " SCP." + Symptom.COLUMN_NAME_ID_PK + " AS " + SymptomView.COLUMN_NAME_SYMPTOM_ID +
+            ", SCP." + CategoryOption.COLUMN_NAME_ID_PK + " AS " + SymptomView.COLUMN_NAME_CATEGORY_OPTION_ID +
+            ", CO." + CategoryOption.COLUMN_NAME_NAME + " AS " + SymptomView.COLUMN_NAME_CATEGORY_OPTION_NAME +
+            ", CO." + Category.COLUMN_NAME_ID_PK + " AS " + SymptomView.COLUMN_NAME_CATEGORY_ID +
+            ", C." + Category.COLUMN_NAME_NAME + " AS " + SymptomView.COLUMN_NAME_CATEGORY_NAME +
+            " FROM " +  SelectedCategoryOption.TABLE_NAME + " SCP" +
+            " INNER JOIN " + CategoryOption.TABLE_NAME + "CO" +
+            " ON SCP." + SelectedCategoryOption.COLUMN_NAME_CATEGORY_OPTION_ID_FK + " = CO." + CategoryOption.COLUMN_NAME_ID_PK +
+            " INNER JOIN " + Category.TABLE_NAME + " C" +
+            " ON CO." + CategoryOption.COLUMN_NAME_CATEGORY_ID_FK + " = C." + Category.COLUMN_NAME_ID_PK + ")";
 }

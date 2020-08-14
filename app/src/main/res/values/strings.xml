@@ -42,6 +42,9 @@
     <string name="pressure_table_diastolic_column">Valor Diástole</string>
     <string name="pdf_success">Reporte PDF generado con éxito</string>
     <string name="pdf_failure">Ocurrió un problema al general el PDF</string>
+    <string name="start_symptom_date_time">Fecha y hora de inicio del síntoma</string>
+    <string name="end_symptom_date_time">Fecha y hora de finalización del síntoma</string>
+    <string name="symptom_duration">Duración del síntoma</string>
     <string name="pdf_subtitle">Reporte de síntomas, glucosa en sangre y presión arterial</string>
 
 
@@ -73,6 +76,7 @@
     <string name="reaction_food">Alimento causante:</string>
     <string name="reaction_food_hint">Nombre del alimento</string>
     <string name="pdf_menu">Generar PDF</string>
+    <string name="detailed_description">Descripción detallada</string>
     <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
 
 
