@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
         <ScrollView
-            android:id="@+id/symtom_form"
+            android:id="@+id/symptom_form"
             android:layout_width="match_parent"
             android:layout_height="500dp">
             <include layout="@layout/symptom_form_fields"/>
