@@ -51,6 +51,7 @@
     <string name="reaction_food">Alimento causante:</string>
     <string name="reaction_food_hint">Nombre del alimento</string>
     <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
+    <string name="incomplete_form_message">El campo de descripción es requerido, por favor ingrese algún valor</string>
 
 
 
@@ -126,9 +127,8 @@
     <!-- =============================== -->
     <!--        Body Selection           -->
     <!-- =============================== -->
-    <string name="male">Hombre</string>
-    <string name="female">Mujer</string>
     <string name="select_body_message">Deslice y seleccione</string>
+    <string name="selection_is_needed">Por favor seleccione un tipo de cuerpo</string>
 
 
 
@@ -152,10 +152,16 @@
 
 
     <!-- =============================== -->
+    <!--       Preferences Values        -->
+    <!-- =============================== -->
+    <string name="preference_selected_body_type_male">male</string>
+    <string name="preference_selected_body_type_female">female</string>
+
+
+    <!-- =============================== -->
     <!--      Preferences Defaults       -->
     <!-- =============================== -->
     <string name="preference_reminder_frequency_default">8</string>
-    <string name="preference_selected_body_type_default">Ninguno</string>
 
 
     <!-- =============================== -->

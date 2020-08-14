@@ -8,14 +8,13 @@ public interface SelectedCategoryOptionDao {
 
     long insert(SelectedCategoryOptionModel selectedCategoryOptionModel) throws Exception;
 
-    List<SelectedCategoryOptionModel> listAllBySymptom(long symptomId) throws Exception;
+    List<SelectedCategoryOptionModel> selectBySymptomId(long symptomId) throws Exception;
 
-    List<SelectedCategoryOptionModel> listAll() throws Exception;
+    List<SelectedCategoryOptionModel> selectAll() throws Exception;
 
-    boolean delete(long symptomId, long categoryId) throws Exception;
+    int delete(long symptomId, long categoryId) throws Exception;
 
-    boolean deleteAllBySymptom(long symptomId) throws Exception;
+    int deleteBySymptomId(long symptomId) throws Exception;
 
-    boolean update(long id, SelectedCategoryOptionModel newValues) throws Exception;
-
+    int update(SelectedCategoryOptionModel newValues) throws Exception;
 }

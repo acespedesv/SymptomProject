@@ -1,7 +1,8 @@
 package com.project.symptoms.db.controller;
 
-import android.app.Notification;
 import android.content.Context;
+
+import com.project.symptoms.db.dao.SymptomDao;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.util.DateTimeUtils;
@@ -14,7 +15,7 @@ import java.util.List;
 public class SymptomController {
 
     private static SymptomController instance;
-    private SymptomDaoImpl symptomDao;
+    private SymptomDao symptomDao;
     private Context context;
 
     private SymptomController(Context context){
@@ -62,55 +63,59 @@ public class SymptomController {
         return newId;
     }
 
-    public List<SymptomModel> listAll(){
+    public List<SymptomModel> selectAll(){
         List<SymptomModel> result = new ArrayList<>();
         try{
-            result = symptomDao.listAll();
+            result = symptomDao.selectAll();
         }catch (Exception e){
             e.printStackTrace();
         }
         return result;
     }
 
-    public List<SymptomModel> listAll(long date, int circleSide){
+    public List<SymptomModel> selectAllByDateAndSide(long date, int circleSide){
         List<SymptomModel> result = new ArrayList<>();
         try{
-            result = symptomDao.listAll(date, circleSide);
+            result = symptomDao.selectAllByDateAndSide(date, circleSide);
         }catch (Exception e){
             e.printStackTrace();
         }
         return result;
     }
 
-    public SymptomModel findById(long symptomId){
+    public SymptomModel select(long symptomId){
         SymptomModel result = null;
         try{
-            result = symptomDao.getById(symptomId);
+            result = symptomDao.select(symptomId);
         }catch (Exception e){
             e.printStackTrace();
         }
         return result;
     }
 
-    public boolean updateSymptom(long id, SymptomModel symptomModel){
+    public int update(SymptomModel symptomModel){
+        int rowsUpdated = -1;
         try {
-            return symptomDao.update(id, symptomModel);
+            rowsUpdated = symptomDao.update(symptomModel);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return rowsUpdated;
     }
 
-    public boolean deleteSymptomById(long symptomId){
+    public int delete(long symptomId){
+        int rowsDeleted = -1;
         try {
-            symptomDao.delete(symptomId);
-            return true;
+            rowsDeleted = symptomDao.delete(symptomId);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return rowsDeleted;
     }
 
+    public void setGlucoseDao(SymptomDaoImpl symptomDao) {
+        this.symptomDao = symptomDao;
+    }
 }

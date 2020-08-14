@@ -40,9 +40,11 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="9"
+            android:checkedButton="@id/intensity_low"
             android:layout_marginHorizontal="10dp">
 
             <RadioButton
+                android:id="@+id/intensity_low"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
@@ -56,6 +58,7 @@
                 android:textSize="20sp" />
 
             <RadioButton
+                android:id="@+id/intensity_medium"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
@@ -68,6 +71,7 @@
                 android:textSize="20sp" />
 
             <RadioButton
+                android:id="@+id/intensity_high"
                 android:layout_weight="3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
