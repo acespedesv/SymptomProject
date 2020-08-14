@@ -57,6 +57,11 @@ public class MainActivity extends AppCompatActivity implements
     private float posXOnTouch, posYOnTouch;
     private int r, g, b; // Color code for the pixel where the user touched
 
+    private final int RED_IN_3_CIRCLES_JOINT = 246;
+    private final int RED_INSIDE_OF_BODY = 237;
+    private final int RED_IN_2_CIRCLES_JOINT = 242;
+    private final int RED_OUTSIDE_OF_BODY = 255;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,9 +304,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private boolean isColorRed(int r) {
-        boolean red = false;
-        if (r == 237 || r == 255 || r == 242 || r == 246) red = true;
-        return red;
+        return (r == RED_INSIDE_OF_BODY || r == RED_OUTSIDE_OF_BODY
+                || r == RED_IN_2_CIRCLES_JOINT || r == RED_IN_3_CIRCLES_JOINT);
     }
 
     private boolean isColorWhite(int r, int g, int b) {
