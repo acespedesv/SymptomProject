@@ -3,7 +3,6 @@ package com.project.symptoms.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.text.SymbolTable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -102,7 +101,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     // Finish form set-up for updating
     private void loadFormForUpdate(){
         saveButton.setText(R.string.update);
-        symptomModelToUpdate = symptomController.findById(symptomIdToUpdate);
+        symptomModelToUpdate = symptomController.select(symptomIdToUpdate);
         symptomDescriptionView.setText(symptomModelToUpdate.getDescription());
         HashMap<String, Integer> intensityHashMap = new HashMap<>();
         intensityHashMap.put(getString(R.string.low), 0);
@@ -123,7 +122,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void enableCheckRespectiveSymptomOptionViews(){
-        for (SelectedCategoryOptionModel optionModel: selectedCategoryOptionController.getAllBySymptom(symptomIdToUpdate)) {
+        for (SelectedCategoryOptionModel optionModel: selectedCategoryOptionController.selectAllBySymptom(symptomIdToUpdate)) {
             String optionName = symptomCategoryOptionController.getById(optionModel.getCategoryOptionId()).getCategoryOptionName();
             SymptomOptionView currentSymptomOptionView = optionsViewHashMap.get(optionName);
             if (currentSymptomOptionView != null) currentSymptomOptionView.setChecked(true);
@@ -228,11 +227,11 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         symptomModelHolder.setCausingDrug(symptomMedicamentView.getText().toString());
         symptomModelHolder.setCausingFood(symptomFoodView.getText().toString());
         symptomModelHolder.setIntermittence(intermittenceSwitchView.isChecked() ? 1 : 0);
+        symptomModelHolder.setSymptomId(symptomIdToUpdate);
 
-        return symptomController.updateSymptom(symptomIdToUpdate, symptomModelHolder) &&
-                selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate) &&
+        return (symptomController.update(symptomModelHolder) != -1) &&
+                (selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate) != 1) &&
                 insertSelectedCategoryOptions(symptomIdToUpdate);
-
     }
 
     private void logSelectedOptions() {
