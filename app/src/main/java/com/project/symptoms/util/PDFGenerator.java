@@ -84,7 +84,7 @@ public class PDFGenerator {
         titlesFont = new Font();
         titlesFont.setSize(36);
         titlesFont.setFamily("Arial");
-        titlesFont.setStyle(Font.BOLD);
+        titlesFont.setStyle(Font.NORMAL);
         titlesFont.setColor(new BaseColor(141,191,65));
 
         subTitlesFont = new Font();
@@ -242,6 +242,7 @@ public class PDFGenerator {
 
         try {
 
+            mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(symptomTitle);
             mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(NEWLINE);
@@ -252,7 +253,6 @@ public class PDFGenerator {
             for (SymptomModel model: models) {
                 writeBasicSymptomInfoInPDF(model);
                 writeDetailedSymptomDescription(model);
-                mainPDFDocument.add(NEWLINE);
                 drawHorizontalLine();
                 mainPDFDocument.add(NEWLINE);
             }
