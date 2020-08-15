@@ -246,10 +246,10 @@ public class PDFGenerator {
             Log.e("PDF", "Models list size: " + models.size());
             for (SymptomModel model: models) {
                 writeBasicSymptomInfoInPDF(model);
+                writeDetailedSymptomDescription(model);
                 mainPDFDocument.add(NEWLINE);
                 drawHorizontalLine();
                 mainPDFDocument.add(NEWLINE);
-                writeDetailedSymptomDescription(model);
             }
 
 
