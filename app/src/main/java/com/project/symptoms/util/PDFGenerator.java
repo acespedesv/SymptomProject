@@ -84,13 +84,13 @@ public class PDFGenerator {
         titlesFont = new Font();
         titlesFont.setSize(36);
         titlesFont.setFamily("Arial");
-        titlesFont.setStyle(Font.NORMAL);
-        titlesFont.setColor(new BaseColor(18,91,167));
+        titlesFont.setStyle(Font.BOLD);
+        titlesFont.setColor(new BaseColor(141,191,65));
 
         subTitlesFont = new Font();
         subTitlesFont.setSize(24);
         subTitlesFont.setFamily("Arial");
-        subTitlesFont.setStyle(Font.NORMAL);
+        subTitlesFont.setStyle(Font.BOLD);
         subTitlesFont.setColor(new BaseColor(18,91,167));
 
         commonTextFont = new Font();
@@ -102,7 +102,6 @@ public class PDFGenerator {
         tableHeadersFont.setSize(16);
         tableHeadersFont.setFamily("Arial");
         tableHeadersFont.setStyle(Font.BOLD);
-        //tableHeadersFont.setColor(new BaseColor(141,191,65));
         tableHeadersFont.setColor(new BaseColor(18,91,167));
     }
 
@@ -244,6 +243,7 @@ public class PDFGenerator {
         try {
 
             mainPDFDocument.add(NEWLINE);
+            mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(symptomTitle);
             mainPDFDocument.add(NEWLINE);
 
@@ -304,7 +304,6 @@ public class PDFGenerator {
         mainPDFDocument.add(NEWLINE);
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_duration), tableHeadersFont));
         mainPDFDocument.add(new Phrase(" " + model.getDuration()));
-        mainPDFDocument.add(NEWLINE);
 //        mainPDFDocument.add(new Phrase(appResources.getString(R.string.detailed_description), tableHeadersFont));
 //        mainPDFDocument.add(new Phrase(" "));
     }
