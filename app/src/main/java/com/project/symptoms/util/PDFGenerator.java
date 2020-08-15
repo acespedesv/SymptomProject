@@ -2,9 +2,11 @@ package com.project.symptoms.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Environment;
 import android.util.Log;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -83,6 +85,7 @@ public class PDFGenerator {
         titlesFont.setSize(36);
         titlesFont.setFamily("Arial");
         titlesFont.setStyle(Font.NORMAL);
+        titlesFont.setColor(new BaseColor(18,91,167));
 
         subTitlesFont = new Font();
         subTitlesFont.setSize(24);
@@ -98,6 +101,7 @@ public class PDFGenerator {
         tableHeadersFont.setSize(16);
         tableHeadersFont.setFamily("Arial");
         tableHeadersFont.setStyle(Font.BOLD);
+        tableHeadersFont.setColor(new BaseColor(141,191,65));
     }
 
     public boolean generateCompletePDF(long startDate, long endDate){
