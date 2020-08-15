@@ -22,7 +22,7 @@ public class GlucoseLevelsController {
     public static GlucoseLevelsController getInstance(Context context) {
         if (instance == null) {
             instance = new GlucoseLevelsController();
-            context = context;
+            instance.context = context;
             glucoseLevelsDao = new GlucoseLevelsDaoImpl(context);
         }
         return instance;
