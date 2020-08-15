@@ -246,6 +246,9 @@ public class PDFGenerator {
             Log.e("PDF", "Models list size: " + models.size());
             for (SymptomModel model: models) {
                 writeBasicSymptomInfoInPDF(model);
+                mainPDFDocument.add(NEWLINE);
+                drawHorizontalLine();
+                mainPDFDocument.add(NEWLINE);
                 writeDetailedSymptomDescription(model);
             }
 
@@ -262,39 +265,42 @@ public class PDFGenerator {
         String currentCategoryName = symptomViewModels.get(0).getCategoryName();
 
         mainPDFDocument.add(NEWLINE);
-        mainPDFDocument.add(new Phrase("\t" + currentCategoryName, tableHeadersFont));
-        mainPDFDocument.add(NEWLINE);
+        Paragraph currentCategoryNameParagraph = new Paragraph(currentCategoryName, tableHeadersFont);
+        currentCategoryNameParagraph.setIndentationLeft(56f);
+        mainPDFDocument.add(currentCategoryNameParagraph);
 
         for (SymptomViewModel symptomViewModel: symptomViewModels) {
             if(!symptomViewModel.getCategoryName().equals(currentCategoryName)){
                 currentCategoryName = symptomViewModel.getCategoryName();
-                mainPDFDocument.add(new Phrase("\t" + currentCategoryName, tableHeadersFont));
-                mainPDFDocument.add(NEWLINE);
+                currentCategoryNameParagraph = new Paragraph(currentCategoryName, tableHeadersFont);
+                currentCategoryNameParagraph.setIndentationLeft(56f);
+                mainPDFDocument.add(currentCategoryNameParagraph);
             }
-            mainPDFDocument.add(new Phrase("\t\t- " + symptomViewModel.getCategoryOptionName(), commonTextFont));
-            mainPDFDocument.add(NEWLINE);
+            Paragraph categoryOptionNameParagraph = new Paragraph(symptomViewModel.getCategoryOptionName(), commonTextFont);
+            categoryOptionNameParagraph.setIndentationLeft(112f);
+            mainPDFDocument.add(categoryOptionNameParagraph);
         }
     }
 
     private void writeBasicSymptomInfoInPDF(SymptomModel model) throws DocumentException {
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_description), tableHeadersFont));
-        mainPDFDocument.add(new Phrase(": " + model.getDescription(), commonTextFont));
+        mainPDFDocument.add(new Phrase(" " + model.getDescription(), commonTextFont));
         mainPDFDocument.add(NEWLINE);
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.intensity), tableHeadersFont));
-        mainPDFDocument.add(new Phrase(": " + model.getIntensity(), commonTextFont));
+        mainPDFDocument.add(new Phrase(" " + model.getIntensity(), commonTextFont));
         mainPDFDocument.add(NEWLINE);
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.intermittent), tableHeadersFont));
-        mainPDFDocument.add(new Phrase(": " + model.getIntermittence(), commonTextFont));
+        mainPDFDocument.add(new Phrase(" " + ((model.getIntermittence() == 1) ? "Sí" : "No"), commonTextFont));
         mainPDFDocument.add(NEWLINE);
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.start_symptom_date_time), tableHeadersFont));
-        mainPDFDocument.add(new Phrase(": " + DateTimeUtils.getInstance().getStringDateFromLong(model.getStartDate()), commonTextFont));
+        mainPDFDocument.add(new Phrase(" " + DateTimeUtils.getInstance().getStringDateFromLong(model.getStartDate()), commonTextFont));
         mainPDFDocument.add(new Phrase(" " + DateTimeUtils.getInstance().getStringTimeFromLong(model.getStartTime()), commonTextFont));
         mainPDFDocument.add(NEWLINE);
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_duration), tableHeadersFont));
-        mainPDFDocument.add(new Phrase(": " + model.getDuration()));
+        mainPDFDocument.add(new Phrase(" " + model.getDuration()));
         mainPDFDocument.add(NEWLINE);
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.detailed_description), tableHeadersFont));
-        mainPDFDocument.add(new Phrase(": "));
+        mainPDFDocument.add(new Phrase(" "));
     }
 
     private void addDateRangeToPDF(long startDate, long endDate) {
@@ -307,7 +313,7 @@ public class PDFGenerator {
                 + " "
                 + appResources.getString(R.string.end_date)
                 + endDateAsString);
-        datesRange.setFont(subTitlesFont);
+        datesRange.setFont(commonTextFont);
         datesRange.setAlignment(Element.ALIGN_CENTER);
         try {
             mainPDFDocument.add(datesRange);
@@ -328,7 +334,7 @@ public class PDFGenerator {
 
     private void insertUserData(){
         Paragraph userInfo = new Paragraph("Paciente: Isaac Mena López\nCédula: 402400867\nFecha de nacimiento: 07/11/98");
-        userInfo.setFont(subTitlesFont);
+        userInfo.setFont(commonTextFont);
         userInfo.setAlignment(Element.ALIGN_CENTER);
         try {
             mainPDFDocument.add(userInfo);
