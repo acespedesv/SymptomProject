@@ -192,7 +192,7 @@ public class Contract {
 
     public static final String SQL_CREATE_SYMPTOMS_VIEW =
             "CREATE VIEW " + SymptomView.VIEW_NAME + " AS" +
-            " (SELECT" +
+            " SELECT" +
             " SCP." + Symptom.COLUMN_NAME_ID_PK + " AS " + SymptomView.COLUMN_NAME_SYMPTOM_ID +
             ", SCP." + CategoryOption.COLUMN_NAME_ID_PK + " AS " + SymptomView.COLUMN_NAME_CATEGORY_OPTION_ID +
             ", CO." + CategoryOption.COLUMN_NAME_NAME + " AS " + SymptomView.COLUMN_NAME_CATEGORY_OPTION_NAME +
@@ -203,7 +203,7 @@ public class Contract {
             " ON SCP." + SelectedCategoryOption.COLUMN_NAME_CATEGORY_OPTION_ID_FK + " = CO." + CategoryOption.COLUMN_NAME_ID_PK +
             " INNER JOIN " + Category.TABLE_NAME + " C" +
             " ON CO." + CategoryOption.COLUMN_NAME_CATEGORY_ID_FK + " = C." + Category.COLUMN_NAME_ID_PK +
-            "ORDER BY CO." + Category.COLUMN_NAME_ID_PK + " ASC" + ")";
+            "ORDER BY CO." + Category.COLUMN_NAME_ID_PK + " ASC";
 
     public static final String SQL_DELETE_SYMPTOMS_VIEW =
             "DROP VIEW IF EXISTS " + SymptomView.VIEW_NAME;
