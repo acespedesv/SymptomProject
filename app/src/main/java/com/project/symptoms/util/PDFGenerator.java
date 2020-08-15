@@ -242,9 +242,8 @@ public class PDFGenerator {
 
         try {
 
-            mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(symptomTitle);
+            mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(NEWLINE);
 
             //List<SymptomModel> models = symptomController.select(startDate, endDate);
@@ -272,18 +271,15 @@ public class PDFGenerator {
 
         mainPDFDocument.add(NEWLINE);
         Paragraph currentCategoryNameParagraph = new Paragraph(currentCategoryName, tableHeadersFont);
-//        currentCategoryNameParagraph.setIndentationLeft(56f);
         mainPDFDocument.add(currentCategoryNameParagraph);
 
         for (SymptomViewModel symptomViewModel: symptomViewModels) {
             if(!symptomViewModel.getCategoryName().equals(currentCategoryName)){
                 currentCategoryName = symptomViewModel.getCategoryName();
                 currentCategoryNameParagraph = new Paragraph(currentCategoryName, tableHeadersFont);
-//                currentCategoryNameParagraph.setIndentationLeft(56f);
                 mainPDFDocument.add(currentCategoryNameParagraph);
             }
-            Paragraph categoryOptionNameParagraph = new Paragraph(symptomViewModel.getCategoryOptionName(), commonTextFont);
-//            categoryOptionNameParagraph.setIndentationLeft(112f);
+            Paragraph categoryOptionNameParagraph = new Paragraph("- " + symptomViewModel.getCategoryOptionName(), commonTextFont);
             mainPDFDocument.add(categoryOptionNameParagraph);
         }
     }
@@ -304,8 +300,6 @@ public class PDFGenerator {
         mainPDFDocument.add(NEWLINE);
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_duration), tableHeadersFont));
         mainPDFDocument.add(new Phrase(" " + model.getDuration()));
-//        mainPDFDocument.add(new Phrase(appResources.getString(R.string.detailed_description), tableHeadersFont));
-//        mainPDFDocument.add(new Phrase(" "));
     }
 
     private void addDateRangeToPDF(long startDate, long endDate) {
