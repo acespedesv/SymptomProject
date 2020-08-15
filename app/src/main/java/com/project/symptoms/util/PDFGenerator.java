@@ -257,37 +257,45 @@ public class PDFGenerator {
         return true;
     }
 
-    private void writeDetailedSymptomDescription(SymptomModel model) {
+    private void writeDetailedSymptomDescription(SymptomModel model) throws DocumentException {
         List<SymptomViewModel> symptomViewModels = symptomController.selectFromView(model.getSymptomId());
-        for (SymptomViewModel symptomViewModel: symptomViewModels) {
+        String currentCategoryName = symptomViewModels.get(0).getCategoryName();
 
+        mainPDFDocument.add(NEWLINE);
+        mainPDFDocument.add(new Phrase("\t" + currentCategoryName, tableHeadersFont));
+        mainPDFDocument.add(NEWLINE);
+
+        for (SymptomViewModel symptomViewModel: symptomViewModels) {
+            if(!symptomViewModel.getCategoryName().equals(currentCategoryName)){
+                currentCategoryName = symptomViewModel.getCategoryName();
+                mainPDFDocument.add(new Phrase("\t" + currentCategoryName, tableHeadersFont));
+            }
+            else{
+                mainPDFDocument.add(new Phrase("\t\t- " + symptomViewModel.getCategoryOptionName(), commonTextFont));
+            }
+            mainPDFDocument.add(NEWLINE);
         }
     }
 
-    private void writeBasicSymptomInfoInPDF(SymptomModel model){
-        try{
-            mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_description), tableHeadersFont));
-            mainPDFDocument.add(new Phrase(": " + model.getDescription(), commonTextFont));
-            mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(new Phrase(appResources.getString(R.string.intensity), tableHeadersFont));
-            mainPDFDocument.add(new Phrase(": " + model.getIntensity(), commonTextFont));
-            mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(new Phrase(appResources.getString(R.string.intermittent), tableHeadersFont));
-            mainPDFDocument.add(new Phrase(": " + model.getIntermittence(), commonTextFont));
-            mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(new Phrase(appResources.getString(R.string.start_symptom_date_time), tableHeadersFont));
-            mainPDFDocument.add(new Phrase(": " + DateTimeUtils.getInstance().getStringDateFromLong(model.getStartDate()), commonTextFont));
-            mainPDFDocument.add(new Phrase(" " + DateTimeUtils.getInstance().getStringTimeFromLong(model.getStartTime()), commonTextFont));
-            mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_duration), tableHeadersFont));
-            mainPDFDocument.add(new Phrase(": " + model.getDuration()));
-            mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(new Phrase(appResources.getString(R.string.detailed_description), tableHeadersFont));
-            mainPDFDocument.add(new Phrase(": "));
-        }
-        catch (DocumentException e) {
-            e.printStackTrace();
-        }
+    private void writeBasicSymptomInfoInPDF(SymptomModel model) throws DocumentException {
+        mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_description), tableHeadersFont));
+        mainPDFDocument.add(new Phrase(": " + model.getDescription(), commonTextFont));
+        mainPDFDocument.add(NEWLINE);
+        mainPDFDocument.add(new Phrase(appResources.getString(R.string.intensity), tableHeadersFont));
+        mainPDFDocument.add(new Phrase(": " + model.getIntensity(), commonTextFont));
+        mainPDFDocument.add(NEWLINE);
+        mainPDFDocument.add(new Phrase(appResources.getString(R.string.intermittent), tableHeadersFont));
+        mainPDFDocument.add(new Phrase(": " + model.getIntermittence(), commonTextFont));
+        mainPDFDocument.add(NEWLINE);
+        mainPDFDocument.add(new Phrase(appResources.getString(R.string.start_symptom_date_time), tableHeadersFont));
+        mainPDFDocument.add(new Phrase(": " + DateTimeUtils.getInstance().getStringDateFromLong(model.getStartDate()), commonTextFont));
+        mainPDFDocument.add(new Phrase(" " + DateTimeUtils.getInstance().getStringTimeFromLong(model.getStartTime()), commonTextFont));
+        mainPDFDocument.add(NEWLINE);
+        mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_duration), tableHeadersFont));
+        mainPDFDocument.add(new Phrase(": " + model.getDuration()));
+        mainPDFDocument.add(NEWLINE);
+        mainPDFDocument.add(new Phrase(appResources.getString(R.string.detailed_description), tableHeadersFont));
+        mainPDFDocument.add(new Phrase(": "));
     }
 
     private void addDateRangeToPDF(long startDate, long endDate) {
