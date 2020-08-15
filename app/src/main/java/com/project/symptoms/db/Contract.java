@@ -199,7 +199,7 @@ public class Contract {
             ", CO." + Category.COLUMN_NAME_ID_PK + " AS " + SymptomView.COLUMN_NAME_CATEGORY_ID +
             ", C." + Category.COLUMN_NAME_NAME + " AS " + SymptomView.COLUMN_NAME_CATEGORY_NAME +
             " FROM " +  SelectedCategoryOption.TABLE_NAME + " SCP" +
-            " INNER JOIN " + CategoryOption.TABLE_NAME + "CO" +
+            " INNER JOIN " + CategoryOption.TABLE_NAME + " CO" +
             " ON SCP." + SelectedCategoryOption.COLUMN_NAME_CATEGORY_OPTION_ID_FK + " = CO." + CategoryOption.COLUMN_NAME_ID_PK +
             " INNER JOIN " + Category.TABLE_NAME + " C" +
             " ON CO." + CategoryOption.COLUMN_NAME_CATEGORY_ID_FK + " = C." + Category.COLUMN_NAME_ID_PK +
