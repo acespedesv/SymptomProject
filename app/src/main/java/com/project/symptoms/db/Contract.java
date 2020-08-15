@@ -202,7 +202,8 @@ public class Contract {
             " INNER JOIN " + CategoryOption.TABLE_NAME + "CO" +
             " ON SCP." + SelectedCategoryOption.COLUMN_NAME_CATEGORY_OPTION_ID_FK + " = CO." + CategoryOption.COLUMN_NAME_ID_PK +
             " INNER JOIN " + Category.TABLE_NAME + " C" +
-            " ON CO." + CategoryOption.COLUMN_NAME_CATEGORY_ID_FK + " = C." + Category.COLUMN_NAME_ID_PK + ")";
+            " ON CO." + CategoryOption.COLUMN_NAME_CATEGORY_ID_FK + " = C." + Category.COLUMN_NAME_ID_PK +
+            "ORDER BY CO." + Category.COLUMN_NAME_ID_PK + " ASC" + ")";
 
     public static final String SQL_DELETE_SYMPTOMS_VIEW =
             "DROP VIEW IF EXISTS " + SymptomView.VIEW_NAME;

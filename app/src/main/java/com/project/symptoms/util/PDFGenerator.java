@@ -26,6 +26,7 @@ import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.db.model.PressureModel;
 import com.project.symptoms.db.model.SymptomModel;
+import com.project.symptoms.db.model.SymptomViewModel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -257,7 +258,10 @@ public class PDFGenerator {
     }
 
     private void writeDetailedSymptomDescription(SymptomModel model) {
+        List<SymptomViewModel> symptomViewModels = symptomController.selectFromView(model.getSymptomId());
+        for (SymptomViewModel symptomViewModel: symptomViewModels) {
 
+        }
     }
 
     private void writeBasicSymptomInfoInPDF(SymptomModel model){

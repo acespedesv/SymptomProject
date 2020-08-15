@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.content.Context;
 import com.project.symptoms.db.dao.SymptomDaoImpl;
 import com.project.symptoms.db.model.SymptomModel;
+import com.project.symptoms.db.model.SymptomViewModel;
 import com.project.symptoms.util.DateTimeUtils;
 import com.project.symptoms.util.NotificationWrapper;
 
@@ -86,6 +87,16 @@ public class SymptomController {
         List<SymptomModel> result = null;
         try {
             result = symptomDao.select(initialDate, finalDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<SymptomViewModel> selectFromView(long symptomId) {
+        List<SymptomViewModel> result = null;
+        try {
+            result = symptomDao.selectFromView(symptomId);
         } catch (Exception e) {
             e.printStackTrace();
         }
