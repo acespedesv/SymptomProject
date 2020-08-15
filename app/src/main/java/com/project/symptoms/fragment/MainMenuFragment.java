@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.project.symptoms.R;
 import com.project.symptoms.activity.BloodPressureForm;
+import com.project.symptoms.activity.BloodPressureHistory;
 import com.project.symptoms.activity.GlucoseForm;
 import com.project.symptoms.activity.GlucoseHistory;
 
@@ -85,7 +86,7 @@ public class MainMenuFragment extends Fragment {
         dialog.findViewById(R.id.pressure_history).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), GlucoseHistory.class));
+                startActivity(new Intent(getContext(), BloodPressureHistory.class));
             }
         });
         dialog.findViewById(R.id.cancel_history).setOnClickListener(new View.OnClickListener() {
