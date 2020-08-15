@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/ic_glucose_history" />
 
     <ImageView
-        android:id="@+id/cancel_hisotry"
+        android:id="@+id/cancel_history"
         android:layout_width="53dp"
         android:layout_height="53dp"
         android:layout_marginStart="160dp"

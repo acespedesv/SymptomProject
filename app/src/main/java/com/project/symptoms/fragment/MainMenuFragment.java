@@ -88,7 +88,7 @@ public class MainMenuFragment extends Fragment {
                 startActivity(new Intent(getContext(), GlucoseHistory.class));
             }
         });
-        dialog.findViewById(R.id.cancel_hisotry).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.cancel_history).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
