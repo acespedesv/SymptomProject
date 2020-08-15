@@ -91,6 +91,7 @@ public class PDFGenerator {
         subTitlesFont.setSize(24);
         subTitlesFont.setFamily("Arial");
         subTitlesFont.setStyle(Font.NORMAL);
+        subTitlesFont.setColor(new BaseColor(18,91,167));
 
         commonTextFont = new Font();
         commonTextFont.setSize(14);
@@ -101,7 +102,8 @@ public class PDFGenerator {
         tableHeadersFont.setSize(16);
         tableHeadersFont.setFamily("Arial");
         tableHeadersFont.setStyle(Font.BOLD);
-        tableHeadersFont.setColor(new BaseColor(141,191,65));
+        //tableHeadersFont.setColor(new BaseColor(141,191,65));
+        tableHeadersFont.setColor(new BaseColor(18,91,167));
     }
 
     public boolean generateCompletePDF(long startDate, long endDate){
@@ -270,18 +272,18 @@ public class PDFGenerator {
 
         mainPDFDocument.add(NEWLINE);
         Paragraph currentCategoryNameParagraph = new Paragraph(currentCategoryName, tableHeadersFont);
-        currentCategoryNameParagraph.setIndentationLeft(56f);
+//        currentCategoryNameParagraph.setIndentationLeft(56f);
         mainPDFDocument.add(currentCategoryNameParagraph);
 
         for (SymptomViewModel symptomViewModel: symptomViewModels) {
             if(!symptomViewModel.getCategoryName().equals(currentCategoryName)){
                 currentCategoryName = symptomViewModel.getCategoryName();
                 currentCategoryNameParagraph = new Paragraph(currentCategoryName, tableHeadersFont);
-                currentCategoryNameParagraph.setIndentationLeft(56f);
+//                currentCategoryNameParagraph.setIndentationLeft(56f);
                 mainPDFDocument.add(currentCategoryNameParagraph);
             }
             Paragraph categoryOptionNameParagraph = new Paragraph(symptomViewModel.getCategoryOptionName(), commonTextFont);
-            categoryOptionNameParagraph.setIndentationLeft(112f);
+//            categoryOptionNameParagraph.setIndentationLeft(112f);
             mainPDFDocument.add(categoryOptionNameParagraph);
         }
     }
@@ -303,8 +305,8 @@ public class PDFGenerator {
         mainPDFDocument.add(new Phrase(appResources.getString(R.string.symptom_duration), tableHeadersFont));
         mainPDFDocument.add(new Phrase(" " + model.getDuration()));
         mainPDFDocument.add(NEWLINE);
-        mainPDFDocument.add(new Phrase(appResources.getString(R.string.detailed_description), tableHeadersFont));
-        mainPDFDocument.add(new Phrase(" "));
+//        mainPDFDocument.add(new Phrase(appResources.getString(R.string.detailed_description), tableHeadersFont));
+//        mainPDFDocument.add(new Phrase(" "));
     }
 
     private void addDateRangeToPDF(long startDate, long endDate) {
@@ -329,6 +331,7 @@ public class PDFGenerator {
 
     private void drawHorizontalLine(){
         LineSeparator ls = new LineSeparator();
+        ls.setLineColor(new BaseColor(18,91,167));
         try {
             mainPDFDocument.add(new Chunk(ls));
         } catch (DocumentException e) {
