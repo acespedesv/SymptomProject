@@ -269,10 +269,9 @@ public class PDFGenerator {
             if(!symptomViewModel.getCategoryName().equals(currentCategoryName)){
                 currentCategoryName = symptomViewModel.getCategoryName();
                 mainPDFDocument.add(new Phrase("\t" + currentCategoryName, tableHeadersFont));
+                mainPDFDocument.add(NEWLINE);
             }
-            else{
-                mainPDFDocument.add(new Phrase("\t\t- " + symptomViewModel.getCategoryOptionName(), commonTextFont));
-            }
+            mainPDFDocument.add(new Phrase("\t\t- " + symptomViewModel.getCategoryOptionName(), commonTextFont));
             mainPDFDocument.add(NEWLINE);
         }
     }
