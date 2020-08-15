@@ -10,14 +10,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.project.symptoms.R;
 import com.project.symptoms.activity.BloodPressureForm;
 import com.project.symptoms.activity.BloodPressureHistory;
@@ -68,19 +69,30 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void openHistoryMenu() {
-        Dialog dialog = new  BottomSheetDialog(getContext());
+        Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.history_selection_dialog);
-        dialog.findViewById(R.id.glucose_button).setOnClickListener(new View.OnClickListener() {
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        window.setLayout(FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.FILL_PARENT);
+
+        dialog.findViewById(R.id.glucose_history).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), GlucoseHistory.class));
             }
         });
-        dialog.findViewById(R.id.pressure_button).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.pressure_history).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), BloodPressureHistory.class));
+            }
+        });
+        dialog.findViewById(R.id.cancel_history).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
         dialog.setCancelable(true);
