@@ -52,8 +52,9 @@ public class DateTimeUtils implements
      */
     private void initTimePicker(){
         // Init the dialog
-        int current_hour = Calendar.getInstance().get(Calendar.HOUR);
+        int current_hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int current_minute = Calendar.getInstance().get(Calendar.MINUTE);
+
         timePickerDialog = new TimePickerDialog(context,this, current_hour, current_minute, FORMAT_12H);
 
         updateTimeView(current_hour, current_minute);
@@ -89,7 +90,7 @@ public class DateTimeUtils implements
     }
 
     public String getCurrentTimeAsString(){
-        int current_hour = Calendar.getInstance().get(Calendar.HOUR);
+        int current_hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int current_minute = Calendar.getInstance().get(Calendar.MINUTE);
         return TIME_FORMATTER.format(new Date(0,0,0, current_hour, current_minute));
     }
