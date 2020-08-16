@@ -31,25 +31,27 @@ public class BloodPressureLevelsController {
     public long insert(){
         try {
 
+            String hypotensionCategory = context.getString(R.string.blood_pressure_category_hypotension);
+            BloodPressureLevels hypotension = new BloodPressureLevels(hypotensionCategory, 90 , 40, 60, 40);
+            bloodPressureLevelsDao.insert(hypotension);
+
             String normalCategory = context.getString(R.string.blood_pressure_category_normal);
-            BloodPressureLevels normal = new BloodPressureLevels(normalCategory, 120, 90, 80, 60);
+            BloodPressureLevels normal = new BloodPressureLevels(normalCategory, 119, 91, 79, 61);
             bloodPressureLevelsDao.insert(normal);
 
             String elevatedCategory = context.getString(R.string.blood_pressure_category_elevated);
-            BloodPressureLevels elevated = new BloodPressureLevels(elevatedCategory, 129, 120, 80, 60);
+            BloodPressureLevels elevated = new BloodPressureLevels(elevatedCategory, 129, 120, 79, 61);
             bloodPressureLevelsDao.insert(elevated);
 
             String hypertensionStage1Category = context.getString(R.string.blood_pressure_category_hypertension_stage_1);
-            BloodPressureLevels hypertensionStage1 = new BloodPressureLevels(hypertensionStage1Category, 139, 130, 90, 80);
+            BloodPressureLevels hypertensionStage1 = new BloodPressureLevels(hypertensionStage1Category, 139, 130, 89, 80);
             bloodPressureLevelsDao.insert(hypertensionStage1);
 
             String hypertensionStage2Category = context.getString(R.string.blood_pressure_category_hypertension_stage_2);
             BloodPressureLevels hypertensionStage2 = new BloodPressureLevels(hypertensionStage2Category, 180, 140, 120, 90);
             bloodPressureLevelsDao.insert(hypertensionStage2);
 
-            String hypotensionCategory = context.getString(R.string.blood_pressure_category_hypotension);
-            BloodPressureLevels hypotension = new BloodPressureLevels(hypotensionCategory, 90 , 40, 60, 40);
-            bloodPressureLevelsDao.insert(hypotension);
+
 
         }catch (Exception e){
             e.printStackTrace();

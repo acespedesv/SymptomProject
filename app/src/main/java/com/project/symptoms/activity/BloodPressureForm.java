@@ -110,20 +110,40 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         return min <= value && value <= max;
     }
 
-    private boolean isPressureBetweenLevel(int systolicValue, int diastolicValue, BloodPressureLevels level){
+    private boolean isPressureBetweenBothRanges(int systolicValue, int diastolicValue, BloodPressureLevels level){
         return isBetweenBounds(systolicValue, level.getSystolicMinimum(), level.getSystolicMaximum())
                 && isBetweenBounds(diastolicValue, level.getDiastolicMinimum(), level.getDiastolicMaximum());
     }
 
-    BloodPressureLevels getCategoryFor(int systolicValue, int diastolicValue){
+    private boolean isPressureBetweenAnyRange(int systolicValue, int diastolicValue, BloodPressureLevels level){
+        return isBetweenBounds(systolicValue, level.getSystolicMinimum(), level.getSystolicMaximum())
+                || isBetweenBounds(diastolicValue, level.getDiastolicMinimum(), level.getDiastolicMaximum());
+    }
+
+    private BloodPressureLevels getCategoryFor(int systolicValue, int diastolicValue){
         List<BloodPressureLevels> allLevels = BloodPressureLevelsController.getInstance(BloodPressureForm.this).listAll();
-        BloodPressureLevels levelThatMatched = null;
+        BloodPressureLevels lastLevelThatMatched = null;
+        boolean matches = false;
         for(BloodPressureLevels level : allLevels){
-            if(isPressureBetweenLevel(systolicValue, diastolicValue, level)){
-                return level;
-            }
+            if(level.getCategory().equals(getString(R.string.blood_pressure_category_hypotension)))
+                matches = isPressureBetweenAnyRange(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_normal)))
+                matches = isPressureBetweenBothRanges(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_elevated)))
+                matches = isPressureBetweenBothRanges(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_hypertension_stage_1)))
+                matches = isPressureBetweenAnyRange(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_hypertension_stage_2)))
+                matches = isPressureBetweenAnyRange(systolicValue, diastolicValue, level);
+
+            if (matches)
+                lastLevelThatMatched = level;
         }
-        return levelThatMatched;
+        return lastLevelThatMatched;
     }
 
     private void checkValues(int systolicValue, int diastolicValue) {
