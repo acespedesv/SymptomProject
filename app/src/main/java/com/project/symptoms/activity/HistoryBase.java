@@ -42,7 +42,6 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_base);
 
-
         setTitle(getTitleResourceId());
 
         listView = findViewById(R.id.data_list_view);
