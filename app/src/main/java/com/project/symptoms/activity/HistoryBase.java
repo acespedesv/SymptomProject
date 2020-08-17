@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,7 +34,7 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
 
 
     protected void hideLoadMoreButton(){
-        listView.removeFooterView(loadMoreButton);
+        loadMoreButton.setVisibility(View.GONE);
     }
 
 
@@ -63,15 +64,13 @@ public abstract class HistoryBase extends AppCompatActivity implements MainMenuF
         headings.setBackgroundColor(getColor(R.color.history_table_header_background));
         listView.addHeaderView(headings, null, false);
 
-        loadMoreButton = new Button(this);
+        loadMoreButton = findViewById(R.id.load_mode);
         loadMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onLoadMoreClicked();
             }
         });
-        loadMoreButton.setText(R.string.load_more);
-        listView.addFooterView(loadMoreButton);
 
 
         registerForContextMenu(listView);

@@ -9,41 +9,33 @@
     android:background="@color/colorMainWhite">
 
     <!--    ACTIONBAR-->
+    <fragment
+        android:id="@id/action_bar"
+        android:name="com.project.symptoms.fragment.ActionBarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--    MAIN TITLE-->
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="426dp"
-        android:layout_height="163dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_backgroud_blue" />
-
     <TextView
         android:id="@+id/form_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/symptom_form"
         android:textAlignment="center"
         android:textColor="@color/colorBlack"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/action_bar"
+         />
 
     <!--  SCROLLABLE SECTION  -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="518dp"
-        android:layout_marginBottom="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/fragment_main_menu"
         app:layout_constraintEnd_toEndOf="parent"
