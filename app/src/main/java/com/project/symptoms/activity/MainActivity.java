@@ -408,8 +408,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        TextView startDate = dialog.getDialog().findViewById(R.id.start_date);
-        TextView endDate = dialog.getDialog().findViewById(R.id.end_date);
+        TextView startDate = dialog.getDialog().findViewById(R.id.start_date_range);
+        TextView endDate = dialog.getDialog().findViewById(R.id.end_date_range);
         try {
             generatePDF(startDate.getText().toString(), endDate.getText().toString());
         } catch (ParseException e) {
