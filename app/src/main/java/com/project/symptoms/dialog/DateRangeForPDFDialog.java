@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.project.symptoms.R;
+import com.project.symptoms.util.DateTimeUtils;
 
 public class DateRangeForPDFDialog extends DialogFragment {
 
@@ -22,15 +25,20 @@ public class DateRangeForPDFDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-
+        View mainView = inflater.inflate(R.layout.pdf_dates_picker_dialog, null);
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.pdf_dates_picker_dialog, null))
+        builder.setView(mainView)
         // Add action buttons
         .setPositiveButton(R.string.accept, (dialog, id) ->
                 dateRangeDialogListener.onDialogPositiveClick(DateRangeForPDFDialog.this))
         .setNegativeButton(R.string.cancel, (dialog, id) ->
                 dateRangeDialogListener.onDialogNegativeClick(DateRangeForPDFDialog.this));
+
+        TextView startDateView = mainView.findViewById(R.id.start_date);
+        TextView endDateView = mainView.findViewById(R.id.end_date);
+        DateTimeUtils.getInstance().registerAsDatePicker(startDateView);
+        DateTimeUtils.getInstance().registerAsDatePicker(endDateView);
 
         return builder.create();
     }
