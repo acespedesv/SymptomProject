@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
@@ -22,54 +24,46 @@ import com.project.symptoms.db.controller.SymptomCategoryOptionController;
 
 public class BodySelection extends FragmentActivity{
 
-    int selectedColor = Color.parseColor("#8DBF41");
-    int normalColor = Color.parseColor("#d6d7d7");
+    String bodyPreferenceKey;
+
     SymptomCategoryController symptomCategoryController;
     SymptomCategoryOptionController symptomCategoryOptionController;
 
-    // Rows
-    final int FEMALE = 0;
-    final int MALE = 1;
-
-    // Columns
-    final int KEYWORD = 0;
-    final int NAME = 1;
-
-
-    int selectedBodyType = MALE; // Be MALE OF FEMALE
-
-    String bodyTypes[][] = {
-            {"female","Mujer"},
-            {"male","Hombre"}
-    };
+    private String noneSelected = "None";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
-        DBHelper database = new DBHelper(this);
-        GlucoseLevelsController.getInstance(this).insert();
-        BloodPressureLevelsController.getInstance(this).insert();
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.body_selection);
 
+        bodyPreferenceKey = getString(R.string.preference_selected_body_type_key);
+
+        setButtonsListeners();
+
+
+    }
+
+    private void setButtonsListeners() {
         final ImageButton maleButton = findViewById(R.id.male_button);
+
         final ImageButton femaleButton = findViewById(R.id.female_button);
 
         femaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedBodyType = FEMALE;
                 v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
                 maleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
+                saveBodyTypeToPreferences(getString(R.string.preference_selected_body_type_female));
             }
         });
 
         maleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedBodyType = MALE;
                 v.setBackground(getResources().getDrawable(R.drawable.body_selection_background1, getTheme()));
                 femaleButton.setBackground(getResources().getDrawable(R.drawable.gradient_background, getTheme()));
+                saveBodyTypeToPreferences(getString(R.string.preference_selected_body_type_male));
             }
         });
 
@@ -78,27 +72,71 @@ public class BodySelection extends FragmentActivity{
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor =  prefs.edit();
-                editor.putString("body_type", bodyTypes[selectedBodyType][KEYWORD]);
-                editor.apply();
-
-                Intent intent = new Intent(BodySelection.this, MainActivity.class);
-                startActivity(intent);
+                onContinueButtonClicked();
             }
         });
 
-        initialDBInsertion();
-
     }
 
-    // Perform initial DB insertion (symptom categories and symptom category options)
-    // Hast to be in that order > 1. SymptomCategory 2. SymptomCategoryOption
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(selectionAlreadyMade())
+            launchMainActivity();
+        else
+            initialDBInsertion();
+        }
+
+    private boolean selectionAlreadyMade(){
+        return ! getBodyTypeInPreferences().equals(noneSelected);
+    }
+
+    /**  Perform initial DB insertion of:
+             - symptom categories (MUST be inserted before category options)
+             - symptom category options
+             - glucose reference values
+             - pressure reference values
+     */
     private void initialDBInsertion(){
         symptomCategoryController = SymptomCategoryController.getInstance(this);
         symptomCategoryController.insert();
+
         symptomCategoryOptionController = SymptomCategoryOptionController.getInstance(this);
         symptomCategoryOptionController.insert();
+
+        GlucoseLevelsController.getInstance(this).insert();
+        BloodPressureLevelsController.getInstance(this).insert();
+    }
+
+    private void onContinueButtonClicked(){
+        if(selectionAlreadyMade())
+            launchMainActivity();
+        else{
+            notifySelectionNeeded();
+        }
+    }
+
+    private void notifySelectionNeeded() {
+        Toast.makeText(this, getString(R.string.selection_is_needed), Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    private void launchMainActivity() {
+        Intent intent = new Intent(BodySelection.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void saveBodyTypeToPreferences(String value){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor =  prefs.edit();
+        editor.putString(bodyPreferenceKey, value);
+        editor.apply();
+    }
+
+    private String getBodyTypeInPreferences(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String valueSaved = prefs.getString(bodyPreferenceKey, noneSelected);
+        return valueSaved;
     }
 }
 

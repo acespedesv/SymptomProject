@@ -40,12 +40,12 @@ public class SymptomCheckerWorker extends Worker {
     }
 
     private boolean symptomStillOpen(){
-        SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).findById(symptomId);
-        return symptom.getDuration() < 0;
+        SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).select(symptomId);
+        return symptom.getDuration() == 0;
     }
 
     private String buildMessageFor(long symptomId){
-        SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).findById(symptomId);
+        SymptomModel symptom = SymptomController.getInstance(getApplicationContext()).select(symptomId);
 
         Date startDate = new Date(symptom.getStartDate());
         String dateString = DateTimeUtils.getInstance().DATE_FORMAT_FOR_NOTIFICATIONS.format(startDate);

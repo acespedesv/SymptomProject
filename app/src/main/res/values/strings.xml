@@ -17,6 +17,7 @@
     <string name="value_successfully_saved">Valor guardado exitosamente</string>
     <string name="value_successfully_updated">Valor actualizado exitosamente</string>
     <string name="value_saving_failed">El valor no se pudo guardar exitosamente</string>
+    <string name="check_input_values">Por favor revise que los campos ingresados son correctos</string>
     <string name="value_updating_failed">El valor no se pudo actualizar exitosamente</string>
     <string name="done">Listo</string>
     <string name="continue_text">Continuar</string>
@@ -110,6 +111,7 @@
     <string name="pdf_menu">Generar PDF</string>
     <string name="detailed_description">Descripción detallada</string>
     <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
+    <string name="incomplete_form_message">El campo de descripción es requerido, por favor ingrese algún valor</string>
 
 
     <!-- =============================== -->
@@ -178,9 +180,8 @@
     <!-- =============================== -->
     <!--        Body Selection           -->
     <!-- =============================== -->
-    <string name="male">Hombre</string>
-    <string name="female">Mujer</string>
     <string name="select_body_message">Deslice y seleccione</string>
+    <string name="selection_is_needed">Por favor seleccione un tipo de cuerpo</string>
 
 
     <!-- =============================== -->
@@ -201,10 +202,16 @@
 
 
     <!-- =============================== -->
+    <!--       Preferences Values        -->
+    <!-- =============================== -->
+    <string name="preference_selected_body_type_male">male</string>
+    <string name="preference_selected_body_type_female">female</string>
+
+
+    <!-- =============================== -->
     <!--      Preferences Defaults       -->
     <!-- =============================== -->
     <string name="preference_reminder_frequency_default">8</string>
-    <string name="preference_selected_body_type_default">Ninguno</string>
 
 
     <!-- =============================== -->
@@ -228,6 +235,15 @@
     <string name="blood_pressure_category_hypotension">Hipotensión</string>
 
 
+
+    <!-- =============================== -->
+    <!--        Glucose Levels           -->
+    <!-- =============================== -->
+    <string name="glucose_level_normal">Normal</string>
+    <string name="glucose_level_prediabetes">Prediabetes</string>
+    <string name="glucose_level_diabetes">Diabetes</string>
+
+  
     <!-- =============================== -->
     <!--    Symptoms Categories Names    -->
     <!-- =============================== -->

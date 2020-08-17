@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
@@ -100,13 +101,13 @@ public class NotificationWrapper {
                 .setInitialDelay(frequency, getCurrentTimeUnit())
                 .build();
         WorkManager.getInstance(context).enqueue(oneTimeWorkRequest);
+        Log.i("#", "reminder set for id "+symptomId+" in "+getCurrentFrequency());
     }
 
-    public void showReminderSetToast() {
+    public String getReminderSetMessage() {
         int frequency = getCurrentFrequency();
         String format = context.getString(R.string.reminder_set_format);
-        String text = String.format(format, frequency);
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+        return String.format(format, frequency);
     }
 
     private TimeUnit getCurrentTimeUnit() {

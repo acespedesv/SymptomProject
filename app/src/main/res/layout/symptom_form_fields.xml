@@ -19,10 +19,13 @@
             android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
             android:hint="@string/symptom_description_hint"
-            />
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,9 +44,11 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="9"
+            android:checkedButton="@id/intensity_low"
             android:layout_marginHorizontal="10dp">
 
             <RadioButton
+                android:id="@+id/intensity_low"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
@@ -57,6 +62,7 @@
                 android:textSize="20sp" />
 
             <RadioButton
+                android:id="@+id/intensity_medium"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
@@ -69,6 +75,7 @@
                 android:textSize="20sp" />
 
             <RadioButton
+                android:id="@+id/intensity_high"
                 android:layout_weight="3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -157,10 +164,14 @@
             android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_duration"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
             android:hint="@string/duration_hint"
-            android:inputType="number" />
+            android:inputType="number"
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
 
         <TextView
             android:id="@+id/textView5"
@@ -177,10 +188,14 @@
             android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_medicament"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
             android:hint="@string/reaction_medicament_hint"
-            android:inputType="textLongMessage" />
+            android:inputType="textLongMessage"
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
 
         <TextView
             android:id="@+id/textView6"
@@ -197,10 +212,14 @@
             android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_food"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
             android:hint="@string/reaction_food_hint"
-            android:inputType="textLongMessage" />
+            android:inputType="textLongMessage"
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
 
         <LinearLayout
             android:orientation="vertical"

@@ -2,6 +2,7 @@ package com.project.symptoms.db.controller;
 
 import android.content.Context;
 
+import com.project.symptoms.db.dao.SymptomCategoryOptionDao;
 import com.project.symptoms.db.dao.SymptomCategoryOptionDaoImpl;
 import com.project.symptoms.db.model.SymptomCategoryModel;
 import com.project.symptoms.db.model.SymptomCategoryOptionModel;
@@ -16,7 +17,7 @@ import java.util.List;
 public class SymptomCategoryOptionController {
 
     private static SymptomCategoryOptionController instance; // Todo: Fix warning
-    private SymptomCategoryOptionDaoImpl symptomCategoryOptionDao;
+    private SymptomCategoryOptionDao symptomCategoryOptionDao;
     private SymptomCategoryController symptomCategoryController;
     private Context context;
 

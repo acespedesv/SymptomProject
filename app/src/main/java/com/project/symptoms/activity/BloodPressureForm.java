@@ -1,7 +1,6 @@
 package com.project.symptoms.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.project.symptoms.db.controller.PressureController;
 import com.project.symptoms.db.controller.BloodPressureLevelsController;
@@ -26,7 +24,6 @@ import java.util.List;
 
 public class BloodPressureForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
-    protected Toolbar toolbar;
     protected Button saveButton;
 
     private long pressureId; // When called for edit
@@ -53,16 +50,25 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
     }
 
     private void init(){
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
+                onSaveButtonClicked();
             }
         });
+    }
+
+    private void onSaveButtonClicked() {
+        try{
+            saveData();
+        }catch (Exception e){
+            String message = getString(R.string.value_saving_failed)
+                    + "\n" + getString(R.string.check_input_values);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).
+                    show();
+        }
     }
 
     private void populateForEdit(long pressureId) {
@@ -78,7 +84,7 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         timeView.setText(DateTimeUtils.getInstance().TIME_FORMATTER.format(model.getTime()));
     }
 
-    private void saveData(){
+    private void saveData() throws Exception{
         // Gather all the data fields
         EditText systolicView = findViewById(R.id.systolic);
         EditText diastolicView = findViewById(R.id.diastolic);
@@ -101,29 +107,52 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
             result = PressureController.getInstance(this).update(pressureId, systolicValue, diastolicValue, date, time );
             messageToShow = getString(R.string.value_successfully_updated);
         }
-        if(result != FAILURE){
-            Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
-        }
+
+        if(result == FAILURE)
+            throw new Exception(getString(R.string.value_saving_failed));
+
+        Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
+
     }
 
     private boolean isBetweenBounds(int value, int min, int max){
         return min <= value && value <= max;
     }
 
-    private boolean isPressureBetweenLevel(int systolicValue, int diastolicValue, BloodPressureLevels level){
+    private boolean isPressureBetweenBothRanges(int systolicValue, int diastolicValue, BloodPressureLevels level){
         return isBetweenBounds(systolicValue, level.getSystolicMinimum(), level.getSystolicMaximum())
                 && isBetweenBounds(diastolicValue, level.getDiastolicMinimum(), level.getDiastolicMaximum());
     }
 
-    BloodPressureLevels getCategoryFor(int systolicValue, int diastolicValue){
+    private boolean isPressureBetweenAnyRange(int systolicValue, int diastolicValue, BloodPressureLevels level){
+        return isBetweenBounds(systolicValue, level.getSystolicMinimum(), level.getSystolicMaximum())
+                || isBetweenBounds(diastolicValue, level.getDiastolicMinimum(), level.getDiastolicMaximum());
+    }
+
+    private BloodPressureLevels getCategoryFor(int systolicValue, int diastolicValue){
         List<BloodPressureLevels> allLevels = BloodPressureLevelsController.getInstance(BloodPressureForm.this).listAll();
-        BloodPressureLevels levelThatMatched = null;
+        BloodPressureLevels lastLevelThatMatched = null;
+        boolean matches = false;
         for(BloodPressureLevels level : allLevels){
-            if(isPressureBetweenLevel(systolicValue, diastolicValue, level)){
-                return level;
-            }
+            if(level.getCategory().equals(getString(R.string.blood_pressure_category_hypotension)))
+                matches = isPressureBetweenAnyRange(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_normal)))
+                matches = isPressureBetweenBothRanges(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_elevated)))
+                matches = isPressureBetweenBothRanges(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_hypertension_stage_1)))
+                matches = isPressureBetweenAnyRange(systolicValue, diastolicValue, level);
+
+            else if(level.getCategory().equals(getString(R.string.blood_pressure_category_hypertension_stage_2)))
+                matches = isPressureBetweenAnyRange(systolicValue, diastolicValue, level);
+
+            if (matches)
+                lastLevelThatMatched = level;
         }
-        return levelThatMatched;
+        return lastLevelThatMatched;
     }
 
     private void checkValues(int systolicValue, int diastolicValue) {

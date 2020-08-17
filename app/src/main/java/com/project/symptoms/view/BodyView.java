@@ -28,6 +28,7 @@ public class BodyView extends View {
 
     // Used to draw the circles over the image
     private Paint redBrush;
+    private Paint redBrushBorder;
 
     // The image to draw on the screen
     private Drawable imageDrawable;
@@ -91,9 +92,12 @@ public class BodyView extends View {
 
     private void init(){
         redBrush = new Paint();
+        redBrushBorder = new Paint();
         redBrush.setAntiAlias(false);
         redBrush.setStyle(Paint.Style.FILL);
-        redBrush.setColor(Color.RED);
+        redBrush.setColor(Color.argb(70, 255, 0, 0));
+        redBrushBorder.setStyle(Paint.Style.STROKE);
+        redBrushBorder.setColor(Color.RED);
 
         points = new ArrayList<>();
 
@@ -165,13 +169,17 @@ public class BodyView extends View {
     }
 
     private void drawPermanentPoints(Canvas canvas) {
-        for(Circle point : points)
+        for(Circle point : points){
+            canvas.drawCircle(point.x, point.y, point.radius, redBrushBorder);
             canvas.drawCircle(point.x, point.y, point.radius, redBrush);
+        }
+
     }
 
     private void drawTemporaryPoint(Canvas canvas) {
-        if(temporaryPoint != null)
+        if(temporaryPoint != null){
             canvas.drawCircle(temporaryPoint.x, temporaryPoint.y, temporaryPoint.radius, redBrush);
+        }
     }
 
     private void drawBodyImage(Canvas canvas) {
@@ -180,8 +188,8 @@ public class BodyView extends View {
     }
 
     private Rect calculateCenteredBounds() {
-        float PERCENTAGE_OF_HEIGHT_TO_USE = 0.8f; // 0 to 1 scale
-        float PERCENTAGE_OF_WIDTH_TO_USE = 0.5f;
+        float PERCENTAGE_OF_HEIGHT_TO_USE = 0.9f; // 0 to 1 scale
+        float PERCENTAGE_OF_WIDTH_TO_USE = 0.6f;
 
         int final_height = (int) (getHeight() * PERCENTAGE_OF_HEIGHT_TO_USE);
 
@@ -190,9 +198,10 @@ public class BodyView extends View {
         int sideMargin = (int) (remainingFreeWidth / 2);
 
         int left = sideMargin;
-        int right = 3*left;
+        int right = getWidth() - sideMargin;
         int top = 0;
-        return new Rect(sideMargin,top,right, final_height);
+        int bottom = final_height;
+        return new Rect(left, top, right, bottom);
     }
 
 

@@ -12,15 +12,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+      
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activity.HistoryBase" />
-        <activity android:name=".activity.GlucoseHistory" />
-        <activity android:name=".activity.BloodPressureHistory" />
-        <activity android:name=".activity.Settings" />
-        <activity android:name=".activity.About" />
+
+
+        <activity android:name=".activity.HistoryBase"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity" />
+
+
+
+        <activity android:name=".activity.GlucoseHistory"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity"/>
+
+
+
+        <activity android:name=".activity.BloodPressureHistory"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity" />
+
+
+
+        <activity android:name=".activity.Settings"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity" />
+
+
+
+        <activity android:name=".activity.About"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity"/>
+
+      
         <activity android:name=".activity.SplashScreen">
             <intent-filter>
 
@@ -34,26 +61,47 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+
+
         <activity
             android:name=".activity.GlucoseForm"
             android:label="@string/title_activity_glucose_form"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- BLOOD PRESSURE FORM -->
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity" />
+
+
+
         <activity
             android:name=".activity.BloodPressureForm"
             android:label="@string/blood_pressure_form_title"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- MAIN ACTIVITY -->
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity" />
+
+
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+
         <activity
             android:name=".activity.BodySelection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+
         <activity
             android:name=".activity.SymptomForm"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.MainActivity" />
+
+
+
     </application>
 
 </manifest>

@@ -2,8 +2,8 @@ package com.project.symptoms.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
 import android.content.Intent;
-import android.icu.text.SymbolTable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +30,7 @@ import com.project.symptoms.db.model.SymptomCategoryOptionModel;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.util.NotificationWrapper;
 import com.project.symptoms.view.BodyView;
 import com.project.symptoms.view.SymptomOptionView;
 
@@ -102,7 +103,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     // Finish form set-up for updating
     private void loadFormForUpdate(){
         saveButton.setText(R.string.update);
-        symptomModelToUpdate = symptomController.findById(symptomIdToUpdate);
+        symptomModelToUpdate = symptomController.select(symptomIdToUpdate);
         symptomDescriptionView.setText(symptomModelToUpdate.getDescription());
         HashMap<String, Integer> intensityHashMap = new HashMap<>();
         intensityHashMap.put(getString(R.string.low), 0);
@@ -123,7 +124,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
     }
 
     private void enableCheckRespectiveSymptomOptionViews(){
-        for (SelectedCategoryOptionModel optionModel: selectedCategoryOptionController.getAllBySymptom(symptomIdToUpdate)) {
+        for (SelectedCategoryOptionModel optionModel: selectedCategoryOptionController.selectAllBySymptom(symptomIdToUpdate)) {
             String optionName = symptomCategoryOptionController.getById(optionModel.getCategoryOptionId()).getCategoryOptionName();
             SymptomOptionView currentSymptomOptionView = optionsViewHashMap.get(optionName);
             if (currentSymptomOptionView != null) currentSymptomOptionView.setChecked(true);
@@ -152,29 +153,12 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = "";
-                // The form will insert a new Symptom
-                if(saveButton.getText().equals(getString(R.string.save))) {
-                    text = insertSymptomsData() ?
-                            getResources().getString(R.string.value_successfully_saved) :
-                            getResources().getString(R.string.value_saving_failed);
-                }
-                // Thw form will update an existing symptom
-                else {
-                    try {
-                        text = updateSymptomsData() ?
-                                getResources().getString(R.string.value_successfully_updated) :
-                                getResources().getString(R.string.value_updating_failed);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-                Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivityIntent);
+                onSaveButtonClicked();
             }
         });
     }
+
+
 
     private boolean insertSelectedCategoryOptions(long symptomId){
         boolean success = true;
@@ -190,10 +174,52 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         return success;
     }
 
-    private boolean insertSymptomsData() {
+    private void onSaveButtonClicked(){
+        if(allRequiredFieldsAreFilled())
+            try {
+                insertOrUpdateSymptom();
+            }catch (Exception e){
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        else
+            notifyIncompleteForm();
+    }
+
+    private boolean allRequiredFieldsAreFilled(){
+        return symptomDescriptionView.getText().length() >= 1;
+    }
+
+    // Move to top, set the field in red and show a toast
+    private void notifyIncompleteForm(){
+        findViewById(R.id.symptom_form).scrollTo(0,0);
+
+        symptomDescriptionView.getBackground().setTint(getColor(R.color.colorMainRed));
+
+        String message = getString(R.string.incomplete_form_message);
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+    }
+
+    // This should be called after the form was already validated
+    private void insertOrUpdateSymptom() throws Exception{
+        String finalMessage = getString(R.string.value_successfully_saved);
+
+        if(saveButton.getText().equals(getString(R.string.save))) { // The form will insert a new Symptom
+            long id = insertSymptomsData();
+            if(getDurationFromField() == 0){
+                NotificationWrapper.getInstance(this).startReminderFor(id);
+                finalMessage += "\n" + NotificationWrapper.getInstance(this).getReminderSetMessage();
+            }
+        }
+        else { // The form will update an existing symptom
+            updateSymptomsData();
+        }
+        Toast.makeText(getApplicationContext(), finalMessage, Toast.LENGTH_LONG).show();
+    }
+
+    private long insertSymptomsData() throws  Exception{
         logSelectedOptions();
-        String stringDuration = symptomDurationView.getText().toString();
-        int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : 0;
+        int finalDuration = getDurationFromField();
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
         RadioButton intensityRadioButton = findViewById(intensityCheckedViewId);
         // Insert in symptom table
@@ -203,13 +229,24 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
                 intermittenceSwitchView.isChecked() ? 1 : 0, currentCircle.radius, bodyState);
 
         // The symptomId should be inserted correctly as well as the category selected options
-        return (symptomId != -1 && insertSelectedCategoryOptions(symptomId));
+        boolean insertSucceeded = (symptomId != -1)
+                && (insertSelectedCategoryOptions(symptomId));
+        if(! insertSucceeded )
+            throw new Exception(getString(R.string.value_saving_failed));
+        return symptomId;
     }
 
-    private boolean updateSymptomsData() throws ParseException {
-        logSelectedOptions();
+    private int getDurationFromField(){
         String stringDuration = symptomDurationView.getText().toString();
-        int finalDuration = (!"".equals(stringDuration)) ? Integer.parseInt(stringDuration) : -1;
+        int value = 0;
+        if( ! stringDuration.equals(""))
+            value = Integer.parseInt(stringDuration);;
+        return value;
+    }
+
+    private long updateSymptomsData() throws Exception {
+        logSelectedOptions();
+        int finalDuration = getDurationFromField();
         int intensityCheckedViewId = intensityRadioGroupView.getCheckedRadioButtonId();
         RadioButton intensityRadioButton = findViewById(intensityCheckedViewId);
         long startDateLong = DateTimeUtils.getInstance().getDateFromString(startDateView.getText().toString()).getTime();
@@ -230,11 +267,14 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         symptomModelHolder.setCausingDrug(symptomMedicamentView.getText().toString());
         symptomModelHolder.setCausingFood(symptomFoodView.getText().toString());
         symptomModelHolder.setIntermittence(intermittenceSwitchView.isChecked() ? 1 : 0);
+        symptomModelHolder.setSymptomId(symptomIdToUpdate);
 
-        return symptomController.updateSymptom(symptomIdToUpdate, symptomModelHolder) &&
-                selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate) &&
-                insertSelectedCategoryOptions(symptomIdToUpdate);
-
+        boolean updateSucceeded = (symptomController.update(symptomModelHolder) != -1)
+                && (selectedCategoryOptionController.deleteAllBySymptom(symptomIdToUpdate) != 1)
+                && (insertSelectedCategoryOptions(symptomIdToUpdate));
+        if(! updateSucceeded)
+            throw new Exception(getString(R.string.value_saving_failed));
+        return symptomIdToUpdate;
     }
 
     private void logSelectedOptions() {
@@ -292,6 +332,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         categoryLabel.setText(categoryName);
         categoryLabel.setTextSize(20);
         categoryLabel.setPadding(20, 50, 20, 20);
+        categoryLabel.setTextColor(getColor(R.color.colorDarkBlue));
         return categoryLabel;
     }
 

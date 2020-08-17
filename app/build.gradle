@@ -39,6 +39,8 @@ dependencies {
 
     // To generate PDF
     implementation 'com.itextpdf:itextg:5.5.10'
+    
+    androidTestImplementation 'org.assertj:assertj-core:3.6.2'
 
     // Used in Settings Activity
     implementation 'androidx.preference:preference:1.1.0'

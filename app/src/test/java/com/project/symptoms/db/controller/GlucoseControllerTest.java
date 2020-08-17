@@ -1,5 +1,6 @@
 package com.project.symptoms.db.controller;
 
+import com.project.symptoms.db.dao.GlucoseDao;
 import com.project.symptoms.db.dao.GlucoseDaoImpl;
 import com.project.symptoms.db.model.GlucoseModel;
 import com.project.symptoms.util.DateTimeUtils;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 public class GlucoseControllerTest{
 
-    GlucoseDaoImpl mockDao;
+    GlucoseDao mockDao;
     GlucoseController controller;
 
     @Before
@@ -63,15 +64,17 @@ public class GlucoseControllerTest{
     }
 
     @Test // Not sure about this test
-    public void GivenSomeDataWhen_Insert_ThenReturnsAnId() throws Exception{
+    public void GivenSomeData_WhenInsert_ThenReturnsAnId() throws Exception{
         // Given
         controller.setDateTimeUtils(createMockedDateTimeUtils());
+        long id = 3;
+        when(mockDao.insert(any())).thenReturn(id);
 
         // When
         long result = controller.insert(50, "asdasd","asd");
 
         // Then
-        assertNotEquals(-1, result);
+        assertEquals(id, result);
     }
 
     @Test
