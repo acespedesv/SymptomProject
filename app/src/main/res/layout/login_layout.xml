@@ -104,6 +104,7 @@
             android:drawableEnd="@drawable/ic_history_2"
             android:fontFamily="@font/montserrat"
             android:padding="15dp"
+            android:textColor="@color/colorMainWhite"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold" />
