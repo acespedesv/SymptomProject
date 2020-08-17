@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
@@ -102,6 +103,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
     @Override
     public List<GlucoseModel> select(long initialDate, long finalDate) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Log.e("LOG", "Glucose dates: " + initialDate + ", " + finalDate);
         String whereClause = Contract.Glucose.COLUMN_NAME_TIME + " BETWEEN ? AND ?";
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
         Cursor cursor = db.query(Contract.Glucose.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
