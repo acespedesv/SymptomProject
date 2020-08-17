@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
@@ -64,6 +65,7 @@ public class SymptomDaoImpl implements SymptomDao {
     public List<SymptomModel> select(long initialDate, long finalDate) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = Contract.Symptom.COLUMN_NAME_START_DATE + " BETWEEN ? AND ?";
+        Log.e("LOG", "Symptoms dates: " + initialDate + ", " + finalDate);
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
         Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<SymptomModel> result;

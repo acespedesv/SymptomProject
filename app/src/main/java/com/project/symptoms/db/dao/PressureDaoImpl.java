@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
@@ -99,6 +100,7 @@ public class PressureDaoImpl implements PressureDao {
     public List<PressureModel> select(long initialDate, long finalDate) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = Contract.Pressure.COLUMN_NAME_DATE + " BETWEEN ? AND ?";
+        Log.e("LOG", "Pressure dates: " + initialDate + ", " + finalDate);
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<PressureModel> result = new ArrayList<>();

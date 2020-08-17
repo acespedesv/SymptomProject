@@ -247,8 +247,8 @@ public class PDFGenerator {
             mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(NEWLINE);
 
-            //List<SymptomModel> models = symptomController.select(startDate, endDate);
-            List<SymptomModel> models = symptomController.listAll();
+            List<SymptomModel> models = symptomController.select(startDate, endDate);
+            //List<SymptomModel> models = symptomController.listAll();
             Log.e("PDF", "Models list size: " + models.size());
             for (SymptomModel model: models) {
                 writeBasicSymptomInfoInPDF(model);
