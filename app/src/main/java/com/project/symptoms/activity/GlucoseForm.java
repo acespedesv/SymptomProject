@@ -79,12 +79,23 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
+                onSaveButtonClicked();
             }
         });
     }
 
-    private void saveData() {
+    private void onSaveButtonClicked() {
+        try{
+            saveData();
+        }catch (Exception e){
+            String message = getString(R.string.value_saving_failed)
+                    + "\n" + getString(R.string.check_input_values);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).
+                    show();
+        }
+    }
+
+    private void saveData() throws Exception{
         measureText = findViewById(R.id.glucose_measure);
         dateView = findViewById(R.id.date_input);
         timeView = findViewById(R.id.time_input);
@@ -103,9 +114,12 @@ public class GlucoseForm extends AppCompatActivity implements MainMenuFragment.O
             result = GlucoseController.getInstance(this).update(glucoseId, glucoseValue, date, hour);
             messageToShow = getString(R.string.value_successfully_updated);
         }
-        if(result != FAILURE){
-            Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
-        }
+
+        if(result == FAILURE)
+            throw new Exception(getString(R.string.value_saving_failed));
+
+        Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
+
     }
 
     private void updateData() {
