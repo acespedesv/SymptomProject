@@ -189,7 +189,7 @@ public class BodyView extends View {
 
     private Rect calculateCenteredBounds() {
         float PERCENTAGE_OF_HEIGHT_TO_USE = 0.9f; // 0 to 1 scale
-        float PERCENTAGE_OF_WIDTH_TO_USE = 0.4f;
+        float PERCENTAGE_OF_WIDTH_TO_USE = 0.6f;
 
         int final_height = (int) (getHeight() * PERCENTAGE_OF_HEIGHT_TO_USE);
 
@@ -197,10 +197,11 @@ public class BodyView extends View {
 
         int sideMargin = (int) (remainingFreeWidth / 2);
 
-        int left = sideMargin-3;
-        int right = 3*left;
+        int left = sideMargin;
+        int right = getWidth() - sideMargin;
         int top = 0;
-        return new Rect(sideMargin,top,right, final_height);
+        int bottom = final_height;
+        return new Rect(left, top, right, bottom);
     }
 
 
