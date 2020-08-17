@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
+import com.project.symptoms.dialog.DateRangeForPDFDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
 import com.project.symptoms.fragment.BodyFragment;
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements
         BodyFragment.OnFragmentInteractionListener,
         MainMenuFragment.OnFragmentInteractionListener,
         CircleSizeSelectionDialog.OnCircleSizeSelectedListener,
-        CircleSizeSelectionDialog.OnCircleSizeUpdatedListener {
+        CircleSizeSelectionDialog.OnCircleSizeUpdatedListener,
+        DateRangeForPDFDialog.DateRangeDialogListener{
 
     private static final int STORAGE_CODE = 100;
     private final long DEFAULT_SELECTED_SYMPTOM_ID_VALUE = -1;
@@ -220,38 +223,11 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 else {
                     // Permission already granted, call save pdf method
-                    generatePDF();
+                    showDateRangeDialog();
                 }
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == STORAGE_CODE) {
-            // Permission was granted from popup, call generate pdf method
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                generatePDF();
-            else // Permission was denied from popup, show error message
-                Toast.makeText(this, getResources().getString(R.string.storage_permission_denied), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void generatePDF() {
-        PDFGenerator pdfGenerator = new PDFGenerator(getApplicationContext());
-        long todayDate = DateTimeUtils.getInstance().getCurrentDateTimeAsLong();
-        String tomorrowDateAsString = DateTimeUtils.getInstance().getCurrentDateAsString();
-        long tomorrowDate = todayDate;
-        try {
-            tomorrowDate = DateTimeUtils.getInstance().getTomorrowsDateFromString(tomorrowDateAsString).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if(pdfGenerator.generateCompletePDF(todayDate, tomorrowDate))
-            Toast.makeText(this, getResources().getString(R.string.pdf_success), Toast.LENGTH_SHORT).show();
-        else Toast.makeText(this, getResources().getString(R.string.pdf_failure), Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -423,6 +399,51 @@ public class MainActivity extends AppCompatActivity implements
 
         // Reset the value
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+    }
+
+    private void showDateRangeDialog(){
+        DateRangeForPDFDialog dateRangeForPDFDialog = new DateRangeForPDFDialog();
+        dateRangeForPDFDialog.show(getSupportFragmentManager(), "DATE_RANGE");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        TextView startDate = dialog.getDialog().findViewById(R.id.start_date);
+        TextView endDate = dialog.getDialog().findViewById(R.id.end_date);
+        try {
+            generatePDF(startDate.getText().toString(), endDate.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == STORAGE_CODE) {
+            // Permission was granted from popup, call generate pdf method
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showDateRangeDialog();
+            } else // Permission was denied from popup, show error message
+                Toast.makeText(this, getResources().getString(R.string.storage_permission_denied), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void generatePDF(String startDate, String endDate) throws ParseException {
+        PDFGenerator pdfGenerator = new PDFGenerator(getApplicationContext());
+
+        long startDateLong = DateTimeUtils.getInstance().getDateFromString(startDate).getTime();
+        long endDateLong = DateTimeUtils.getInstance().getDateFromString(endDate).getTime();
+
+        if(pdfGenerator.generateCompletePDF(startDateLong, endDateLong))
+            Toast.makeText(this, getResources().getString(R.string.pdf_success), Toast.LENGTH_SHORT).show();
+
+        else Toast.makeText(this, getResources().getString(R.string.pdf_failure), Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        dialog.dismiss();
     }
 
     // Class used to hold distances between symptoms coordinates
