@@ -167,7 +167,7 @@ public class PDFGenerator {
             Log.e("PDF", "Glucose models list size: " + models.size());
 
             if (models.size() <= 0){
-                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_glucose_registered), tableHeadersFont));
+                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_glucose_registered), commonTextFont));
             }
             else{
                 for (GlucoseModel model: models) {
@@ -226,7 +226,7 @@ public class PDFGenerator {
             Log.e("PDF", "Pressure models list size: " + models.size());
 
             if (models.size() <= 0){
-                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_pressure_registered), tableHeadersFont));
+                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_pressure_registered), commonTextFont));
             }
             else{
                 for (PressureModel model: models) {
@@ -264,7 +264,7 @@ public class PDFGenerator {
             Log.e("PDF", "Models list size: " + models.size());
 
             if (models.size() <= 0){
-                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_symptoms_registered), tableHeadersFont));
+                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_symptoms_registered), commonTextFont));
             }
             else{
                 for (SymptomModel model: models) {
