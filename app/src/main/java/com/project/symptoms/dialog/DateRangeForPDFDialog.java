@@ -29,6 +29,7 @@ public class DateRangeForPDFDialog extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(mainView)
+        .setTitle(R.string.date_range_dialog)
         // Add action buttons
         .setPositiveButton(R.string.accept, (dialog, id) ->
                 dateRangeDialogListener.onDialogPositiveClick(DateRangeForPDFDialog.this))
