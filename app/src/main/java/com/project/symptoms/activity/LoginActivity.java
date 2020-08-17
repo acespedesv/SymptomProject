@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!fieldsEmpty()){
             saveUserInfoInPref();
             Bundle data = new Bundle();
-            data.putBoolean("UserInfoAsked", true);
+            data.putBoolean(getResources().getString(R.string.bundle_key), true);
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtras(data);
             startActivity(intent);

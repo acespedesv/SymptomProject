@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
 
-        if (getIntent().getBooleanExtra("UserInfoAsked", false)){
+        if (getIntent().getBooleanExtra(getResources().getString(R.string.bundle_key), false)){
             showDateRangeDialog();
         }
     }
