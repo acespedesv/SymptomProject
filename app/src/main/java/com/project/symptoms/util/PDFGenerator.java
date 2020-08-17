@@ -252,7 +252,6 @@ public class PDFGenerator {
             mainPDFDocument.add(NEWLINE);
             mainPDFDocument.add(symptomTitle);
             mainPDFDocument.add(NEWLINE);
-            mainPDFDocument.add(NEWLINE);
 
             List<SymptomModel> models = symptomController.select(startDate, endDate);
 
