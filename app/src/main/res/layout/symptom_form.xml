@@ -9,17 +9,25 @@
     android:background="@color/colorMainWhite">
 
     <!--    ACTIONBAR-->
-    <include
-        android:id="@+id/include"
-        layout="@layout/action_bar" />
 
     <!--    MAIN TITLE-->
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="426dp"
+        android:layout_height="163dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_backgroud_blue" />
+
     <TextView
         android:id="@+id/form_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/symptom_form"
         android:textAlignment="center"
@@ -28,24 +36,26 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--  SCROLLABLE SECTION  -->
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="518dp"
         android:layout_marginBottom="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/fragment_main_menu"
-        app:layout_constraintTop_toBottomOf="@id/form_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/form_title">
+
         <ScrollView
             android:id="@+id/symptom_form"
             android:layout_width="match_parent"
-            android:layout_height="500dp">
-            <include layout="@layout/symptom_form_fields"/>
+            android:layout_height="match_parent">
+
+            <include layout="@layout/symptom_form_fields" />
         </ScrollView>
 
     </LinearLayout>

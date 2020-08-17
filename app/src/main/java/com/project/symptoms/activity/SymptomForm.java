@@ -332,6 +332,7 @@ public class SymptomForm extends AppCompatActivity implements MainMenuFragment.O
         categoryLabel.setText(categoryName);
         categoryLabel.setTextSize(20);
         categoryLabel.setPadding(20, 50, 20, 20);
+        categoryLabel.setTextColor(getColor(R.color.colorDarkBlue));
         return categoryLabel;
     }
 
