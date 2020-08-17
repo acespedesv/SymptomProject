@@ -33,6 +33,7 @@
     <string name="birth_day">Fecha de nacimiento</string>
     <string name="user_info">Información necesaria para los reportes:</string>
     <string name="fields_not_filled">Todos los campos son requeridos</string>
+    <string name="not_specified_info">Todos los campos son requeridos</string>
 
     <!-- =============================== -->
     <!--        Shared Preferences       -->
@@ -71,6 +72,9 @@
     <string name="start_symptom_date_time">Fecha y hora de inicio del síntoma:</string>
     <string name="end_symptom_date_time">Fecha y hora de finalización del síntoma:</string>
     <string name="symptom_duration">Duración del síntoma:</string>
+    <string name="patient">Paciente: </string>
+    <string name="id">Cédula: </string>
+    <string name="birth_day_info">Fecha de nacimiento: </string>
     <string name="pdf_subtitle">Reporte de síntomas, glucosa en sangre y presión arterial</string>
 
 

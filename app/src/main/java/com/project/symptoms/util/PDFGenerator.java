@@ -1,9 +1,11 @@
 package com.project.symptoms.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.itextpdf.text.BaseColor;
@@ -57,6 +59,8 @@ public class PDFGenerator {
 
     public static final Chunk NEWLINE = new Chunk("\n");
 
+    private SharedPreferences preferences;
+
     public PDFGenerator(Context context){
         pressureController = PressureController.getInstance(context);
         glucoseController = GlucoseController.getInstance(context);
@@ -65,6 +69,7 @@ public class PDFGenerator {
         symptomCategoryOptionController = SymptomCategoryOptionController.getInstance(context);
 
         appResources = context.getResources();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         setUpFonts();
 
@@ -163,8 +168,6 @@ public class PDFGenerator {
             glucoseData.addCell(valueHeaderCell);
 
             List<GlucoseModel> models = glucoseController.select(startDate, endDate);
-            //List<GlucoseModel> models = glucoseController.listAll();
-            Log.e("PDF", "Glucose models list size: " + models.size());
 
             if (models.size() <= 0){
                 mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_glucose_registered), commonTextFont));
@@ -221,8 +224,6 @@ public class PDFGenerator {
             pressureData.addCell(diastolicHeaderCell);
 
             List<PressureModel> models = pressureController.select(startDate, endDate);
-            //List<PressureModel> models = pressureController.selectAll();
-            Log.e("PDF", "Pressure models list size: " + models.size());
 
             if (models.size() <= 0){
                 mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_pressure_registered), commonTextFont));
@@ -258,8 +259,6 @@ public class PDFGenerator {
             mainPDFDocument.add(NEWLINE);
 
             List<SymptomModel> models = symptomController.select(startDate, endDate);
-            //List<SymptomModel> models = symptomController.listAll();
-            Log.e("PDF", "Models list size: " + models.size());
 
             if (models.size() <= 0){
                 mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_symptoms_registered), commonTextFont));
@@ -349,9 +348,25 @@ public class PDFGenerator {
     }
 
     private void insertUserData(){
-        Paragraph userInfo = new Paragraph("Paciente: Isaac Mena López\nCédula: 402400867\nFecha de nacimiento: 07/11/98");
+
+        String userName = preferences.getString(appResources.getString(R.string.sp_user_name),
+                appResources.getString(R.string.not_specified_info));
+        String userFirstLastName = preferences.getString(appResources.getString(R.string.sp_user_first_last_name),
+                appResources.getString(R.string.not_specified_info));
+        String userSecondLastName = preferences.getString(appResources.getString(R.string.sp_user_second_last_name),
+                appResources.getString(R.string.not_specified_info));
+        String userId = preferences.getString(appResources.getString(R.string.sp_user_id),
+                appResources.getString(R.string.not_specified_info));
+        String birthDay = preferences.getString(appResources.getString(R.string.sp_user_birth_date),
+                appResources.getString(R.string.not_specified_info));
+
+        Paragraph userInfo = new Paragraph(appResources.getString(R.string.patient) +  userName + " " + userFirstLastName + " " + userSecondLastName +
+                "\n" + appResources.getString(R.string.patient) + userId +
+                "\n" + appResources.getString(R.string.birth_day_info) + birthDay);
+
         userInfo.setFont(commonTextFont);
         userInfo.setAlignment(Element.ALIGN_CENTER);
+
         try {
             mainPDFDocument.add(userInfo);
         } catch (DocumentException e) {
