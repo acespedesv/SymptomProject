@@ -28,6 +28,9 @@
     <!-- =============================== -->
     <string name="pdf_document_name">SymptomsApp_Historial_</string>
     <string name="date_range_dialog">Rango de fechas a considerar</string>
+    <string name="no_symptoms_registered">No hay síntomas registrados dentro del ranngo de fechas seleccionado</string>
+    <string name="no_glucose_registered">No hay tomas de glucosa en sangre registradas dentro del ranngo de fechas seleccionado</string>
+    <string name="no_pressure_registered">No hay tomas de presión sanguínea registradas dentro del ranngo de fechas seleccionado</string>
     <string name="pdf_extension">pdf</string>
     <string name="start_date">Desde: </string>
     <string name="end_date">Hasta: </string>

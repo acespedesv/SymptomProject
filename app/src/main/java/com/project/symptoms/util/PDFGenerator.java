@@ -165,10 +165,16 @@ public class PDFGenerator {
             List<GlucoseModel> models = glucoseController.select(startDate, endDate);
             //List<GlucoseModel> models = glucoseController.listAll();
             Log.e("PDF", "Glucose models list size: " + models.size());
-            for (GlucoseModel model: models) {
-                String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
-                glucoseData.addCell(new Phrase(date, commonTextFont));
-                glucoseData.addCell(new Phrase(Integer.toString(model.getValue()), commonTextFont));
+
+            if (models.size() <= 0){
+                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_glucose_registered), tableHeadersFont));
+            }
+            else{
+                for (GlucoseModel model: models) {
+                    String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
+                    glucoseData.addCell(new Phrase(date, commonTextFont));
+                    glucoseData.addCell(new Phrase(Integer.toString(model.getValue()), commonTextFont));
+                }
             }
 
             mainPDFDocument.add(glucoseData);
@@ -218,11 +224,17 @@ public class PDFGenerator {
             List<PressureModel> models = pressureController.select(startDate, endDate);
             //List<PressureModel> models = pressureController.selectAll();
             Log.e("PDF", "Pressure models list size: " + models.size());
-            for (PressureModel model: models) {
-                String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
-                pressureData.addCell(new Phrase(date, commonTextFont));
-                pressureData.addCell(new Phrase(Integer.toString(model.getSystolic()), commonTextFont));
-                pressureData.addCell(new Phrase(Integer.toString(model.getDiastolic()), commonTextFont));
+
+            if (models.size() <= 0){
+                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_pressure_registered), tableHeadersFont));
+            }
+            else{
+                for (PressureModel model: models) {
+                    String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
+                    pressureData.addCell(new Phrase(date, commonTextFont));
+                    pressureData.addCell(new Phrase(Integer.toString(model.getSystolic()), commonTextFont));
+                    pressureData.addCell(new Phrase(Integer.toString(model.getDiastolic()), commonTextFont));
+                }
             }
 
             mainPDFDocument.add(pressureData);
@@ -250,11 +262,17 @@ public class PDFGenerator {
             List<SymptomModel> models = symptomController.select(startDate, endDate);
             //List<SymptomModel> models = symptomController.listAll();
             Log.e("PDF", "Models list size: " + models.size());
-            for (SymptomModel model: models) {
-                writeBasicSymptomInfoInPDF(model);
-                writeDetailedSymptomDescription(model);
-                drawHorizontalLine();
-                mainPDFDocument.add(NEWLINE);
+
+            if (models.size() <= 0){
+                mainPDFDocument.add(new Paragraph(appResources.getString(R.string.no_symptoms_registered), tableHeadersFont));
+            }
+            else{
+                for (SymptomModel model: models) {
+                    writeBasicSymptomInfoInPDF(model);
+                    writeDetailedSymptomDescription(model);
+                    drawHorizontalLine();
+                    mainPDFDocument.add(NEWLINE);
+                }
             }
 
 
