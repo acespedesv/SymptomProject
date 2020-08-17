@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.View;
@@ -241,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String userName = preferences.getString(getResources().getString(R.string.sp_user_name),
                 getResources().getString(R.string.not_specified_info));
-
+        Log.e("USER INFO", userName);
         if (userName.equals(getResources().getString(R.string.not_specified_info))) {
             startActivity(new Intent(this, LoginActivity.class));
         }
