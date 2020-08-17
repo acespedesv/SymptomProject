@@ -60,9 +60,20 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
+                onSaveButtonClicked();
             }
         });
+    }
+
+    private void onSaveButtonClicked() {
+        try{
+            saveData();
+        }catch (Exception e){
+            String message = getString(R.string.value_saving_failed)
+                    + "\n" + getString(R.string.check_input_values);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).
+                    show();
+        }
     }
 
     private void populateForEdit(long pressureId) {
@@ -78,7 +89,7 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
         timeView.setText(DateTimeUtils.getInstance().TIME_FORMATTER.format(model.getTime()));
     }
 
-    private void saveData(){
+    private void saveData() throws Exception{
         // Gather all the data fields
         EditText systolicView = findViewById(R.id.systolic);
         EditText diastolicView = findViewById(R.id.diastolic);
@@ -101,9 +112,12 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
             result = PressureController.getInstance(this).update(pressureId, systolicValue, diastolicValue, date, time );
             messageToShow = getString(R.string.value_successfully_updated);
         }
-        if(result != FAILURE){
-            Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
-        }
+
+        if(result == FAILURE)
+            throw new Exception(getString(R.string.value_saving_failed));
+
+        Toast.makeText(this, messageToShow, Toast.LENGTH_SHORT).show();
+
     }
 
     private boolean isBetweenBounds(int value, int min, int max){

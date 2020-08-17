@@ -17,6 +17,7 @@
     <string name="value_successfully_saved">Valor guardado exitosamente</string>
     <string name="value_successfully_updated">Valor actualizado exitosamente</string>
     <string name="value_saving_failed">El valor no se pudo guardar exitosamente</string>
+    <string name="check_input_values">Por favor revise que los campos ingresados son correctos</string>
     <string name="value_updating_failed">El valor no se pudo actualizar exitosamente</string>
     <string name="done">Listo</string>
     <string name="continue_text">Continuar</string>
