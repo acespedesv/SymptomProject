@@ -6,7 +6,9 @@
     android:orientation="vertical">
 
         <TextView
-            android:textSize="22sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorDarkBlue"
             android:layout_width="wrap_content"
@@ -27,8 +29,10 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
             android:textStyle="bold"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textColor="@color/colorDarkBlue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

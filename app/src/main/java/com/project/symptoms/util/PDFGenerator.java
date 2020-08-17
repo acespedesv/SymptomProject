@@ -162,8 +162,8 @@ public class PDFGenerator {
             glucoseData.addCell(dateHeaderCell);
             glucoseData.addCell(valueHeaderCell);
 
-            //List<GlucoseModel> models = glucoseController.select(startDate, endDate);
-            List<GlucoseModel> models = glucoseController.listAll();
+            List<GlucoseModel> models = glucoseController.select(startDate, endDate);
+            //List<GlucoseModel> models = glucoseController.listAll();
             Log.e("PDF", "Models list size: " + models.size());
             for (GlucoseModel model: models) {
                 String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
@@ -215,8 +215,8 @@ public class PDFGenerator {
             pressureData.addCell(systolicHeaderCell);
             pressureData.addCell(diastolicHeaderCell);
 
-            //List<PressureModel> models = pressureController.select(startDate, endDate);
-            List<PressureModel> models = pressureController.selectAll();
+            List<PressureModel> models = pressureController.select(startDate, endDate);
+            //List<PressureModel> models = pressureController.selectAll();
             Log.e("PDF", "Models list size: " + models.size());
             for (PressureModel model: models) {
                 String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());

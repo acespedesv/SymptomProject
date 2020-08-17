@@ -3,13 +3,17 @@ package com.project.symptoms.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.project.symptoms.R;
@@ -26,10 +30,19 @@ public class DateRangeForPDFDialog extends DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View mainView = inflater.inflate(R.layout.pdf_dates_picker_dialog, null);
+
+        TextView dialogTitle = new TextView(getContext());
+        dialogTitle.setHeight(50);
+        dialogTitle.setBackgroundColor(Color.RED);
+        dialogTitle.setText(R.string.date_range_dialog);
+        dialogTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        dialogTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.colorLightBlue));
+        dialogTitle.setGravity(Gravity.CENTER);
+
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(mainView)
-        .setTitle(R.string.date_range_dialog)
+        .setCustomTitle(dialogTitle)
         // Add action buttons
         .setPositiveButton(R.string.accept, (dialog, id) ->
                 dateRangeDialogListener.onDialogPositiveClick(DateRangeForPDFDialog.this))
