@@ -164,7 +164,7 @@ public class PDFGenerator {
 
             List<GlucoseModel> models = glucoseController.select(startDate, endDate);
             //List<GlucoseModel> models = glucoseController.listAll();
-            Log.e("PDF", "Models list size: " + models.size());
+            Log.e("PDF", "Glucose models list size: " + models.size());
             for (GlucoseModel model: models) {
                 String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
                 glucoseData.addCell(new Phrase(date, commonTextFont));
@@ -217,7 +217,7 @@ public class PDFGenerator {
 
             List<PressureModel> models = pressureController.select(startDate, endDate);
             //List<PressureModel> models = pressureController.selectAll();
-            Log.e("PDF", "Models list size: " + models.size());
+            Log.e("PDF", "Pressure models list size: " + models.size());
             for (PressureModel model: models) {
                 String date = DateTimeUtils.getInstance().getStringDateFromLong(model.getDate());
                 pressureData.addCell(new Phrase(date, commonTextFont));

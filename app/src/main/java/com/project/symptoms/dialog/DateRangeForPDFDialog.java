@@ -32,11 +32,11 @@ public class DateRangeForPDFDialog extends DialogFragment {
         View mainView = inflater.inflate(R.layout.pdf_dates_picker_dialog, null);
 
         TextView dialogTitle = new TextView(getContext());
-        dialogTitle.setHeight(50);
-        dialogTitle.setBackgroundColor(Color.RED);
+        dialogTitle.setHeight(125);
+        dialogTitle.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorDarkBlue));
         dialogTitle.setText(R.string.date_range_dialog);
         dialogTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        dialogTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.colorLightBlue));
+        dialogTitle.setTextColor(Color.WHITE);
         dialogTitle.setGravity(Gravity.CENTER);
 
         // Inflate and set the layout for the dialog

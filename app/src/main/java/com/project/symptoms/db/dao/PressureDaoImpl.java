@@ -98,7 +98,7 @@ public class PressureDaoImpl implements PressureDao {
     @Override
     public List<PressureModel> select(long initialDate, long finalDate) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = "date BETWEEN ? AND ?";
+        String whereClause = Contract.Pressure.COLUMN_NAME_DATE + " BETWEEN ? AND ?";
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
         Cursor cursor = db.query(Contract.Pressure.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<PressureModel> result = new ArrayList<>();
