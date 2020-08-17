@@ -1,7 +1,6 @@
 package com.project.symptoms.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.project.symptoms.db.controller.PressureController;
 import com.project.symptoms.db.controller.BloodPressureLevelsController;
@@ -26,7 +24,6 @@ import java.util.List;
 
 public class BloodPressureForm extends AppCompatActivity implements MainMenuFragment.OnFragmentInteractionListener {
 
-    protected Toolbar toolbar;
     protected Button saveButton;
 
     private long pressureId; // When called for edit
@@ -53,8 +50,6 @@ public class BloodPressureForm extends AppCompatActivity implements MainMenuFrag
     }
 
     private void init(){
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {

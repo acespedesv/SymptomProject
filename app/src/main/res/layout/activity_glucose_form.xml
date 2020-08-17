@@ -8,9 +8,13 @@
     tools:context=".activity.GlucoseForm"
     android:background="@color/colorMainWhite">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/action_bar" />
+    <fragment
+        android:id="@id/action_bar"
+        android:name="com.project.symptoms.fragment.ActionBarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/form_title"
