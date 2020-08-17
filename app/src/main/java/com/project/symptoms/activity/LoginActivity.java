@@ -9,13 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.symptoms.R;
+import com.project.symptoms.util.DateTimeUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText name, firstLastName, secondLastName, userId, birthDate;
+    EditText name, firstLastName, secondLastName, userId;
+    TextView birthDate;
     Button continueButton;
 
     @Override
@@ -29,9 +32,10 @@ public class LoginActivity extends AppCompatActivity {
         birthDate = findViewById(R.id.user_birth_date);
         continueButton = findViewById(R.id.finish_button);
         continueButton.setOnClickListener(v -> continueButtonPressed());
+        DateTimeUtils.getInstance().registerAsDatePicker(birthDate);
     }
 
-    private boolean fieldsFilled(){
+    private boolean fieldsEmpty(){
         return name.getText().toString().trim().length() == 0
                 || firstLastName.getText().toString().trim().length() == 0
                 || secondLastName.getText().toString().trim().length() == 0
@@ -51,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void continueButtonPressed(){
-        if (fieldsFilled()){
+        if (!fieldsEmpty()){
             saveUserInfoInPref();
             Bundle data = new Bundle();
             data.putBoolean("UserInfoAsked", true);
