@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(getResources().getString(R.string.sp_user_first_last_name), firstLastName.getText().toString());
         editor.putString(getResources().getString(R.string.sp_user_second_last_name), secondLastName.getText().toString());
         editor.putString(getResources().getString(R.string.sp_user_id), userId.getText().toString());
-        editor.putString(getResources().getString(R.string.birth_day), birthDate.getText().toString());
+        editor.putString(getResources().getString(R.string.sp_user_birth_date), birthDate.getText().toString());
         editor.apply();
     }
 
