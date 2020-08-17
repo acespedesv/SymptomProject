@@ -35,8 +35,8 @@ public class DateRangeForPDFDialog extends DialogFragment {
         .setNegativeButton(R.string.cancel, (dialog, id) ->
                 dateRangeDialogListener.onDialogNegativeClick(DateRangeForPDFDialog.this));
 
-        TextView startDateView = mainView.findViewById(R.id.start_date);
-        TextView endDateView = mainView.findViewById(R.id.end_date);
+        TextView startDateView = mainView.findViewById(R.id.start_date_range);
+        TextView endDateView = mainView.findViewById(R.id.end_date_range);
         DateTimeUtils.getInstance().registerAsDatePicker(startDateView);
         DateTimeUtils.getInstance().registerAsDatePicker(endDateView);
 
