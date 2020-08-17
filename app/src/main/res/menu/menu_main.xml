@@ -25,7 +25,7 @@
             <item
                 android:id="@+id/action_pdf"
                 android:title="@string/pdf_menu"
-                android:icon="@drawable/ic_info"
+                android:icon="@drawable/ic_pdf"
                 app:showAsAction="ifRoom" />
 
         </menu>
