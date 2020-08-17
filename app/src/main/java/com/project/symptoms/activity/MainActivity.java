@@ -3,6 +3,7 @@ package com.project.symptoms.activity;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements
             updateSymptomsInBodyView();
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+
+        if (getIntent().getBooleanExtra("UserInfoAsked", false)){
+            showDateRangeDialog();
         }
     }
 
@@ -222,12 +227,27 @@ public class MainActivity extends AppCompatActivity implements
                     requestPermissions(permissions, STORAGE_CODE);
                 }
                 else {
-                    // Permission already granted, call save pdf method
-                    showDateRangeDialog();
+                    // Permission already granted, call login activity
+                    checkLoginActivity();
                 }
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Open login activity to get user info just the first time
+    // If the data was already asked just open the dialog for dates range
+    private void checkLoginActivity() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String userName = preferences.getString(getResources().getString(R.string.sp_user_name),
+                getResources().getString(R.string.not_specified_info));
+
+        if (userName.equals(getResources().getString(R.string.not_specified_info))) {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        else {
+            showDateRangeDialog();
+        }
     }
 
     @Override

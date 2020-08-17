@@ -42,8 +42,6 @@ public class PDFGenerator {
     private PressureController pressureController;
     private GlucoseController glucoseController;
     private SymptomController symptomController;
-    private SymptomCategoryOptionController symptomCategoryOptionController;
-    private SymptomCategoryController symptomCategoryController;
 
     private Document mainPDFDocument;
     private String documentName;
@@ -65,8 +63,6 @@ public class PDFGenerator {
         pressureController = PressureController.getInstance(context);
         glucoseController = GlucoseController.getInstance(context);
         symptomController = SymptomController.getInstance(context);
-        symptomCategoryController = SymptomCategoryController.getInstance(context);
-        symptomCategoryOptionController = SymptomCategoryOptionController.getInstance(context);
 
         appResources = context.getResources();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);

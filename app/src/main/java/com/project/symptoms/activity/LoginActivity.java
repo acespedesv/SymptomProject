@@ -53,7 +53,10 @@ public class LoginActivity extends AppCompatActivity {
     private void continueButtonPressed(){
         if (fieldsFilled()){
             saveUserInfoInPref();
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Bundle data = new Bundle();
+            data.putBoolean("UserInfoAsked", true);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtras(data);
             startActivity(intent);
         }
         else {

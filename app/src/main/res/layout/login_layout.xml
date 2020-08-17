@@ -35,6 +35,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="@string/name"
+            android:textColor="@color/colorMainWhite"
             android:fontFamily="@font/montserrat"
             android:layout_marginVertical="8dp"/>
 
@@ -53,6 +54,7 @@
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
                 android:hint="@string/first_last_name"
+                android:textColor="@color/colorMainWhite"
                 android:fontFamily="@font/montserrat"
                 android:layout_marginVertical="8dp"/>
             <EditText
@@ -64,6 +66,7 @@
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
                 android:hint="@string/second_last_name"
+                android:textColor="@color/colorMainWhite"
                 android:fontFamily="@font/montserrat"
                 android:layout_marginVertical="8dp"/>
 
@@ -77,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/id_number"
+            android:textColor="@color/colorMainWhite"
             android:fontFamily="@font/montserrat"
             android:layout_marginVertical="8dp"/>
         <EditText
@@ -87,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/birth_day"
+            android:textColor="@color/colorMainWhite"
             android:drawableEnd="@drawable/ic_history"
             android:fontFamily="@font/montserrat"
             android:layout_marginVertical="8dp"/>
@@ -102,5 +107,16 @@
         android:textColor="@color/colorMainWhite"
         android:paddingHorizontal="25dp"
         android:paddingVertical="15dp"/>
+
+    <TextView
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info_asked_once"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/colorMainWhite"/>
 
 </LinearLayout>
