@@ -24,6 +24,28 @@
     <string name="storage_permission_denied">Permiso denegado</string>
 
     <!-- =============================== -->
+    <!--         User information        -->
+    <!-- =============================== -->
+    <string name="name">Nombre</string>
+    <string name="first_last_name">Primer apellido</string>
+    <string name="second_last_name">Segundo apellido</string>
+    <string name="id_number">Número de cédula</string>
+    <string name="birth_day">Fecha de nacimiento</string>
+    <string name="user_info">Información necesaria para los reportes:</string>
+    <string name="fields_not_filled">Todos los campos son requeridos</string>
+
+    <!-- =============================== -->
+    <!--        Shared Preferences       -->
+    <!-- =============================== -->
+    <string name="sp_body_type">body_type</string>
+    <string name="sp_user_name">user_name</string>
+    <string name="sp_user_first_last_name">user_first_last_name</string>
+    <string name="sp_user_second_last_name">user_second_last_name</string>
+    <string name="sp_user_id">user_id</string>
+    <string name="sp_user_birth_date">user_birth_date</string>
+
+
+    <!-- =============================== -->
     <!--          PDF Document           -->
     <!-- =============================== -->
     <string name="pdf_document_name">SymptomsApp_Historial_</string>
@@ -84,14 +106,11 @@
     <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
 
 
-
-
     <!-- =============================== -->
     <!--        Glucose History          -->
     <!-- =============================== -->
     <string name="glucose_history_title">Historial de Glucosa</string>
     <string name="glucose_measure">mmol/L</string>
-
 
 
     <!-- =============================== -->
@@ -116,7 +135,6 @@
     <string name="developed_by">Desarrollado por</string>
 
 
-
     <!-- =============================== -->
     <!--        Settings Activity        -->
     <!-- =============================== -->
@@ -125,7 +143,6 @@
     <string name="frequency_summary">Horas luego de registrar un síntoma sin finalización</string>
     <string name="notifications_frequency">Frecuencia de notificaciones</string>
     <string name="notifications_frequency_summary">Recordar síntomas sin finalización cada ciertas horas</string>
-
 
 
     <!-- =============================== -->
@@ -152,15 +169,12 @@
     <string name="blood_pressure_alert_message">Los valores ingresados indican que presenta una presión arterial de %s \n\n Se le recomienda consultar a su medico.</string>
 
 
-
-
     <!-- =============================== -->
     <!--        Body Selection           -->
     <!-- =============================== -->
     <string name="male">Hombre</string>
     <string name="female">Mujer</string>
     <string name="select_body_message">Deslice y seleccione</string>
-
 
 
     <!-- =============================== -->
@@ -171,8 +185,6 @@
     <string name="fasting_test">En ayunas</string>
     <string name="tolerance_test">Postcomida</string>
     <string name="bottom_sheet_title">Tamaño del área de dolor</string>
-
-
 
 
     <!-- =============================== -->
@@ -200,7 +212,6 @@
     <string name="sample_calendar_day">02</string>
 
 
-
     <!-- =============================== -->
     <!--     Blood Pressure Categories   -->
     <!-- =============================== -->
@@ -209,8 +220,6 @@
     <string name="blood_pressure_category_hypertension_stage_1">Hipertensión: Etapa 1</string>
     <string name="blood_pressure_category_hypertension_stage_2">Hipertensión: Etapa 2</string>
     <string name="blood_pressure_category_hypotension">Hipotensión</string>
-
-
 
 
     <!-- =============================== -->
@@ -309,5 +318,14 @@
     <string name="hot">Calor</string>
     <string name="humidity">Humedad</string>
     <string name="dryness">Sequedad</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

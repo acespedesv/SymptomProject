@@ -16,6 +16,7 @@
 
         <EditText
             android:layout_marginHorizontal="10dp"
+            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -153,6 +154,7 @@
 
         <EditText
             android:layout_marginHorizontal="10dp"
+            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -172,6 +174,7 @@
 
         <EditText
             android:layout_marginHorizontal="10dp"
+            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_medicament"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -191,6 +194,7 @@
 
         <EditText
             android:layout_marginHorizontal="10dp"
+            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -175,9 +175,8 @@ public class PDFGenerator {
                     glucoseData.addCell(new Phrase(date, commonTextFont));
                     glucoseData.addCell(new Phrase(Integer.toString(model.getValue()), commonTextFont));
                 }
+                mainPDFDocument.add(glucoseData);
             }
-
-            mainPDFDocument.add(glucoseData);
 
         } catch (DocumentException e) {
             e.printStackTrace();
@@ -235,9 +234,8 @@ public class PDFGenerator {
                     pressureData.addCell(new Phrase(Integer.toString(model.getSystolic()), commonTextFont));
                     pressureData.addCell(new Phrase(Integer.toString(model.getDiastolic()), commonTextFont));
                 }
+                mainPDFDocument.add(pressureData);
             }
-
-            mainPDFDocument.add(pressureData);
 
         } catch (DocumentException e) {
             e.printStackTrace();
