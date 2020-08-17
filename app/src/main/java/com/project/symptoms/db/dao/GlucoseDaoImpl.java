@@ -104,7 +104,7 @@ public class GlucoseDaoImpl implements GlucoseDao {
     public List<GlucoseModel> select(long initialDate, long finalDate) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.e("LOG", "Glucose dates: " + initialDate + ", " + finalDate);
-        String whereClause = Contract.Glucose.COLUMN_NAME_TIME + " BETWEEN ? AND ?";
+        String whereClause = Contract.Glucose.COLUMN_NAME_DATE + " BETWEEN ? AND ?";
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
         Cursor cursor = db.query(Contract.Glucose.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<GlucoseModel> result = new ArrayList<>();
