@@ -66,6 +66,16 @@ public class GlucoseController {
         return glucoseModel;
     }
 
+    public List<GlucoseModel> select(long initialDate, long finalDate) {
+        List<GlucoseModel> result = null;
+        try {
+            result = glucoseDao.select(initialDate, finalDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public int update(long id, int glucoseValue, String dateText, String hourText) {
         //TODO validate ID
         int updatedRows = -1;

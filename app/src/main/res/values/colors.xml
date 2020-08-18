@@ -12,6 +12,7 @@
     <color name="colorMainWhite">#FFFFFF</color>
     <color name="colorGreyBackground">#AFAFAF</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorWhiteHint">#36862D</color>
 
     <color name="symptom_option_normal_background">#81bf41</color>
     <color name="symptom_option_selected_background">#82e61a</color>

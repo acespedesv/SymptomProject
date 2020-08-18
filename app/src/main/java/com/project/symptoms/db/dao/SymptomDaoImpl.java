@@ -4,15 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.project.symptoms.db.Contract;
 import com.project.symptoms.db.DBHelper;
 import com.project.symptoms.db.model.SymptomModel;
+import com.project.symptoms.db.model.SymptomViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SymptomDaoImpl implements SymptomDao{
+public class SymptomDaoImpl implements SymptomDao {
 
     private DBHelper dbHelper;
 
@@ -53,6 +55,63 @@ public class SymptomDaoImpl implements SymptomDao{
         String[] whereArgs = new String[] {Long.toString(dateTime), Integer.toString(circleSide)};
         Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<SymptomModel> result = buildListFromCursor(cursor);
+        return result;
+    }
+
+    @Override
+    public List<SymptomModel> select(long initialDate, long finalDate) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = Contract.Symptom.COLUMN_NAME_START_DATE + " BETWEEN ? AND ?";
+        Log.e("LOG", "Symptoms dates: " + initialDate + ", " + finalDate);
+        String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
+        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+        List<SymptomModel> result;
+        result = buildListFromCursor(cursor);
+        cursor.close();
+        db.close();
+        return result;
+    }
+
+    @Override
+    public List<SymptomViewModel> selectFromView(long symptomId) throws Exception {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = Contract.SymptomView.COLUMN_NAME_SYMPTOM_ID + " = ?";
+        String[] whereArgs = new String[] {Long.toString(symptomId)};
+        Cursor cursor = db.query(Contract.SymptomView.VIEW_NAME, null, whereClause, whereArgs, null, null, null);
+        List<SymptomViewModel> result;
+        result = buildSymptomViewFromCursor(cursor);
+        cursor.close();
+        db.close();
+        return result;
+    }
+
+    private List<SymptomViewModel> buildSymptomViewFromCursor(Cursor cursor){
+        List<SymptomViewModel> result = new ArrayList<>();
+        long symptomId;
+        long categoryOptionId;
+        String categoryOptionName;
+        long categoryId;
+        String categoryName;
+
+        while(cursor.moveToNext()){
+
+            symptomId = cursor.getLong(cursor.getColumnIndex(Contract.SymptomView.COLUMN_NAME_SYMPTOM_ID));
+            categoryOptionId = cursor.getLong(cursor.getColumnIndex(Contract.SymptomView.COLUMN_NAME_CATEGORY_OPTION_ID));
+            categoryOptionName = cursor.getString(cursor.getColumnIndex(Contract.SymptomView.COLUMN_NAME_CATEGORY_OPTION_NAME));
+            categoryId = cursor.getLong(cursor.getColumnIndex(Contract.SymptomView.COLUMN_NAME_CATEGORY_ID));
+            categoryName = cursor.getString(cursor.getColumnIndex(Contract.SymptomView.COLUMN_NAME_CATEGORY_NAME));
+
+            SymptomViewModel model = new SymptomViewModel(
+                    symptomId,
+                    categoryOptionId,
+                    categoryOptionName,
+                    categoryId,
+                    categoryName
+            );
+
+            result.add(model);
+
+        }
         return result;
     }
 

@@ -1,7 +1,10 @@
 package com.project.symptoms.activity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,26 +12,31 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.symptoms.db.controller.SelectedCategoryOptionController;
 import com.project.symptoms.db.controller.SymptomController;
 import com.project.symptoms.db.model.SymptomModel;
 import com.project.symptoms.dialog.CircleSizeSelectionDialog;
+import com.project.symptoms.dialog.DateRangeForPDFDialog;
 import com.project.symptoms.fragment.MainMenuFragment;
 import com.project.symptoms.R;
 import com.project.symptoms.fragment.BodyFragment;
 import com.project.symptoms.fragment.CalendarFragment;
 import com.project.symptoms.util.DateTimeUtils;
+import com.project.symptoms.util.PDFGenerator;
 import com.project.symptoms.view.BodyView;
 
 import java.text.ParseException;
@@ -42,8 +50,10 @@ public class MainActivity extends AppCompatActivity implements
         BodyFragment.OnFragmentInteractionListener,
         MainMenuFragment.OnFragmentInteractionListener,
         CircleSizeSelectionDialog.OnCircleSizeSelectedListener,
-        CircleSizeSelectionDialog.OnCircleSizeUpdatedListener {
+        CircleSizeSelectionDialog.OnCircleSizeUpdatedListener,
+        DateRangeForPDFDialog.DateRangeDialogListener{
 
+    private static final int STORAGE_CODE = 100;
     private final long DEFAULT_SELECTED_SYMPTOM_ID_VALUE = -1;
     private BodyView bodyView;
     private Toolbar toolbar;
@@ -73,6 +83,10 @@ public class MainActivity extends AppCompatActivity implements
             updateSymptomsInBodyView();
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+
+        if (getIntent().getBooleanExtra(getResources().getString(R.string.bundle_key), false)){
+            showDateRangeDialog();
         }
     }
 
@@ -228,8 +242,34 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.action_about:
                 startAboutActivity();
                 break;
+            case R.id.action_pdf:
+                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                    // Permission has not been granted, request it
+                    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permissions, STORAGE_CODE);
+                }
+                else {
+                    // Permission already granted, call login activity
+                    checkLoginActivity();
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Open login activity to get user info just the first time
+    // If the data was already asked just open the dialog for dates range
+    private void checkLoginActivity() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String userName = preferences.getString(getResources().getString(R.string.sp_user_name),
+                getResources().getString(R.string.not_specified_info));
+        Log.e("USER INFO", userName);
+        if (userName.equals(getResources().getString(R.string.not_specified_info))) {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        else {
+            showDateRangeDialog();
+        }
     }
 
     @Override
@@ -406,6 +446,51 @@ public class MainActivity extends AppCompatActivity implements
 
         // Reset the value
         nearestSymptomToSelectedId = DEFAULT_SELECTED_SYMPTOM_ID_VALUE;
+    }
+
+    private void showDateRangeDialog(){
+        DateRangeForPDFDialog dateRangeForPDFDialog = new DateRangeForPDFDialog();
+        dateRangeForPDFDialog.show(getSupportFragmentManager(), "DATE_RANGE");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        TextView startDate = dialog.getDialog().findViewById(R.id.start_date_range);
+        TextView endDate = dialog.getDialog().findViewById(R.id.end_date_range);
+        try {
+            generatePDF(startDate.getText().toString(), endDate.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == STORAGE_CODE) {
+            // Permission was granted from popup, call generate pdf method
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                checkLoginActivity();
+            } else // Permission was denied from popup, show error message
+                Toast.makeText(this, getResources().getString(R.string.storage_permission_denied), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void generatePDF(String startDate, String endDate) throws ParseException {
+        PDFGenerator pdfGenerator = new PDFGenerator(getApplicationContext());
+
+        long startDateLong = DateTimeUtils.getInstance().getDateFromString(startDate).getTime();
+        long endDateLong = DateTimeUtils.getInstance().getDateFromString(endDate).getTime();
+
+        if(pdfGenerator.generateCompletePDF(startDateLong, endDateLong))
+            Toast.makeText(this, getResources().getString(R.string.pdf_success), Toast.LENGTH_SHORT).show();
+
+        else Toast.makeText(this, getResources().getString(R.string.pdf_failure), Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        dialog.dismiss();
     }
 
     // Class used to hold distances between symptoms coordinates

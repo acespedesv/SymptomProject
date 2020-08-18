@@ -22,6 +22,63 @@
     <string name="done">Listo</string>
     <string name="continue_text">Continuar</string>
     <string name="warning">ALERTA</string>
+    <string name="storage_permission_denied">Permiso denegado</string>
+
+    <!-- =============================== -->
+    <!--         User information        -->
+    <!-- =============================== -->
+    <string name="name">Nombre</string>
+    <string name="first_last_name">Primer apellido</string>
+    <string name="second_last_name">Segundo apellido</string>
+    <string name="id_number">Número de cédula</string>
+    <string name="birth_day">Fecha de nacimiento</string>
+    <string name="user_info">Información necesaria para los reportes:</string>
+    <string name="fields_not_filled">Todos los campos son requeridos</string>
+    <string name="not_specified_info">Todos los campos son requeridos</string>
+    <string name="bundle_key">UserInfoAsked</string>
+    <string name="info_asked_once">Esta información sólo se solicita una vez.</string>
+
+    <!-- =============================== -->
+    <!--        Shared Preferences       -->
+    <!-- =============================== -->
+    <string name="sp_body_type">body_type</string>
+    <string name="sp_user_name">user_name</string>
+    <string name="sp_user_first_last_name">user_first_last_name</string>
+    <string name="sp_user_second_last_name">user_second_last_name</string>
+    <string name="sp_user_id">user_id</string>
+    <string name="sp_user_birth_date">user_birth_date</string>
+
+
+    <!-- =============================== -->
+    <!--          PDF Document           -->
+    <!-- =============================== -->
+    <string name="pdf_document_name">SymptomsApp_Historial_</string>
+    <string name="date_range_dialog">Rango de fechas a considerar</string>
+    <string name="no_symptoms_registered">No hay síntomas registrados dentro del rango de fechas seleccionado</string>
+    <string name="no_glucose_registered">No hay tomas de glucosa en sangre registradas dentro del rango de fechas seleccionado</string>
+    <string name="no_pressure_registered">No hay tomas de presión sanguínea registradas dentro del rango de fechas seleccionado</string>
+    <string name="pdf_extension">pdf</string>
+    <string name="start_date">Desde: </string>
+    <string name="end_date">Hasta: </string>
+    <string name="date_range">Fechas consideradas</string>
+    <string name="pdf_saved">Documento guardado en</string>
+    <string name="pdf_title">Symptoms App</string>
+    <string name="glucose_title">Glucosa en sangre</string>
+    <string name="pressure_title">Presión Sanguínea</string>
+    <string name="symptom_title">Síntomas</string>
+    <string name="table_date_column">Fecha de muestra</string>
+    <string name="glucose_table_value_column">Valor ml/dl</string>
+    <string name="pressure_table_systolic_column">Valor Sístole</string>
+    <string name="pressure_table_diastolic_column">Valor Diástole</string>
+    <string name="pdf_success">Reporte PDF generado con éxito</string>
+    <string name="pdf_failure">Ocurrió un problema al general el PDF</string>
+    <string name="start_symptom_date_time">Fecha y hora de inicio del síntoma:</string>
+    <string name="end_symptom_date_time">Fecha y hora de finalización del síntoma:</string>
+    <string name="symptom_duration">Duración del síntoma:</string>
+    <string name="patient">Paciente: </string>
+    <string name="id">Cédula: </string>
+    <string name="birth_day_info">Fecha de nacimiento: </string>
+    <string name="pdf_subtitle">Reporte de síntomas, glucosa en sangre y presión arterial</string>
 
 
     <!-- =============================== -->
@@ -51,10 +108,10 @@
     <string name="reaction_medicament_hint">Nombre del medicamento</string>
     <string name="reaction_food">Alimento causante:</string>
     <string name="reaction_food_hint">Nombre del alimento</string>
+    <string name="pdf_menu">Generar PDF</string>
+    <string name="detailed_description">Descripción detallada</string>
     <string name="reminder_set_format">No se registró duración, se le recordará sobre este síntoma en %d horas</string>
     <string name="incomplete_form_message">El campo de descripción es requerido, por favor ingrese algún valor</string>
-
-
 
 
     <!-- =============================== -->
@@ -62,7 +119,6 @@
     <!-- =============================== -->
     <string name="glucose_history_title">Historial de Glucosa</string>
     <string name="glucose_measure">mmol/L</string>
-
 
 
     <!-- =============================== -->
@@ -87,7 +143,6 @@
     <string name="developed_by">Desarrollado por</string>
 
 
-
     <!-- =============================== -->
     <!--        Settings Activity        -->
     <!-- =============================== -->
@@ -96,7 +151,6 @@
     <string name="frequency_summary">Horas luego de registrar un síntoma sin finalización</string>
     <string name="notifications_frequency">Frecuencia de notificaciones</string>
     <string name="notifications_frequency_summary">Recordar síntomas sin finalización cada ciertas horas</string>
-
 
 
     <!-- =============================== -->
@@ -123,14 +177,11 @@
     <string name="blood_pressure_alert_message">Los valores ingresados indican que presenta una presión arterial de %s \n\n Se le recomienda consultar a su medico.</string>
 
 
-
-
     <!-- =============================== -->
     <!--        Body Selection           -->
     <!-- =============================== -->
     <string name="select_body_message">Deslice y seleccione</string>
     <string name="selection_is_needed">Por favor seleccione un tipo de cuerpo</string>
-
 
 
     <!-- =============================== -->
@@ -141,8 +192,6 @@
     <string name="fasting_test">En ayunas</string>
     <string name="tolerance_test">Postcomida</string>
     <string name="bottom_sheet_title">Tamaño del área de dolor</string>
-
-
 
 
     <!-- =============================== -->
@@ -176,7 +225,6 @@
     <string name="sample_calendar_day">02</string>
 
 
-
     <!-- =============================== -->
     <!--     Blood Pressure Categories   -->
     <!-- =============================== -->
@@ -187,6 +235,7 @@
     <string name="blood_pressure_category_hypotension">Hipotensión</string>
 
 
+
     <!-- =============================== -->
     <!--        Glucose Levels           -->
     <!-- =============================== -->
@@ -194,9 +243,7 @@
     <string name="glucose_level_prediabetes">Prediabetes</string>
     <string name="glucose_level_diabetes">Diabetes</string>
 
-
-
-
+  
     <!-- =============================== -->
     <!--    Symptoms Categories Names    -->
     <!-- =============================== -->
@@ -293,5 +340,14 @@
     <string name="hot">Calor</string>
     <string name="humidity">Humedad</string>
     <string name="dryness">Sequedad</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

@@ -12,6 +12,8 @@ public interface PressureDao {
 
     PressureModel select(long id) throws Exception;
 
+    List<PressureModel> select(long initialDate, long finalDate) throws Exception;
+
     int delete(long id) throws Exception;
 
     int update(PressureModel newValues) throws Exception;

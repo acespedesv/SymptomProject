@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "SympDB.db";
 
     public DBHelper(Context context) {
@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(Contract.SQL_CREATE_GLUCOSE);
         db.execSQL(Contract.SQL_CREATE_GLUCOSE_LEVELS);
         db.execSQL(Contract.SQL_CREATE_PRESSURE_LEVELS);
+        db.execSQL(Contract.SQL_CREATE_SYMPTOMS_VIEW);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -37,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(Contract.SQL_DELETE_GLUCOSE);
         db.execSQL(Contract.SQL_DELETE_GLUCOSE_LEVELS);
         db.execSQL(Contract.SQL_DELETE_PRESSURE_LEVELS);
+        db.execSQL(Contract.SQL_DELETE_SYMPTOMS_VIEW);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
