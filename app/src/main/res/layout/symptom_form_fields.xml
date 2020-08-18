@@ -15,8 +15,6 @@
             android:textSize="20sp" />
 
         <EditText
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_description"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -160,8 +158,6 @@
             android:textStyle="normal" />
 
         <EditText
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_duration"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -184,8 +180,6 @@
             android:textSize="20sp" />
 
         <EditText
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_medicament"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -208,8 +202,6 @@
             android:textSize="20sp" />
 
         <EditText
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="@color/colorDarkBlue"
             android:id="@+id/symp_food"
             android:layout_width="match_parent"
             android:layout_height="40dp"
