@@ -42,9 +42,6 @@ public class DateTimeUtils implements
     }
 
     public static DateTimeUtils getInstance(){
-//        if( instance == null)
-//            instance = new DateTimeUtils();
-//        return instance;
         return new DateTimeUtils();
     }
 
