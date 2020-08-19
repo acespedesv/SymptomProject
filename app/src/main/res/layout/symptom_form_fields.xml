@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/symptom_form"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/symptom_description"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/symp_description"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
+            android:hint="@string/symptom_description_hint"
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/intensity"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/symp_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="9"
+            android:checkedButton="@id/intensity_low"
+            android:layout_marginHorizontal="10dp">
+
+            <RadioButton
+                android:id="@+id/intensity_low"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:buttonTint="@color/IntesidadBaja"
+                android:drawableTint="#F8EB03"
+                android:gravity="center"
+                android:text="@string/low"
+                android:textStyle="bold"
+                android:textColor="@color/IntesidadBaja"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/intensity_medium"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:buttonTint="@color/colorMainOrange"
+                android:gravity="center"
+                android:text="@string/medium"
+                android:textStyle="bold"
+                android:textColor="@color/colorMainOrange"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/intensity_high"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:buttonTint="@color/colorMainRed"
+                android:gravity="center"
+                android:text="@string/high"
+                android:textStyle="bold"
+                android:textColor="@color/colorMainRed"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <Switch
+            android:id="@+id/intermittence_switch"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginVertical="20dp"
+            android:text="@string/intermittent"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/start"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center">
+
+                <TextView
+                    android:id="@+id/start_date"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_view_style"
+                    android:drawableEnd="@drawable/ic_history"
+                    android:fontFamily="@font/montserrat"
+                    android:padding="@dimen/edit_text_padding"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="5dp"/>
+
+                <TextView
+                    android:id="@+id/start_time"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_view_style"
+                    android:drawableEnd="@drawable/ic_time"
+                    android:fontFamily="@font/montserrat"
+                    android:padding="@dimen/edit_text_padding"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/duration"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <EditText
+            android:id="@+id/symp_duration"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
+            android:hint="@string/duration_hint"
+            android:inputType="number"
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/reaction_medicament"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/symp_medicament"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
+            android:hint="@string/reaction_medicament_hint"
+            android:inputType="textLongMessage"
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/reaction_food"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/symp_food"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/text_view_style"
+            android:hint="@string/reaction_food_hint"
+            android:inputType="textLongMessage"
+            android:paddingLeft="10dp"
+            android:textAlignment="inherit" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/categories_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:background="@drawable/filled_button"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/save"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginVertical="10dp"
+            android:textColor="@color/colorMainWhite"/>
+
+    </LinearLayout>

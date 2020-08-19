@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp"
+    android:padding="15dp"
+    android:layout_gravity="center_horizontal">
+
+<!--    <ImageView-->
+<!--        android:id="@+id/profile_picture"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_launcher_background"/>-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp">
+        <TextView
+            android:id="@+id/about_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="Emmanuel Alfaro" />
+
+        <TextView
+            android:id="@+id/about_institution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instituto Tecnológico de Costa Rica" />
+
+        <TextView
+            android:id="@+id/about_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ealfarobrenes@hotmail.com" />
+
+    </LinearLayout>
+</LinearLayout>

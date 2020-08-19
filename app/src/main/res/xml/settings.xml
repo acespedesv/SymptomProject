@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="@string/preference_reminder_frequency_key"
+        android:defaultValue="@string/preference_reminder_frequency_default"
+        android:icon="@drawable/ic_time"
+        android:entries="@array/frequency_options_readable_values"
+        android:entryValues="@array/frequency_options_values"
+        android:title="@string/frequency_title"
+        android:summary="@string/frequency_summary"
+        />
+</PreferenceScreen>

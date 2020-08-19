@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content">
+
+    <!-- BORDER CIRCLE -->
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_brightness_1_black_24dp"
+        android:backgroundTint="@color/symptom_option_normal_border"
+        android:tag="border_circle" />
+
+
+    <!-- BACKGROUND CIRCLE -->
+    <ImageView
+
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_brightness_1_black_24dp"
+        android:backgroundTint="@color/symptom_option_normal_background"
+        android:tag="background_circle" />
+
+    <!--    ICON-->
+
+    <ImageView
+
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:src="@drawable/ic_brightness_1_black_24dp"
+        android:tag="icon" />
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:tag="label"
+        android:text="Dolor"
+        android:textAlignment="center" />
+</RelativeLayout>
