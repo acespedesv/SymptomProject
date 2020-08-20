@@ -55,6 +55,7 @@ public class SymptomDaoImpl implements SymptomDao {
         String[] whereArgs = new String[] {Long.toString(dateTime), Integer.toString(circleSide)};
         Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         List<SymptomModel> result = buildListFromCursor(cursor);
+        cursor.close();
         return result;
     }
 
@@ -62,13 +63,11 @@ public class SymptomDaoImpl implements SymptomDao {
     public List<SymptomModel> select(long initialDate, long finalDate) throws Exception {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String whereClause = Contract.Symptom.COLUMN_NAME_START_DATE + " BETWEEN ? AND ?";
-        Log.e("LOG", "Symptoms dates: " + initialDate + ", " + finalDate);
+        String sortOrder = Contract.Symptom.COLUMN_NAME_START_DATE + " DESC";
         String[] whereArgs = new String[] {Long.toString(initialDate), Long.toString(finalDate)};
-        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, null);
-        List<SymptomModel> result;
-        result = buildListFromCursor(cursor);
+        Cursor cursor = db.query(Contract.Symptom.TABLE_NAME, null, whereClause, whereArgs, null, null, sortOrder);
+        List<SymptomModel> result = buildListFromCursor(cursor);
         cursor.close();
-        db.close();
         return result;
     }
 
@@ -81,7 +80,6 @@ public class SymptomDaoImpl implements SymptomDao {
         List<SymptomViewModel> result;
         result = buildSymptomViewFromCursor(cursor);
         cursor.close();
-        db.close();
         return result;
     }
 
